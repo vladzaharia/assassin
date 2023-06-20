@@ -10,6 +10,10 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 		).results
 
 		if (results && results.length > 1) {
+			if (results[0].target) {
+					return c.json({ message: 'Game already started!' }, 400)
+			}
+
 			const matched: string[] = []
 
 			// Match people

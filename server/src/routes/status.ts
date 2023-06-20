@@ -16,7 +16,7 @@ export const GameStatus = async (c: Context<{ Bindings: Bindings }>) => {
 				status: records[0]?.target ? 'started' :
 					records.length > 1 ? 'ready' :
 						'not-ready',
-				players: records.length
+				players: records.map((r) => r.name)
 			})
 		} else {
 			return c.json({ status: 'not-ready', players: 0 })

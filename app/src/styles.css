@@ -17,11 +17,15 @@
 }
 
 body {
-  height: 100vh;
+  height: 100%;
   margin: 0;
   font-family: 'Flexo-Regular','Roboto', Arial, sans-serif;
   font-size: 1rem;
   background: #FFF;
+}
+
+html, .root {
+	height: 100%;
 }
 
 h1, h2 {

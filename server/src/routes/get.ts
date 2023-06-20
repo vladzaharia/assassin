@@ -12,7 +12,7 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		if (record) {
 			return c.json(record)
 		} else {
-			return c.json({ message: 'Record not found!' }, 404)
+			return c.json({ message: 'Player not found!' }, 404)
 		}
 
 	} catch (e) {
