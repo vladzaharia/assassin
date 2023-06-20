@@ -5,14 +5,10 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { name } = c.req.param()
 
-		const record = await c.env.D1DATABASE.prepare(`SELECT * FROM assassin WHERE name=?`)
-		.bind(name)
-		.first<AssassinRecord>()
+		const record = await c.env.D1DATABASE.prepare(`SELECT * FROM assassin WHERE name=?`).bind(name).first<AssassinRecord>()
 
 		if (!record) {
-			const insertResult = await c.env.D1DATABASE.prepare(`INSERT INTO assassin (name) VALUES(?)`)
-				.bind(name)
-				.run()
+			const insertResult = await c.env.D1DATABASE.prepare(`INSERT INTO assassin (name) VALUES(?)`).bind(name).run()
 			console.info(`Create table => createTableResult ${insertResult.error || insertResult.success}`)
 
 			if (insertResult.success) {

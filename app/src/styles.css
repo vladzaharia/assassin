@@ -1,39 +1,47 @@
 @font-face {
-  font-family: 'Flexo-Regular';
-  src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot');
-  src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-regular.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-regular.ttf') format('truetype');
+	font-family: 'Flexo-Regular';
+	src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot');
+	src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot?#iefix') format('embedded-opentype'),
+		url('https://pokedex.vlad.gg/fonts/flexo-regular.woff') format('woff'),
+		url('https://pokedex.vlad.gg/fonts/flexo-regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Flexo-Bold';
-  src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot');
-  src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-bold.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-bold.ttf') format('truetype');
+	font-family: 'Flexo-Bold';
+	src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot');
+	src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot?#iefix') format('embedded-opentype'),
+		url('https://pokedex.vlad.gg/fonts/flexo-bold.woff') format('woff'),
+		url('https://pokedex.vlad.gg/fonts/flexo-bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Flexo-Heavy';
-  src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot');
-  src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-heavy.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-heavy.ttf') format('truetype');
+	font-family: 'Flexo-Heavy';
+	src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot');
+	src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot?#iefix') format('embedded-opentype'),
+		url('https://pokedex.vlad.gg/fonts/flexo-heavy.woff') format('woff'),
+		url('https://pokedex.vlad.gg/fonts/flexo-heavy.ttf') format('truetype');
 }
 
 body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Flexo-Regular','Roboto', Arial, sans-serif;
-  font-size: 1rem;
-  background: #FFF;
+	height: 100%;
+	margin: 0;
+	font-family: 'Flexo-Regular', 'Roboto', Arial, sans-serif;
+	font-size: 1rem;
+	background: #fff;
 }
 
-html, .root {
+html,
+.root {
 	height: 100%;
 }
 
-h1, h2 {
-  font-family: 'Flexo-Heavy','Roboto', Arial, sans-serif;
-  text-align: center;
+h1,
+h2 {
+	font-family: 'Flexo-Heavy', 'Roboto', Arial, sans-serif;
+	text-align: center;
 }
 
-input[type=text] {
+input[type='text'] {
 	height: 1.5rem;
 	border: 0.1rem solid #aaa;
 	border-radius: 0.3em;
@@ -41,33 +49,33 @@ input[type=text] {
 
 button {
 	outline: 1px solid #4dae5b;
-  margin-top: 0.625em;
-  border-radius: 0.3em;
-  font-size: 0.9rem;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  font-family: "Flexo-Heavy", sans-serif;
-  cursor: pointer;
+	margin-top: 0.625em;
+	border-radius: 0.3em;
+	font-size: 0.9rem;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 8px 16px;
+	font-family: 'Flexo-Heavy', sans-serif;
+	cursor: pointer;
 	margin: 2px;
 	background-color: #4dae5b;
-  color: #fff;
-  border: none;
+	color: #fff;
+	border: none;
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;
 }
 
 button.secondary {
-	background-color: #FFF;
+	background-color: #fff;
 	color: #4dae5b;
 	outline: 1px solid #4dae5b;
 }
 
 button.failed {
-	background-color: #F26671;
-	outline: 1px solid #F26671;
+	background-color: #f26671;
+	outline: 1px solid #f26671;
 }
 
 button:disabled {

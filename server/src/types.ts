@@ -6,6 +6,6 @@ export type Bindings = {
 }
 
 export interface AssassinRecord {
-	name: string;
-	target?: string;
+	name: string
+	target?: string
 }

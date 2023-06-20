@@ -1,17 +1,14 @@
-import arrayShuffle from 'array-shuffle';
+import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
 import { AssassinRecord, Bindings } from '../types'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
-		const results = (
-			await c.env.D1DATABASE.prepare(`SELECT * FROM assassin`)
-				.all<AssassinRecord>()
-		).results
+		const results = (await c.env.D1DATABASE.prepare(`SELECT * FROM assassin`).all<AssassinRecord>()).results
 
 		if (results && results.length > 1) {
 			if (results[0].target) {
-					return c.json({ message: 'Game already started!' }, 400)
+				return c.json({ message: 'Game already started!' }, 400)
 			}
 
 			const matched: string[] = []
@@ -20,8 +17,8 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			for (const result of results) {
 				const unmatched = results.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
 
-				console.log("matched", matched)
-				console.log("unmatched", unmatched)
+				console.log('matched', matched)
+				console.log('unmatched', unmatched)
 
 				result.target = arrayShuffle(unmatched)[0]?.name
 				console.log(`${result?.name} => ${result.target}`)
@@ -30,16 +27,13 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 			// Update records
 			for (const result of results) {
-				await c.env.D1DATABASE.prepare(`UPDATE assassin SET target=? WHERE name=?`)
-					.bind(result.name, result.target)
-					.run()
+				await c.env.D1DATABASE.prepare(`UPDATE assassin SET target=? WHERE name=?`).bind(result.name, result.target).run()
 			}
 
 			return c.json({ message: 'ok' })
 		} else {
 			return c.json({ message: 'Must have at least 2 people signed up!' }, 400)
 		}
-
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)
