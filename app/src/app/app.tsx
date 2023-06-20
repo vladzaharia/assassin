@@ -88,7 +88,7 @@ function App() {
 
   return (
 		<div className="app">
-			<h1>Assassin Matcher</h1>
+			<h1>PokéAssassin</h1>
 			<div className="assassin">
 				<div className="menu">
 						<div className="status">
@@ -102,7 +102,7 @@ function App() {
 						<button
 							className={startGameStatus && startGameStatus !== "ok" ? "failed" : undefined}
 							onClick={() => startGame()}
-							disabled={gameStatus?.status === "ready"}>
+							disabled={gameStatus?.status !== "ready"}>
 							<FontAwesomeIcon icon={faPlay} size='xl' /> Play
 						</button>
 					</div>
