@@ -92,8 +92,7 @@ function App() {
 			<div className="assassin">
 				<div className="menu">
 						<div className="status">
-							<span><span className={`label ${gameStatus?.status || "unknown"}`}>{ConvertStatus(gameStatus?.status || "unknown")}</span></span>
-							<span>Players: {gameStatus?.players.length.toString() || "Unknown"}</span>
+							<span className={`label ${gameStatus?.status || "unknown"}`}>{ConvertStatus(gameStatus?.status || "unknown")}</span>
 						</div>
 					<div className="actions">
 						<button className={resetGameStatus && resetGameStatus !== "ok" ? "failed" : undefined} onClick={() => resetGame()}>
@@ -124,7 +123,7 @@ function App() {
 						</div>
 					</div>
 					<div className="player-list">
-						<h3>Player List</h3>
+						<h3>Player List ({gameStatus?.players.length || 0})</h3>
 						{gameStatus?.players.map((player) => {
 							return (<div className="player" key={player}>
 								<FontAwesomeIcon icon={faUser} /> {player}
@@ -151,7 +150,7 @@ function App() {
 								<div className="step">
 									<div className="icon"><FontAwesomeIcon icon={faUserPlus} size='2x' /></div>
 									<div className="explanation">
-										<h3>Join a game</h3>
+										<h3>Join the game</h3>
 										Enter your first name and click "Join" to add your name to the list.
 									</div>
 								</div>
@@ -163,7 +162,7 @@ function App() {
 									</div>
 								</div>
 								<div className="step">
-									<div className="icon"><FontAwesomeIcon icon={faUserSecret} size='2x' /></div>
+									<div className="icon"><FontAwesomeIcon icon={faMagnifyingGlass} size='2x' /></div>
 									<div className="explanation">
 										<h3>Lookup your target</h3>
 										Enter your first name and click "Lookup" to find who your target is.
