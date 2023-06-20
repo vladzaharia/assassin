@@ -86,6 +86,9 @@ function App() {
     fetchGameStatus()
   }, [])
 
+	const params = (new URL(document.location.toString())).searchParams;
+	const isAdmin = params.get("admin") === "true";
+
   return (
 		<div className="app">
 			<h1>Workday Assassin</h1>
@@ -94,7 +97,7 @@ function App() {
 						<div className="status">
 							<span className={`label ${gameStatus?.status || "unknown"}`}>{ConvertStatus(gameStatus?.status || "unknown")}</span>
 						</div>
-					<div className="actions">
+					{isAdmin ? <div className="admin-actions">
 						<button className={resetGameStatus && resetGameStatus !== "ok" ? "failed" : undefined} onClick={() => resetGame()}>
 							<FontAwesomeIcon icon={faArrowRotateLeft} size='xl' /> Reset
 						</button>
@@ -102,9 +105,9 @@ function App() {
 							className={startGameStatus && startGameStatus !== "ok" ? "failed" : undefined}
 							onClick={() => startGame()}
 							disabled={gameStatus?.status !== "ready"}>
-							<FontAwesomeIcon icon={faPlay} size='xl' /> Play
+							<FontAwesomeIcon icon={faPlay} size='xl' /> Start
 						</button>
-					</div>
+					</div> : false}
 					<div className="player-actions">
 						<input type="text" placeholder="First Name" className="name" id="name" value={name} onChange={(e) => { setName(e.target.value) }} />
 						<div className="buttons">
