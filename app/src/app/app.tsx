@@ -88,7 +88,7 @@ function App() {
 
   return (
 		<div className="app">
-			<h1>PokéAssassin</h1>
+			<h1>Assassin Matcher</h1>
 			<div className="assassin">
 				<div className="menu">
 						<div className="status">
