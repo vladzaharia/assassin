@@ -9,6 +9,7 @@
 		"wrangler": "^3.0.0"
 	},
 	"dependencies": {
-		"hono": "^3.2.5"
+		"hono": "^3.2.5",
+		"array-shuffle": "^3.0.0"
 	}
 }

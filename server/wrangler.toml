@@ -12,6 +12,6 @@ bucket = "./dist"
 crons = [ ]
 
 [[d1_databases]]
-binding = "ASSASSIN"
+binding = "D1DATABASE"
 database_name = "assassin"
 database_id = "a24a1078-cacd-42dd-82d2-c8865fd4c306"
