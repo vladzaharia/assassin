@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateLeft, faPlay, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
-import { faMagnifyingGlass, faUser, faUserSecret, faCrosshairs } from '@fortawesome/pro-regular-svg-icons'
+import { faMagnifyingGlass, faUser, faUserSecret, faCrosshairs, faHourglass, faCardsBlank } from '@fortawesome/pro-regular-svg-icons'
 
 import './app.css'
 import { ConvertStatus } from './utils';
@@ -146,7 +146,45 @@ function App() {
 									<span id="words"><FontAwesomeIcon icon={faCrosshairs} size="lg" />Check your card!</span>
 								</div>
 							</div> :
-							<div className="no-selection">No player selected!</div> }
+							<div className="no-selection">
+								<h2>How to Play</h2>
+								<div className="step">
+									<div className="icon"><FontAwesomeIcon icon={faUserPlus} size='2x' /></div>
+									<div className="explanation">
+										<h3>Join a game</h3>
+										Enter your first name and click "Join" to add your name to the list.
+									</div>
+								</div>
+								<div className="step">
+									<div className="icon"><FontAwesomeIcon icon={faHourglass} size='2x' /></div>
+									<div className="explanation">
+										<h3>Wait for the game to start...</h3>
+										Enter your first name and click "Join" to add your name to the list.
+									</div>
+								</div>
+								<div className="step">
+									<div className="icon"><FontAwesomeIcon icon={faUserSecret} size='2x' /></div>
+									<div className="explanation">
+										<h3>Lookup your target</h3>
+										Enter your first name and click "Lookup" to find who your target is.
+									</div>
+								</div>
+								<div className="step">
+									<div className="icon"><FontAwesomeIcon icon={faCrosshairs} size='2x' /></div>
+									<div className="explanation">
+										<h3>Eliminate your target!</h3>
+										Try to get your target to say one of your words through the day.
+									</div>
+								</div>
+								<div className="step">
+									<div className="icon"><FontAwesomeIcon icon={faCardsBlank} size='2x' /></div>
+									<div className="explanation">
+										<h3>Take your target's card</h3>
+										Take your target's card and try to eliminate their target! <br />
+										You can use any words on any cards you have.
+									</div>
+								</div>
+							</div> }
 					{ startGameStatus && startGameStatus != "ok" ?
 						<ErrorField message={startGameStatus} />:
 						undefined }
