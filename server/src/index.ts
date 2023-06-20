@@ -20,15 +20,16 @@ app.use(
 )
 // #endregion
 
-app.get('/', GameStatus)
-app.post('/reset', ResetGame)
-app.post('/start', StartGame)
-app.get('/player/:name', GetPlayer)
-app.put('/player/:name', AddPlayer)
+app.get('/api', GameStatus)
+app.get('/api/', GameStatus)
+app.post('/api/reset', ResetGame)
+app.post('/api/start', StartGame)
+app.get('/api/player/:name', GetPlayer)
+app.put('/api/player/:name', AddPlayer)
 
 // App
 app.get(
-	'/app/*',
+	'/*',
 	serveStatic({
 		root: './',
 	})

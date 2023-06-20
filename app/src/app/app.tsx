@@ -15,8 +15,8 @@ import './app.css'
 import { ConvertStatus } from './utils'
 import { ErrorField } from './components/error'
 
-// const BASE_URL = 'http://127.0.0.1:8787/'
-const BASE_URL = `https://assassin.vlad.gg/`
+// const BASE_URL = 'http://127.0.0.1:8787/api/'
+const BASE_URL = `https://assassin.vlad.gg/api/`
 
 interface GameStatus {
 	status: string
