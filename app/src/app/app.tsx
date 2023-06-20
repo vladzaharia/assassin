@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRotateLeft, faPlay, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
-import { faMagnifyingGlass, faUser, faUserSecret, faCrosshairs, faHourglass, faCardsBlank } from '@fortawesome/pro-regular-svg-icons'
+import { faArrowRotateLeft, faCrosshairs, faHourglass, faMagnifyingGlass, faPlay, faUser, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faUserSecret, faCardsBlank } from '@fortawesome/pro-regular-svg-icons'
 
 import './app.css'
 import { ConvertStatus } from './utils';
