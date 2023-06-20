@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Flexo-Regular';
+  src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot');
+  src: url('https://pokedex.vlad.gg/fonts/flexo-regular.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-regular.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Flexo-Bold';
+  src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot');
+  src: url('https://pokedex.vlad.gg/fonts/flexo-bold.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-bold.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Flexo-Heavy';
+  src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot');
+  src: url('https://pokedex.vlad.gg/fonts/flexo-heavy.eot?#iefix') format('embedded-opentype'), url('https://pokedex.vlad.gg/fonts/flexo-heavy.woff') format('woff'), url('https://pokedex.vlad.gg/fonts/flexo-heavy.ttf') format('truetype');
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  font-family: 'Flexo-Regular','Roboto', Arial, sans-serif;
+  font-size: 1.2rem;
+  background: #FFF;
+}
+
+h1, h2 {
+  font-family: 'Flexo-Heavy','Roboto', Arial, sans-serif;
+  text-align: center;
+}
+
+input[type=text] {
+	height: 1.5rem;
+	border: 0.1rem solid #aaa;
+	border-radius: 0.3em;
+}
+
+button {
+  margin-top: 0.625em;
+  border-radius: 0.3em;
+  border: none;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  font-family: "Flexo-Heavy", sans-serif;
+  cursor: pointer;
+	margin: 2px;
+	background-color: #4dae5b;
+  color: #fff;
+  border: none;
+}
+
+button:disabled {
+	background-color: #aaa;
+	cursor: default;
+}

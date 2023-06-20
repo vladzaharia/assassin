@@ -1,0 +1,17 @@
+name = "assassin"
+main = "src/index.ts"
+compatibility_date = "2023-06-17"
+usage_model = "bundled"
+env = { }
+route = { pattern = "assassin.vlad.gg", custom_domain = true }
+
+[site]
+bucket = "./dist"
+
+[triggers]
+crons = [ ]
+
+[[d1_databases]]
+binding = "ASSASSIN"
+database_name = "assassin"
+database_id = "a24a1078-cacd-42dd-82d2-c8865fd4c306"

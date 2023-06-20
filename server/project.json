@@ -1,0 +1,61 @@
+{
+	"name": "asseassin-server",
+	"$schema": "../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "./server/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "server",
+				"command": "tsc -p ./tsconfig.json"
+			}
+		},
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["./server/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"format": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "server",
+				"command": "prettier --check ."
+			}
+		},
+		"format:write": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "server",
+				"command": "prettier --write ."
+			}
+		},
+		"serve": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["assassin-app:build"],
+			"options": {
+				"cwd": "server",
+				"command": "wrangler dev"
+			}
+		},
+		"serve:remote": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["assassin-app:build"],
+			"options": {
+				"cwd": "server",
+				"command": "wrangler dev --remote"
+			}
+		},
+		"deploy": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["assassin-app:build"],
+			"options": {
+				"cwd": "server",
+				"command": "wrangler deploy"
+			}
+		}
+	},
+	"tags": []
+}

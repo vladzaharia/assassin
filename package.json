@@ -1,0 +1,38 @@
+{
+	"name": "workspace",
+	"version": "0.0.0",
+	"license": "MIT",
+	"scripts": {
+		"build": "nx run-many -t build",
+		"test": "nx run-many -t test",
+		"lint": "nx run-many -t lint",
+		"format": "nx run-many -t format:write",
+		"serve": "nx run-many -t serve",
+		"serve:remote": "nx run assassin-server:serve:remote",
+		"deploy": "nx run assassin-server:deploy"
+	},
+	"private": true,
+	"devDependencies": {
+		"@nx/cypress": "16.3.2",
+		"@nx/eslint-plugin": "16.3.2",
+		"@nx/js": "16.3.2",
+		"@nx/linter": "16.3.2",
+		"@nx/react": "^16.3.2",
+		"eslint": "~8.15.0",
+		"eslint-config-prettier": "8.1.0",
+		"eslint-plugin-import": "2.27.5",
+		"eslint-plugin-jsx-a11y": "6.7.1",
+		"eslint-plugin-react": "7.32.2",
+		"eslint-plugin-react-hooks": "4.6.0",
+		"nx": "16.3.2",
+		"typescript": "~5.0.2",
+		"vite": "^4.3.4",
+		"vite-plugin-eslint": "^1.8.1",
+		"vite-tsconfig-paths": "^4.0.2",
+		"vitest": "^0.31.0"
+	},
+	"workspaces": [
+		"app",
+		"server"
+	]
+}

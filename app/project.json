@@ -1,0 +1,92 @@
+{
+	"name": "assassin-app",
+	"$schema": "../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "./app/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nx/vite:build",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "server/dist/app"
+			},
+			"configurations": {
+				"development": {
+					"mode": "development"
+				},
+				"production": {
+					"mode": "production"
+				}
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["coverage/assassin-app"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../coverage/assassin-app"
+			}
+		},
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["./app/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"format": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "app",
+				"command": "prettier --check ."
+			}
+		},
+		"format:write": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "app",
+				"command": "prettier --write ."
+			}
+		},
+		"serve": {
+			"executor": "@nx/vite:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "assassin-app:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "assassin-app:build:development",
+					"hmr": true
+				},
+				"production": {
+					"buildTarget": "assassin-app:build:production",
+					"hmr": false
+				}
+			}
+		},
+		"preview": {
+			"executor": "@nx/vite:preview-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "assassin-app:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "assassin-app:build:development"
+				},
+				"production": {
+					"buildTarget": "assassin-app:build:production"
+				}
+			}
+		},
+		"serve-static": {
+			"executor": "@nx/web:file-server",
+			"options": {
+				"buildTarget": "assassin-app:build"
+			}
+		}
+	},
+	"tags": []
+}
