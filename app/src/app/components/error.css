@@ -6,6 +6,11 @@
 	justify-content: center;
 }
 
+.error-field span {
+	font-size: 1rem;
+	font-family: 'Flexo-Regular', Arial, sans-serif;
+}
+
 .error-field>span {
 	padding: 1rem;
 	background: #F26671;
@@ -14,7 +19,6 @@
 	display: grid;
 	grid-template-columns: 1fr 5fr;
 	align-items: center;
-	font-size: 1rem;
 	width: 80%;
 }
 

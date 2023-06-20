@@ -40,9 +40,9 @@ input[type=text] {
 }
 
 button {
+	outline: 1px solid #4dae5b;
   margin-top: 0.625em;
   border-radius: 0.3em;
-  border: none;
   font-size: 0.9rem;
   text-decoration: none;
   display: flex;
@@ -55,13 +55,24 @@ button {
 	background-color: #4dae5b;
   color: #fff;
   border: none;
+	margin-left: 0.25rem;
+	margin-right: 0.25rem;
+}
+
+button.secondary {
+	background-color: #FFF;
+	color: #4dae5b;
+	outline: 1px solid #4dae5b;
 }
 
 button.failed {
 	background-color: #F26671;
+	outline: 1px solid #F26671;
 }
 
 button:disabled {
 	background-color: #aaa;
+	outline: 1px solid #aaa;
+	color: #fff;
 	cursor: default;
 }

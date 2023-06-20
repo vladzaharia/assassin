@@ -3,7 +3,7 @@ export function ConvertStatus(status: string): string {
 		case "started":
 			return "Started!"
 		case "ready":
-			return "Ready"
+			return "Ready to Start"
 		case "not-ready":
 			return "Not Ready"
 		default:

@@ -52,16 +52,16 @@ function App() {
 			setStartGameStatus((await r.json()).message)
 			fetchGameStatus()
 		}).catch(() => {
-			setResetGameStatus("Something went wrong!")
+			setStartGameStatus("Something went wrong!")
 		})
 	}
 
 	const addPlayer = async () => {
 		fetch(`${BASE_URL}player/${name}`, { method: "PUT" }).then(async (r) => {
-			setStartGameStatus((await r.json()).message)
+			setAddPlayerStatus((await r.json()).message)
 			fetchGameStatus()
 		}).catch(() => {
-			setResetGameStatus("Something went wrong!")
+			setAddPlayerStatus("Something went wrong!")
 		})
 	}
 
@@ -98,7 +98,7 @@ function App() {
 							<span className={`label ${gameStatus?.status || "unknown"}`}>{ConvertStatus(gameStatus?.status || "unknown")}</span>
 						</div>
 					{isAdmin ? <div className="admin-actions">
-						<button className={resetGameStatus && resetGameStatus !== "ok" ? "failed" : undefined} onClick={() => resetGame()}>
+						<button className={resetGameStatus && resetGameStatus !== "ok" ? "secondary failed" : "secondary"} onClick={() => resetGame()}>
 							<FontAwesomeIcon icon={faArrowRotateLeft} size='xl' /> Reset
 						</button>
 						<button
