@@ -25,7 +25,7 @@
 body {
 	height: 100%;
 	margin: 0;
-	font-family: 'Flexo-Regular', 'Roboto', Arial, sans-serif;
+	font-family: 'Flexo-Regular', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 1rem;
 	background: #fff;
 }
@@ -37,7 +37,7 @@ html,
 
 h1,
 h2 {
-	font-family: 'Flexo-Heavy', 'Roboto', Arial, sans-serif;
+	font-family: 'Flexo-Heavy', Roboto, Arial, Helvetica, sans-serif;
 	text-align: center;
 }
 
@@ -83,4 +83,8 @@ button:disabled {
 	outline: 1px solid #aaa;
 	color: #fff;
 	cursor: default;
+}
+
+strong {
+	font-family: 'Flexo-Bold', Roboto, Arial, Helvetica, sans-serif;
 }

@@ -13,7 +13,7 @@ import { faUserSecret, faCardsBlank } from '@fortawesome/pro-regular-svg-icons'
 
 import './app.css'
 import { ConvertStatus } from './utils'
-import { ErrorField } from './components/error'
+import { ErrorField } from './components/common/error'
 
 // const BASE_URL = 'http://127.0.0.1:8787/api/'
 const BASE_URL = `https://assassin.vlad.gg/api/`
@@ -179,13 +179,13 @@ function App() {
 							<div className="target">
 								<label htmlFor="target">Your target is...</label>
 								<span id="target">
-									<FontAwesomeIcon icon={faUserSecret} size="xl" /> {playerInfo.target}
+									<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
 								</span>
 							</div>
 							<div className="words">
 								<label htmlFor="words">Your words are...</label>
 								<span id="words">
-									<FontAwesomeIcon icon={faCrosshairs} size="lg" />
+									<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
 									Check your card(s)!
 								</span>
 							</div>
@@ -195,7 +195,7 @@ function App() {
 							<h2>How to Play</h2>
 							<div className="step">
 								<div className="icon">
-									<FontAwesomeIcon icon={faUserPlus} size="2x" />
+									<FontAwesomeIcon icon={faUserPlus} color="#4dae5b" size="2x" />
 								</div>
 								<div className="explanation">
 									<h3>Join the game</h3>
@@ -204,16 +204,16 @@ function App() {
 							</div>
 							<div className="step">
 								<div className="icon">
-									<FontAwesomeIcon icon={faHourglass} size="2x" />
+									<FontAwesomeIcon icon={faHourglass} color="#fcba03" size="2x" />
 								</div>
 								<div className="explanation">
 									<h3>Wait for the game to start...</h3>
-									Enter your first name and click "Join" to add your name to the list.
+									Once enough players join, the game can start. Until then, study your first card and the words on it.
 								</div>
 							</div>
 							<div className="step">
 								<div className="icon">
-									<FontAwesomeIcon icon={faMagnifyingGlass} size="2x" />
+									<FontAwesomeIcon icon={faMagnifyingGlass} color="#4dae5b" size="2x" />
 								</div>
 								<div className="explanation">
 									<h3>Lookup your target</h3>
@@ -222,7 +222,7 @@ function App() {
 							</div>
 							<div className="step">
 								<div className="icon">
-									<FontAwesomeIcon icon={faCrosshairs} size="2x" />
+									<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="2x" />
 								</div>
 								<div className="explanation">
 									<h3>Eliminate your target!</h3>
@@ -231,12 +231,12 @@ function App() {
 							</div>
 							<div className="step">
 								<div className="icon">
-									<FontAwesomeIcon icon={faCardsBlank} size="2x" />
+									<FontAwesomeIcon icon={faCardsBlank} color="#237afc" size="2x" />
 								</div>
 								<div className="explanation">
 									<h3>Take your target's card</h3>
 									Take your target's card and try to eliminate their target! <br />
-									You can use any words on any cards you have.
+									<strong>You can use any unused words on any cards you have.</strong>
 								</div>
 							</div>
 						</div>
