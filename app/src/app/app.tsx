@@ -107,7 +107,7 @@ function App() {
 
 	return (
 		<div className="app">
-			<h1>Workday Assassin</h1>
+			<h1>Word Assassin</h1>
 			<div className="assassin">
 				<div className="menu">
 					<div className="status">
