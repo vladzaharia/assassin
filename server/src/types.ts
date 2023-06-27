@@ -14,7 +14,9 @@ export interface PlayerRecord {
 
 export interface RoomRecord {
 	name: string
-	words: string[]
+
+	/** Words used, as JSON-parseable string */
+	words: string
 }
 
 export interface WordListRecord {

@@ -1,6 +1,7 @@
 import { Context } from 'hono'
-import { Bindings, RoomRecord } from '../../types'
+import { Bindings } from '../../types'
 import { createRoomsTable, findRoom } from '../../tables/room'
+import { listPlayersInRoom } from '../../tables/player'
 
 export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -11,12 +12,19 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		await createRoomsTable(db)
 
 		// Try to find room
-		const record = await findRoom(db, room)
-		if (!record) {
+		const roomRecord = await findRoom(db, room)
+		if (!roomRecord) {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		return c.json(record)
+		// Find players in room
+		const playerRecords = (await listPlayersInRoom(db, room)).results || []
+
+		return c.json({
+			name: roomRecord.name,
+			words: JSON.parse(roomRecord.words),
+			players: playerRecords.map((p => p.name))
+		})
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)
