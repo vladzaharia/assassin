@@ -37,6 +37,7 @@ app.get('/api', Ok)
 app.get('/api/', Ok)
 
 // List rooms
+app.get('/api/room', ListRooms)
 app.get('/api/room/', ListRooms)
 
 // Get/Add/Delete room
@@ -56,6 +57,7 @@ app.delete('/api/room/:room/player/:name', DeletePlayer)
 
 // List word lists
 app.get('/api/wordlist', ListWordLists)
+app.get('/api/wordlist/', ListWordLists)
 
 // Get/add/delete word lists
 app.get('/api/wordlist/:list', GetWordList)
