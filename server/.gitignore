@@ -3,3 +3,4 @@ node_modules
 .wranger
 **/db.sqlite
 dist/
+*.js

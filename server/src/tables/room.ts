@@ -1,4 +1,4 @@
-import { RoomRecord } from "../types"
+import { RoomRecord } from '../types'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`

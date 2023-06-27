@@ -55,6 +55,13 @@
 				"cwd": "server",
 				"command": "wrangler deploy"
 			}
+		},
+		"tail": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "server",
+				"command": "wrangler tail"
+			}
 		}
 	},
 	"tags": []

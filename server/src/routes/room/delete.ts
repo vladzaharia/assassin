@@ -2,7 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom, deleteRoom } from '../../tables/room'
 
-export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
+export const DeleteRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
 		const db = c.env.D1DATABASE

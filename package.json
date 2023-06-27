@@ -9,7 +9,8 @@
 		"format": "nx run-many -t format:write",
 		"serve": "nx run-many -t serve",
 		"serve:remote": "nx run assassin-server:serve:remote",
-		"deploy": "nx run assassin-server:deploy"
+		"deploy": "nx run assassin-server:deploy",
+		"tail": "nx run assassin-server:tail"
 	},
 	"private": true,
 	"devDependencies": {

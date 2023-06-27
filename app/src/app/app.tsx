@@ -16,7 +16,7 @@ import { ConvertStatus } from './utils'
 import { ErrorField } from './components/common/error'
 
 // const BASE_URL = 'http://127.0.0.1:8787/api/'
-const BASE_URL = `https://assassin.vlad.gg/api/`
+const BASE_URL = `https://assassin.vlad.gg/api/room/galactic/`
 
 interface GameStatus {
 	status: string
@@ -42,7 +42,7 @@ function App() {
 		setPlayerInfo(undefined)
 		setGameStatus(undefined)
 
-		const status = await fetch(BASE_URL).then((r) => r.json())
+		const status = await fetch(`${BASE_URL}status`).then((r) => r.json())
 		setGameStatus(status)
 	}
 

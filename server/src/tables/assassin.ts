@@ -1,4 +1,4 @@
-import { AssassinRecord } from "../types"
+import { AssassinRecord } from '../types'
 
 export async function createAssassinTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -17,7 +17,10 @@ export async function listAssassinsInRoom(db: D1Database, room: string) {
 }
 
 export async function insertAssassin(db: D1Database, name: string, room: string) {
-	const insertResult = await db.prepare(`INSERT INTO assassin (name, room, words, status) VALUES(?,?,?, 'alive')`).bind(name, room, []).run()
+	const insertResult = await db
+		.prepare(`INSERT INTO assassin (name, room, words, status) VALUES(?,?,?, 'alive')`)
+		.bind(name, room, [])
+		.run()
 	console.info(`Insert assassin => insertResult ${insertResult.error || insertResult.success}`)
 
 	return insertResult

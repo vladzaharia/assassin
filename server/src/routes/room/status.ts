@@ -1,9 +1,9 @@
 import { Context } from 'hono'
-import { AssassinRecord, Bindings } from '../../types'
+import { Bindings } from '../../types'
 import { createAssassinTable, listAssassinsInRoom } from '../../tables/assassin'
 import { createRoomsTable, findRoom } from '../../tables/room'
 
-export const GameStatus = async (c: Context<{ Bindings: Bindings }>) => {
+export const RoomStatus = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
 		const db = c.env.D1DATABASE
