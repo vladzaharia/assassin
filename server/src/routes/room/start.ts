@@ -1,7 +1,7 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
-import { AssassinRecord, Bindings } from '../../types'
-import { createAssassinTable, listAssassinsInRoom, setAssassinTarget } from '../../tables/assassin'
+import { PlayerRecord, Bindings } from '../../types'
+import { createPlayerTable, listPlayersInRoom, setPlayerTarget } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
@@ -10,7 +10,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
-		await createAssassinTable(db)
+		await createPlayerTable(db)
 		await createRoomsTable(db)
 
 		// Try to find room
@@ -19,7 +19,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const results = (await listAssassinsInRoom(db, room)).results
+		const results = (await listPlayersInRoom(db, room)).results
 		if (results && results.length > 1) {
 			// Check if targets have been assigned
 			if (results[0].target) {
@@ -42,7 +42,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 			// Update records
 			for (const result of results) {
-				await setAssassinTarget(db, result.name, room, result.target!)
+				await setPlayerTarget(db, result.name, room, result.target!)
 			}
 
 			return c.json({ message: 'ok' })

@@ -1,16 +1,16 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
-import { createPlayerTable, listPlayersInRoom } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
+import { createPlayerTable, deletePlayer } from '../../tables/player'
 
-export const RoomStatus = async (c: Context<{ Bindings: Bindings }>) => {
+export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
-		const { room } = c.req.param()
+		const { name, room } = c.req.param()
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
-		await createPlayerTable(db)
 		await createRoomsTable(db)
+		await createPlayerTable(db)
 
 		// Try to find room
 		const roomRecord = await findRoom(db, room)
@@ -18,15 +18,12 @@ export const RoomStatus = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const records = (await listPlayersInRoom(db, room)).results
+		const deleteResult = await deletePlayer(db, name, room)
 
-		if (records) {
-			return c.json({
-				status: records[0]?.target ? 'started' : records.length > 1 ? 'ready' : 'not-ready',
-				players: records.map((r) => r.name),
-			})
+		if (deleteResult.success) {
+			return c.json({ message: 'ok' })
 		} else {
-			return c.json({ status: 'not-ready', players: 0 })
+			return c.json({ message: 'Something went wrong!', error: deleteResult.error }, 500)
 		}
 	} catch (e) {
 		console.error('err', e)

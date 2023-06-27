@@ -9,6 +9,7 @@
 		"lib": ["esnext"],
 		"types": ["@cloudflare/workers-types", "node"],
 		"jsx": "react-jsx",
-		"jsxImportSource": "hono/jsx"
+		"jsxImportSource": "hono/jsx",
+		"noEmit": true
 	}
 }

@@ -3,7 +3,7 @@ import { RoomRecord } from '../types'
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
 		CREATE TABLE IF NOT EXISTS room (name TEXT, words BLOB, PRIMARY KEY(name));`)
-	console.info(`Create table => createTableResult ${createTableResult.error || createTableResult.success}`)
+	console.info(`Create room table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
 }

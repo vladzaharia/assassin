@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
-import { createAssassinTable as createAssassinTable, findAssassin as findAssassin, insertAssassin } from '../../tables/assassin'
+import { createPlayerTable as createPlayerTable, findPlayer as findPlayer, insertPlayer } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
@@ -9,7 +9,7 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		const db = c.env.D1DATABASE
 
 		// Create D1 tables if needed
-		await createAssassinTable(db)
+		await createPlayerTable(db)
 		await createRoomsTable(db)
 
 		// Check if room exists
@@ -19,12 +19,12 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Check if player exists
-		const record = await findAssassin(db, name, room)
+		const record = await findPlayer(db, name, room)
 		if (record) {
 			return c.json({ message: 'Player already exists!' }, 400)
 		}
 
-		const insertResult = await insertAssassin(db, name, room)
+		const insertResult = await insertPlayer(db, name, room)
 		if (insertResult.success) {
 			return c.json({ message: 'ok' })
 		} else {

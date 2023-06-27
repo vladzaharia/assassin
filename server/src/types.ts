@@ -5,7 +5,7 @@ export type Bindings = {
 	/* eslint-enable no-undef */
 }
 
-export interface AssassinRecord {
+export interface PlayerRecord {
 	name: string
 	room: string
 	target?: string
@@ -15,4 +15,14 @@ export interface AssassinRecord {
 export interface RoomRecord {
 	name: string
 	words: string[]
+}
+
+export interface WordListRecord {
+	name: string
+	description: string
+}
+
+export interface WordRecord {
+	word: string
+	list: string
 }

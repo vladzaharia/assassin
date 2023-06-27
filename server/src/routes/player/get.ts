@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
-import { createAssassinTable, findAssassin } from '../../tables/assassin'
+import { createPlayerTable, findPlayer } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
@@ -9,7 +9,7 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
-		await createAssassinTable(db)
+		await createPlayerTable(db)
 		await createRoomsTable(db)
 
 		// Check if room exists
@@ -18,7 +18,7 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const record = await findAssassin(db, name, room)
+		const record = await findPlayer(db, name, room)
 		if (!record) {
 			return c.json({ message: 'Player not found!' }, 404)
 		}
