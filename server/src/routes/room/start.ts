@@ -1,12 +1,27 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
-import { AssassinRecord, Bindings } from '../types'
+import { AssassinRecord, Bindings } from '../../types'
+import { createAssassinTable, listAssassinsInRoom, setAssassinTarget } from '../../tables/assassin'
+import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
-		const results = (await c.env.D1DATABASE.prepare(`SELECT * FROM assassin`).all<AssassinRecord>()).results
+		const { room } = c.req.param()
+		const db = c.env.D1DATABASE
 
+		// Create D1 table if needed
+		await createAssassinTable(db)
+		await createRoomsTable(db)
+
+		// Try to find room
+		const roomRecord = await findRoom(db, room)
+		if (!roomRecord) {
+			return c.json({ message: 'Room not found!' }, 404)
+		}
+
+		const results = (await listAssassinsInRoom(db, room)).results
 		if (results && results.length > 1) {
+			// Check if targets have been assigned
 			if (results[0].target) {
 				return c.json({ message: 'Game already started!' }, 400)
 			}
@@ -27,7 +42,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 			// Update records
 			for (const result of results) {
-				await c.env.D1DATABASE.prepare(`UPDATE assassin SET target=? WHERE name=?`).bind(result.name, result.target).run()
+				await setAssassinTarget(db, result.name, room, result.target!)
 			}
 
 			return c.json({ message: 'ok' })

@@ -7,5 +7,12 @@ export type Bindings = {
 
 export interface AssassinRecord {
 	name: string
+	room: string
 	target?: string
+	status: 'alive' | 'eliminated'
+}
+
+export interface RoomRecord {
+	name: string
+	words: string[]
 }
