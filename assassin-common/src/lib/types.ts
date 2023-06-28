@@ -1,5 +1,3 @@
-
-
 export interface RoomRecord {
 	name: string
 }

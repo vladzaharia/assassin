@@ -20,6 +20,20 @@
 			"options": {
 				"lintFilePatterns": ["assassin-common/**/*.ts"]
 			}
+		},
+		"format": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "assassin-common",
+				"command": "prettier --check ."
+			}
+		},
+		"format:write": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "assassin-common",
+				"command": "prettier --write ."
+			}
 		}
 	},
 	"tags": []
