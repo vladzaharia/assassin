@@ -33,7 +33,7 @@ jobs:
           node-version: 18.x
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       - name: Initialize Nx Cloud
         run: npx nx-cloud start-ci-run
       - name: Run commands in parallel
@@ -91,7 +91,7 @@ jobs:
           node-version: 18.x
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       - name: Initialize Nx Cloud
         run: npx nx-cloud start-ci-run
       - name: Pull CF secret from Vault
