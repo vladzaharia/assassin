@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
 	faArrowRotateLeft,
+	faChevronLeft,
 	faCrosshairs,
 	faHourglass,
 	faMagnifyingGlass,
@@ -10,10 +11,11 @@ import {
 	faUserPlus,
 } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret, faCardsBlank } from '@fortawesome/pro-regular-svg-icons'
+import { API_URL } from 'assassin-common'
 
 import './room.css'
 import { ErrorField } from '../../components/error/error'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ContentBox from '../../components/content-box/content-box'
 import Menu from '../../components/menu/menu'
 
@@ -48,9 +50,10 @@ function Room() {
 	const [startGameStatus, setStartGameStatus] = useState<string | undefined>(undefined)
 	const [addPlayerStatus, setAddPlayerStatus] = useState<string | undefined>(undefined)
 	const [getPlayerStatus, setGetPlayerStatus] = useState<string | undefined>(undefined)
+	const navigate = useNavigate()
 
 	const { room } = useParams()
-	const baseUrl = `https://assassin.vlad.gg/api/room/${room}`
+	const baseUrl = `${API_URL}/room/${room}`
 
 	const fetchGameStatus = async () => {
 		// Reset data
@@ -122,7 +125,11 @@ function Room() {
 
 	return (
 		<ContentBox>
-			<Menu>
+			<Menu
+				header={<>
+					<button onClick={() => navigate("/")}><FontAwesomeIcon icon={faChevronLeft} /></button>
+					<span>{room}</span>
+				</>}>
 				<div className="status">
 					<span className={`label ${gameStatus?.status || 'unknown'}`}>{ConvertStatus(gameStatus?.status || 'unknown')}</span>
 				</div>

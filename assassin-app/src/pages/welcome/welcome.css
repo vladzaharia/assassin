@@ -1,0 +1,29 @@
+.welcome {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.room-form {
+	display: flex;
+	flex-direction: row;
+}
+
+.room-form #room {
+	height: 3rem;
+	width: 20rem;
+	font-size: x-large;
+	text-align: center;
+}
+
+.room-form button {
+	margin-left: 1rem;
+	height: 3rem;
+	width: 3rem;
+}
+
+.error-field {
+	margin-top: 1rem;
+}
+

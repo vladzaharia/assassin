@@ -45,6 +45,7 @@ input[type='text'] {
 	height: 1.5rem;
 	border: 0.1rem solid #aaa;
 	border-radius: 0.3em;
+	font-family: 'Flexo-Regular', Roboto, Arial, Helvetica, sans-serif;
 }
 
 button {
