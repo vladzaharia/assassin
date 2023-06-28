@@ -6,23 +6,23 @@ import { Bindings } from "./types"
 type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE"
 export const SECURE_ENDPOINTS: { path: RegExp, methods: HTTPMethods[] }[] = [
 	{
-		path: /room\/\w*/,
+		path: /room\/\w*$/,
 		methods: ["PUT", "DELETE"]
 	},
 	{
-		path: /room\/\w*\/(start|reset)/,
+		path: /room\/\w*\/(start|reset)$/,
 		methods: ["POST"]
 	},
 	{
-		path: /room\/\w*\/player\/\w*/,
+		path: /room\/\w*\/player\/\w*$/,
 		methods: ["DELETE"]
 	},
 	{
-		path: /wordlist\/\w*/,
+		path: /wordlist\/\w*$/,
 		methods: ["PUT", "DELETE"]
 	},
 	{
-		path: /wordlist\/\w*\/words/,
+		path: /wordlist\/\w*\/words$/,
 		methods: ["PUT", "DELETE"]
 	},
 ]
@@ -30,6 +30,7 @@ export const SECURE_ENDPOINTS: { path: RegExp, methods: HTTPMethods[] }[] = [
 export const checkPath = (path: string, method: string) => {
 	for (const secureEndpoint of SECURE_ENDPOINTS) {
 		if (path.match(secureEndpoint.path) && secureEndpoint.methods.includes(method as HTTPMethods)) {
+			console.info(`${method} ${path} matched against ${secureEndpoint.path} / ${secureEndpoint.methods}`)
 			return true
 		}
 	}

@@ -22,7 +22,7 @@ interface GameStatus {
 	players: string[]
 }
 
-interface AssassinRecord {
+interface PlayerRecord {
 	name: string
 	target?: string
 }
@@ -43,7 +43,7 @@ function ConvertStatus(status: string): string {
 
 function Room() {
 	const [gameStatus, setGameStatus] = useState<GameStatus | undefined>(undefined)
-	const [playerInfo, setPlayerInfo] = useState<AssassinRecord | undefined>(undefined)
+	const [playerInfo, setPlayerInfo] = useState<PlayerRecord | undefined>(undefined)
 	const [name, setName] = useState<string>('')
 	const [resetGameStatus, setResetGameStatus] = useState<string | undefined>(undefined)
 	const [startGameStatus, setStartGameStatus] = useState<string | undefined>(undefined)
