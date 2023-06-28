@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom } from '../../tables/room'
-import { deletePlayersInRoom } from '../../tables/player'
+import { createPlayerTable, deletePlayersInRoom } from '../../tables/player'
 
 export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -10,6 +10,7 @@ export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 		// Create D1 table if needed
 		await createRoomsTable(db)
+		await createPlayerTable(db)
 
 		// Try to find room
 		const record = await findRoom(db, room)

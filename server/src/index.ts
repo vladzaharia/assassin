@@ -1,11 +1,14 @@
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { cors } from 'hono/cors'
+
+import { AuthMiddleware } from './auth'
 import { Bindings } from './types'
 import { ResetGame } from './routes/room/reset'
 import { StartGame } from './routes/room/start'
 import { GetPlayer } from './routes/player/get'
 import { AddPlayer } from './routes/player/add'
+import { DeletePlayer } from './routes/player/delete'
 import { ListRooms } from './routes/room/list'
 import { AddRoom } from './routes/room/add'
 import { GetRoom } from './routes/room/get'
@@ -17,7 +20,6 @@ import { DeleteWordList } from './routes/wordlist/delete'
 import { AddWordsToList } from './routes/wordlist/addWords'
 import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
 import { Ok } from './routes/ok'
-import { DeletePlayer } from './routes/player/delete'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -29,6 +31,9 @@ app.use(
 		origin: '*',
 	})
 )
+
+// JWT Authentication for specific paths
+app.use('/api/*', AuthMiddleware)
 // #endregion
 
 // Simple Ok response

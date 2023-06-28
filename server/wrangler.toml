@@ -5,6 +5,10 @@ usage_model = "bundled"
 env = { }
 route = { pattern = "assassin.vlad.gg", custom_domain = true }
 
+kv_namespaces = [
+    { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" }
+]
+
 [site]
 bucket = "./dist"
 

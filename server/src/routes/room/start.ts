@@ -1,6 +1,6 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
-import { PlayerRecord, Bindings } from '../../types'
+import { Bindings } from '../../types'
 import { createPlayerTable, listPlayersInRoom, setPlayerTarget } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 

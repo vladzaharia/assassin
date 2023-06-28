@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom } from '../../tables/room'
-import { listPlayersInRoom } from '../../tables/player'
+import { createPlayerTable, listPlayersInRoom } from '../../tables/player'
 import { getRoomStatus } from '../../util'
 
 export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
@@ -11,6 +11,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 
 		// Create D1 table if needed
 		await createRoomsTable(db)
+		await createPlayerTable(db)
 
 		// Try to find room
 		const roomRecord = await findRoom(db, room)
