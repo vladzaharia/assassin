@@ -1,4 +1,4 @@
-name: assassin-ci
+name: nx-cloud
 
 on:
   push:
