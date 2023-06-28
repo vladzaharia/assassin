@@ -40,7 +40,6 @@ function ConvertStatus(status: string): string {
 	}
 }
 
-
 function Room() {
 	const [gameStatus, setGameStatus] = useState<GameStatus | undefined>(undefined)
 	const [playerInfo, setPlayerInfo] = useState<PlayerRecord | undefined>(undefined)
@@ -50,7 +49,7 @@ function Room() {
 	const [addPlayerStatus, setAddPlayerStatus] = useState<string | undefined>(undefined)
 	const [getPlayerStatus, setGetPlayerStatus] = useState<string | undefined>(undefined)
 
-	const { room } = useParams();
+	const { room } = useParams()
 	const baseUrl = `https://assassin.vlad.gg/api/room/${room}`
 
 	const fetchGameStatus = async () => {
@@ -129,10 +128,7 @@ function Room() {
 				</div>
 				{isAdmin ? (
 					<div className="admin-actions">
-						<button
-							className={resetGameStatus && resetGameStatus !== 'ok' ? 'secondary failed' : 'secondary'}
-							onClick={() => resetGame()}
-						>
+						<button className={resetGameStatus && resetGameStatus !== 'ok' ? 'secondary failed' : 'secondary'} onClick={() => resetGame()}>
 							<FontAwesomeIcon icon={faArrowRotateLeft} size="xl" /> Reset
 						</button>
 						<button

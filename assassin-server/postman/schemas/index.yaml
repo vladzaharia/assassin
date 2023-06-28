@@ -19,7 +19,7 @@ paths:
         - Ping
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
 
   /room:
     get:
@@ -38,10 +38,10 @@ paths:
                   rooms:
                     type: array
                     items:
-                      $ref: "#/components/schemas/RoomName"
+                      $ref: '#/components/schemas/RoomName'
                     example: ['galactic', 'saturn', 'charon']
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
   /room/{room}:
     get:
       summary: Get room
@@ -49,18 +49,18 @@ paths:
       tags:
         - Room
       parameters:
-        - $ref: "#/components/parameters/RoomName"
+        - $ref: '#/components/parameters/RoomName'
       responses:
         200:
           description: Room information
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Room"
+                $ref: '#/components/schemas/Room'
         404:
-          $ref: "#/components/responses/RoomNotFound"
+          $ref: '#/components/responses/RoomNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     put:
       summary: Add room
       description: Add a new room.
@@ -71,14 +71,14 @@ paths:
         - JWTAuth: []
 
       parameters:
-        - $ref: "#/components/parameters/RoomName"
+        - $ref: '#/components/parameters/RoomName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         400:
-          $ref: "#/components/responses/RoomExists"
+          $ref: '#/components/responses/RoomExists'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete room
       description: Delete an existing room.
@@ -88,14 +88,14 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/RoomName"
+        - $ref: '#/components/parameters/RoomName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         400:
-          $ref: "#/components/responses/RoomExists"
+          $ref: '#/components/responses/RoomExists'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
   /room/{room}/reset:
     post:
       summary: Reset room
@@ -106,14 +106,14 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/RoomName"
+        - $ref: '#/components/parameters/RoomName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         404:
-          $ref: "#/components/responses/RoomNotFound"
+          $ref: '#/components/responses/RoomNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
   /room/{room}/start:
     post:
       summary: Start game
@@ -127,10 +127,10 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/RoomName"
+        - $ref: '#/components/parameters/RoomName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         400:
           description: Not enough players
           content:
@@ -141,11 +141,11 @@ paths:
                   message:
                     type: string
                     description: Message for this error.
-                    example: "Must have at least 2 people signed up!"
+                    example: 'Must have at least 2 people signed up!'
         404:
-          $ref: "#/components/responses/RoomNotFound"
+          $ref: '#/components/responses/RoomNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /room/{room}/player/{name}:
     get:
@@ -154,19 +154,19 @@ paths:
       tags:
         - Player
       parameters:
-        - $ref: "#/components/parameters/RoomName"
-        - $ref: "#/components/parameters/PlayerName"
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
       responses:
         200:
           description: Player information
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Player"
+                $ref: '#/components/schemas/Player'
         404:
-          $ref: "#/components/responses/PlayerNotFound"
+          $ref: '#/components/responses/PlayerNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     put:
       summary: Add player
       description: Add a player to the room.
@@ -176,17 +176,17 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/RoomName"
-        - $ref: "#/components/parameters/PlayerName"
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         400:
-          $ref: "#/components/responses/PlayerExists"
+          $ref: '#/components/responses/PlayerExists'
         404:
-          $ref: "#/components/responses/RoomNotFound"
+          $ref: '#/components/responses/RoomNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete player
       description: Delete a player from a room.
@@ -196,15 +196,15 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/RoomName"
-        - $ref: "#/components/parameters/PlayerName"
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         404:
-          $ref: "#/components/responses/RoomNotFound"
+          $ref: '#/components/responses/RoomNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /wordlist:
     get:
@@ -223,10 +223,10 @@ paths:
                   wordlists:
                     type: array
                     items:
-                      $ref: "#/components/schemas/WordlistName"
+                      $ref: '#/components/schemas/WordlistName'
                     example: ['card-assassins-poison', 'card-assassins-dagger', 'pokemon', 'ptcs']
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}:
     get:
       summary: Get wordlist
@@ -234,18 +234,18 @@ paths:
       tags:
         - Wordlist
       parameters:
-        - $ref: "#/components/parameters/WordlistName"
+        - $ref: '#/components/parameters/WordlistName'
       responses:
         200:
           description: Wordlist information
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Wordlist"
+                $ref: '#/components/schemas/Wordlist'
         404:
-          $ref: "#/components/responses/WordlistNotFound"
+          $ref: '#/components/responses/WordlistNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     put:
       summary: Add wordlist
       description: Add a new empty wordlist.
@@ -255,16 +255,16 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/WordlistName"
+        - $ref: '#/components/parameters/WordlistName'
       requestBody:
-        $ref: "#/components/requestBodies/AddWordlist"
+        $ref: '#/components/requestBodies/AddWordlist'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         400:
-          $ref: "#/components/responses/WordlistExists"
+          $ref: '#/components/responses/WordlistExists'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete wordlist
       description: Delete a wordlist.
@@ -274,14 +274,14 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/WordlistName"
+        - $ref: '#/components/parameters/WordlistName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         404:
-          $ref: "#/components/responses/WordlistNotFound"
+          $ref: '#/components/responses/WordlistNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /wordlist/{list}/words:
     put:
@@ -296,16 +296,16 @@ paths:
       security:
         - JWTAuth: []
       parameters:
-        - $ref: "#/components/parameters/WordlistName"
+        - $ref: '#/components/parameters/WordlistName'
       requestBody:
-        $ref: "#/components/requestBodies/WordlistWords"
+        $ref: '#/components/requestBodies/WordlistWords'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         404:
-          $ref: "#/components/responses/WordlistNotFound"
+          $ref: '#/components/responses/WordlistNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete words from wordlist
       description: |
@@ -318,16 +318,16 @@ paths:
       security:
         - JWTAuth: []
       requestBody:
-        $ref: "#/components/requestBodies/WordlistWords"
+        $ref: '#/components/requestBodies/WordlistWords'
       parameters:
-        - $ref: "#/components/parameters/WordlistName"
+        - $ref: '#/components/parameters/WordlistName'
       responses:
         200:
-          $ref: "#/components/responses/Success"
+          $ref: '#/components/responses/Success'
         404:
-          $ref: "#/components/responses/WordlistNotFound"
+          $ref: '#/components/responses/WordlistNotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
 components:
   securitySchemes:
@@ -339,7 +339,7 @@ components:
       name: room
       description: Name of room to use.
       schema:
-        $ref: "#/components/parameters/RoomName"
+        $ref: '#/components/parameters/RoomName'
       example: galactic
       in: path
       required: true
@@ -347,7 +347,7 @@ components:
       name: name
       description: Name of player within a room.
       schema:
-        $ref: "#/components/parameters/PlayerName"
+        $ref: '#/components/parameters/PlayerName'
       example: Vlad
       in: path
       required: true
@@ -355,7 +355,7 @@ components:
       name: list
       description: Name of word list to use.
       schema:
-        $ref: "#/components/schemas/WordlistName"
+        $ref: '#/components/schemas/WordlistName'
       example: card-assassins-poison
       in: path
       required: true
@@ -366,13 +366,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/WordlistBody"
+            $ref: '#/components/schemas/WordlistBody'
     WordlistWords:
       description: Body for adding words to wordlists.
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/WordsBody"
+            $ref: '#/components/schemas/WordsBody'
 
   responses:
     Success:
@@ -463,17 +463,17 @@ components:
       type: object
       properties:
         name:
-          $ref: "#/components/schemas/PlayerName"
+          $ref: '#/components/schemas/PlayerName'
         room:
-          $ref: "#/components/schemas/RoomName"
+          $ref: '#/components/schemas/RoomName'
         status:
-          $ref: "#/components/schemas/PlayerStatus"
+          $ref: '#/components/schemas/PlayerStatus'
         target:
           description: Target the player has to eliminate, if set.
           type: string
           example: Ben
         words:
-          $ref: "#/components/schemas/WordlistArray"
+          $ref: '#/components/schemas/WordlistArray'
       required:
         - name
         - room
@@ -493,14 +493,14 @@ components:
       type: object
       properties:
         name:
-          $ref: "#/components/schemas/RoomName"
+          $ref: '#/components/schemas/RoomName'
         status:
-          $ref: "#/components/schemas/RoomStatus"
+          $ref: '#/components/schemas/RoomStatus'
         players:
           type: array
           minItems: 0
           items:
-            $ref: "#/components/schemas/PlayerName"
+            $ref: '#/components/schemas/PlayerName'
       required:
         - name
         - status
@@ -526,16 +526,16 @@ components:
         - type: object
           properties:
             name:
-              $ref: "#/components/schemas/WordlistName"
+              $ref: '#/components/schemas/WordlistName'
             words:
-              $ref: "#/components/schemas/WordlistArray"
-        - $ref: "#/components/schemas/WordlistBody"
+              $ref: '#/components/schemas/WordlistArray'
+        - $ref: '#/components/schemas/WordlistBody'
     WordlistArray:
       type: array
       description: A list of words that can be used by players to eliminate their opponents.
       example: ['foo', 'bar', 'baz']
       items:
-        $ref: "#/components/schemas/Word"
+        $ref: '#/components/schemas/Word'
     WordlistBody:
       type: object
       properties:
@@ -551,4 +551,4 @@ components:
       type: object
       properties:
         words:
-          $ref: "#/components/schemas/WordlistArray"
+          $ref: '#/components/schemas/WordlistArray'

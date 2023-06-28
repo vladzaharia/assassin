@@ -75,7 +75,7 @@ app.delete('/api/wordlist/:list/words', DeleteWordsFromList)
 app.get(
 	'/api/openapi.swagger',
 	serveStatic({
-		path: './openapi/openapi.swagger'
+		path: './openapi/openapi.swagger',
 	})
 )
 

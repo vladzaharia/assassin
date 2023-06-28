@@ -9,7 +9,7 @@
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
-				"outputPath": "server/dist/app"
+				"outputPath": "assassin-server/dist/app"
 			},
 			"configurations": {
 				"development": {
@@ -32,20 +32,20 @@
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["./app/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["./assassin-app/**/*.{ts,tsx,js,jsx}"]
 			}
 		},
 		"format": {
 			"executor": "nx:run-commands",
 			"options": {
-				"cwd": "app",
+				"cwd": "assassin-app",
 				"command": "prettier --check ."
 			}
 		},
 		"format:write": {
 			"executor": "nx:run-commands",
 			"options": {
-				"cwd": "app",
+				"cwd": "assassin-app",
 				"command": "prettier --write ."
 			}
 		},

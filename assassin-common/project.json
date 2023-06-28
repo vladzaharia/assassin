@@ -8,17 +8,17 @@
 			"executor": "@nx/js:tsc",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/common",
-				"main": "common/src/index.ts",
-				"tsConfig": "common/tsconfig.lib.json",
-				"assets": ["common/*.md"]
+				"outputPath": "dist/assassin-common",
+				"main": "assassin-common/src/index.ts",
+				"tsConfig": "assassin-common/tsconfig.lib.json",
+				"assets": ["assassin-common/*.md"]
 			}
 		},
 		"lint": {
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["common/**/*.ts"]
+				"lintFilePatterns": ["assassin-common/**/*.ts"]
 			}
 		}
 	},

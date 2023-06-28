@@ -9,9 +9,7 @@ function ContentBox({ children }: ContentBoxProps) {
 	return (
 		<div className="app">
 			<h1>Word Assassin</h1>
-			<div className="content-box">
-				{children}
-			</div>
+			<div className="content-box">{children}</div>
 		</div>
 	)
 }

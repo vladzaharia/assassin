@@ -6,11 +6,7 @@ export interface MenuProps {
 }
 
 function Menu({ children }: MenuProps) {
-	return (
-		<div className="menu">
-			{children}
-		</div>
-	)
+	return <div className="menu">{children}</div>
 }
 
 export default Menu
