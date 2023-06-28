@@ -6,7 +6,6 @@ import { ResetGame } from './routes/room/reset'
 import { StartGame } from './routes/room/start'
 import { GetPlayer } from './routes/player/get'
 import { AddPlayer } from './routes/player/add'
-import { RoomStatus } from './routes/room/status'
 import { ListRooms } from './routes/room/list'
 import { AddRoom } from './routes/room/add'
 import { GetRoom } from './routes/room/get'
@@ -46,7 +45,6 @@ app.put('/api/room/:room', AddRoom)
 app.delete('/api/room/:room', DeleteRoom)
 
 // Execute action on room
-app.get('/api/room/:room/status', RoomStatus)
 app.post('/api/room/:room/reset', ResetGame)
 app.post('/api/room/:room/start', StartGame)
 
@@ -68,11 +66,19 @@ app.delete('/api/wordlist/:list', DeleteWordList)
 app.put('/api/wordlist/:list/words', AddWordsToList)
 app.delete('/api/wordlist/:list/words', DeleteWordsFromList)
 
+// OpenAPI
+app.get(
+	'/api/openapi.swagger',
+	serveStatic({
+		path: './openapi/openapi.swagger'
+	})
+)
+
 // App
 app.get(
 	'/*',
 	serveStatic({
-		root: './',
+		root: './app',
 	})
 )
 

@@ -1,6 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom, deleteRoom } from '../../tables/room'
+import { deletePlayersInRoom } from '../../tables/player'
 
 export const DeleteRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -16,9 +17,10 @@ export const DeleteRoom = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
+		const deletePlayersResult = await deletePlayersInRoom(db, room)
 		const deleteResult = await deleteRoom(db, room)
 
-		if (deleteResult.success) {
+		if (deletePlayersResult.success && deleteResult.success) {
 			return c.json({ message: 'ok' })
 		} else {
 			return c.json({ message: 'Something went wrong!', error: deleteResult.error }, 500)

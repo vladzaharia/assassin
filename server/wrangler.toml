@@ -6,7 +6,7 @@ env = { }
 route = { pattern = "assassin.vlad.gg", custom_domain = true }
 
 [site]
-bucket = "./dist/app"
+bucket = "./dist"
 
 [triggers]
 crons = [ ]
