@@ -66,6 +66,7 @@ paths:
       description: Add a new room.
       tags:
         - Room
+        - Admin
       security:
         - JWTAuth: []
 
@@ -83,6 +84,7 @@ paths:
       description: Delete an existing room.
       tags:
         - Room
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -100,6 +102,7 @@ paths:
       description: Resets room's players and status.
       tags:
         - Room
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -120,6 +123,7 @@ paths:
         **Note:** Game will only start if there's 2 or more players in the room.
       tags:
         - Room
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -168,6 +172,7 @@ paths:
       description: Add a player to the room.
       tags:
         - Player
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -187,6 +192,7 @@ paths:
       description: Delete a player from a room.
       tags:
         - Player
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -245,6 +251,7 @@ paths:
       description: Add a new empty wordlist.
       tags:
         - Wordlist
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -263,6 +270,7 @@ paths:
       description: Delete a wordlist.
       tags:
         - Wordlist
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -284,7 +292,7 @@ paths:
         If a word already exists in the wordlist, will skip but not error.
       tags:
         - Wordlist
-        - Words
+        - Admin
       security:
         - JWTAuth: []
       parameters:
@@ -306,7 +314,7 @@ paths:
         If a word does not exist in the wordlist, will skip but not error.
       tags:
         - Wordlist
-        - Words
+        - Admin
       security:
         - JWTAuth: []
       requestBody:
