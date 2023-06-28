@@ -6,6 +6,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/vite:build",
+			"dependsOn": ["assassin-common:build"],
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {

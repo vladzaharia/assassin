@@ -50,7 +50,7 @@
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build", "assassin-server:deploy:openapi"],
+			"dependsOn": ["assassin-common:build", "assassin-app:build", "assassin-server:deploy:openapi"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"
