@@ -1,0 +1,13 @@
+.content-box .menu {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+	.content-box .menu {
+		width: 90vw;
+	}
+}

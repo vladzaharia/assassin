@@ -6,9 +6,9 @@ import {
 } from "react-router-dom";
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 
-import App from './app/app'
-import Admin from './app/pages/admin';
-import Room from './app/pages/room';
+import Admin from './pages/admin/admin';
+import Room from './pages/room/room';
+import Welcome from './pages/welcome/welcome';
 
 const oidcConfig: AuthProviderProps = {
   authority: "https://auth.zhr.one/application/o/word-assassins/",
@@ -20,7 +20,7 @@ const oidcConfig: AuthProviderProps = {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Welcome />,
   },
 	{
     path: "/:room",
