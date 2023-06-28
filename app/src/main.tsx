@@ -13,7 +13,8 @@ import Welcome from './pages/welcome/welcome';
 const oidcConfig: AuthProviderProps = {
   authority: "https://auth.zhr.one/application/o/word-assassins/",
   client_id: "qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G",
-  redirect_uri: "http://localhost:4200/admin",
+  // redirect_uri: "http://localhost:4200/admin",
+	redirect_uri: "https://assassin.vlad.gg/admin",
 	scope: "openid profile",
 };
 
