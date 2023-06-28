@@ -81,6 +81,18 @@ app.get(
 
 // App
 app.get(
+	'/admin',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/:roomId',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
 	'/*',
 	serveStatic({
 		root: './app',
