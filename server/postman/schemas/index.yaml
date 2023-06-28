@@ -66,6 +66,9 @@ paths:
       description: Add a new room.
       tags:
         - Room
+      security:
+        - JWTAuth: []
+
       parameters:
         - $ref: "#/components/parameters/RoomName"
       responses:
@@ -80,6 +83,8 @@ paths:
       description: Delete an existing room.
       tags:
         - Room
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/RoomName"
       responses:
@@ -95,6 +100,8 @@ paths:
       description: Resets room's players and status.
       tags:
         - Room
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/RoomName"
       responses:
@@ -113,6 +120,8 @@ paths:
         **Note:** Game will only start if there's 2 or more players in the room.
       tags:
         - Room
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/RoomName"
       responses:
@@ -159,6 +168,8 @@ paths:
       description: Add a player to the room.
       tags:
         - Player
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/RoomName"
         - $ref: "#/components/parameters/PlayerName"
@@ -176,6 +187,8 @@ paths:
       description: Delete a player from a room.
       tags:
         - Player
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/RoomName"
         - $ref: "#/components/parameters/PlayerName"
@@ -232,6 +245,8 @@ paths:
       description: Add a new empty wordlist.
       tags:
         - Wordlist
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/WordlistName"
       requestBody:
@@ -248,6 +263,8 @@ paths:
       description: Delete a wordlist.
       tags:
         - Wordlist
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/WordlistName"
       responses:
@@ -268,6 +285,8 @@ paths:
       tags:
         - Wordlist
         - Words
+      security:
+        - JWTAuth: []
       parameters:
         - $ref: "#/components/parameters/WordlistName"
       requestBody:
@@ -288,6 +307,8 @@ paths:
       tags:
         - Wordlist
         - Words
+      security:
+        - JWTAuth: []
       requestBody:
         $ref: "#/components/requestBodies/WordlistWords"
       parameters:
@@ -301,6 +322,10 @@ paths:
           $ref: "#/components/responses/InternalServerError"
 
 components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
   parameters:
     RoomName:
       name: room
