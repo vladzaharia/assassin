@@ -9,14 +9,12 @@ export interface PlayerRecord {
 	name: string
 	room: string
 	target?: string
+	words?: string
 	status: 'alive' | 'eliminated'
 }
 
 export interface RoomRecord {
 	name: string
-
-	/** Words used, as JSON-parseable string */
-	words: string
 }
 
 export interface WordListRecord {

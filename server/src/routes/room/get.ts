@@ -2,6 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom } from '../../tables/room'
 import { listPlayersInRoom } from '../../tables/player'
+import { getRoomStatus } from '../../util'
 
 export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -22,7 +23,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 
 		return c.json({
 			name: roomRecord.name,
-			words: JSON.parse(roomRecord.words),
+			status: getRoomStatus(playerRecords),
 			players: playerRecords.map((p => p.name))
 		})
 	} catch (e) {

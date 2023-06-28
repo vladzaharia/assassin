@@ -2,6 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createPlayerTable, listPlayersInRoom } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
+import { getRoomStatus } from '../../util'
 
 export const RoomStatus = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -22,7 +23,7 @@ export const RoomStatus = async (c: Context<{ Bindings: Bindings }>) => {
 
 		if (records) {
 			return c.json({
-				status: records[0]?.target ? 'started' : records.length > 1 ? 'ready' : 'not-ready',
+				status: getRoomStatus(records),
 				players: records.map((r) => r.name),
 			})
 		} else {

@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Word Assassin API
+  description: API for hosting Word Assassin games on https://assassin.vlad.gg
+  version: 1.0.0
+
+servers:
+  - description: Production
+    url: https://assassin.vlad.gg/api
+  - description: Local
+    url: http://localhost:8787/api
+
+paths:
+  /:
+    get:
+      description: Simple ping endpoint for querying if the server is alive.
+      tags:
+        - Ping
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: Ok message
+                    example: ok
+                required:
+                  - message
+  /room:
+    get:
+      description: List all available room names.
+      tags:
+        - Room
+      responses:
+        200:
+          description: List of room names on this server.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/RoomName"
+                    example: ['galactic', 'saturn', 'charon']
+        500:
+          $ref: "#/components/responses/InternalServerError"
+components:
+  parameters:
+    RoomName:
+      name: room
+      description: Name of room to use.
+      schema:
+        $ref: "#/components/parameters/RoomName"
+      in: path
+      required: true
+    PlayerName:
+      name: name
+      description: Name of player within a room.
+      schema:
+        $ref: "#/components/parameters/PlayerName"
+      in: path
+      required: true
+    WordListName:
+      name: list
+      description: Name of word list to use.
+      schema:
+        $ref: "#/components/schemas/WordListName"
+      in: path
+      required: true
+  responses:
+    InternalServerError:
+      description: Something went wrong processing your request.
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Somethng went wrong!
+  schemas:
+    Player:
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/PlayerName"
+        room:
+          $ref: "#/components/schemas/RoomName"
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        target:
+          description: Target the player has to eliminate, if set.
+          type: string
+          example: Ben
+        words:
+          $ref: "#/components/schemas/WordListArray"
+      required:
+        - name
+        - room
+    PlayerStatus:
+      description: The player's status within the room.
+      type: string
+      enum:
+        - alive
+        - eliminated
+      example: alive
+    PlayerName:
+      description: Name of a player within a room.
+      type: string
+      example: Vlad
+    Room:
+      description: Room information
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/RoomName"
+        status:
+          $ref: "#/components/schemas/RoomStatus"
+        players:
+          type: array
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/PlayerName"
+      required:
+        - name
+        - status
+        - players
+    RoomName:
+      description: Name of a room.
+      type: string
+      example: galactic
+    RoomStatus:
+      description: The status of the game within a room.
+      type: string
+      enum:
+        - started
+        - ready
+        - not-ready
+      example: started
+    Word:
+      type: string
+      description: A word the player can use to eliminate their target.
+      example: foo
+    WordList:
+      allOf:
+        - type: object
+          properties:
+            name:
+              $ref: "#/components/schemas/WordListName"
+            words:
+              $ref: "#/components/schemas/WordListArray"
+        - $ref: "#/components/schemas/WordListBody"
+    WordListArray:
+      type: array
+      description: A list of words that can be used by players to eliminate their opponents.
+      example: ['foo', 'bar', 'baz']
+      items:
+        $ref: "#/components/schemas/Word"
+    WordListBody:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description to use when showing this word list to admins.
+          example: This is a default word list provided by the 'Card Assassins' game.
+    WordListName:
+      type: string
+      description: Name of word list to use.
+      example: card-assassins-poison
+    WordsBody:
+      type: object
+      properties:
+        words:
+          $ref: "#/components/schemas/WordListArray"
