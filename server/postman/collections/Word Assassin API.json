@@ -25,9 +25,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/",
+							"raw": "{{API_URL}}/",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								""
@@ -93,9 +93,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room",
+							"raw": "{{API_URL}}/room",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room"
@@ -189,9 +189,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room",
+							"raw": "{{API_URL}}/room/:room",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -199,7 +199,6 @@
 							],
 							"variable": [
 								{
-									"id": "bb4798d3-9206-4062-9b7a-c4acb28738ad",
 									"key": "room",
 									"value": "galactic"
 								}
@@ -230,7 +229,6 @@
 									],
 									"variable": [
 										{
-											"id": "bb4798d3-9206-4062-9b7a-c4acb28738ad",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -272,7 +270,6 @@
 									],
 									"variable": [
 										{
-											"id": "bb4798d3-9206-4062-9b7a-c4acb28738ad",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -314,7 +311,6 @@
 									],
 									"variable": [
 										{
-											"id": "bb4798d3-9206-4062-9b7a-c4acb28738ad",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -351,9 +347,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room",
+							"raw": "{{API_URL}}/room/:room",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -361,7 +357,6 @@
 							],
 							"variable": [
 								{
-									"id": "dcb5c6e7-aee7-4d2f-ab3c-d8add3764719",
 									"key": "room",
 									"value": "galactic"
 								}
@@ -392,7 +387,6 @@
 									],
 									"variable": [
 										{
-											"id": "dcb5c6e7-aee7-4d2f-ab3c-d8add3764719",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -434,7 +428,6 @@
 									],
 									"variable": [
 										{
-											"id": "dcb5c6e7-aee7-4d2f-ab3c-d8add3764719",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -476,7 +469,6 @@
 									],
 									"variable": [
 										{
-											"id": "dcb5c6e7-aee7-4d2f-ab3c-d8add3764719",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -513,9 +505,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room",
+							"raw": "{{API_URL}}/room/:room",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -523,7 +515,6 @@
 							],
 							"variable": [
 								{
-									"id": "229a023b-41f6-4a55-a72d-1ae9112a38cf",
 									"key": "room",
 									"value": "galactic"
 								}
@@ -554,7 +545,6 @@
 									],
 									"variable": [
 										{
-											"id": "229a023b-41f6-4a55-a72d-1ae9112a38cf",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -596,7 +586,6 @@
 									],
 									"variable": [
 										{
-											"id": "229a023b-41f6-4a55-a72d-1ae9112a38cf",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -638,7 +627,6 @@
 									],
 									"variable": [
 										{
-											"id": "229a023b-41f6-4a55-a72d-1ae9112a38cf",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -675,9 +663,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room/reset",
+							"raw": "{{API_URL}}/room/:room/reset",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -686,7 +674,6 @@
 							],
 							"variable": [
 								{
-									"id": "cdd72027-028c-45f2-af1e-c8f622b1b559",
 									"key": "room",
 									"value": "galactic"
 								}
@@ -718,7 +705,6 @@
 									],
 									"variable": [
 										{
-											"id": "cdd72027-028c-45f2-af1e-c8f622b1b559",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -761,7 +747,6 @@
 									],
 									"variable": [
 										{
-											"id": "cdd72027-028c-45f2-af1e-c8f622b1b559",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -804,7 +789,6 @@
 									],
 									"variable": [
 										{
-											"id": "cdd72027-028c-45f2-af1e-c8f622b1b559",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -841,9 +825,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room/start",
+							"raw": "{{API_URL}}/room/:room/start",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -852,7 +836,6 @@
 							],
 							"variable": [
 								{
-									"id": "2b86ec3f-3d24-4606-9926-fb256dd129d9",
 									"key": "room",
 									"value": "galactic"
 								}
@@ -884,7 +867,6 @@
 									],
 									"variable": [
 										{
-											"id": "2b86ec3f-3d24-4606-9926-fb256dd129d9",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -927,7 +909,6 @@
 									],
 									"variable": [
 										{
-											"id": "2b86ec3f-3d24-4606-9926-fb256dd129d9",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -970,7 +951,6 @@
 									],
 									"variable": [
 										{
-											"id": "2b86ec3f-3d24-4606-9926-fb256dd129d9",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -1013,7 +993,6 @@
 									],
 									"variable": [
 										{
-											"id": "2b86ec3f-3d24-4606-9926-fb256dd129d9",
 											"key": "room",
 											"value": "galactic"
 										}
@@ -1056,9 +1035,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room/player/:name",
+							"raw": "{{API_URL}}/room/:room/player/:name",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -1068,12 +1047,10 @@
 							],
 							"variable": [
 								{
-									"id": "348900b2-41c5-4ca2-98e5-c96a40bedc38",
 									"key": "room",
 									"value": "galactic"
 								},
 								{
-									"id": "d4203b24-9797-4983-8d84-b5ddc9cba852",
 									"key": "name",
 									"value": "Vlad"
 								}
@@ -1106,12 +1083,10 @@
 									],
 									"variable": [
 										{
-											"id": "348900b2-41c5-4ca2-98e5-c96a40bedc38",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "d4203b24-9797-4983-8d84-b5ddc9cba852",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1155,12 +1130,10 @@
 									],
 									"variable": [
 										{
-											"id": "348900b2-41c5-4ca2-98e5-c96a40bedc38",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "d4203b24-9797-4983-8d84-b5ddc9cba852",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1204,12 +1177,10 @@
 									],
 									"variable": [
 										{
-											"id": "348900b2-41c5-4ca2-98e5-c96a40bedc38",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "d4203b24-9797-4983-8d84-b5ddc9cba852",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1246,9 +1217,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room/player/:name",
+							"raw": "{{API_URL}}/room/:room/player/:name",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -1258,12 +1229,10 @@
 							],
 							"variable": [
 								{
-									"id": "dabaad0b-508e-45bd-bf10-e2a7c8b6c6ff",
 									"key": "room",
 									"value": "galactic"
 								},
 								{
-									"id": "3bcebfd4-ee3b-477f-8b5a-ed3b035b389e",
 									"key": "name",
 									"value": "Vlad"
 								}
@@ -1296,12 +1265,10 @@
 									],
 									"variable": [
 										{
-											"id": "dabaad0b-508e-45bd-bf10-e2a7c8b6c6ff",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "3bcebfd4-ee3b-477f-8b5a-ed3b035b389e",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1345,12 +1312,10 @@
 									],
 									"variable": [
 										{
-											"id": "dabaad0b-508e-45bd-bf10-e2a7c8b6c6ff",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "3bcebfd4-ee3b-477f-8b5a-ed3b035b389e",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1394,12 +1359,10 @@
 									],
 									"variable": [
 										{
-											"id": "dabaad0b-508e-45bd-bf10-e2a7c8b6c6ff",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "3bcebfd4-ee3b-477f-8b5a-ed3b035b389e",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1443,12 +1406,10 @@
 									],
 									"variable": [
 										{
-											"id": "dabaad0b-508e-45bd-bf10-e2a7c8b6c6ff",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "3bcebfd4-ee3b-477f-8b5a-ed3b035b389e",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1485,9 +1446,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/room/:room/player/:name",
+							"raw": "{{API_URL}}/room/:room/player/:name",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"room",
@@ -1497,12 +1458,10 @@
 							],
 							"variable": [
 								{
-									"id": "3e68bf34-b8d3-4018-af8f-a62b4cdfbb9d",
 									"key": "room",
 									"value": "galactic"
 								},
 								{
-									"id": "cd5b7637-1673-4b59-92d2-c3462eefe89f",
 									"key": "name",
 									"value": "Vlad"
 								}
@@ -1535,12 +1494,10 @@
 									],
 									"variable": [
 										{
-											"id": "3e68bf34-b8d3-4018-af8f-a62b4cdfbb9d",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "cd5b7637-1673-4b59-92d2-c3462eefe89f",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1584,12 +1541,10 @@
 									],
 									"variable": [
 										{
-											"id": "3e68bf34-b8d3-4018-af8f-a62b4cdfbb9d",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "cd5b7637-1673-4b59-92d2-c3462eefe89f",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1633,12 +1588,10 @@
 									],
 									"variable": [
 										{
-											"id": "3e68bf34-b8d3-4018-af8f-a62b4cdfbb9d",
 											"key": "room",
 											"value": "galactic"
 										},
 										{
-											"id": "cd5b7637-1673-4b59-92d2-c3462eefe89f",
 											"key": "name",
 											"value": "Vlad"
 										}
@@ -1681,9 +1634,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/wordlist",
+							"raw": "{{API_URL}}/wordlist",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist"
@@ -1777,9 +1730,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list",
+							"raw": "{{API_URL}}/wordlist/:list",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist",
@@ -1787,7 +1740,6 @@
 							],
 							"variable": [
 								{
-									"id": "5417e6bd-a79b-48aa-9a1b-cae29feb5fa4",
 									"key": "list",
 									"value": "card-assassins-poison"
 								}
@@ -1818,7 +1770,6 @@
 									],
 									"variable": [
 										{
-											"id": "5417e6bd-a79b-48aa-9a1b-cae29feb5fa4",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -1860,7 +1811,6 @@
 									],
 									"variable": [
 										{
-											"id": "5417e6bd-a79b-48aa-9a1b-cae29feb5fa4",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -1902,7 +1852,6 @@
 									],
 									"variable": [
 										{
-											"id": "5417e6bd-a79b-48aa-9a1b-cae29feb5fa4",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -1953,9 +1902,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list",
+							"raw": "{{API_URL}}/wordlist/:list",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist",
@@ -1963,7 +1912,6 @@
 							],
 							"variable": [
 								{
-									"id": "a87e982b-95c5-4bbf-9311-8b63c63f9cd0",
 									"key": "list",
 									"value": "card-assassins-poison"
 								}
@@ -2008,7 +1956,6 @@
 									],
 									"variable": [
 										{
-											"id": "a87e982b-95c5-4bbf-9311-8b63c63f9cd0",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2064,7 +2011,6 @@
 									],
 									"variable": [
 										{
-											"id": "a87e982b-95c5-4bbf-9311-8b63c63f9cd0",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2120,7 +2066,6 @@
 									],
 									"variable": [
 										{
-											"id": "a87e982b-95c5-4bbf-9311-8b63c63f9cd0",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2157,9 +2102,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list",
+							"raw": "{{API_URL}}/wordlist/:list",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist",
@@ -2167,7 +2112,6 @@
 							],
 							"variable": [
 								{
-									"id": "23754cbc-868e-4f4f-ade9-837ecd528e11",
 									"key": "list",
 									"value": "card-assassins-poison"
 								}
@@ -2198,7 +2142,6 @@
 									],
 									"variable": [
 										{
-											"id": "23754cbc-868e-4f4f-ade9-837ecd528e11",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2240,7 +2183,6 @@
 									],
 									"variable": [
 										{
-											"id": "23754cbc-868e-4f4f-ade9-837ecd528e11",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2282,7 +2224,6 @@
 									],
 									"variable": [
 										{
-											"id": "23754cbc-868e-4f4f-ade9-837ecd528e11",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2333,9 +2274,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list/words",
+							"raw": "{{API_URL}}/wordlist/:list/words",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist",
@@ -2344,7 +2285,6 @@
 							],
 							"variable": [
 								{
-									"id": "9e5be730-8357-462d-8b70-47d6526de043",
 									"key": "list",
 									"value": "card-assassins-poison"
 								}
@@ -2390,7 +2330,6 @@
 									],
 									"variable": [
 										{
-											"id": "9e5be730-8357-462d-8b70-47d6526de043",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2447,7 +2386,6 @@
 									],
 									"variable": [
 										{
-											"id": "9e5be730-8357-462d-8b70-47d6526de043",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2504,7 +2442,6 @@
 									],
 									"variable": [
 										{
-											"id": "9e5be730-8357-462d-8b70-47d6526de043",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2555,9 +2492,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list/words",
+							"raw": "{{API_URL}}/wordlist/:list/words",
 							"host": [
-								"{{baseUrl}}"
+								"{{API_URL}}"
 							],
 							"path": [
 								"wordlist",
@@ -2566,7 +2503,6 @@
 							],
 							"variable": [
 								{
-									"id": "2010d52b-3704-401a-8af4-1b3990a4d765",
 									"key": "list",
 									"value": "card-assassins-poison"
 								}
@@ -2612,7 +2548,6 @@
 									],
 									"variable": [
 										{
-											"id": "2010d52b-3704-401a-8af4-1b3990a4d765",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2669,7 +2604,6 @@
 									],
 									"variable": [
 										{
-											"id": "2010d52b-3704-401a-8af4-1b3990a4d765",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2726,7 +2660,6 @@
 									],
 									"variable": [
 										{
-											"id": "2010d52b-3704-401a-8af4-1b3990a4d765",
 											"key": "list",
 											"value": "card-assassins-poison"
 										}
@@ -2750,463 +2683,73 @@
 				}
 			],
 			"id": "743a337e-4db2-4a8d-9323-26f9207bfe2b"
-		},
-		{
-			"name": "Words",
-			"item": [
-				{
-					"name": "Add words to wordlist",
-					"id": "141993ea-b394-4cb6-9b30-684c9cb671cf",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list/words",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"wordlist",
-								":list",
-								"words"
-							],
-							"variable": [
-								{
-									"id": "4140a503-6f7a-4baf-b324-97019f904fd4",
-									"key": "list",
-									"value": "card-assassins-poison"
-								}
-							]
-						},
-						"description": "Adds words to an existing wordlist.\n\nIf a word already exists in the wordlist, will skip but not error.\n"
-					},
-					"response": [
-						{
-							"id": "b931c3e7-a269-46d5-90db-3f73dc93b1b8",
-							"name": "Operation executed successfully.",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "4140a503-6f7a-4baf-b324-97019f904fd4",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Adds words to an existing wordlist.\n\nIf a word already exists in the wordlist, will skip but not error.\n"
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"ok\"\n}"
-						},
-						{
-							"id": "09664021-fa9e-461d-9d9c-40a77d49c61c",
-							"name": "Could not find wordlist.",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "4140a503-6f7a-4baf-b324-97019f904fd4",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Adds words to an existing wordlist.\n\nIf a word already exists in the wordlist, will skip but not error.\n"
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"Wordlist not found!\"\n}"
-						},
-						{
-							"id": "a21550fa-eaaf-4cae-ab43-2a2e922209b0",
-							"name": "Something went wrong processing your request.",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "4140a503-6f7a-4baf-b324-97019f904fd4",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Adds words to an existing wordlist.\n\nIf a word already exists in the wordlist, will skip but not error.\n"
-							},
-							"status": "Internal Server Error",
-							"code": 500,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"Somethng went wrong!\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Delete words from wordlist",
-					"id": "9b258ffe-3e99-427d-94a8-7045b4796c3d",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/wordlist/:list/words",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"wordlist",
-								":list",
-								"words"
-							],
-							"variable": [
-								{
-									"id": "898570ae-9c7e-4f19-8aa7-d56a74384cf5",
-									"key": "list",
-									"value": "card-assassins-poison"
-								}
-							]
-						},
-						"description": "Delete words from an existing wordlist.\n\nIf a word does not exist in the wordlist, will skip but not error.\n"
-					},
-					"response": [
-						{
-							"id": "f289357f-6aec-45c3-bb2e-272dfc1d5817",
-							"name": "Operation executed successfully.",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "898570ae-9c7e-4f19-8aa7-d56a74384cf5",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Delete words from an existing wordlist.\n\nIf a word does not exist in the wordlist, will skip but not error.\n"
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"ok\"\n}"
-						},
-						{
-							"id": "50a95149-ec77-4938-b00e-291afcf42e68",
-							"name": "Could not find wordlist.",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "898570ae-9c7e-4f19-8aa7-d56a74384cf5",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Delete words from an existing wordlist.\n\nIf a word does not exist in the wordlist, will skip but not error.\n"
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"Wordlist not found!\"\n}"
-						},
-						{
-							"id": "f5392e7f-ad56-47d4-887a-273225ce8cad",
-							"name": "Something went wrong processing your request.",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"words\": [\n    \"foo\",\n    \"bar\",\n    \"baz\"\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"wordlist",
-										":list",
-										"words"
-									],
-									"variable": [
-										{
-											"id": "898570ae-9c7e-4f19-8aa7-d56a74384cf5",
-											"key": "list",
-											"value": "card-assassins-poison"
-										}
-									]
-								},
-								"description": "Delete words from an existing wordlist.\n\nIf a word does not exist in the wordlist, will skip but not error.\n"
-							},
-							"status": "Internal Server Error",
-							"code": 500,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"message\": \"Somethng went wrong!\"\n}"
-						}
-					]
-				}
-			],
-			"id": "daec120c-1774-4188-8d8a-6509d7f2d5c3"
 		}
 	],
-	"variable": [
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "secret",
+				"value": "{{OPENID_SECRET}}",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "payload",
+				"value": "{\n    \"iss\": \"https://auth.zhr.one/application/o/word-assassins/\",\n    \"sub\": \"f99b3db43989cf43fc83caaad5748ec71f55e7edf7a3853f0472cb535f67502e\",\n    \"aud\": \"qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G\",\n    \"exp\": 1687925559,\n    \"iat\": 1687923759,\n    \"auth_time\": 1687923759,\n    \"acr\": \"goauthentik.io/providers/oauth2/default\",\n    \"amr\": [\n        \"user\"\n    ],\n    \"email\": \"accounts@vlad.gg\",\n    \"email_verified\": true,\n    \"name\": \"Vlad Zaharia\",\n    \"given_name\": \"Vlad Zaharia\",\n    \"preferred_username\": \"vlad\",\n    \"nickname\": \"vlad\",\n    \"groups\": [\n        \"Administrators\",\n        \"Family\",\n        \"Users\",\n        \"Vault Azure - zhrone RG Reader\",\n        \"Vault Azure - Reader\",\n        \"Vault PKI - Server Certificates\",\n        \"Vault SSH - Server Certificates\",\n        \"Vault PKI - User Certificates\",\n        \"Vault Azure - Vault Resources\",\n        \"Vault SSH - User Certificates\",\n        \"Vault Azure - kasm RG Reader\",\n        \"Vault Secrets - CI/CD Reader\",\n        \"Vault Secrets - Dotenv Dev Reader\",\n        \"Vault Secrets - Dotenv Reader\",\n        \"Vault JIT - Root\",\n        \"Vault JIT - Manager\",\n        \"Vault JIT - Reader\",\n        \"Vault Azure - tidbyt-selfhost RG Reader\",\n        \"Vault Azure - Subscription Reader\",\n        \"Vault SSH - Root User Certificates\",\n        \"Vault TOTP - Reader\",\n        \"Auth - BookStack Access\",\n        \"Auth - Media User Access\",\n        \"Auth - Media Downloader Access\",\n        \"Auth - Kasm Access\",\n        \"Auth - Calibre Access\",\n        \"Auth - Media Indexer Access\",\n        \"Auth - Vault Access\",\n        \"Auth - Organizr Access\",\n        \"Auth - Nextcloud Access\",\n        \"Auth - Paperless-ngx Access\",\n        \"Auth - Traefik Access\",\n        \"Vault AWS - Dropshare Reader\",\n        \"Vault DB - Reader\",\n        \"RADIUS - VLAN 10 (Clients)\"\n    ]\n}",
+				"type": "string"
+			},
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
 		{
-			"id": "c1a21c3c-da7a-451a-9aee-b91676768619",
-			"key": "baseUrl",
-			"value": "https://assassin.vlad.gg/api"
+			"listen": "prerequest",
+			"script": {
+				"id": "07749cd7-1656-479f-af99-b1b9d8f859e6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8cfff5e9-624a-4481-9e24-4f3a48787573",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
