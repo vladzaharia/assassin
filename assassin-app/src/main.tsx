@@ -10,7 +10,7 @@ import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './components/error/error'
 
 const oidcConfig: AuthProviderProps = {
-	authority: 'https://auth.zhr.one/application/o/word-assassins/',
+	authority: 'https://auth.zhr.one/application/o/word-assassin/',
 	client_id: 'qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G',
 	// redirect_uri: "http://localhost:4200/admin",
 	redirect_uri: 'https://assassin.vlad.gg/admin',
