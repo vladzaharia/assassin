@@ -123,7 +123,7 @@ function Room() {
 	const isAdmin = params.get('admin') === 'true'
 
 	return (
-		<ContentBox>
+		<>
 			<Menu
 				header={{
 					title: room,
@@ -260,7 +260,7 @@ function Room() {
 				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className='bottom' message={resetGameStatus} /> : undefined}
 				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className='bottom' message={addPlayerStatus} /> : undefined}
 			</div>
-		</ContentBox>
+		</>
 	)
 }
 

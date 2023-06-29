@@ -12,23 +12,38 @@ import './welcome.css'
 
 function Welcome() {
 	const [ room, setRoom ] = useState<string>("")
-	const [ statusCode, setStatusCode ] = useState<number|undefined>(undefined)
+	const [ status, setStatus ] = useState<string|undefined>(undefined)
 	const navigate = useNavigate()
 
 	const fetchRoom = async () => {
+		if (!room || room === "") {
+			return setStatus("Enter a room to continue!")
+		}
+
 		const roomUrl = `${API_URL}/room/${room}`
 
 		const roomStatus = await fetch(`${roomUrl}`)
 
 		if (roomStatus.status === 200) {
-			navigate(`/room/${room}`)
+			setStatus("ok")
+			return navigate(`/room/${room}`)
+		} else if (roomStatus.status === 404) {
+			return setStatus("Could not find room!")
 		}
 
-		setStatusCode(roomStatus.status)
+		setStatus("Something went wrong!")
+	}
+
+	const getButtonClass = () => {
+		if (status) {
+			return status === 'ok' ? 'success' : 'failed'
+		}
+
+		return 'secondary'
 	}
 
 	return (
-		<ContentBox>
+		<>
 			<h1 className="title">Word Assassin</h1>
 			<div className="welcome">
 				<label htmlFor="room"><h2>Enter a room code to continue</h2></label>
@@ -42,19 +57,19 @@ function Welcome() {
 						placeholder="Room code"
 						value={room}
 						onChange={(e) => {
-							setStatusCode(undefined)
+							setStatus(undefined)
 							setRoom(e.target.value)
 						}}
 					/>
-					<button type="submit" className={statusCode && statusCode !== 200 ? 'failed' : undefined}>
+					<button type="submit" className={getButtonClass()}>
 						<FontAwesomeIcon icon={faCheck} size='xl' />
 					</button>
 				</form>
-				{ statusCode === 404 ?
-					<ErrorField className="bottom" message={`Could not find room!`} /> :
+				{ status && status !== "ok" ?
+					<ErrorField className="bottom" message={status} /> :
 					undefined}
 			</div>
-		</ContentBox>
+		</>
 	)
 }
 

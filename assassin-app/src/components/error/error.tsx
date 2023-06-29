@@ -1,42 +1,23 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHexagonExclamation } from '@fortawesome/pro-regular-svg-icons'
 
 import './error.css'
+import { Link, useRouteError } from 'react-router-dom'
 
-interface Props {
-	children?: ReactNode
+
+export const RouterErrorBoundary = () => {
+  const error = useRouteError() as Error;
+
+  // Uncaught ReferenceError: path is not defined
+  return (
+		<div className="error-boundary">
+			<h1>Something went wrong!</h1>
+			<span>Go back to the <Link to="/">start page</Link> to continue.</span>
+			<span className="details">{error.message}</span>
+		</div>
+	);
 }
-
-interface State {
-	hasError: boolean
-	error?: Error
-}
-
-class ErrorBoundary extends Component<Props, State> {
-	public state: State = {
-		hasError: false,
-	}
-
-	public static getDerivedStateFromError(error: Error): State {
-		// Update state so the next render will show the fallback UI.
-		return { hasError: true, error }
-	}
-
-	public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-		console.error('Uncaught error:', error, errorInfo)
-	}
-
-	public render() {
-		if (this.state.hasError) {
-			return <h1>{this.state.error?.message}</h1>
-		}
-
-		return this.props.children
-	}
-}
-
-export default ErrorBoundary
 
 export const ErrorField = ({ message, className }: { message: string, className?: string }) => {
 	return (
