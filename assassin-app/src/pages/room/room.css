@@ -199,7 +199,7 @@
 	margin-right: 0.5rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
 	.content-box .menu {
 		width: 90vw;
 	}
@@ -218,5 +218,12 @@
 	.player-info .target,
 	.player-info .words {
 		padding-bottom: 1rem;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.player-info .no-selection .step {
+		width: auto;
+		padding: 0 1rem;
 	}
 }
