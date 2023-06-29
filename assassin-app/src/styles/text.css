@@ -1,0 +1,42 @@
+body {
+	height: 100%;
+	margin: 0;
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	font-size: 1rem;
+	background-image: url('/background.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+h1 {
+	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 700;
+}
+
+h2 {
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 700;
+}
+
+h3 {
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 600;
+}
+
+strong {
+	font-family: 'Flexo-Bold', Roboto, Arial, Helvetica, sans-serif;
+}
+
+a {
+	color: var(--primary);
+	background-color: var(--primary-light);
+	text-decoration: none;
+	padding: 0.5rem;
+    padding-top: 0.4rem;
+	border-radius: 0.3rem;
+}
+
+a:hover {
+	background-color: var(--primary);
+	color: var(--white);
+}

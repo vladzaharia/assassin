@@ -15,7 +15,7 @@ export const RouterErrorBoundary = () => {
 			<span>
 				Go back to the <Link to="/">start page</Link> to continue.
 			</span>
-			{error && <span className="details">{error.message}</span>}
+			{error && error.message && <span className="details">{error.message}</span>}
 		</div>
 	)
 }

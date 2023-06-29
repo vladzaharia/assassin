@@ -25,7 +25,10 @@
 	border-width: 0.125rem;
 }
 
-.title {
+.title:has(+ .welcome) {
+	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
+	font-size: 3.25rem;
 	position: absolute;
 	top: 1rem;
+	color: var(--primary);
 }

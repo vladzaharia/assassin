@@ -1,0 +1,8 @@
+* {
+	transition: all 0.3s ease;
+}
+
+html,
+.root {
+	height: 100%;
+}
