@@ -4,7 +4,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 1rem 0;
-	border-bottom: .0625rem solid var(--grey-light);
+	border-bottom: 0.0625rem solid var(--grey-light);
 }
 
 .menu .status .label {
@@ -20,13 +20,13 @@
 }
 
 .menu .status .label.not-ready {
-	border: .0625rem solid var(--orange);
+	border: 0.0625rem solid var(--orange);
 	color: var(--orange);
 	background-color: white;
 }
 
 .menu .status .label.ready {
-	border: .0625rem solid var(--success);
+	border: 0.0625rem solid var(--success);
 	color: var(--success);
 	background-color: white;
 }
@@ -46,7 +46,7 @@
 	align-items: center;
 	justify-content: space-evenly;
 	padding: 1rem 0;
-	border-bottom: .0625rem solid var(--grey-light);
+	border-bottom: 0.0625rem solid var(--grey-light);
 }
 
 .menu .admin-actions button {
@@ -63,7 +63,7 @@
 	align-items: center;
 	justify-content: center;
 	padding-top: 1rem;
-	border-bottom: .0625rem solid var(--grey-light);
+	border-bottom: 0.0625rem solid var(--grey-light);
 }
 
 .menu .buttons {
@@ -109,7 +109,7 @@
 
 .content-box .player-info {
 	height: 100%;
-	border-left: .0625rem solid var(--grey-light);
+	border-left: 0.0625rem solid var(--grey-light);
 	flex: 1 1 auto;
 
 	display: flex;
@@ -150,10 +150,10 @@
 
 .player-info .info {
 	flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .player-info .target,
@@ -193,7 +193,7 @@
 
 	.content-box .player-info {
 		border-left: none;
-		border-top: .0625rem solid var(--grey-light);
+		border-top: 0.0625rem solid var(--grey-light);
 		margin-left: 0;
 	}
 

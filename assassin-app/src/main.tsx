@@ -21,17 +21,17 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Welcome />,
-		errorElement: <RouterErrorBoundary />
+		errorElement: <RouterErrorBoundary />,
 	},
 	{
 		path: '/room/',
 		element: <Welcome />,
-		errorElement: <RouterErrorBoundary />
+		errorElement: <RouterErrorBoundary />,
 	},
 	{
 		path: '/room/:room',
 		element: <Room />,
-		errorElement: <RouterErrorBoundary />
+		errorElement: <RouterErrorBoundary />,
 	},
 	{
 		path: '/admin',
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
 				<Admin />
 			</AuthProvider>
 		),
-		errorElement: <RouterErrorBoundary />
+		errorElement: <RouterErrorBoundary />,
 	},
 ])
 

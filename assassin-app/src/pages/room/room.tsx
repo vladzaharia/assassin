@@ -103,7 +103,7 @@ function Room() {
 
 		const r = await fetch(`${baseUrl}/player/${name}`)
 		if (r.status === 404) {
-			return setGetPlayerStatus("Player not found!")
+			return setGetPlayerStatus('Player not found!')
 		}
 
 		const json = await r.json()
@@ -127,8 +127,9 @@ function Room() {
 			<Menu
 				header={{
 					title: room,
-					onClick: () => navigate("/")
-				}}>
+					onClick: () => navigate('/'),
+				}}
+			>
 				<div className="status">
 					<span className={`label ${gameStatus?.status || 'unknown'}`}>{ConvertStatus(gameStatus?.status || 'unknown')}</span>
 				</div>
@@ -255,10 +256,10 @@ function Room() {
 						</div>
 					</div>
 				)}
-				{getPlayerStatus && getPlayerStatus !== 'ok' ? <ErrorField className='bottom' message={getPlayerStatus} /> : undefined}
-				{startGameStatus && startGameStatus !== 'ok' ? <ErrorField className='bottom' message={startGameStatus} /> : undefined}
-				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className='bottom' message={resetGameStatus} /> : undefined}
-				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className='bottom' message={addPlayerStatus} /> : undefined}
+				{getPlayerStatus && getPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={getPlayerStatus} /> : undefined}
+				{startGameStatus && startGameStatus !== 'ok' ? <ErrorField className="bottom" message={startGameStatus} /> : undefined}
+				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className="bottom" message={resetGameStatus} /> : undefined}
+				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={addPlayerStatus} /> : undefined}
 			</div>
 		</>
 	)

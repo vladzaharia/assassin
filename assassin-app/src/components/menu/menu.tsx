@@ -16,11 +16,16 @@ export interface MenuProps {
 function Menu({ header, children }: MenuProps) {
 	return (
 		<div className="menu">
-		{header &&
-			<div className="header">
-					{header.onClick && <button className="secondary" onClick={header.onClick}><FontAwesomeIcon icon={header.icon || faChevronLeft} /></button>}
+			{header && (
+				<div className="header">
+					{header.onClick && (
+						<button className="secondary" onClick={header.onClick}>
+							<FontAwesomeIcon icon={header.icon || faChevronLeft} />
+						</button>
+					)}
 					{header.title && <h2>{header.title}</h2>}
-			</div>}
+				</div>
+			)}
 			{children}
 		</div>
 	)

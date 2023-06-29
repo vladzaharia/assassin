@@ -61,7 +61,7 @@ input[type='text']:focus {
 }
 
 button {
-	outline: .0625rem solid var(--grey-dark);
+	outline: 0.0625rem solid var(--grey-dark);
 	margin-top: 0.625em;
 	border-radius: 0.3rem;
 	font-size: 0.9rem;
@@ -102,12 +102,12 @@ button.warning {
 
 button.failed {
 	background-color: var(--failure);
-	outline: .0625rem solid var(--failure);
+	outline: 0.0625rem solid var(--failure);
 }
 
 button:disabled {
 	background-color: var(--grey-light);
-	outline: .0625rem solid var(--grey-light);
+	outline: 0.0625rem solid var(--grey-light);
 	color: var(--grey-dark);
 	cursor: default;
 }
@@ -126,9 +126,8 @@ a {
 
 a:hover {
 	background-color: var(--blue);
-	color: var(--white)
+	color: var(--white);
 }
-
 
 .error-boundary {
 	display: flex;

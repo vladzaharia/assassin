@@ -11,13 +11,13 @@ import { ErrorField } from '../../components/error/error'
 import './welcome.css'
 
 function Welcome() {
-	const [ room, setRoom ] = useState<string>("")
-	const [ status, setStatus ] = useState<string|undefined>(undefined)
+	const [room, setRoom] = useState<string>('')
+	const [status, setStatus] = useState<string | undefined>(undefined)
 	const navigate = useNavigate()
 
 	const fetchRoom = async () => {
-		if (!room || room === "") {
-			return setStatus("Enter a room to continue!")
+		if (!room || room === '') {
+			return setStatus('Enter a room to continue!')
 		}
 
 		const roomUrl = `${API_URL}/room/${room}`
@@ -25,13 +25,13 @@ function Welcome() {
 		const roomStatus = await fetch(`${roomUrl}`)
 
 		if (roomStatus.status === 200) {
-			setStatus("ok")
+			setStatus('ok')
 			return navigate(`/room/${room}`)
 		} else if (roomStatus.status === 404) {
-			return setStatus("Could not find room!")
+			return setStatus('Could not find room!')
 		}
 
-		setStatus("Something went wrong!")
+		setStatus('Something went wrong!')
 	}
 
 	const getButtonClass = () => {
@@ -46,11 +46,16 @@ function Welcome() {
 		<>
 			<h1 className="title">Word Assassin</h1>
 			<div className="welcome">
-				<label htmlFor="room"><h2>Enter a room code to continue</h2></label>
-				<form onSubmit={(e) => {
-					e.preventDefault()
-					fetchRoom()
-				}} className="room-form">
+				<label htmlFor="room">
+					<h2>Enter a room code to continue</h2>
+				</label>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault()
+						fetchRoom()
+					}}
+					className="room-form"
+				>
 					<input
 						type="text"
 						id="room"
@@ -62,12 +67,10 @@ function Welcome() {
 						}}
 					/>
 					<button type="submit" className={getButtonClass()}>
-						<FontAwesomeIcon icon={faCheck} size='xl' />
+						<FontAwesomeIcon icon={faCheck} size="xl" />
 					</button>
 				</form>
-				{ status && status !== "ok" ?
-					<ErrorField className="bottom" message={status} /> :
-					undefined}
+				{status && status !== 'ok' ? <ErrorField className="bottom" message={status} /> : undefined}
 			</div>
 		</>
 	)

@@ -7,7 +7,7 @@
 }
 
 .app > h1 {
-	color: white
+	color: white;
 }
 
 .content-box {
@@ -24,7 +24,7 @@
 
 	background: var(--white);
 	border-radius: 1rem;
-	filter: drop-shadow(0 .1875rem .9375rem rgba(0, 0, 0, 0.3));
+	filter: drop-shadow(0 0.1875rem 0.9375rem rgba(0, 0, 0, 0.3));
 	backdrop-filter: blur(0);
 	-webkit-backdrop-filter: blur(0);
 }
