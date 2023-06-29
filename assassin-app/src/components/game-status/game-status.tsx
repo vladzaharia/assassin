@@ -42,10 +42,10 @@ function GameStatus() {
 
 	return (
 		<div className="game-status">
-				<span className={`label ${status?.status || 'unknown'}`}>
-					<FontAwesomeIcon icon={getStatusIcon()} />
-					<span>{getStatusLabel()}</span>
-				</span>
+			<span className={`label ${status?.status || 'unknown'}`}>
+				<FontAwesomeIcon icon={getStatusIcon()} />
+				<span>{getStatusLabel()}</span>
+			</span>
 		</div>
 	)
 }

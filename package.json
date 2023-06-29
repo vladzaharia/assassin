@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "nx run-many -t build",
 		"test": "nx run-many -t test",
+		"lint:all": "nx run-many -t lint format:write",
 		"lint": "nx run-many -t lint",
 		"format": "nx run-many -t format:write",
 		"serve": "nx run-many -t serve",
