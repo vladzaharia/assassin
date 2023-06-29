@@ -34,6 +34,7 @@
 }
 
 .game-status .label.started {
+	border: 0.0625rem solid var(--success);
 	background-color: var(--success);
 	color: white;
 }

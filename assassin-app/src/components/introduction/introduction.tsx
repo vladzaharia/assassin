@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCrosshairs, faMagnifyingGlass, faTextSize, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faMagnifyingGlass, faRetweet, faTextSize, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 
 import './introduction.css'
 
@@ -28,7 +28,7 @@ function Step({ icon, color, title, description }: StepProps) {
 function Introduction() {
 	return (
 		<div className="introduction">
-			<h2 className="title">How to Play</h2>
+			<h2>How to Play</h2>
 			<Step
 				title="Join the game"
 				description='Enter your first name and click "Join" to add your name to the list.'
@@ -62,7 +62,7 @@ function Introduction() {
 			<Step
 				title="Take your target's words and target"
 				description="You'll be assigned your target's words and target. You can use any unused words to eliminate your new target!"
-				icon={faTextSize}
+				icon={faRetweet}
 				color="purple"
 			/>
 			<Step
