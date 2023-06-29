@@ -26,8 +26,12 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/",
-							"host": ["{{API_URL}}"],
-							"path": [""]
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								""
+							]
 						},
 						"description": "Simple ping endpoint for querying if the server is alive."
 					},
@@ -45,8 +49,12 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/",
-									"host": ["{{baseUrl}}"],
-									"path": [""]
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
 								},
 								"description": "Simple ping endpoint for querying if the server is alive."
 							},
@@ -86,8 +94,12 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room",
-							"host": ["{{API_URL}}"],
-							"path": ["room"]
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room"
+							]
 						},
 						"description": "List all available room names."
 					},
@@ -105,8 +117,12 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room"]
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room"
+									]
 								},
 								"description": "List all available room names."
 							},
@@ -135,8 +151,12 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room"]
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room"
+									]
 								},
 								"description": "List all available room names."
 							},
@@ -170,8 +190,13 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -195,8 +220,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -231,8 +261,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -267,8 +302,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -308,8 +348,13 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -333,8 +378,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -369,8 +419,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -405,8 +460,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -446,8 +506,13 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -471,8 +536,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -507,8 +577,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -543,8 +618,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -584,8 +664,14 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room/reset",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room", "reset"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room",
+								"reset"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -609,8 +695,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/reset",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "reset"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"reset"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -645,8 +737,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/reset",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "reset"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"reset"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -681,8 +779,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/reset",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "reset"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"reset"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -722,8 +826,14 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room/start",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room", "start"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room",
+								"start"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -747,8 +857,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/start",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "start"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"start"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -783,8 +899,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/start",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "start"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"start"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -819,8 +941,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/start",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "start"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"start"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -855,8 +983,14 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/start",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "start"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"start"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -902,8 +1036,15 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room/player/:name",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room", "player", ":name"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room",
+								"player",
+								":name"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -931,8 +1072,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -971,8 +1119,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1011,8 +1166,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1056,8 +1218,15 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room/player/:name",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room", "player", ":name"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room",
+								"player",
+								":name"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -1085,8 +1254,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1125,8 +1301,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1165,8 +1348,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1205,8 +1395,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1250,8 +1447,15 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/room/:room/player/:name",
-							"host": ["{{API_URL}}"],
-							"path": ["room", ":room", "player", ":name"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"room",
+								":room",
+								"player",
+								":name"
+							],
 							"variable": [
 								{
 									"key": "room",
@@ -1279,8 +1483,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1319,8 +1530,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1359,8 +1577,15 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/room/:room/player/:name",
-									"host": ["{{baseUrl}}"],
-									"path": ["room", ":room", "player", ":name"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"room",
+										":room",
+										"player",
+										":name"
+									],
 									"variable": [
 										{
 											"key": "room",
@@ -1410,8 +1635,12 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/wordlist",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist"]
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist"
+							]
 						},
 						"description": "List all available wordlist names."
 					},
@@ -1429,8 +1658,12 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist"]
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist"
+									]
 								},
 								"description": "List all available wordlist names."
 							},
@@ -1459,8 +1692,12 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist"]
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist"
+									]
 								},
 								"description": "List all available wordlist names."
 							},
@@ -1494,8 +1731,13 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/wordlist/:list",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist", ":list"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist",
+								":list"
+							],
 							"variable": [
 								{
 									"key": "list",
@@ -1519,8 +1761,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1555,8 +1802,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1591,8 +1843,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1646,8 +1903,13 @@
 						},
 						"url": {
 							"raw": "{{API_URL}}/wordlist/:list",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist", ":list"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist",
+								":list"
+							],
 							"variable": [
 								{
 									"key": "list",
@@ -1685,8 +1947,13 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1735,8 +2002,13 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1785,8 +2057,13 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1826,8 +2103,13 @@
 						],
 						"url": {
 							"raw": "{{API_URL}}/wordlist/:list",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist", ":list"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist",
+								":list"
+							],
 							"variable": [
 								{
 									"key": "list",
@@ -1851,8 +2133,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1887,8 +2174,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1923,8 +2215,13 @@
 								],
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -1978,8 +2275,14 @@
 						},
 						"url": {
 							"raw": "{{API_URL}}/wordlist/:list/words",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist", ":list", "words"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist",
+								":list",
+								"words"
+							],
 							"variable": [
 								{
 									"key": "list",
@@ -2017,8 +2320,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2067,8 +2376,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2117,8 +2432,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2172,8 +2493,14 @@
 						},
 						"url": {
 							"raw": "{{API_URL}}/wordlist/:list/words",
-							"host": ["{{API_URL}}"],
-							"path": ["wordlist", ":list", "words"],
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"wordlist",
+								":list",
+								"words"
+							],
 							"variable": [
 								{
 									"key": "list",
@@ -2211,8 +2538,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2261,8 +2594,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2311,8 +2650,14 @@
 								},
 								"url": {
 									"raw": "{{baseUrl}}/wordlist/:list/words",
-									"host": ["{{baseUrl}}"],
-									"path": ["wordlist", ":list", "words"],
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"wordlist",
+										":list",
+										"words"
+									],
 									"variable": [
 										{
 											"key": "list",
@@ -2344,6 +2689,11 @@
 		"type": "jwt",
 		"jwt": [
 			{
+				"key": "payload",
+				"value": "{\n    \"iss\": \"https://auth.zhr.one/application/o/word-assassins/\",\n    \"sub\": \"f99b3db43989cf43fc83caaad5748ec71f55e7edf7a3853f0472cb535f67502e\",\n    \"aud\": \"qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G\",\n    \"iat\": 1687923759,\n    \"auth_time\": 1687923759,\n    \"acr\": \"goauthentik.io/providers/oauth2/default\",\n    \"amr\": [\n        \"user\"\n    ],\n    \"email\": \"accounts@vlad.gg\",\n    \"email_verified\": true,\n    \"name\": \"Vlad Zaharia\",\n    \"given_name\": \"Vlad Zaharia\",\n    \"preferred_username\": \"vlad\",\n    \"nickname\": \"vlad\",\n    \"groups\": [\n        \"Administrators\",\n        \"Family\",\n        \"Users\",\n        \"Vault Azure - zhrone RG Reader\",\n        \"Vault Azure - Reader\",\n        \"Vault PKI - Server Certificates\",\n        \"Vault SSH - Server Certificates\",\n        \"Vault PKI - User Certificates\",\n        \"Vault Azure - Vault Resources\",\n        \"Vault SSH - User Certificates\",\n        \"Vault Azure - kasm RG Reader\",\n        \"Vault Secrets - CI/CD Reader\",\n        \"Vault Secrets - Dotenv Dev Reader\",\n        \"Vault Secrets - Dotenv Reader\",\n        \"Vault JIT - Root\",\n        \"Vault JIT - Manager\",\n        \"Vault JIT - Reader\",\n        \"Vault Azure - tidbyt-selfhost RG Reader\",\n        \"Vault Azure - Subscription Reader\",\n        \"Vault SSH - Root User Certificates\",\n        \"Vault TOTP - Reader\",\n        \"Auth - BookStack Access\",\n        \"Auth - Media User Access\",\n        \"Auth - Media Downloader Access\",\n        \"Auth - Kasm Access\",\n        \"Auth - Calibre Access\",\n        \"Auth - Media Indexer Access\",\n        \"Auth - Vault Access\",\n        \"Auth - Organizr Access\",\n        \"Auth - Nextcloud Access\",\n        \"Auth - Paperless-ngx Access\",\n        \"Auth - Traefik Access\",\n        \"Vault AWS - Dropshare Reader\",\n        \"Vault DB - Reader\",\n        \"RADIUS - VLAN 10 (Clients)\"\n    ]\n}",
+				"type": "string"
+			},
+			{
 				"key": "secret",
 				"value": "{{OPENID_SECRET}}",
 				"type": "string"
@@ -2352,11 +2702,6 @@
 				"key": "isSecretBase64Encoded",
 				"value": false,
 				"type": "boolean"
-			},
-			{
-				"key": "payload",
-				"value": "{\n    \"iss\": \"https://auth.zhr.one/application/o/word-assassins/\",\n    \"sub\": \"f99b3db43989cf43fc83caaad5748ec71f55e7edf7a3853f0472cb535f67502e\",\n    \"aud\": \"qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G\",\n    \"exp\": 1687925559,\n    \"iat\": 1687923759,\n    \"auth_time\": 1687923759,\n    \"acr\": \"goauthentik.io/providers/oauth2/default\",\n    \"amr\": [\n        \"user\"\n    ],\n    \"email\": \"accounts@vlad.gg\",\n    \"email_verified\": true,\n    \"name\": \"Vlad Zaharia\",\n    \"given_name\": \"Vlad Zaharia\",\n    \"preferred_username\": \"vlad\",\n    \"nickname\": \"vlad\",\n    \"groups\": [\n        \"Administrators\",\n        \"Family\",\n        \"Users\",\n        \"Vault Azure - zhrone RG Reader\",\n        \"Vault Azure - Reader\",\n        \"Vault PKI - Server Certificates\",\n        \"Vault SSH - Server Certificates\",\n        \"Vault PKI - User Certificates\",\n        \"Vault Azure - Vault Resources\",\n        \"Vault SSH - User Certificates\",\n        \"Vault Azure - kasm RG Reader\",\n        \"Vault Secrets - CI/CD Reader\",\n        \"Vault Secrets - Dotenv Dev Reader\",\n        \"Vault Secrets - Dotenv Reader\",\n        \"Vault JIT - Root\",\n        \"Vault JIT - Manager\",\n        \"Vault JIT - Reader\",\n        \"Vault Azure - tidbyt-selfhost RG Reader\",\n        \"Vault Azure - Subscription Reader\",\n        \"Vault SSH - Root User Certificates\",\n        \"Vault TOTP - Reader\",\n        \"Auth - BookStack Access\",\n        \"Auth - Media User Access\",\n        \"Auth - Media Downloader Access\",\n        \"Auth - Kasm Access\",\n        \"Auth - Calibre Access\",\n        \"Auth - Media Indexer Access\",\n        \"Auth - Vault Access\",\n        \"Auth - Organizr Access\",\n        \"Auth - Nextcloud Access\",\n        \"Auth - Paperless-ngx Access\",\n        \"Auth - Traefik Access\",\n        \"Vault AWS - Dropshare Reader\",\n        \"Vault DB - Reader\",\n        \"RADIUS - VLAN 10 (Clients)\"\n    ]\n}",
-				"type": "string"
 			},
 			{
 				"key": "algorithm",
@@ -2389,17 +2734,21 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "07749cd7-1656-479f-af99-b1b9d8f859e6",
+				"id": "f46bf6ae-1f23-4fc1-96da-429f0330500c",
 				"type": "text/javascript",
-				"exec": [""]
+				"exec": [
+					""
+				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "8cfff5e9-624a-4481-9e24-4f3a48787573",
+				"id": "0e4c53d4-edea-45b3-b23f-326dc7309d3a",
 				"type": "text/javascript",
-				"exec": [""]
+				"exec": [
+					""
+				]
 			}
 		}
 	]
