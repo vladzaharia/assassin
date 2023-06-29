@@ -87,7 +87,7 @@ app.get(
 	})
 )
 app.get(
-	'/:roomId',
+	'/room/:roomId',
 	serveStatic({
 		path: './app/index.html',
 	})

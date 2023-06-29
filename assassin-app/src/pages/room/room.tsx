@@ -125,10 +125,10 @@ function Room() {
 	return (
 		<ContentBox>
 			<Menu
-				header={<>
-					<button onClick={() => navigate("/")}><FontAwesomeIcon icon={faChevronLeft} /></button>
-					<span>{room}</span>
-				</>}>
+				header={{
+					title: room,
+					onClick: () => navigate("/")
+				}}>
 				<div className="status">
 					<span className={`label ${gameStatus?.status || 'unknown'}`}>{ConvertStatus(gameStatus?.status || 'unknown')}</span>
 				</div>
@@ -206,10 +206,10 @@ function Room() {
 					</div>
 				) : (
 					<div className="no-selection">
-						<h2>How to Play</h2>
+						<h2 className="title">How to Play</h2>
 						<div className="step">
 							<div className="icon">
-								<FontAwesomeIcon icon={faUserPlus} color="#4dae5b" size="2x" />
+								<FontAwesomeIcon icon={faUserPlus} color="var(--blue)" size="2x" />
 							</div>
 							<div className="explanation">
 								<h3>Join the game</h3>
@@ -218,7 +218,7 @@ function Room() {
 						</div>
 						<div className="step">
 							<div className="icon">
-								<FontAwesomeIcon icon={faHourglass} color="#fcba03" size="2x" />
+								<FontAwesomeIcon icon={faHourglass} color="var(--orange)" size="2x" />
 							</div>
 							<div className="explanation">
 								<h3>Wait for the game to start...</h3>
@@ -227,7 +227,7 @@ function Room() {
 						</div>
 						<div className="step">
 							<div className="icon">
-								<FontAwesomeIcon icon={faMagnifyingGlass} color="#4dae5b" size="2x" />
+								<FontAwesomeIcon icon={faMagnifyingGlass} color="var(--green)" size="2x" />
 							</div>
 							<div className="explanation">
 								<h3>Lookup your target</h3>
@@ -236,7 +236,7 @@ function Room() {
 						</div>
 						<div className="step">
 							<div className="icon">
-								<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="2x" />
+								<FontAwesomeIcon icon={faCrosshairs} color="var(--primary)" size="2x" />
 							</div>
 							<div className="explanation">
 								<h3>Eliminate your target!</h3>
@@ -245,7 +245,7 @@ function Room() {
 						</div>
 						<div className="step">
 							<div className="icon">
-								<FontAwesomeIcon icon={faCardsBlank} color="#237afc" size="2x" />
+								<FontAwesomeIcon icon={faCardsBlank} color="var(--green)" size="2x" />
 							</div>
 							<div className="explanation">
 								<h3>Take your target's card</h3>

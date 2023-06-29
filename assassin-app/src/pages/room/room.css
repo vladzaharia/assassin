@@ -1,32 +1,18 @@
-.menu .header button {
-	height: 2rem;
-	width: 2rem;
-	text-align: center;
-}
-
-.menu .header button svg {
-	margin-right: 0;
-}
-
-.menu .header span {
-	flex: 1 1 100%;
-}
-
 .menu .status {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 1rem 0;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid var(--grey-light);
 }
 
 .menu .status .label {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #aaa;
-	color: white;
+	background-color: var(--grey-light);
+	color: var(--white);
 	padding: 0 1.5rem;
 	height: 2.5rem;
 	border-radius: 0.5rem;
@@ -34,19 +20,19 @@
 }
 
 .menu .status .label.not-ready {
-	border: 1px solid #f26671;
-	color: #f26671;
+	border: 1px solid var(--orange);
+	color: var(--orange);
 	background-color: white;
 }
 
 .menu .status .label.ready {
-	border: 1px solid #4dae5b;
-	color: #4dae5b;
+	border: 1px solid var(--success);
+	color: var(--success);
 	background-color: white;
 }
 
 .menu .status .label.started {
-	background-color: #4dae5b;
+	background-color: var(--success);
 	color: white;
 }
 
@@ -60,7 +46,7 @@
 	align-items: center;
 	justify-content: space-evenly;
 	padding: 1rem 0;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid var(--grey-light);
 }
 
 .menu .admin-actions button {
@@ -77,7 +63,7 @@
 	align-items: center;
 	justify-content: center;
 	padding-top: 1rem;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid var(--grey-light);
 }
 
 .menu .buttons {
@@ -123,7 +109,7 @@
 
 .content-box .player-info {
 	height: 100%;
-	border-left: 1px solid #aaa;
+	border-left: 1px solid var(--grey-light);
 	flex: 1 1 auto;
 
 	display: flex;
@@ -147,7 +133,7 @@
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 1rem;
-	width: 100%;
+	width: 90%;
 }
 
 .player-info .no-selection .step h3 {
@@ -200,10 +186,6 @@
 }
 
 @media only screen and (max-width: 1000px) {
-	.content-box .menu {
-		width: 90vw;
-	}
-
 	.menu .player-list {
 		height: 15vh;
 		max-height: 25vh;
@@ -211,7 +193,7 @@
 
 	.content-box .player-info {
 		border-left: none;
-		border-top: 1px solid #aaa;
+		border-top: 1px solid var(--grey-light);
 		margin-left: 0;
 	}
 
@@ -219,11 +201,8 @@
 	.player-info .words {
 		padding-bottom: 1rem;
 	}
-}
 
-@media only screen and (max-width: 500px) {
-	.player-info .no-selection .step {
-		width: auto;
-		padding: 0 1rem;
+	.player-info .no-selection h2 {
+		position: initial;
 	}
 }

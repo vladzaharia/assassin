@@ -21,7 +21,7 @@ function Welcome() {
 		const roomStatus = await fetch(`${roomUrl}`)
 
 		if (roomStatus.status === 200) {
-			navigate(`/${room}`)
+			navigate(`/room/${room}`)
 		}
 
 		setStatusCode(roomStatus.status)
@@ -29,9 +29,13 @@ function Welcome() {
 
 	return (
 		<ContentBox>
+			<h1 className="title">Word Assassin</h1>
 			<div className="welcome">
 				<label htmlFor="room"><h2>Enter a room code to continue</h2></label>
-				<div className="room-form">
+				<form onSubmit={(e) => {
+					e.preventDefault()
+					fetchRoom()
+				}} className="room-form">
 					<input
 						type="text"
 						id="room"
@@ -42,10 +46,10 @@ function Welcome() {
 							setRoom(e.target.value)
 						}}
 					/>
-					<button className={statusCode && statusCode !== 200 ? 'failed' : undefined} onClick={() => fetchRoom()}>
+					<button type="submit" className={statusCode && statusCode !== 200 ? 'failed' : undefined}>
 						<FontAwesomeIcon icon={faCheck} size='xl' />
 					</button>
-				</div>
+				</form>
 				{ statusCode === 404 ?
 					<ErrorField className="bottom" message={`Could not find room!`} /> :
 					undefined}

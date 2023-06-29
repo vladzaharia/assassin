@@ -8,15 +8,32 @@
 	padding: 1rem;
 }
 
-.header {
+/** Menu header / title */
+.menu .header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border-bottom: 1px solid #aaa;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--grey-light);
 }
 
-@media only screen and (max-width: 600px) {
+.menu .header button {
+	height: 2rem;
+	width: 2rem;
+	text-align: center;
+}
+
+.menu .header button svg {
+	margin-right: 0;
+}
+
+.menu .header h2 {
+	font-size: large;
+	margin: 0;
+}
+
+@media only screen and (max-width: 1000px) {
 	.content-box .menu {
-		width: 90vw;
+		width: 100%;
 	}
 }

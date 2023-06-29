@@ -22,6 +22,21 @@
 		url('https://pokedex.vlad.gg/fonts/flexo-heavy.ttf') format('truetype');
 }
 
+:root {
+  --primary: #F26671;
+	--primary-dark: #681723;
+	--grey-light: #E7E5E5;
+	--grey-dark: #5E6472;
+	--green: #52AA5E;
+	--blue: #08B2E3;
+	--yellow: #FEEA00;
+	--orange: #FF9F1C;
+	--white: #fff;
+
+	--success: #52AA5E;
+	--failure: #DB5461;
+}
+
 html,
 .root {
 	height: 100%;
@@ -45,13 +60,13 @@ h2 {
 
 input[type='text'] {
 	height: 1.5rem;
-	border: 0.1rem solid #aaa;
+	border: 0.1rem solid var(--grey-light);
 	border-radius: 0.3em;
 	font-family: 'Flexo-Regular', Roboto, Arial, Helvetica, sans-serif;
 }
 
 button {
-	outline: 1px solid #4dae5b;
+	outline: 1px solid var(--blue);
 	margin-top: 0.625em;
 	border-radius: 0.3em;
 	font-size: 0.9rem;
@@ -63,28 +78,32 @@ button {
 	font-family: 'Flexo-Heavy', sans-serif;
 	cursor: pointer;
 	margin: 2px;
-	background-color: #4dae5b;
-	color: #fff;
+	background-color: var(--blue);
+	color: var(--white);
 	border: none;
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;
 }
 
-button.secondary {
-	background-color: #fff;
-	color: #4dae5b;
-	outline: 1px solid #4dae5b;
+button.success {
+	background-color: var(--success);
+	outline-color: var(--success);
+}
+
+button.warning {
+	background-color: var(--orange);
+	outline-color: var(--orange);
 }
 
 button.failed {
-	background-color: #f26671;
-	outline: 1px solid #f26671;
+	background-color: var(--failure);
+	outline: 1px solid var(--failure);
 }
 
 button:disabled {
-	background-color: #aaa;
-	outline: 1px solid #aaa;
-	color: #fff;
+	background-color: var(--grey-light);
+	outline: 1px solid var(--grey-light);
+	color: var(--grey-dark);
 	cursor: default;
 }
 

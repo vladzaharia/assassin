@@ -11,7 +11,7 @@
 
 .error-field > span {
 	padding: 1rem;
-	background: #f26671;
+	background: var(--failure);
 	border-radius: 0.5rem;
 	color: white;
 	display: grid;

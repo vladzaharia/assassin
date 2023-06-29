@@ -11,6 +11,7 @@
 }
 
 .content-box {
+	position: relative;
 	width: 75vw;
 	height: 75vh;
 
@@ -21,7 +22,7 @@
 	align-items: center;
 	justify-content: center;
 
-	background: #fff;
+	background: var(--white);
 	border-radius: 16px;
 	filter: drop-shadow(0 3px 15px rgba(0, 0, 0, 0.3));
 	backdrop-filter: blur(0);
