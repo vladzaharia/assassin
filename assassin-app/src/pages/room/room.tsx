@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateLeft, faCrosshairs, faMagnifyingGlass, faPlay, faUser, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
@@ -7,34 +7,18 @@ import { API_URL } from 'assassin-common'
 
 import './room.css'
 import { ErrorField } from '../../components/error/error'
+import GameStatus, { GameStatusContext, GameStatusContextType } from '../../components/game-status/game-status'
 import Introduction from '../../components/introduction/introduction'
 import Menu from '../../components/menu/menu'
-
-interface GameStatus {
-	status: string
-	players: string[]
-}
 
 interface PlayerRecord {
 	name: string
 	target?: string
 }
 
-function ConvertStatus(status: string): string {
-	switch (status) {
-		case 'started':
-			return 'Started!'
-		case 'ready':
-			return 'Ready to Start'
-		case 'not-ready':
-			return 'Not Ready'
-		default:
-			return 'Unknown'
-	}
-}
-
 function Room() {
-	const [gameStatus, setGameStatus] = useState<GameStatus | undefined>(undefined)
+	const [gameStatus, setGameStatus] = useState<GameStatusContextType | undefined>(undefined)
+
 	const [playerInfo, setPlayerInfo] = useState<PlayerRecord | undefined>(undefined)
 	const [name, setName] = useState<string>('')
 	const [resetGameStatus, setResetGameStatus] = useState<string | undefined>(undefined)
@@ -114,16 +98,15 @@ function Room() {
 	const isAdmin = params.get('admin') === 'true'
 
 	return (
-		<>
+		<GameStatusContext.Provider value={gameStatus}>
 			<Menu
 				header={{
 					title: room,
 					onClick: () => navigate('/'),
 				}}
 			>
-				<div className="status">
-					<span className={`label ${gameStatus?.status || 'unknown'}`}>{ConvertStatus(gameStatus?.status || 'unknown')}</span>
-				</div>
+				<GameStatus />
+
 				{isAdmin ? (
 					<div className="admin-actions">
 						<button className={resetGameStatus && resetGameStatus !== 'ok' ? 'secondary failed' : 'secondary'} onClick={() => resetGame()}>
@@ -204,7 +187,7 @@ function Room() {
 				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className="bottom" message={resetGameStatus} /> : undefined}
 				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={addPlayerStatus} /> : undefined}
 			</div>
-		</>
+		</GameStatusContext.Provider>
 	)
 }
 

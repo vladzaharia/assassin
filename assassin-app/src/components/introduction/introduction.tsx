@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCrosshairs, faHourglass, faMagnifyingGlass, faTextSize, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faMagnifyingGlass, faTextSize, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 
 import './introduction.css'
 
@@ -38,7 +38,7 @@ function Introduction() {
 			<Step
 				title="Wait for the game to start..."
 				description="Once enough players join, the game can start. Until then, study your first card and the words on it."
-				icon={faHourglass}
+				icon={faTimer}
 				color="orange"
 			/>
 			<Step
@@ -64,6 +64,12 @@ function Introduction() {
 				description="You'll be assigned your target's words and target. You can use any unused words to eliminate your new target!"
 				icon={faTextSize}
 				color="purple"
+			/>
+			<Step
+				title="Become the champion!"
+				description="Eliminate everyone else in the room and become the champion of the game!"
+				icon={faTrophyStar}
+				color="yellow"
 			/>
 		</div>
 	)
