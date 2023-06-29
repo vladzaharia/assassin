@@ -15,8 +15,6 @@ files[] = {"id":"124733-64a9a3da-fb3b-425e-8275-39aaf2319776","path":"Word Assas
 
 [config.relations.apiDefinition]
 rootDirectory = server/postman/schemas
-files[] = {"path":"index.yaml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3
-rootFiles[] = index.yaml
