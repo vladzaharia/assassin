@@ -19,11 +19,11 @@ function Menu({ header, children }: MenuProps) {
 			{header && (
 				<div className="header">
 					{header.onClick && (
-						<button className="secondary" onClick={header.onClick}>
+						<button className="primary" onClick={header.onClick}>
 							<FontAwesomeIcon icon={header.icon || faChevronLeft} />
 						</button>
 					)}
-					{header.title && <h2>{header.title}</h2>}
+					{header.title && <h3>{header.title}</h3>}
 				</div>
 			)}
 			{children}

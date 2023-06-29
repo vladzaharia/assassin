@@ -39,7 +39,7 @@ function Welcome() {
 			return status === 'ok' ? 'success' : 'failed'
 		}
 
-		return 'secondary'
+		return 'primary'
 	}
 
 	return (

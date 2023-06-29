@@ -41,10 +41,18 @@ body {
 	background-position: center center;
 }
 
-h1,
-h2 {
+h1 {
 	font-family: 'Flexo-Heavy', Roboto, Arial, Helvetica, sans-serif;
-	text-align: center;
+}
+
+h2 {
+	font-family: 'Flexo-Bold', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 400;
+}
+
+h3 {
+	font-family: 'Flexo-Bold', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 400;
 }
 
 input[type='text'] {
