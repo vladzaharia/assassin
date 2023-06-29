@@ -10,7 +10,6 @@
 .instructions .title {
 	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 2rem;
-	position: absolute;
 	top: 1rem;
 	color: var(--primary);
 }
@@ -45,8 +44,4 @@
 	.introduction .step {
 		width: 100%;
 	}
-
-	/* .introduction .step:last-child {
-		margin-bottom: 1rem;
-	} */
 }
