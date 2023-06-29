@@ -22,17 +22,19 @@
 		url('https://pokedex.vlad.gg/fonts/flexo-heavy.ttf') format('truetype');
 }
 
+html,
+.root {
+	height: 100%;
+}
+
 body {
 	height: 100%;
 	margin: 0;
 	font-family: 'Flexo-Regular', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 1rem;
-	background: #fff;
-}
-
-html,
-.root {
-	height: 100%;
+	background-image: url('/background.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 h1,

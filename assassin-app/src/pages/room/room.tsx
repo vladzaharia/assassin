@@ -101,19 +101,18 @@ function Room() {
 		// Reset data
 		setPlayerInfo(undefined)
 
-		fetch(`${baseUrl}player/${name}`)
-			.then(async (r) => {
-				const json = await r.json()
-				if (json.message) {
-					setGetPlayerStatus(json.message)
-				} else {
-					setPlayerInfo(json)
-					setGetPlayerStatus('ok')
-				}
-			})
-			.catch(() => {
-				setGetPlayerStatus('Something went wrong!')
-			})
+		const r = await fetch(`${baseUrl}/player/${name}`)
+		if (r.status === 404) {
+			return setGetPlayerStatus("Player not found!")
+		}
+
+		const json = await r.json()
+		if (json.message) {
+			setGetPlayerStatus(json.message)
+		} else {
+			setPlayerInfo(json)
+			setGetPlayerStatus('ok')
+		}
 	}
 
 	useEffect(() => {
@@ -189,9 +188,7 @@ function Room() {
 				</div>
 			</Menu>
 			<div className="player-info">
-				{getPlayerStatus && getPlayerStatus != 'ok' ? (
-					<ErrorField message={getPlayerStatus} />
-				) : playerInfo ? (
+				{playerInfo ? (
 					<div className="info">
 						<div className="target">
 							<label htmlFor="target">Your target is...</label>
@@ -258,9 +255,10 @@ function Room() {
 						</div>
 					</div>
 				)}
-				{startGameStatus && startGameStatus != 'ok' ? <ErrorField message={startGameStatus} /> : undefined}
-				{resetGameStatus && resetGameStatus != 'ok' ? <ErrorField message={resetGameStatus} /> : undefined}
-				{addPlayerStatus && addPlayerStatus != 'ok' ? <ErrorField message={addPlayerStatus} /> : undefined}
+				{getPlayerStatus && getPlayerStatus !== 'ok' ? <ErrorField className='bottom' message={getPlayerStatus} /> : undefined}
+				{startGameStatus && startGameStatus !== 'ok' ? <ErrorField className='bottom' message={startGameStatus} /> : undefined}
+				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className='bottom' message={resetGameStatus} /> : undefined}
+				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className='bottom' message={addPlayerStatus} /> : undefined}
 			</div>
 		</ContentBox>
 	)

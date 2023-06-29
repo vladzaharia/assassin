@@ -95,12 +95,12 @@
 }
 
 .menu .player-list {
+	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 0.5rem 0;
-	overflow-y: scroll;
-	max-height: 25vh;
+	overflow-y: overlay;
 }
 
 .menu .player-list h3 {
@@ -118,25 +118,27 @@
 .menu .error-field {
 	align-items: end;
 	padding-bottom: 1rem;
+	align-self: stretch;
 }
 
 .content-box .player-info {
-	padding: 1rem;
-	height: 90%;
+	height: 100%;
 	border-left: 1px solid #aaa;
+	flex: 1 1 auto;
 
-	display: grid;
-	grid-template-rows: 7fr 1fr;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	overflow-y: scroll;
+	justify-content: space-between;
+	overflow-y: overlay;
 }
 
 .player-info .no-selection {
-	display: grid;
-	grid-template-columns: subgrid;
-	grid-template-rows: 1fr;
-	max-height: 100%;
+	flex: 1 1 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .player-info .no-selection .step {
@@ -145,6 +147,7 @@
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 1rem;
+	width: 100%;
 }
 
 .player-info .no-selection .step h3 {
@@ -157,6 +160,14 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+}
+
+.player-info .info {
+	flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .player-info .target,
@@ -195,6 +206,7 @@
 
 	.menu .player-list {
 		height: 15vh;
+		max-height: 25vh;
 	}
 
 	.content-box .player-info {

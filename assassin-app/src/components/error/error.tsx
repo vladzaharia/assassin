@@ -38,9 +38,9 @@ class ErrorBoundary extends Component<Props, State> {
 
 export default ErrorBoundary
 
-export const ErrorField = ({ message }: { message: string }) => {
+export const ErrorField = ({ message, className }: { message: string, className?: string }) => {
 	return (
-		<div className="error-field">
+		<div className={`error-field ${className}`}>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
 				<span>{message}</span>

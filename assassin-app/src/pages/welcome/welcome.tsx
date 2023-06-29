@@ -47,7 +47,7 @@ function Welcome() {
 					</button>
 				</div>
 				{ statusCode === 404 ?
-					<ErrorField message={`Could not find room!`} /> :
+					<ErrorField className="bottom" message={`Could not find room!`} /> :
 					undefined}
 			</div>
 		</ContentBox>
