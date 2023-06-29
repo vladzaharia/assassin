@@ -3,6 +3,19 @@ import * as ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 
+/* Special Elite */
+import '@fontsource/special-elite'
+
+/* Barlow */
+import '@fontsource/barlow'
+import '@fontsource/barlow/200.css'
+import '@fontsource/barlow/600.css'
+import '@fontsource/barlow/700.css'
+import '@fontsource/barlow/800.css'
+
+/* Global styles */
+import './styles'
+
 import Admin from './pages/admin/admin'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'

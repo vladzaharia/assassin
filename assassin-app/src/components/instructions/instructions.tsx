@@ -2,7 +2,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faCrosshairs, faMagnifyingGlass, faTextSize, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 
-import './introduction.css'
+import './instructions.css'
 
 interface StepProps {
 	icon: IconDefinition
@@ -25,9 +25,9 @@ function Step({ icon, color, title, description }: StepProps) {
 	)
 }
 
-function Introduction() {
+function Instructions() {
 	return (
-		<div className="introduction">
+		<div className="instructions">
 			<h2 className="title">How to Play</h2>
 			<Step
 				title="Join the game"
@@ -75,4 +75,4 @@ function Introduction() {
 	)
 }
 
-export default Introduction
+export default Instructions

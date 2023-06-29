@@ -1,0 +1,52 @@
+button {
+	outline: 0.0625rem solid var(--grey-dark);
+	margin-top: 0.625em;
+	border-radius: 0.3rem;
+	font-size: 0.9rem;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	font-family: 'Barlow', sans-serif;
+	font-weight: 600;
+	cursor: pointer;
+	margin: 0.125rem;
+	background-color: var(--grey-dark);
+	color: var(--white);
+	border: none;
+	margin-left: 0.25rem;
+	margin-right: 0.25rem;
+}
+
+button.primary {
+	background-color: var(--primary);
+	outline-color: var(--primary);
+}
+
+button.secondary {
+	background-color: var(--blue);
+	outline-color: var(--blue);
+}
+
+button.success {
+	background-color: var(--success);
+	outline-color: var(--success);
+}
+
+button.warning {
+	background-color: var(--orange);
+	outline-color: var(--orange);
+}
+
+button.failed {
+	background-color: var(--failure);
+	outline: 0.0625rem solid var(--failure);
+}
+
+button:disabled {
+	background-color: var(--grey-light);
+	outline: 0.0625rem solid var(--grey-light);
+	color: var(--grey-dark);
+	cursor: default;
+}

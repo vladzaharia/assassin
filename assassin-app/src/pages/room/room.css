@@ -109,7 +109,8 @@
 .words span {
 	display: block;
 	font-size: 2rem;
-	font-family: 'Flexo-Heavy', Roboto, Arial, Helvetica, sans-serif;
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	font-weight: 700;
 }
 
 .player-info svg {

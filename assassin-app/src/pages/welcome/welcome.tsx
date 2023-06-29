@@ -43,7 +43,7 @@ function Welcome() {
 
 	return (
 		<>
-			<h1 className="title">Word Assassin</h1>
+			<h1 className="title">Word Assassin.</h1>
 			<div className="welcome">
 				<label htmlFor="room">
 					<h2>Enter a room code to continue</h2>

@@ -1,3 +1,18 @@
+.error-boundary {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.error-boundary .details {
+	font-size: smaller;
+	margin-top: 1rem;
+	padding: 1rem;
+	background-color: var(--grey-light);
+	border-radius: 0.3rem;
+}
+
 .error-field {
 	display: flex;
 	align-items: center;
@@ -6,7 +21,7 @@
 
 .error-field span {
 	font-size: 1rem;
-	font-family: 'Flexo-Regular', Roboto, Arial, Helvetica, sans-serif;
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
 }
 
 .error-field > span {

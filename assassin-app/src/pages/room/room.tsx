@@ -8,7 +8,7 @@ import { API_URL } from 'assassin-common'
 import './room.css'
 import { ErrorField } from '../../components/error/error'
 import GameStatus, { GameStatusContext, GameStatusContextType } from '../../components/game-status/game-status'
-import Introduction from '../../components/introduction/introduction'
+import Instructions from '../../components/instructions/instructions'
 import Menu from '../../components/menu/menu'
 
 interface PlayerRecord {
@@ -180,7 +180,7 @@ function Room() {
 						</div>
 					</div>
 				) : (
-					<Introduction />
+					<Instructions />
 				)}
 				{getPlayerStatus && getPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={getPlayerStatus} /> : undefined}
 				{startGameStatus && startGameStatus !== 'ok' ? <ErrorField className="bottom" message={startGameStatus} /> : undefined}
