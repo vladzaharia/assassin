@@ -1,0 +1,554 @@
+openapi: 3.0.0
+info:
+  title: Word Assassin API
+  description: API for hosting Word Assassin games on https://assassin.vlad.gg
+  version: 1.0.0
+
+servers:
+  - description: Production
+    url: https://assassin.vlad.gg/api
+  - description: Local
+    url: http://localhost:8787/api
+
+paths:
+  /:
+    get:
+      summary: Ping
+      description: Simple ping endpoint for querying if the server is alive.
+      tags:
+        - Ping
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+
+  /room:
+    get:
+      summary: List rooms
+      description: List all available room names.
+      tags:
+        - Room
+      responses:
+        200:
+          description: List of room names on this server.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RoomName'
+                    example: ['galactic', 'saturn', 'charon']
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /room/{room}:
+    get:
+      summary: Get room
+      description: Get information about a room.
+      tags:
+        - Room
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          description: Room information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Add room
+      description: Add a new room.
+      tags:
+        - Room
+        - Admin
+      security:
+        - JWTAuth: []
+
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/RoomExists'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete room
+      description: Delete an existing room.
+      tags:
+        - Room
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/RoomExists'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /room/{room}/reset:
+    post:
+      summary: Reset room
+      description: Resets room's players and status.
+      tags:
+        - Room
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /room/{room}/start:
+    post:
+      summary: Start game
+      description: |
+        Starts the game in a room.
+
+        **Note:** Game will only start if there's 2 or more players in the room.
+      tags:
+        - Room
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          description: Not enough players
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message for this error.
+                    example: 'Must have at least 2 people signed up!'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /room/{room}/player/{name}:
+    get:
+      summary: Get player
+      description: Get information about a player.
+      tags:
+        - Player
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
+      responses:
+        200:
+          description: Player information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+        404:
+          $ref: '#/components/responses/PlayerNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Add player
+      description: Add a player to the room.
+      tags:
+        - Player
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/PlayerExists'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete player
+      description: Delete a player from a room.
+      tags:
+        - Player
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /wordlist:
+    get:
+      summary: List wordlists
+      description: List all available wordlist names.
+      tags:
+        - Wordlist
+      responses:
+        200:
+          description: List of wordlist names on this server.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wordlists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WordlistName'
+                    example: ['card-assassins-poison', 'card-assassins-dagger', 'pokemon', 'ptcs']
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /wordlist/{list}:
+    get:
+      summary: Get wordlist
+      description: Get information about a wordlist.
+      tags:
+        - Wordlist
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      responses:
+        200:
+          description: Wordlist information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wordlist'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Add wordlist
+      description: Add a new empty wordlist.
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      requestBody:
+        $ref: '#/components/requestBodies/AddWordlist'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/WordlistExists'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete wordlist
+      description: Delete a wordlist.
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /wordlist/{list}/words:
+    put:
+      summary: Add words to wordlist
+      description: |
+        Adds words to an existing wordlist.
+
+        If a word already exists in the wordlist, will skip but not error.
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      requestBody:
+        $ref: '#/components/requestBodies/WordlistWords'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete words from wordlist
+      description: |
+        Delete words from an existing wordlist.
+
+        If a word does not exist in the wordlist, will skip but not error.
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/WordlistWords'
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    RoomName:
+      name: room
+      description: Name of room to use.
+      schema:
+        $ref: '#/components/parameters/RoomName'
+      example: galactic
+      in: path
+      required: true
+    PlayerName:
+      name: name
+      description: Name of player within a room.
+      schema:
+        $ref: '#/components/parameters/PlayerName'
+      example: Vlad
+      in: path
+      required: true
+    WordlistName:
+      name: list
+      description: Name of word list to use.
+      schema:
+        $ref: '#/components/schemas/WordlistName'
+      example: card-assassins-poison
+      in: path
+      required: true
+
+  requestBodies:
+    AddWordlist:
+      description: Body for adding wordlists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WordlistBody'
+    WordlistWords:
+      description: Body for adding words to wordlists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WordsBody'
+
+  responses:
+    Success:
+      description: Operation executed successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Success message
+                example: ok
+            required:
+              - message
+    RoomExists:
+      description: Room already exists and cannot be recreated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Room already exists!
+    RoomNotFound:
+      description: Could not find room.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Room not found!
+    PlayerExists:
+      description: Player already exists in the room.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Player already exists!
+    PlayerNotFound:
+      description: Could not find player.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Player not found!
+    WordlistExists:
+      description: Wordlist already exists.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Wordlist already exists!
+    WordlistNotFound:
+      description: Could not find wordlist.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Wordlist not found!
+
+    InternalServerError:
+      description: Something went wrong processing your request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Message for this error.
+                example: Somethng went wrong!
+  schemas:
+    Player:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/PlayerName'
+        room:
+          $ref: '#/components/schemas/RoomName'
+        status:
+          $ref: '#/components/schemas/PlayerStatus'
+        target:
+          description: Target the player has to eliminate, if set.
+          type: string
+          example: Ben
+        words:
+          $ref: '#/components/schemas/WordlistArray'
+      required:
+        - name
+        - room
+    PlayerStatus:
+      description: The player's status within the room.
+      type: string
+      enum:
+        - alive
+        - eliminated
+      example: alive
+    PlayerName:
+      description: Name of a player within a room.
+      type: string
+      example: Vlad
+    Room:
+      description: Room information
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/RoomName'
+        status:
+          $ref: '#/components/schemas/RoomStatus'
+        players:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/PlayerName'
+      required:
+        - name
+        - status
+        - players
+    RoomName:
+      description: Name of a room.
+      type: string
+      example: galactic
+    RoomStatus:
+      description: The status of the game within a room.
+      type: string
+      enum:
+        - started
+        - ready
+        - not-ready
+      example: not-ready
+    Word:
+      type: string
+      description: A word the player can use to eliminate their target.
+      example: foo
+    Wordlist:
+      allOf:
+        - type: object
+          properties:
+            name:
+              $ref: '#/components/schemas/WordlistName'
+            words:
+              $ref: '#/components/schemas/WordlistArray'
+        - $ref: '#/components/schemas/WordlistBody'
+    WordlistArray:
+      type: array
+      description: A list of words that can be used by players to eliminate their opponents.
+      example: ['foo', 'bar', 'baz']
+      items:
+        $ref: '#/components/schemas/Word'
+    WordlistBody:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description to use when showing this word list to admins.
+          example: This is a default word list provided by the 'Card Assassins' game.
+    WordlistName:
+      type: string
+      description: Name of word list to use.
+      example: card-assassins-poison
+    WordsBody:
+      type: object
+      properties:
+        words:
+          $ref: '#/components/schemas/WordlistArray'
