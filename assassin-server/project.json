@@ -5,6 +5,7 @@
 	"projectType": "application",
 	"targets": {
 		"build": {
+			"dependsOn": ["assassin-common:build"],
 			"executor": "nx:run-commands",
 			"options": {
 				"cwd": "assassin-server",
@@ -34,7 +35,7 @@
 		},
 		"serve": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build"],
+			"dependsOn": ["assassin-app:build", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler dev"
@@ -42,7 +43,7 @@
 		},
 		"serve:remote": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build"],
+			"dependsOn": ["assassin-app:build", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler dev --remote"
@@ -50,7 +51,7 @@
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-common:build", "assassin-app:build", "assassin-server:deploy:openapi"],
+			"dependsOn": ["assassin-app:build", "assassin-server:build", "assassin-server:deploy:openapi"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"

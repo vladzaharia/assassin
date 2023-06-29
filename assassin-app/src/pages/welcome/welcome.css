@@ -13,6 +13,7 @@
 .room-form #room {
 	height: 3rem;
 	width: 20rem;
+	max-width: 75vw;
 	font-size: x-large;
 	text-align: center;
 }

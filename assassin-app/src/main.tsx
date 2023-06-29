@@ -19,36 +19,36 @@ const oidcConfig: AuthProviderProps = {
 
 const router = createBrowserRouter([
 	{
-		path: '/',
-		element: <Welcome />,
-		errorElement: <RouterErrorBoundary />,
-	},
-	{
-		path: '/room/',
-		element: <Welcome />,
-		errorElement: <RouterErrorBoundary />,
-	},
-	{
-		path: '/room/:room',
-		element: <Room />,
-		errorElement: <RouterErrorBoundary />,
-	},
-	{
-		path: '/admin',
-		element: (
-			<AuthProvider {...oidcConfig}>
-				<Admin />
-			</AuthProvider>
-		),
-		errorElement: <RouterErrorBoundary />,
+		element: <ContentBox />,
+		errorElement: <ContentBox><RouterErrorBoundary /></ContentBox>,
+		children: [
+			{
+				path: '/',
+				element: <Welcome />,
+			},
+			{
+				path: 'room/',
+				element: <RouterErrorBoundary />,
+			},
+			{
+				path: '/room/:room',
+				element: <Room />,
+			},
+			{
+				path: '/admin',
+				element: (
+						<Admin />
+				),
+			},
+		]
 	},
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<StrictMode>
-		<ContentBox>
+		<AuthProvider {...oidcConfig}>
 			<RouterProvider router={router} />
-		</ContentBox>
+		</AuthProvider>
 	</StrictMode>
 )

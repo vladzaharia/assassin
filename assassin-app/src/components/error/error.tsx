@@ -15,7 +15,7 @@ export const RouterErrorBoundary = () => {
 			<span>
 				Go back to the <Link to="/">start page</Link> to continue.
 			</span>
-			<span className="details">{error.message}</span>
+			{error && <span className="details">{error.message}</span>}
 		</div>
 	)
 }
@@ -25,7 +25,7 @@ export const ErrorField = ({ message, className }: { message: string; className?
 		<div className={`error-field ${className}`}>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
-				<span>{message}</span>
+				<span className="message">{message}</span>
 			</span>
 		</div>
 	)
