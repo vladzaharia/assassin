@@ -19,7 +19,8 @@ function ContentBox({ children }: ContentBoxProps) {
 					initial={{ opacity: 0.5 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0.75 }}
-					transition={{ duration: 0.5 }}>
+					transition={{ duration: 0.5 }}
+				>
 					{children ? children : <Outlet />}
 				</motion.div>
 			</AnimatePresence>

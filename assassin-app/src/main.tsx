@@ -20,7 +20,11 @@ const oidcConfig: AuthProviderProps = {
 const router = createBrowserRouter([
 	{
 		element: <ContentBox />,
-		errorElement: <ContentBox><RouterErrorBoundary /></ContentBox>,
+		errorElement: (
+			<ContentBox>
+				<RouterErrorBoundary />
+			</ContentBox>
+		),
 		children: [
 			{
 				path: '/',
@@ -36,11 +40,9 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/admin',
-				element: (
-						<Admin />
-				),
+				element: <Admin />,
 			},
-		]
+		],
 	},
 ])
 

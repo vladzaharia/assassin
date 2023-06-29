@@ -5,7 +5,6 @@ import { faCheck } from '@fortawesome/pro-solid-svg-icons'
 
 import { API_URL } from 'assassin-common'
 
-import ContentBox from '../../components/content-box/content-box'
 import { ErrorField } from '../../components/error/error'
 
 import './welcome.css'
