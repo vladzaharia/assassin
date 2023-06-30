@@ -2,10 +2,10 @@ import { createContext, useContext, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
 import { faPlayCircle } from '@fortawesome/pro-regular-svg-icons'
-import { Popover } from '@mui/material'
 import isMobile from 'is-mobile'
 
 import './game-status.css'
+import Popover from '../popover/popover'
 
 export interface GameStatusContextType {
 	status: string
@@ -74,23 +74,11 @@ function GameStatus() {
 		}
 	}
 
-	const GameStatusPopoverContent = () => {
-		return (
-			<div className="game-popover">
-				<h3 className={status?.status}>
-					<FontAwesomeIcon icon={getStatusIcon()} size="lg" />
-					{getStatusLabel()}
-				</h3>
-				<span className="description">{getStatusDescription()}</span>
-			</div>
-		)
-	}
-
 	return (
 		<>
 			<div
 				ref={popoverAnchor}
-				className={`game-status ${status?.status || 'unknown'}`}
+				className={`game-status ${getStatusColor()}`}
 				onMouseEnter={() => {
 					if (!isMobile()) {
 						setPopoverOpen(true)
@@ -111,34 +99,13 @@ function GameStatus() {
 			</div>
 			<Popover
 				open={popoverOpen}
-				anchorEl={popoverAnchor.current}
+				anchor={popoverAnchor.current}
+				color={getStatusColor()}
+				title={getStatusLabel()}
+				description={getStatusDescription()}
+				icon={getStatusIcon()}
 				onClose={() => setPopoverOpen(false)}
-				slotProps={{
-					paper: {
-						elevation: 0,
-						sx: {
-							'margin-top': '0.5rem',
-							border: `solid 1px var(--${getStatusColor()})`,
-							'border-radius': '0.5rem',
-						},
-					},
-				}}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'center',
-				}}
-				sx={{
-					pointerEvents: 'none',
-				}}
-				disableRestoreFocus
-				hideBackdrop
-			>
-				<GameStatusPopoverContent />
-			</Popover>
+			/>
 		</>
 	)
 }

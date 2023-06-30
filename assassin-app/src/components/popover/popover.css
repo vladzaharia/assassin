@@ -1,0 +1,49 @@
+.popover {
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: stretch;
+}
+
+.popover h3 {
+	padding: 1rem 0;
+	margin: 0;
+	width: 100%;
+	background-color: var(--grey-light);
+	color: var(--grey-dark);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.popover h3.primary {
+	background-color: var(--primary);
+	color: var(--primary);
+}
+
+.popover h3.green {
+	background-color: var(--green);
+	color: var(--white);
+}
+
+.popover h3.orange {
+	background-color: var(--orange);
+	color: var(--black);
+}
+
+.popover h3.blue {
+	background-color: var(--blue);
+	color: var(--white);
+}
+
+.popover svg {
+	margin-right: 1rem;
+}
+
+.popover span {
+	max-width: 14rem;
+	margin: 0.75rem;
+	text-align: center;
+}

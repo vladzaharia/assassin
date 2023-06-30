@@ -15,62 +15,17 @@
 	margin: 0;
 }
 
-.game-status.not-ready {
+.game-status.orange {
 	border-color: var(--orange);
 	color: var(--orange);
 }
 
-.game-status.ready {
+.game-status.blue {
 	border-color: var(--blue);
 	color: var(--blue);
 }
 
-.game-status.started {
+.game-status.green {
 	border-color: var(--green);
 	color: var(--green);
-}
-
-.game-popover {
-	border-radius: 1rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: stretch;
-}
-
-.game-popover h3 {
-	padding: 1rem 0;
-	margin: 0;
-	width: 100%;
-	background-color: var(--grey-light);
-	color: var(--grey-dark);
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-}
-
-.game-popover h3.started {
-	background-color: var(--green);
-	color: var(--white);
-}
-
-.game-popover h3.not-ready {
-	background-color: var(--orange);
-	color: var(--black);
-}
-
-.game-popover h3.ready {
-	background-color: var(--blue);
-	color: var(--white);
-}
-
-.game-popover svg {
-	margin-right: 1rem;
-}
-
-.game-popover span {
-	max-width: 14rem;
-	margin: 0.75rem;
-	text-align: center;
 }
