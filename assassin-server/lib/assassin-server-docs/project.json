@@ -1,0 +1,31 @@
+{
+	"name": "assassin-server-docs",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "assassin-server/lib/assassin-server-docs/dist",
+	"projectType": "library",
+	"targets": {
+		"generate-sources": {
+			"executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
+			"options": {
+				"useDockerBuild": true,
+				"generator": "html2",
+				"sourceSpecPathOrUrl": "/local/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml",
+				"additionalProperties": "",
+				"globalProperties": ""
+			},
+			"inputs": [ "{workspaceRoot}/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml" ],
+			"outputs": [ "{projectRoot}/dist/index.html" ]
+		},
+		"copy-to-dist": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["assassin-server-docs:generate-sources"],
+			"options": {
+				"cwd": "assassin-server",
+				"command": "mkdir -p dist/openapi && cp lib/assassin-server-docs/dist/index.html dist/openapi/index.html"
+			},
+			"inputs": ["{projectRoot}/dist/index.html"],
+			"outputs": ["{workspaceRoot}/assassin-server/dist/openapi/index.html"]
+		}
+	},
+	"tags": []
+}

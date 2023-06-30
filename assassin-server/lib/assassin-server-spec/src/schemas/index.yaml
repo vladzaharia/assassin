@@ -339,7 +339,7 @@ components:
       name: room
       description: Name of room to use.
       schema:
-        $ref: '#/components/parameters/RoomName'
+        $ref: '#/components/schemas/RoomName'
       example: galactic
       in: path
       required: true
@@ -347,7 +347,7 @@ components:
       name: name
       description: Name of player within a room.
       schema:
-        $ref: '#/components/parameters/PlayerName'
+        $ref: '#/components/schemas/PlayerName'
       example: Vlad
       in: path
       required: true

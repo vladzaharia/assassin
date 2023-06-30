@@ -1,0 +1,18 @@
+{
+	"name": "assassin-server-spec",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "assassin-server/lib/assassin-server-spec/src",
+	"projectType": "library",
+	"targets": {
+		"copy-to-dist": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "assassin-server",
+				"command": "mkdir -p dist/openapi && cp lib/assassin-server-spec/src/schemas/index.yaml dist/openapi/openapi.swagger"
+			},
+			"inputs": ["{projectRoot}/src/schemas/index.yaml"],
+			"outputs": ["{workspaceRoot}/assassin-server/dist/openapi/openapi.swagger"]
+		}
+	},
+	"tags": []
+}

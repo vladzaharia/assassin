@@ -6,6 +6,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/js:tsc",
+			"dependsOn": ["assassin-server-client:generate-sources"],
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/assassin-common",

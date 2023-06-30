@@ -10,7 +10,7 @@
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
-				"outputPath": "assassin-server/dist/app"
+				"outputPath": "dist/assassin-app"
 			},
 			"configurations": {
 				"development": {
@@ -88,6 +88,16 @@
 			"options": {
 				"buildTarget": "assassin-app:build"
 			}
+		},
+		"copy-to-dist": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["assassin-app:build"],
+			"options": {
+				"cwd": "assassin-server",
+				"command": "mkdir -p dist/app && cp -R ../dist/assassin-app/* dist/app"
+			},
+			"inputs": ["{workspaceRoot}/dist/assassin-app/**/*"],
+			"outputs": ["{workspaceRoot}/assassin-server/dist/app/**/*"]
 		}
 	},
 	"tags": []

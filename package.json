@@ -10,6 +10,7 @@
 		"format": "nx run-many -t format:write",
 		"serve": "nx run-many -t serve",
 		"serve:remote": "nx run assassin-server:serve:remote",
+		"generate-sources": "nx run-many -t generate-sources",
 		"deploy": "nx run assassin-server:deploy",
 		"tail": "nx run assassin-server:tail"
 	},
@@ -20,6 +21,8 @@
 		"@nx/js": "16.3.2",
 		"@nx/linter": "16.3.2",
 		"@nx/react": "^16.3.2",
+		"@openapitools/openapi-generator-cli": "2.3.7",
+		"@trumbitta/nx-plugin-openapi": "^1.12.1",
 		"@types/node": "18.7.1",
 		"eslint": "~8.15.0",
 		"eslint-config-prettier": "8.1.0",
@@ -38,10 +41,11 @@
 	},
 	"workspaces": [
 		"assassin-app",
-		"assassin-common",
-		"assassin-server"
+		"assassin-server",
+		"assassin-server/libs/**"
 	],
 	"volta": {
 		"node": "18.16.1"
-	}
+	},
+	"dependencies": {}
 }

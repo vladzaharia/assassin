@@ -51,20 +51,12 @@
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build", "assassin-server:build", "assassin-server:deploy:openapi"],
+			"dependsOn": ["assassin-server-spec:copy-to-dist", "assassin-app:copy-to-dist", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"
-			}
-		},
-		"deploy:openapi": {
-			"executor": "nx:run-commands",
-			"options": {
-				"cwd": "assassin-server",
-				"command": "mkdir -p dist/openapi && cp postman/schemas/index.yaml dist/openapi/openapi.swagger"
 			},
-			"inputs": ["{projectRoot}/openapi.swagger"],
-			"outputs": ["{projectRoot}/dist/openapi/openapi.swagger"]
+			"inputs": [{ "fileset": "{projectRoot}/src/**/*.ts" }]
 		},
 		"tail": {
 			"executor": "nx:run-commands",
