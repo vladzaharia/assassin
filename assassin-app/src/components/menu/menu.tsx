@@ -3,11 +3,13 @@ import './menu.css'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
+import GameStatus from '../game-status/game-status'
 
 export interface MenuProps {
 	header?: {
 		title?: string
 		icon?: IconDefinition
+		status?: boolean
 		onClick?: () => void
 	}
 	children: ReactNode
@@ -24,6 +26,7 @@ function Menu({ header, children }: MenuProps) {
 						</button>
 					)}
 					{header.title && <h3>{header.title}</h3>}
+					{header.status ? <GameStatus /> : undefined}
 				</div>
 			)}
 			{children}

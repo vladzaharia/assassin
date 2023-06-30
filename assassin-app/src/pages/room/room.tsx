@@ -103,9 +103,9 @@ function Room() {
 				header={{
 					title: room,
 					onClick: () => navigate('/'),
+					status: true
 				}}
 			>
-				<GameStatus />
 
 				{isAdmin ? (
 					<div className="admin-actions">
