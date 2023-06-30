@@ -6,7 +6,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/vite:build",
-			"dependsOn": ["assassin-common:build"],
+			"dependsOn": ["assassin-server-client:generate"],
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
@@ -94,7 +94,7 @@
 			"dependsOn": ["assassin-app:build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "mkdir -p dist/app && cp -R ../dist/assassin-app/* dist/app"
+				"command": "mkdir -p dist/app && cp -vR ../dist/assassin-app/* dist/app"
 			},
 			"inputs": ["{workspaceRoot}/dist/assassin-app/**/*"],
 			"outputs": ["{workspaceRoot}/assassin-server/dist/app/**/*"]

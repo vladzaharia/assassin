@@ -8,7 +8,7 @@
 			"executor": "nx:run-commands",
 			"options": {
 				"cwd": "assassin-server",
-				"command": "mkdir -p dist/openapi && cp lib/assassin-server-spec/src/schemas/index.yaml dist/openapi/openapi.swagger"
+				"command": "mkdir -p dist/openapi && cp -v lib/assassin-server-spec/src/schemas/index.yaml dist/openapi/openapi.swagger"
 			},
 			"inputs": ["{projectRoot}/src/schemas/index.yaml"],
 			"outputs": ["{workspaceRoot}/assassin-server/dist/openapi/openapi.swagger"]

@@ -10,7 +10,7 @@
 		"format": "nx run-many -t format:write",
 		"serve": "nx run-many -t serve",
 		"serve:remote": "nx run assassin-server:serve:remote",
-		"generate-sources": "nx run-many -t generate-sources",
+		"generate": "nx run-many -t generate",
 		"deploy": "nx run assassin-server:deploy",
 		"tail": "nx run assassin-server:tail"
 	},

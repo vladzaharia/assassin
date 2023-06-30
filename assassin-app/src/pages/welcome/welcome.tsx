@@ -5,12 +5,12 @@ import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 
-import { API_URL } from 'assassin-common'
-
 import { ErrorField } from '../../components/error/error'
 
 import './welcome.css'
 import { AnimatePresence, motion } from 'framer-motion'
+
+const API_URL = "https://assassin.vlad.gg/api"
 
 function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')

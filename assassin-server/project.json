@@ -51,7 +51,14 @@
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-server-spec:copy-to-dist", "assassin-app:copy-to-dist", "assassin-server:build"],
+			"dependsOn": [
+				{
+					"projects": ["assassin-server-spec", "assassin-server-docs", "assassin-app"],
+					"target": "copy-to-dist",
+					"params": "ignore"
+				},
+				"assassin-server:build"
+			],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"

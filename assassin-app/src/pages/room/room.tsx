@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRotateLeft, faCrosshairs, faMagnifyingGlass, faPlay, faUser, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
-import { API_URL } from 'assassin-common'
 
 import './room.css'
 import { ErrorField } from '../../components/error/error'
-import GameStatus, { GameStatusContext, GameStatusContextType } from '../../components/game-status/game-status'
+import { GameStatusContext, GameStatusContextType } from '../../components/game-status/game-status'
 import Instructions from '../../components/instructions/instructions'
 import Menu from '../../components/menu/menu'
+
+const API_URL = "https://assassin.vlad.gg/api"
 
 interface PlayerRecord {
 	name: string
