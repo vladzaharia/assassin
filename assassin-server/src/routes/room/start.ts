@@ -20,7 +20,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		const results = (await listPlayersInRoom(db, room)).results
-		if (results && results.length > 1) {
+		if (results && results.length > 2) {
 			// Check if targets have been assigned
 			if (results[0].target) {
 				return c.json({ message: 'Game already started!' }, 400)
@@ -47,7 +47,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 			return c.json({ message: 'ok' })
 		} else {
-			return c.json({ message: 'Must have at least 2 people signed up!' }, 400)
+			return c.json({ message: 'Must have at least 3 people signed up!' }, 400)
 		}
 	} catch (e) {
 		console.error('err', e)

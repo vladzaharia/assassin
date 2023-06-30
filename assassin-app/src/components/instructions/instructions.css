@@ -10,7 +10,6 @@
 .instructions .title {
 	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 2rem;
-	position: absolute;
 	top: 1rem;
 	color: var(--primary);
 }
@@ -21,7 +20,11 @@
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 1rem;
-	width: 90%;
+	width: 75%;
+}
+
+.introduction .step:last-child {
+	margin-bottom: 0;
 }
 
 .instructions .step h3 {
@@ -38,7 +41,7 @@
 }
 
 @media only screen and (max-width: 62.5rem) {
-	.instructions .title {
-		position: initial;
+	.introduction .step {
+		width: 100%;
 	}
 }

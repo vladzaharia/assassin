@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCrosshairs, faMagnifyingGlass, faTextSize, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faMagnifyingGlass, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 
 import './instructions.css'
 
@@ -62,7 +62,7 @@ function Instructions() {
 			<Step
 				title="Take your target's words and target"
 				description="You'll be assigned your target's words and target. You can use any unused words to eliminate your new target!"
-				icon={faTextSize}
+				icon={faRetweet}
 				color="purple"
 			/>
 			<Step

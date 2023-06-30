@@ -2,6 +2,10 @@
 	transition: all 0.3s ease;
 }
 
+.no-animate {
+	transition: none;
+}
+
 html,
 .root {
 	height: 100%;
