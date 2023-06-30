@@ -103,10 +103,9 @@ function Room() {
 				header={{
 					title: room,
 					onClick: () => navigate('/'),
-					status: true
+					status: true,
 				}}
 			>
-
 				{isAdmin ? (
 					<div className="admin-actions">
 						<button className={resetGameStatus && resetGameStatus !== 'ok' ? 'secondary failed' : 'secondary'} onClick={() => resetGame()}>

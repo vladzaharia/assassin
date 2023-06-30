@@ -53,6 +53,7 @@
 		"@mui/material": "^5.13.6",
 		"@swc/helpers": "~0.5.0",
 		"framer-motion": "^10.12.17",
+		"is-mobile": "^4.0.0",
 		"oidc-client-ts": "^2.2.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

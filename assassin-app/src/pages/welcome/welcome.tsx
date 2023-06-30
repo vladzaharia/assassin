@@ -10,12 +10,12 @@ import { API_URL } from 'assassin-common'
 import { ErrorField } from '../../components/error/error'
 
 import './welcome.css'
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'
 
 function Welcome() {
-	const [name, setName] = useLocalStorage<string>("name", "")
+	const [name, setName] = useLocalStorage<string>('name', '')
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
-	const [room, setRoom] = useSessionStorage<string>("room", { defaultValue: "" })
+	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
 	const [status, setStatus] = useState<string | undefined>(undefined)
 	const navigate = useNavigate()
 
@@ -51,20 +51,21 @@ function Welcome() {
 			<h1 className="title">Word Assassin.</h1>
 			<div className="welcome">
 				<AnimatePresence mode="popLayout">
-					{!nameSubmitted ?
+					{!nameSubmitted ? (
 						<motion.div
 							className="no-animate"
 							key="user"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							transition={{ duration: 0.5 }}>
+							transition={{ duration: 0.5 }}
+						>
 							<label htmlFor="user">
 								<h2>What name do you go by?</h2>
 							</label>
 							<form
 								onSubmit={(e) => {
-									if (name !== "") {
+									if (name !== '') {
 										e.preventDefault()
 										setNameSubmitted(true)
 									}
@@ -84,14 +85,16 @@ function Welcome() {
 									<FontAwesomeIcon icon={faChevronRight} size="xl" />
 								</button>
 							</form>
-						</motion.div> : undefined}
-					{nameSubmitted ?
+						</motion.div>
+					) : undefined}
+					{nameSubmitted ? (
 						<motion.div
 							className="no-animate"
 							key="room"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
-							transition={{ delay: 0.5, duration: 0.5 }}>
+							transition={{ delay: 0.5, duration: 0.5 }}
+						>
 							<label htmlFor="room">
 								<h2>What room are you in?</h2>
 							</label>
@@ -116,7 +119,8 @@ function Welcome() {
 									<FontAwesomeIcon icon={faCheck} size="xl" />
 								</button>
 							</form>
-						</motion.div> : undefined}
+						</motion.div>
+					) : undefined}
 				</AnimatePresence>
 				{status && status !== 'ok' ? <ErrorField className="bottom" message={status} /> : undefined}
 			</div>
