@@ -14,7 +14,7 @@ function ContentBox({ children }: ContentBoxProps) {
 		<div className="app">
 			<AnimatePresence mode="popLayout">
 				<motion.div
-					className="content-box"
+					className="content-box no-animate"
 					key={location.pathname}
 					initial={{ opacity: 0.5 }}
 					animate={{ opacity: 1 }}
