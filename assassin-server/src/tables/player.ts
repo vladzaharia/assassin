@@ -23,15 +23,19 @@ export async function listPlayersInRoom(db: D1Database, room: string) {
 	return await db.prepare(`SELECT * FROM player WHERE room=?`).bind(room).all<PlayerRecord>()
 }
 
+export async function findPlayer(db: D1Database, name: string, room: string) {
+	return await db.prepare(`SELECT * FROM player WHERE name=? AND room=?`).bind(name, room).first<PlayerRecord>()
+}
+
+export async function findRoomGM(db: D1Database, room: string) {
+	return await db.prepare(`SELECT * FROM player WHERE room=? AND isGM=1`).bind(room).first<PlayerRecord>()
+}
+
 export async function insertPlayer(db: D1Database, name: string, room: string, isGM = false) {
 	const insertResult = await db.prepare(`INSERT INTO player (name, room, words, status, isGM) VALUES(?,?,?,'alive',?)`).bind(name, room, [], isGM ? 1 : 0).run()
 	console.info(`Insert player => insertResult ${insertResult.error || insertResult.success}`)
 
 	return insertResult
-}
-
-export async function findPlayer(db: D1Database, name: string, room: string) {
-	return await db.prepare(`SELECT * FROM player WHERE name=? AND room=?`).bind(name, room).first<PlayerRecord>()
 }
 
 export async function setPlayerTarget(db: D1Database, name: string, room: string, target: string) {

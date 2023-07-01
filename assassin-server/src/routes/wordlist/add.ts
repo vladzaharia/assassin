@@ -4,13 +4,14 @@ import { createWordListTable, findWordList, insertWordList } from '../../tables/
 
 interface AddWordListBody {
 	description: string
+	icon?: string
 }
 
 export const AddWordList = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 		const { list } = c.req.param()
-		const { description } = await c.req.json<AddWordListBody>()
+		const { description, icon } = await c.req.json<AddWordListBody>()
 
 		// Check if description is passed in
 		if (!description) {
@@ -27,7 +28,7 @@ export const AddWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Insert word list
-		const insertResult = await insertWordList(db, list, description)
+		const insertResult = await insertWordList(db, list, description, icon)
 		if (insertResult.success) {
 			return c.json({ message: 'ok' })
 		} else {

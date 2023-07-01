@@ -40,6 +40,8 @@ paths:
                     items:
                       $ref: '#/components/schemas/RoomName'
                     example: ['galactic', 'saturn', 'charon']
+                required:
+                  - rooms
         500:
           $ref: '#/components/responses/InternalServerError'
   /room/{room}:
@@ -103,10 +105,18 @@ paths:
       tags:
         - Room
         - Admin
+        - GM
       security:
         - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
+        - name: name
+          description: Name of player executing the action.
+          in: query
+          required: false
+          schema:
+            type: string
+            example: Vlad
       responses:
         200:
           $ref: '#/components/responses/Success'
@@ -124,10 +134,18 @@ paths:
       tags:
         - Room
         - Admin
+        - GM
       security:
         - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
+        - name: name
+          description: Name of player executing the action.
+          in: query
+          required: false
+          schema:
+            type: string
+            example: Vlad
       responses:
         200:
           $ref: '#/components/responses/Success'
@@ -142,6 +160,8 @@ paths:
                     type: string
                     description: Message for this error.
                     example: 'Must have at least 2 people signed up!'
+                required:
+                  - message
         404:
           $ref: '#/components/responses/RoomNotFound'
         500:
@@ -219,6 +239,8 @@ paths:
                     items:
                       $ref: '#/components/schemas/WordlistName'
                     example: ['card-assassins-poison', 'card-assassins-dagger', 'pokemon', 'ptcs']
+                required:
+                  - wordlists
         500:
           $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}:
@@ -322,6 +344,35 @@ paths:
           $ref: '#/components/responses/WordlistNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
+  /debug/demo:
+    put:
+      summary: Initialize demo data
+      description: |
+        Add demo data to database
+      tags:
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: room
+          description: Name of demo room, defaults to "test"
+          in: query
+          required: false
+          schema:
+            type: string
+            example: test
+        - name: name
+          description: Name of demo player, defaults to "Test"
+          in: query
+          required: false
+          schema:
+            type: string
+            example: Test
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        500:
+          $ref: '#/components/responses/InternalServerError'
   /debug/reset:
     put:
       summary: Reset database
@@ -418,6 +469,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Room not found!
+            required:
+              - message
     PlayerExists:
       description: Player already exists in the room.
       content:
@@ -429,6 +482,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Player already exists!
+            required:
+              - message
     PlayerNotFound:
       description: Could not find player.
       content:
@@ -440,6 +495,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Player not found!
+            required:
+              - message
     WordlistExists:
       description: Wordlist already exists.
       content:
@@ -451,6 +508,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Wordlist already exists!
+            required:
+              - message
     WordlistNotFound:
       description: Could not find wordlist.
       content:
@@ -462,6 +521,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Wordlist not found!
+            required:
+              - message
 
     InternalServerError:
       description: Something went wrong processing your request.
@@ -474,6 +535,8 @@ components:
                 type: string
                 description: Message for this error.
                 example: Somethng went wrong!
+            required:
+              - message
   schemas:
     BasicPlayer:
       type: object
@@ -563,6 +626,9 @@ components:
               $ref: '#/components/schemas/WordlistName'
             words:
               $ref: '#/components/schemas/WordlistArray'
+          required:
+            - name
+            - words
         - $ref: '#/components/schemas/WordlistBody'
     WordlistArray:
       type: array
@@ -577,6 +643,12 @@ components:
           type: string
           description: Description to use when showing this word list to admins.
           example: This is a default word list provided by the 'Card Assassins' game.
+        icon:
+          type: string
+          description: FontAwesome icon class to use, if set. Do **not** include `fa-`
+          example: plus
+      required:
+        - description
     WordlistName:
       type: string
       description: Name of word list to use.
@@ -586,3 +658,5 @@ components:
       properties:
         words:
           $ref: '#/components/schemas/WordlistArray'
+      required:
+        - words

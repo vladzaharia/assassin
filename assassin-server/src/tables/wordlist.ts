@@ -2,7 +2,7 @@ import { WordListRecord } from '../types'
 
 export async function createWordListTable(db: D1Database) {
 	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS wordlist (name TEXT PRIMARY KEY, description TEXT NOT NULL);`)
+		CREATE TABLE IF NOT EXISTS wordlist (name TEXT PRIMARY KEY, description TEXT NOT NULL, icon TEXT);`)
 	console.info(`Create word list table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
@@ -19,8 +19,8 @@ export async function listWordLists(db: D1Database) {
 	return await db.prepare(`SELECT * FROM wordlist`).all<WordListRecord>()
 }
 
-export async function insertWordList(db: D1Database, name: string, description: string) {
-	const insertResult = await db.prepare(`INSERT INTO wordlist (name, description) VALUES(?, ?)`).bind(name, description).run()
+export async function insertWordList(db: D1Database, name: string, description: string, icon?: string) {
+	const insertResult = await db.prepare(`INSERT INTO wordlist (name, description) VALUES(?, ?, ?)`).bind(name, description, icon).run()
 	console.info(`Insert word list => insertResult ${insertResult.error || insertResult.success}`)
 
 	return insertResult

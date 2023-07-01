@@ -48,7 +48,7 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 								</button>
 								<Popover
 									title="GM Options"
-									description={<>As the first player to join the room, you can control the game! <br /><br /> <strong>Click here to set room options.</strong></>}
+									description={<>As the first player to join the room, you can control it! <br /><br /> <strong>Click here to set room options and start the game.</strong></>}
 									color="orange"
 									icon={faCrown}
 									anchor={popoverAnchor.current}
