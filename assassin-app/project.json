@@ -3,10 +3,11 @@
 	"$schema": "../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "./app/src",
 	"projectType": "application",
+	"implicitDependencies": ["assassin-server-client"],
 	"targets": {
 		"build": {
 			"executor": "@nx/vite:build",
-			"dependsOn": ["assassin-server-client:build"],
+			"dependsOn": ["^build"],
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {

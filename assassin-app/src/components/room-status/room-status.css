@@ -1,4 +1,4 @@
-.game-status {
+.room-status {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -11,21 +11,21 @@
 	font-size: 1.25rem;
 }
 
-.game-status svg {
+.room-status svg {
 	margin: 0;
 }
 
-.game-status.orange {
+.room-status.orange {
 	border-color: var(--orange);
 	color: var(--orange);
 }
 
-.game-status.blue {
+.room-status.blue {
 	border-color: var(--blue);
 	color: var(--blue);
 }
 
-.game-status.green {
+.room-status.green {
 	border-color: var(--green);
 	color: var(--green);
 }

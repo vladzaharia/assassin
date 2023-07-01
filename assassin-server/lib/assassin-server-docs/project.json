@@ -2,6 +2,7 @@
 	"name": "assassin-server-docs",
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "assassin-server/lib/assassin-server-docs/dist",
+	"implicitDependencies": ["assassin-server-spec"],
 	"projectType": "library",
 	"targets": {
 		"build": {

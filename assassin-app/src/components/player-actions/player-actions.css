@@ -1,0 +1,12 @@
+.menu .player-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-top: 1rem;
+	border-bottom: 0.0625rem solid var(--grey-light);
+}
+
+.player-actions button svg {
+	margin-right: 1rem;
+}

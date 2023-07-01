@@ -172,9 +172,6 @@ paths:
       description: Add a player to the room.
       tags:
         - Player
-        - Admin
-      security:
-        - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
         - $ref: '#/components/parameters/PlayerName'
@@ -192,9 +189,6 @@ paths:
       description: Delete a player from a room.
       tags:
         - Player
-        - Admin
-      security:
-        - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
         - $ref: '#/components/parameters/PlayerName'

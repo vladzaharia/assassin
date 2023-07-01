@@ -3,6 +3,7 @@
 	"$schema": "../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "./assassin-server/src",
 	"projectType": "application",
+	"implicitDependencies": ["assassin-app", "assassin-server-spec", "assassin-server-docs"],
 	"targets": {
 		"build": {
 			"executor": "nx:run-commands",
@@ -43,26 +44,12 @@
 				"command": "wrangler dev --remote"
 			}
 		},
-		"prepare-deploy": {
-			"executor": "nx:run-commands",
-			"dependsOn": [
-				{
-					"projects": ["assassin-server-spec", "assassin-server-docs", "assassin-app"],
-					"target": "prepare-deploy",
-					"params": "ignore"
-				}
-			],
-			"options": {
-				"command": "true"
-			},
-			"inputs": ["{projectRoot}/dist/**/*"]
-		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["prepare-deploy", "build"],
+			"dependsOn": ["^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "wrangler deploy"
+				"command": "NO_D1_WARNING=true wrangler deploy"
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},

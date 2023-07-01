@@ -4,22 +4,22 @@ import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
 import { faPlayCircle } from '@fortawesome/pro-regular-svg-icons'
 import isMobile from 'is-mobile'
 
-import './game-status.css'
+import './room-status.css'
 import Popover from '../popover/popover'
 
-export interface GameStatusContextType {
+export interface RoomStatusContextType {
 	status: string
 	players: string[]
 }
-export const GameStatusContext = createContext<GameStatusContextType | undefined>(undefined)
+export const RoomStatusContext = createContext<RoomStatusContextType | undefined>(undefined)
 
-function GameStatus() {
-	const status = useContext(GameStatusContext)
+function RoomStatus() {
+	const roomStatus = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 	const popoverAnchor = useRef<HTMLDivElement>(null)
 
 	const getStatusIcon = () => {
-		switch (status?.status) {
+		switch (roomStatus?.status) {
 			case 'started':
 				return faPlayCircle
 			case 'ready':
@@ -32,7 +32,7 @@ function GameStatus() {
 	}
 
 	const getStatusLabel = () => {
-		switch (status?.status) {
+		switch (roomStatus?.status) {
 			case 'started':
 				return 'Game started!'
 			case 'ready':
@@ -45,9 +45,9 @@ function GameStatus() {
 	}
 
 	const getStatusDescription = () => {
-		const playersNeeded = 3 - (status?.players.length || 0)
+		const playersNeeded = 3 - (roomStatus?.players.length || 0)
 
-		switch (status?.status) {
+		switch (roomStatus?.status) {
 			case 'started':
 				return 'The game has started! Look up your opponent and get them!'
 			case 'ready':
@@ -62,7 +62,7 @@ function GameStatus() {
 	}
 
 	const getStatusColor = () => {
-		switch (status?.status) {
+		switch (roomStatus?.status) {
 			case 'started':
 				return 'green'
 			case 'ready':
@@ -78,7 +78,7 @@ function GameStatus() {
 		<>
 			<div
 				ref={popoverAnchor}
-				className={`game-status ${getStatusColor()}`}
+				className={`room-status ${getStatusColor()}`}
 				onMouseEnter={() => {
 					if (!isMobile()) {
 						setPopoverOpen(true)
@@ -110,4 +110,4 @@ function GameStatus() {
 	)
 }
 
-export default GameStatus
+export default RoomStatus

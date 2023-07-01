@@ -14,10 +14,6 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[] }[] = [
 		methods: ['POST'],
 	},
 	{
-		path: /room\/\w*\/player\/\w*$/,
-		methods: ['DELETE'],
-	},
-	{
 		path: /wordlist\/\w*$/,
 		methods: ['PUT', 'DELETE'],
 	},
