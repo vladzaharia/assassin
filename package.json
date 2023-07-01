@@ -5,11 +5,11 @@
 	"scripts": {
 		"build": "nx run-many -t build",
 		"test": "nx run-many -t test",
-		"lint:all": "nx run-many -t lint format",
+		"fix": "nx run-many -t lint format",
 		"lint": "nx run-many -t lint",
 		"format": "nx run-many -t format",
 		"serve": "nx run-many -t serve",
-		"serve:remote": "nx run assassin-server:serve:remote",
+		"serve-remote": "nx run assassin-server:serve-remote",
 		"generate": "nx run-many -t generate",
 		"deploy": "nx run assassin-server:deploy",
 		"tail": "nx run assassin-server:tail"
