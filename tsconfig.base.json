@@ -15,11 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@undefined/assassin-api-docs": ["libs/assassin-api-docs/src/index.ts"],
-			"@undefined/assassin-server-docs": [
-				"libs/assassin-server-docs/src/index.ts"
-			],
-			"common": ["common/src/index.ts"]
+			"assassin-server-client": ["assassin-server/lib/assassin-server-client/dist/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

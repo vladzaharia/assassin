@@ -5,7 +5,6 @@
 	"projectType": "application",
 	"targets": {
 		"build": {
-			"dependsOn": ["assassin-common:build"],
 			"executor": "nx:run-commands",
 			"options": {
 				"cwd": "assassin-server",
@@ -25,8 +24,8 @@
 				"cwd": "assassin-server",
 				"command": "prettier --write ."
 			},
-			"inputs": ["{projectRoot}/*", "{projectRoot}/src/**/*"],
-			"outputs": ["{projectRoot}/*", "{projectRoot}/src/**/*"]
+			"inputs": ["{projectRoot}/**/*", "!{projectRoot}/dist/**/*"],
+			"outputs": ["{projectRoot}/**/*", "!{projectRoot}/dist/**/*"]
 		},
 		"serve": {
 			"executor": "nx:run-commands",
@@ -65,7 +64,7 @@
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"
 			},
-			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts"]
+			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
 		"tail": {
 			"executor": "nx:run-commands",

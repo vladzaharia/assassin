@@ -48,6 +48,13 @@
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore"
       ]
+    },
+		"format": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.prettierignore",
+        "{workspaceRoot}/.prettierrc"
+      ]
     }
   }
 }
