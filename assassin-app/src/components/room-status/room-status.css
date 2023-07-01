@@ -2,7 +2,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 0.0625rem solid var(--grey-light);
+	outline: 0.0625rem solid var(--grey-light);
 	background-color: var(--white);
 	color: var(--grey-dark);
 	height: 2rem;
@@ -16,16 +16,16 @@
 }
 
 .room-status.orange {
-	border-color: var(--orange);
+	outline-color: var(--orange);
 	color: var(--orange);
 }
 
 .room-status.blue {
-	border-color: var(--blue);
+	outline-color: var(--blue);
 	color: var(--blue);
 }
 
 .room-status.green {
-	border-color: var(--green);
+	outline-color: var(--green);
 	color: var(--green);
 }

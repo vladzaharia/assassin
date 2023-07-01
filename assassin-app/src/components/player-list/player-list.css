@@ -17,7 +17,7 @@
 
 .player-list .header h3 {
 	margin: 0.5rem;
-	margin-left: 1rem;
+	margin-left: 1.25rem;
 }
 
 .player-list .header .buttons {
@@ -25,7 +25,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	margin-right: 1rem;
+	margin-right: 0.75rem;
 }
 
 .player-list .header .buttons button {
@@ -40,11 +40,4 @@
 	align-items: center;
 	justify-content: space-around;
 	padding: 0.5rem;
-}
-
-@media only screen and (max-width: 62.5rem) {
-	.player-list {
-		height: 15vh;
-		max-height: 25vh;
-	}
 }

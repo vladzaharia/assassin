@@ -50,7 +50,7 @@
 	margin-right: 0.5rem;
 }
 
-@media only screen and (max-width: 62.5rem) {
+@media only screen and (max-width: 50rem) {
 	.menu .player-list {
 		height: 15vh;
 		max-height: 25vh;

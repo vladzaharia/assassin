@@ -28,7 +28,7 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		if (playerRecord.isGM) {
 			const players = (await listPlayersInRoom(db, room)).results
 
-			if (players?.length || 0 > 1) {
+			if (players && players.length > 1) {
 				const otherPlayers = players!.filter((p) => !p.isGM)
 				setPlayerAsGM(db, otherPlayers[0].name, room)
 			}

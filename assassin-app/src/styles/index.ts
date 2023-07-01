@@ -1,5 +1,5 @@
 // Variables
-import './colors.css'
+import './vars/colors.css'
 
 // Global styles
 import './button.css'

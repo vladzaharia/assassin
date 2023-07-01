@@ -40,7 +40,7 @@
 	text-align: center;
 }
 
-@media only screen and (max-width: 62.5rem) {
+@media only screen and (max-width: 50rem) {
 	.introduction .step {
 		width: 100%;
 	}

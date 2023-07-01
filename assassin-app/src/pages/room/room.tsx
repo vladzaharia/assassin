@@ -85,9 +85,14 @@ function Room() {
 	}
 
 	useEffect(() => {
-		getRoom()
+		if (name) {
+			getRoom()
+		} else {
+			navigate("/")
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [name])
 
 	return (
 		<RoomStatusContext.Provider value={{
