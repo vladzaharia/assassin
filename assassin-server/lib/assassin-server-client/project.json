@@ -4,7 +4,7 @@
 	"sourceRoot": "assassin-server/lib/assassin-server-client/dist",
 	"projectType": "library",
 	"targets": {
-		"generate": {
+		"build": {
 			"executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
 			"options": {
 				"useDockerBuild": true,

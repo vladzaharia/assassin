@@ -59,7 +59,7 @@
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["prepare-deploy", "assassin-server:build"],
+			"dependsOn": ["prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"

@@ -6,7 +6,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/vite:build",
-			"dependsOn": ["assassin-server-client:generate"],
+			"dependsOn": ["assassin-server-client:build"],
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {

@@ -4,7 +4,7 @@
 	"sourceRoot": "assassin-server/lib/assassin-server-docs/dist",
 	"projectType": "library",
 	"targets": {
-		"generate": {
+		"build": {
 			"executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
 			"options": {
 				"useDockerBuild": true,
@@ -18,7 +18,7 @@
 		},
 		"prepare-deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["generate"],
+			"dependsOn": ["build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "mkdir -p dist/openapi && cp -v lib/assassin-server-docs/dist/index.html dist/openapi/index.html"
