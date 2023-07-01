@@ -6,7 +6,7 @@ import './popover.css'
 
 export interface PopoverContentProps {
 	title?: string
-	description?: string
+	description?: string | JSX.Element
 	color: string
 	icon?: IconDefinition
 }

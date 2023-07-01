@@ -33,7 +33,7 @@ function Instructions() {
 				title="Join the game"
 				description='Enter your first name and click "Join" to add your name to the list.'
 				icon={faUserPlus}
-				color="blue"
+				color="green"
 			/>
 			<Step
 				title="Wait for the game to start..."
@@ -45,7 +45,7 @@ function Instructions() {
 				title="Look up your target"
 				description='Enter your first name and click "Lookup" to find who your target is.'
 				icon={faMagnifyingGlass}
-				color="blue-dark"
+				color="blue"
 			/>
 			<Step
 				title="Eliminate your target!"
@@ -57,7 +57,7 @@ function Instructions() {
 				title="Record your assassination"
 				description="Once you've assassinated your target, rceord which word you used here."
 				icon={faCheck}
-				color="green"
+				color="blue-dark"
 			/>
 			<Step
 				title="Take your target's words and target"

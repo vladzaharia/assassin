@@ -10,7 +10,7 @@
 }
 
 /** Menu header / title */
-.menu .header {
+.menu > .header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -18,17 +18,17 @@
 	border-bottom: 0.0625rem solid var(--grey-light);
 }
 
-.menu .header button {
+.menu > .header button {
 	height: 2rem;
 	width: 2rem;
 	text-align: center;
 }
 
-.menu .header button svg {
+.menu > .header button svg {
 	margin-right: 0;
 }
 
-.menu .header h3 {
+.menu > .header h3 {
 	margin: 0;
 }
 

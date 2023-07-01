@@ -5,7 +5,7 @@ import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 
-import { createRoomApi } from '../..//axios'
+import { createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
 
 import './welcome.css'
@@ -44,7 +44,7 @@ function Welcome() {
 
 	const getButtonClass = () => {
 		if (status) {
-			return status === 'ok' ? 'success' : 'failed'
+			return status === 'ok' ? 'green' : 'failed'
 		}
 
 		return 'primary'

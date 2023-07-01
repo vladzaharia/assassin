@@ -1,23 +1,23 @@
 import { AdminApi, Configuration, PlayerApi, RoomApi, WordlistApi } from 'assassin-server-client'
 
-export const getAxiosConfig = () => {
+const getApiConfig = () => {
 	return new Configuration({
 		basePath: import.meta.env.DEV ? 'http://localhost:8787/api' : undefined,
 	})
 }
 
 export const createRoomApi = () => {
-	return new RoomApi(getAxiosConfig())
+	return new RoomApi(getApiConfig())
 }
 
 export const createPlayerApi = () => {
-	return new PlayerApi(getAxiosConfig())
+	return new PlayerApi(getApiConfig())
 }
 
 export const createAdminApi = () => {
-	return new AdminApi(getAxiosConfig())
+	return new AdminApi(getApiConfig())
 }
 
 export const createWordlistApi = () => {
-	return new WordlistApi(getAxiosConfig())
+	return new WordlistApi(getApiConfig())
 }

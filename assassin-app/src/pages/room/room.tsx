@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrosshairs, faCrown, faUser } from '@fortawesome/pro-solid-svg-icons'
+import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import useLocalStorage from 'use-local-storage'
 
 import { Room as RoomResponse, Player as PlayerResponse } from 'assassin-server-client'
 
-import { createPlayerApi, createRoomApi } from '../..//axios'
+import { createPlayerApi, createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
 import { RoomStatusContext } from '../../components/room-status/room-status'
 import Instructions from '../../components/instructions/instructions'
 import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
+import PlayerList from '../../components/player-list/player-list'
 
 import './room.css'
-import { isAxiosError } from 'axios'
 
 function Room() {
 	const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
@@ -90,7 +90,12 @@ function Room() {
 	}, [])
 
 	return (
-		<RoomStatusContext.Provider value={roomStatus}>
+		<RoomStatusContext.Provider value={{
+			room: roomStatus,
+			lookup: getPlayer,
+			join: addPlayer,
+			leave: deletePlayer
+		}}>
 			<Menu
 				header={{
 					title: room,
@@ -99,23 +104,11 @@ function Room() {
 				}}
 			>
 				<PlayerActions
-					name={name}
-					lookup={() => getPlayer}
-					join={() => addPlayer()}
-					leave={() => deletePlayer()}
 					requestError={requestError}
 				/>
-
-				<div className="player-list">
-					<h3>Player List ({roomStatus?.players.length || 0})</h3>
-					{roomStatus?.players.map((player) => {
-						return (
-							<div className="player" key={player.name}>
-								<FontAwesomeIcon icon={player.isGM ? faCrown : faUser} /> {player.name}
-							</div>
-						)
-					})}
-				</div>
+				<PlayerList
+					clickGM={() => { return }}
+				/>
 			</Menu>
 			<div className="player-info">
 				{playerInfo ? (

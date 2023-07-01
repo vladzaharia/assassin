@@ -8,16 +8,22 @@ import './room-status.css'
 import Popover from '../popover/popover'
 import { Room } from 'assassin-server-client'
 
-export interface RoomStatusContextType {
-	status: string
-	players: string[]
+export interface RoomStatusContextProps {
+	room: Room | undefined
+	join: () => void
+	leave: () => void
+	lookup: () => void
 }
-export const RoomStatusContext = createContext<Room | undefined>(undefined)
+
+export const RoomStatusContext = createContext<RoomStatusContextProps | undefined>(undefined)
 
 function RoomStatus() {
-	const roomStatus = useContext(RoomStatusContext)
+	const roomContext = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
-	const popoverAnchor = useRef<HTMLDivElement>(null)
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const popoverAnchor = useRef<any>(null)
+
+	const roomStatus = roomContext?.room
 
 	const getStatusIcon = () => {
 		switch (roomStatus?.status) {

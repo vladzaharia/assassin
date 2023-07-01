@@ -24,17 +24,17 @@ button.primary {
 	outline-color: var(--primary);
 }
 
-button.secondary {
+button.blue {
 	background-color: var(--blue);
 	outline-color: var(--blue);
 }
 
-button.success {
-	background-color: var(--success);
-	outline-color: var(--success);
+button.green {
+	background-color: var(--green);
+	outline-color: var(--green);
 }
 
-button.warning {
+button.orange {
 	background-color: var(--orange);
 	outline-color: var(--orange);
 }

@@ -34,7 +34,7 @@
 			"dependsOn": ["assassin-app:build", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "wrangler dev"
+				"command": "NO_D1_WARNING=true wrangler dev"
 			}
 		},
 		"serve-remote": {
@@ -42,7 +42,7 @@
 			"dependsOn": ["assassin-app:build", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "wrangler dev --remote"
+				"command": "NO_D1_WARNING=true wrangler dev --remote"
 			}
 		},
 		"deploy": {

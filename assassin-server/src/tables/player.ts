@@ -42,6 +42,10 @@ export async function setPlayerWords(db: D1Database, name: string, room: string,
 	return await db.prepare(`UPDATE player SET words=? WHERE name=? AND room=?`).bind(words, name, room).run()
 }
 
+export async function setPlayerAsGM(db: D1Database, name: string, room: string) {
+	return await db.prepare(`UPDATE player SET isGM=? WHERE name=? AND room=?`).bind(1, name, room).run()
+}
+
 export async function deletePlayer(db: D1Database, name: string, room: string) {
 	const deleteRowsResult = await db.prepare(`DELETE FROM player WHERE name=? AND room=?`).bind(name, room).run()
 	console.info(`Delete player => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
