@@ -12,6 +12,7 @@ export interface PlayerRecord {
 	target?: string
 	words?: string
 	status: 'alive' | 'eliminated'
+	isGM: 0 | 1
 }
 
 export interface RoomRecord {

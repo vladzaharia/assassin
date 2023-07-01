@@ -12,6 +12,13 @@ export async function createWordTable(db: D1Database) {
 	return createTableResult
 }
 
+export async function dropWordTable(db: D1Database) {
+	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS word`)
+	console.info(`Drop word table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
+
+return dropTableResult
+}
+
 export async function listWords(db: D1Database) {
 	return await db.prepare(`SELECT * FROM word`).all<WordRecord>()
 }

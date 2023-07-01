@@ -10,8 +10,7 @@ import { ErrorField } from '../../components/error/error'
 
 import './welcome.css'
 import { AnimatePresence, motion } from 'framer-motion'
-import { AxiosError, AxiosResponse, isAxiosError } from 'axios'
-import { Room } from 'assassin-server-client'
+import { AxiosError, isAxiosError } from 'axios'
 
 function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')

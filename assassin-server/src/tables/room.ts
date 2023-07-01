@@ -8,6 +8,13 @@ export async function createRoomsTable(db: D1Database) {
 	return createTableResult
 }
 
+export async function dropRoomTable(db: D1Database) {
+	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS room`)
+	console.info(`Drop room table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
+
+return dropTableResult
+}
+
 export async function listRooms(db: D1Database) {
 	return await db.prepare(`SELECT * FROM room`).all<RoomRecord>()
 }

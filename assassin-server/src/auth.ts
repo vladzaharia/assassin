@@ -6,6 +6,10 @@ import { Bindings } from './types'
 type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE'
 export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[] }[] = [
 	{
+		path: /debug.*$/,
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	},
+	{
 		path: /room\/\w*$/,
 		methods: ['PUT', 'DELETE'],
 	},

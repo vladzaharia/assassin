@@ -20,6 +20,7 @@ import { DeleteWordList } from './routes/wordlist/delete'
 import { AddWordsToList } from './routes/wordlist/addWords'
 import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
 import { Ok } from './routes/ok'
+import { ResetDb } from './routes/debug/reset'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -70,6 +71,9 @@ app.delete('/api/wordlist/:list', DeleteWordList)
 // Add/delete words from word lists
 app.put('/api/wordlist/:list/words', AddWordsToList)
 app.delete('/api/wordlist/:list/words', DeleteWordsFromList)
+
+// Debug endpoints
+app.put('/api/debug/reset', ResetDb)
 
 // OpenAPI
 app.get(

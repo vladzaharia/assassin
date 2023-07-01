@@ -6,12 +6,13 @@ import isMobile from 'is-mobile'
 
 import './room-status.css'
 import Popover from '../popover/popover'
+import { Room } from 'assassin-server-client'
 
 export interface RoomStatusContextType {
 	status: string
 	players: string[]
 }
-export const RoomStatusContext = createContext<RoomStatusContextType | undefined>(undefined)
+export const RoomStatusContext = createContext<Room | undefined>(undefined)
 
 function RoomStatus() {
 	const roomStatus = useContext(RoomStatusContext)

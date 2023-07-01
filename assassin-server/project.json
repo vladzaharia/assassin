@@ -10,7 +10,8 @@
 			"options": {
 				"cwd": "assassin-server",
 				"command": "tsc -p ./tsconfig.json"
-			}
+			},
+			"inputs": ["{projectRoot}/src/**/*", "{projectRoot}/tsconfig.json", "{workspaceRoot}/tsconfig.base.json"]
 		},
 		"lint": {
 			"executor": "@nx/linter:eslint",

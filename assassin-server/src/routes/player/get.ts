@@ -23,7 +23,12 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Player not found!' }, 404)
 		}
 
-		return c.json(record)
+		const { isGM, ... recordProps } = record
+
+		return c.json({
+			isGM: isGM === 1,
+			... recordProps
+		})
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

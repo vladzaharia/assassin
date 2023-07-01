@@ -23,7 +23,7 @@ function PlayerActions({ name, lookup, join, leave, requestError }: PlayerAction
 				<button className={requestError && requestError !== 'ok' ? 'failed' : 'success'} onClick={lookup}>
 					<FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> Look up Target
 				</button>
-			) : roomStatus?.players.includes(name) ? (
+			) : roomStatus?.players.some((p) => p.name === name) ? (
 				<button className={requestError && requestError !== 'ok' ? 'failed' : 'primary'} onClick={leave}>
 					<FontAwesomeIcon icon={faUserMinus} size="xl" /> Leave room
 				</button>

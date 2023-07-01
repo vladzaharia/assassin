@@ -2,10 +2,17 @@ import { PlayerRecord } from '../types'
 
 export async function createPlayerTable(db: D1Database) {
 	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS player (name TEXT, room TEXT, target TEXT, words BLOB, status TEXT, UNIQUE(name, room));`)
+		CREATE TABLE IF NOT EXISTS player (name TEXT, room TEXT, target TEXT, words BLOB, status TEXT, isGM INTEGER, UNIQUE(name, room));`)
 	console.info(`Create player table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
+}
+
+export async function dropPlayerTable(db: D1Database) {
+	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS player`)
+	console.info(`Drop player table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
+
+return dropTableResult
 }
 
 export async function listPlayers(db: D1Database) {
@@ -16,8 +23,8 @@ export async function listPlayersInRoom(db: D1Database, room: string) {
 	return await db.prepare(`SELECT * FROM player WHERE room=?`).bind(room).all<PlayerRecord>()
 }
 
-export async function insertPlayer(db: D1Database, name: string, room: string) {
-	const insertResult = await db.prepare(`INSERT INTO player (name, room, words, status) VALUES(?,?,?, 'alive')`).bind(name, room, []).run()
+export async function insertPlayer(db: D1Database, name: string, room: string, isGM = false) {
+	const insertResult = await db.prepare(`INSERT INTO player (name, room, words, status, isGM) VALUES(?,?,?,'alive',?)`).bind(name, room, [], isGM ? 1 : 0).run()
 	console.info(`Insert player => insertResult ${insertResult.error || insertResult.success}`)
 
 	return insertResult

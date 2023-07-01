@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrosshairs, faUser } from '@fortawesome/pro-solid-svg-icons'
+import { faCrosshairs, faCrown, faUser } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import useLocalStorage from 'use-local-storage'
 
-import { Room as RoomResponse, RoomApi, PlayerApi, Player as PlayerResponse } from 'assassin-server-client'
+import { Room as RoomResponse, Player as PlayerResponse } from 'assassin-server-client'
 
-import { getAxiosConfig, createPlayerApi, createRoomApi } from '../..//axios'
+import { createPlayerApi, createRoomApi } from '../..//axios'
 import { ErrorField } from '../../components/error/error'
 import { RoomStatusContext } from '../../components/room-status/room-status'
 import Instructions from '../../components/instructions/instructions'
@@ -15,6 +15,7 @@ import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
 
 import './room.css'
+import { isAxiosError } from 'axios'
 
 function Room() {
 	const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
@@ -64,8 +65,10 @@ function Room() {
 			const addPlayerResponse = await playerApi.roomRoomPlayerNamePut(room || '', name)
 			setRequestError(addPlayerResponse.data.message)
 			getRoom()
-		} catch {
-			setRequestError('Something went wrong!')
+		} catch(e) {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const eAsAny = e as any
+			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
 		}
 	}
 
@@ -74,8 +77,10 @@ function Room() {
 			const deletePlayerResponse = await playerApi.roomRoomPlayerNameDelete(room || '', name)
 			setRequestError(deletePlayerResponse.data.message)
 			getRoom()
-		} catch {
-			setRequestError('Something went wrong!')
+		} catch(e) {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const eAsAny = e as any
+			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
 		}
 	}
 
@@ -105,8 +110,8 @@ function Room() {
 					<h3>Player List ({roomStatus?.players.length || 0})</h3>
 					{roomStatus?.players.map((player) => {
 						return (
-							<div className="player" key={player}>
-								<FontAwesomeIcon icon={faUser} /> {player}
+							<div className="player" key={player.name}>
+								<FontAwesomeIcon icon={player.isGM ? faCrown : faUser} /> {player.name}
 							</div>
 						)
 					})}

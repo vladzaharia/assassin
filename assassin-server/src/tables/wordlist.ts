@@ -3,9 +3,16 @@ import { WordListRecord } from '../types'
 export async function createWordListTable(db: D1Database) {
 	const createTableResult = await db.exec(`
 		CREATE TABLE IF NOT EXISTS wordlist (name TEXT PRIMARY KEY, description TEXT NOT NULL);`)
-	console.info(`Create word list => createTableResult ${createTableResult.error || createTableResult.success}`)
+	console.info(`Create word list table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
+}
+
+export async function dropWordListTable(db: D1Database) {
+	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS wordlist`)
+	console.info(`Drop word list table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
+
+return dropTableResult
 }
 
 export async function listWordLists(db: D1Database) {

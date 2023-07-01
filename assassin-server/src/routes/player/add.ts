@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
-import { createPlayerTable as createPlayerTable, findPlayer as findPlayer, insertPlayer } from '../../tables/player'
+import { createPlayerTable, insertPlayer, listPlayersInRoom } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
@@ -19,12 +19,12 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Check if player exists
-		const record = await findPlayer(db, name, room)
-		if (record) {
+		const players = await (await listPlayersInRoom(db, room)).results
+		if (players?.some((p) => p.name === name)) {
 			return c.json({ message: 'Player already exists!' }, 400)
 		}
 
-		const insertResult = await insertPlayer(db, name, room)
+		const insertResult = await insertPlayer(db, name, room, players?.length === 0)
 		if (insertResult.success) {
 			return c.json({ message: 'ok' })
 		} else {

@@ -322,6 +322,20 @@ paths:
           $ref: '#/components/responses/WordlistNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
+  /debug/reset:
+    put:
+      summary: Reset database
+      description: |
+        Drops and recreates all tables in the D1 database.
+      tags:
+        - Admin
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        500:
+          $ref: '#/components/responses/InternalServerError'
 
 components:
   securitySchemes:
@@ -461,6 +475,16 @@ components:
                 description: Message for this error.
                 example: Somethng went wrong!
   schemas:
+    BasicPlayer:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/PlayerName'
+        isGM:
+          $ref: '#/components/schemas/PlayerIsGM'
+      required:
+        - name
+        - isGM
     Player:
       type: object
       properties:
@@ -476,9 +500,13 @@ components:
           example: Ben
         words:
           $ref: '#/components/schemas/WordlistArray'
+        isGM:
+          $ref: '#/components/schemas/PlayerIsGM'
       required:
         - name
         - room
+        - status
+        - isGM
     PlayerStatus:
       description: The player's status within the room.
       type: string
@@ -486,6 +514,10 @@ components:
         - alive
         - eliminated
       example: alive
+    PlayerIsGM:
+      description: Whether the player is the room's GM (first player added).
+      type: boolean
+      example: true
     PlayerName:
       description: Name of a player within a room.
       type: string
@@ -502,7 +534,7 @@ components:
           type: array
           minItems: 0
           items:
-            $ref: '#/components/schemas/PlayerName'
+            $ref: '#/components/schemas/BasicPlayer'
       required:
         - name
         - status
