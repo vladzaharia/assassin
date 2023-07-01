@@ -7,6 +7,7 @@ import useLocalStorage from 'use-local-storage'
 
 import { Room as RoomResponse, RoomApi, PlayerApi, Player as PlayerResponse } from 'assassin-server-client'
 
+import { getAxiosConfig, createPlayerApi, createRoomApi } from '../..//axios'
 import { ErrorField } from '../../components/error/error'
 import { RoomStatusContext } from '../../components/room-status/room-status'
 import Instructions from '../../components/instructions/instructions'
@@ -19,11 +20,11 @@ function Room() {
 	const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
 	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [requestError, setRequestError] = useState<string | undefined>(undefined)
-	const [name] = useLocalStorage<string>("name", '')
+	const [name] = useLocalStorage<string>('name', '')
 	const navigate = useNavigate()
 
-	const roomApi = new RoomApi()
-	const playerApi = new PlayerApi()
+	const roomApi = createRoomApi()
+	const playerApi = createPlayerApi()
 
 	const { room } = useParams()
 
@@ -80,6 +81,7 @@ function Room() {
 
 	useEffect(() => {
 		getRoom()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
@@ -96,7 +98,8 @@ function Room() {
 					lookup={() => getPlayer}
 					join={() => addPlayer()}
 					leave={() => deletePlayer()}
-					requestError={requestError} />
+					requestError={requestError}
+				/>
 
 				<div className="player-list">
 					<h3>Player List ({roomStatus?.players.length || 0})</h3>
