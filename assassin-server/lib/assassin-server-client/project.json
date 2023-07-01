@@ -12,7 +12,9 @@
 				"sourceSpecPathOrUrl": "/local/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml",
 				"additionalProperties": "",
 				"globalProperties": ""
-			}
+			},
+			"inputs": ["{workspaceRoot}/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml"],
+			"outputs": ["{projectRoot}/dist/**/*"]
 		}
 	},
 	"tags": []

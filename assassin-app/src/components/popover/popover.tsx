@@ -1,5 +1,5 @@
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover as MUIPopover } from '@mui/material'
 
 import './popover.css'
@@ -14,10 +14,12 @@ export interface PopoverContentProps {
 const PopoverContent = ({ title, description, color, icon }: PopoverContentProps) => {
 	return (
 		<div className="popover">
-			{title && <h3 className={color}>
-				{icon && <FontAwesomeIcon icon={icon} size="lg" />}
-				{title}
-			</h3>}
+			{title && (
+				<h3 className={color}>
+					{icon && <FontAwesomeIcon icon={icon} size="lg" />}
+					{title}
+				</h3>
+			)}
 			{description && <span className="description">{description}</span>}
 		</div>
 	)
@@ -61,7 +63,7 @@ const Popover = (props: PopoverProps) => {
 			disableRestoreFocus
 			hideBackdrop
 		>
-			<PopoverContent {... props} />
+			<PopoverContent {...props} />
 		</MUIPopover>
 	)
 }

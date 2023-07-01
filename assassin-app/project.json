@@ -40,15 +40,10 @@
 			"executor": "nx:run-commands",
 			"options": {
 				"cwd": "assassin-app",
-				"command": "prettier --check ."
-			}
-		},
-		"format:write": {
-			"executor": "nx:run-commands",
-			"options": {
-				"cwd": "assassin-app",
 				"command": "prettier --write ."
-			}
+			},
+			"inputs": ["{projectRoot}/**/*"],
+			"outputs": ["{projectRoot}/**/*"]
 		},
 		"serve": {
 			"executor": "@nx/vite:dev-server",
@@ -89,7 +84,7 @@
 				"buildTarget": "assassin-app:build"
 			}
 		},
-		"copy-to-dist": {
+		"prepare-deploy": {
 			"executor": "nx:run-commands",
 			"dependsOn": ["assassin-app:build"],
 			"options": {

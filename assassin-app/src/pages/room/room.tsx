@@ -1,90 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRotateLeft, faCrosshairs, faMagnifyingGlass, faPlay, faUser, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCrosshairs, faMagnifyingGlass, faUser, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 
 import './room.css'
 import { ErrorField } from '../../components/error/error'
-import { GameStatusContext, GameStatusContextType } from '../../components/game-status/game-status'
+import { GameStatusContext } from '../../components/game-status/game-status'
 import Instructions from '../../components/instructions/instructions'
 import Menu from '../../components/menu/menu'
 
-const API_URL = "https://assassin.vlad.gg/api"
-
-interface PlayerRecord {
-	name: string
-	target?: string
-}
+import { Room as RoomResponse, RoomApi, PlayerApi, Player as PlayerResponse } from 'assassin-server-client'
 
 function Room() {
-	const [gameStatus, setGameStatus] = useState<GameStatusContextType | undefined>(undefined)
+	const [gameStatus, setGameStatus] = useState<RoomResponse | undefined>(undefined)
 
-	const [playerInfo, setPlayerInfo] = useState<PlayerRecord | undefined>(undefined)
+	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [name, setName] = useState<string>('')
-	const [resetGameStatus, setResetGameStatus] = useState<string | undefined>(undefined)
-	const [startGameStatus, setStartGameStatus] = useState<string | undefined>(undefined)
 	const [addPlayerStatus, setAddPlayerStatus] = useState<string | undefined>(undefined)
 	const [getPlayerStatus, setGetPlayerStatus] = useState<string | undefined>(undefined)
 	const navigate = useNavigate()
 
+	const roomApi = new RoomApi()
+	const playerApi = new PlayerApi()
+
 	const { room } = useParams()
-	const baseUrl = `${API_URL}/room/${room}`
 
 	const fetchGameStatus = async () => {
 		// Reset data
 		setPlayerInfo(undefined)
 		setGameStatus(undefined)
 
-		const status = await fetch(`${baseUrl}`).then((r) => r.json())
+		const status = (await roomApi.roomRoomGet(room || '')).data
 		setGameStatus(status)
 	}
 
-	const resetGame = async () => {
-		fetch(`${baseUrl}/reset`, { method: 'POST' })
-			.then(async (r) => {
-				setStartGameStatus((await r.json()).message)
-				fetchGameStatus()
-			})
-			.catch(() => {
-				setResetGameStatus('Something went wrong!')
-			})
-	}
-
-	const startGame = async () => {
-		fetch(`${baseUrl}/start`, { method: 'POST' })
-			.then(async (r) => {
-				setStartGameStatus((await r.json()).message)
-				fetchGameStatus()
-			})
-			.catch(() => {
-				setStartGameStatus('Something went wrong!')
-			})
-	}
-
 	const addPlayer = async () => {
-		fetch(`${baseUrl}/player/${name}`, { method: 'PUT' })
-			.then(async (r) => {
-				setAddPlayerStatus((await r.json()).message)
-				fetchGameStatus()
-			})
-			.catch(() => {
-				setAddPlayerStatus('Something went wrong!')
-			})
+		try {
+			const addPlayerResponse = await playerApi.roomRoomPlayerNamePut(room || '', name)
+			setAddPlayerStatus(addPlayerResponse.data.message)
+		} catch {
+			setAddPlayerStatus('Something went wrong!')
+		}
 	}
 
 	const getPlayer = async () => {
 		// Reset data
 		setPlayerInfo(undefined)
 
-		const r = await fetch(`${baseUrl}/player/${name}`)
-		if (r.status === 404) {
+		const getPlayerResponse = await playerApi.roomRoomPlayerNameGet(room || '', name)
+
+		if (getPlayerResponse.status === 404) {
 			return setGetPlayerStatus('Player not found!')
 		}
 
-		const json = await r.json()
-		if (json.message) {
-			setGetPlayerStatus(json.message)
+		const json = getPlayerResponse.data
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const jsonAsAny = json as any
+
+		if (jsonAsAny.message) {
+			setGetPlayerStatus(jsonAsAny.message)
 		} else {
 			setPlayerInfo(json)
 			setGetPlayerStatus('ok')
@@ -107,22 +82,6 @@ function Room() {
 					status: true,
 				}}
 			>
-				{isAdmin ? (
-					<div className="admin-actions">
-						<button className={resetGameStatus && resetGameStatus !== 'ok' ? 'secondary failed' : 'secondary'} onClick={() => resetGame()}>
-							<FontAwesomeIcon icon={faArrowRotateLeft} size="xl" /> Reset
-						</button>
-						<button
-							className={startGameStatus && startGameStatus !== 'ok' ? 'failed' : undefined}
-							onClick={() => startGame()}
-							disabled={gameStatus?.status !== 'ready'}
-						>
-							<FontAwesomeIcon icon={faPlay} size="xl" /> Start
-						</button>
-					</div>
-				) : (
-					false
-				)}
 				<div className="player-actions">
 					<input
 						type="text"
@@ -183,8 +142,6 @@ function Room() {
 					<Instructions />
 				)}
 				{getPlayerStatus && getPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={getPlayerStatus} /> : undefined}
-				{startGameStatus && startGameStatus !== 'ok' ? <ErrorField className="bottom" message={startGameStatus} /> : undefined}
-				{resetGameStatus && resetGameStatus !== 'ok' ? <ErrorField className="bottom" message={resetGameStatus} /> : undefined}
 				{addPlayerStatus && addPlayerStatus !== 'ok' ? <ErrorField className="bottom" message={addPlayerStatus} /> : undefined}
 			</div>
 		</GameStatusContext.Provider>

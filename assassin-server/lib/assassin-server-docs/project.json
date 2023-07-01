@@ -13,10 +13,10 @@
 				"additionalProperties": "",
 				"globalProperties": ""
 			},
-			"inputs": [ "{workspaceRoot}/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml" ],
-			"outputs": [ "{projectRoot}/dist/index.html" ]
+			"inputs": ["{workspaceRoot}/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml"],
+			"outputs": ["{projectRoot}/dist/index.html"]
 		},
-		"copy-to-dist": {
+		"prepare-deploy": {
 			"executor": "nx:run-commands",
 			"dependsOn": ["generate"],
 			"options": {

@@ -23,15 +23,10 @@
 			"executor": "nx:run-commands",
 			"options": {
 				"cwd": "assassin-server",
-				"command": "prettier --check ."
-			}
-		},
-		"format:write": {
-			"executor": "nx:run-commands",
-			"options": {
-				"cwd": "assassin-server",
 				"command": "prettier --write ."
-			}
+			},
+			"inputs": ["{projectRoot}/*", "{projectRoot}/src/**/*"],
+			"outputs": ["{projectRoot}/*", "{projectRoot}/src/**/*"]
 		},
 		"serve": {
 			"executor": "nx:run-commands",
@@ -49,21 +44,28 @@
 				"command": "wrangler dev --remote"
 			}
 		},
-		"deploy": {
+		"prepare-deploy": {
 			"executor": "nx:run-commands",
 			"dependsOn": [
 				{
 					"projects": ["assassin-server-spec", "assassin-server-docs", "assassin-app"],
-					"target": "copy-to-dist",
+					"target": "prepare-deploy",
 					"params": "ignore"
-				},
-				"assassin-server:build"
+				}
 			],
+			"options": {
+				"command": "true"
+			},
+			"inputs": ["{projectRoot}/dist/**/*"]
+		},
+		"deploy": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["prepare-deploy", "assassin-server:build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "wrangler deploy"
 			},
-			"inputs": [{ "fileset": "{projectRoot}/src/**/*.ts" }]
+			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts"]
 		},
 		"tail": {
 			"executor": "nx:run-commands",

@@ -10,7 +10,7 @@ import { ErrorField } from '../../components/error/error'
 import './welcome.css'
 import { AnimatePresence, motion } from 'framer-motion'
 
-const API_URL = "https://assassin.vlad.gg/api"
+const API_URL = 'https://assassin.vlad.gg/api'
 
 function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')

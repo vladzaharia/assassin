@@ -6,7 +6,11 @@
         "cacheableOperations": [
           "build",
           "lint",
-          "test"
+					"format",
+          "test",
+					"generate",
+					"prepare-deploy",
+					"deploy"
         ],
         "accessToken": "ZTY0ODU1OTItN2U5OS00MzcyLTg1NDYtMjJkMWI2ODFlNTE3fHJlYWQtd3JpdGU="
       }
