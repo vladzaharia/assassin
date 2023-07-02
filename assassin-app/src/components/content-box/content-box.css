@@ -15,7 +15,8 @@
 	width: 75vw;
 	height: 75vh;
 
-	max-height: 75vh;
+	max-height: 40rem;
+	max-width: 70rem;
 
 	display: flex;
 	flex-direction: row;

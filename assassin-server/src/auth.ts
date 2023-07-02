@@ -21,6 +21,11 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; useGMAuth
 		useGMAuth: true,
 	},
 	{
+		path: /room\/\w*\/gm\/?(\w+)?$/,
+		methods: ['POST'],
+		useGMAuth: true,
+	},
+	{
 		path: /wordlist\/\w*$/,
 		methods: ['PUT', 'DELETE'],
 	},
@@ -40,12 +45,12 @@ export const checkPath = (path: string, method: string) => {
 }
 
 export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
-	const secret = await c.env.OPENID.get('secret')
+	const secret = await c.env.OPENID.get('secret') || "test-secret"
 	const match = checkPath(c.req.path, c.req.method)
 	if (match) {
 		if (match.useGMAuth) {
-			const { name } = c.req.query()
 			const { room } = c.req.param()
+			const { 'X-Assassin-User': name } = c.req.header()
 
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
 
@@ -56,9 +61,9 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
 
 			if (roomGM?.name !== name) {
-				return jwt({ secret: secret || '' })(c, next)
+				return jwt({ secret })(c, next)
 			}
-		} else if (secret) {
+		} else {
 			return jwt({ secret })(c, next)
 		}
 	}

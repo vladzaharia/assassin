@@ -10,7 +10,9 @@
 .instructions .title {
 	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 2rem;
-	top: 1rem;
+	margin: 0;
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
 	color: var(--primary);
 }
 
@@ -41,7 +43,10 @@
 }
 
 @media only screen and (max-width: 50rem) {
-	.introduction .step {
-		width: 100%;
+	.instructions .title {
+		margin-top: 1.5rem;
+	}
+	.instructions .step {
+		width: 90%;
 	}
 }

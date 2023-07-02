@@ -36,7 +36,7 @@ function Room() {
 		setPlayerInfo(undefined)
 		setRoomStatus(undefined)
 
-		const status = (await roomApi.roomRoomGet(room || '')).data
+		const status = (await roomApi.getRoom(room || '')).data
 		setRoomStatus(status)
 	}
 
@@ -44,7 +44,7 @@ function Room() {
 		// Reset data
 		setPlayerInfo(undefined)
 
-		const getPlayerResponse = await playerApi.roomRoomPlayerNameGet(room || '', name)
+		const getPlayerResponse = await playerApi.getPlayer(room || '', name)
 
 		if (getPlayerResponse.status === 404) {
 			return setRequestError('Player not found!')
@@ -64,7 +64,7 @@ function Room() {
 
 	const addPlayer = async () => {
 		try {
-			const addPlayerResponse = await playerApi.roomRoomPlayerNamePut(room || '', name)
+			const addPlayerResponse = await playerApi.putPlayer(room || '', name)
 			setRequestError(addPlayerResponse.data.message)
 			getRoom()
 		} catch (e) {
@@ -76,7 +76,7 @@ function Room() {
 
 	const deletePlayer = async () => {
 		try {
-			const deletePlayerResponse = await playerApi.roomRoomPlayerNameDelete(room || '', name)
+			const deletePlayerResponse = await playerApi.deletePlayer(room || '', name)
 			setRequestError(deletePlayerResponse.data.message)
 			getRoom()
 		} catch (e) {

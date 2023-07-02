@@ -21,7 +21,7 @@ export async function listRooms(db: D1Database) {
 }
 
 export async function findRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).executeTakeFirst()
+	return await getKyselyDb(db).selectFrom('room').selectAll().where('name', '=', room).executeTakeFirst()
 }
 
 export async function insertRoom(db: D1Database, room: string) {

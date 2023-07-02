@@ -1,13 +1,13 @@
 import { useContext, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCrown, faUser, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import useLocalStorage from 'use-local-storage'
+import isMobile from 'is-mobile'
 
+import Popover from '../popover/popover'
 import { RoomStatusContext } from '../room-status/room-status'
 
 import './player-list.css'
-import { faCrown, faUser, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
-import useLocalStorage from 'use-local-storage'
-import Popover from '../popover/popover'
-import isMobile from 'is-mobile'
 
 export interface PlayerListProps {
 	clickGM: () => void
@@ -17,8 +17,9 @@ export interface PlayerListProps {
 function PlayerList({ clickGM, requestError }: PlayerListProps) {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
-	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
-	const popoverAnchor = useRef<HTMLButtonElement>(null)
+
+	const [gmPopoverOpen, setGMPopoverOpen] = useState<boolean>(false)
+	const gmPopoverAnchor = useRef<HTMLButtonElement>(null)
 
 	const roomStatus = roomContext?.room
 	const playerIsGM = roomContext?.room?.players.filter((p) => p.isGM)[0]?.name === name
@@ -33,15 +34,15 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 							<button
 								className={'orange'}
 								onClick={clickGM}
-								ref={popoverAnchor}
-								onMouseEnter={() => {
+								ref={gmPopoverAnchor}
+								onPointerEnter={() => {
 									if (!isMobile()) {
-										setPopoverOpen(true)
+										setGMPopoverOpen(true)
 									}
 								}}
-								onMouseLeave={() => {
+								onPointerLeave={() => {
 									if (!isMobile()) {
-										setPopoverOpen(false)
+										setGMPopoverOpen(false)
 									}
 								}}
 							>
@@ -57,21 +58,24 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 								}
 								color="orange"
 								icon={faCrown}
-								anchor={popoverAnchor.current}
-								open={popoverOpen}
-								onClose={() => setPopoverOpen(false)}
+								anchor={gmPopoverAnchor.current}
+								open={gmPopoverOpen}
+								onClose={() => setGMPopoverOpen(false)}
 							/>
 						</>
 					) : undefined}
 					{roomStatus?.players.some((p) => p.name === name) ? (
-						<button className={requestError && requestError !== 'ok' ? 'failed' : 'primary'} onClick={roomContext?.leave}>
+						<button
+							className={requestError && requestError !== 'ok' ? 'failed' : 'primary'}
+							onClick={roomContext?.leave}
+							disabled={!roomStatus || roomStatus.status === "started"}>
 							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
 					) : (
 						<button
 							className={requestError && requestError !== 'ok' ? 'failed' : 'green'}
 							onClick={roomContext?.join}
-							disabled={!roomStatus}
+							disabled={!roomStatus || roomStatus.status === "started"}
 						>
 							<FontAwesomeIcon icon={faUserPlus} />
 						</button>

@@ -4,10 +4,12 @@ import { Popover as MUIPopover } from '@mui/material'
 
 import './popover.css'
 
+export type PopoverColor = "primary" | "blue" | "green" | "orange" | "grey-dark"
+
 export interface PopoverContentProps {
 	title?: string
 	description?: string | JSX.Element
-	color: string
+	color: PopoverColor
 	icon?: IconDefinition
 }
 
@@ -43,9 +45,9 @@ const Popover = (props: PopoverProps) => {
 				paper: {
 					elevation: 0,
 					sx: {
-						'margin-top': '0.5rem',
+						marginTop: '0.5rem',
 						border: `solid 1px var(--${color})`,
-						'border-radius': '0.5rem',
+						borderRadius: '0.5rem',
 					},
 				},
 			}}

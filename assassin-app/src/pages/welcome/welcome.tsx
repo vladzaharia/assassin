@@ -26,7 +26,7 @@ function Welcome() {
 			return setStatus('Enter a room to continue!')
 		}
 
-		const roomResponse = await roomApi.roomRoomGet(room).catch((e: Error | AxiosError) => {
+		const roomResponse = await roomApi.getRoom(room).catch((e: Error | AxiosError) => {
 			if (isAxiosError(e)) {
 				if (e.response?.status === 404) {
 					setStatus('Room not found!')

@@ -22,6 +22,7 @@ import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
 import { Ok } from './routes/ok'
 import { ResetDb } from './routes/debug/reset'
 import { DemoDb } from './routes/debug/demo'
+import { AssignGM } from './routes/room/gm'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -50,6 +51,11 @@ app.get('/api/room/', ListRooms)
 app.get('/api/room/:room', GetRoom)
 app.put('/api/room/:room', AddRoom)
 app.delete('/api/room/:room', DeleteRoom)
+
+// Set room GM
+app.put('/api/room/:room/gm', AssignGM)
+app.put('/api/room/:room/gm/', AssignGM)
+app.put('/api/room/:room/gm/:name', AssignGM)
 
 // Execute action on room
 app.post('/api/room/:room/reset', ResetGame)

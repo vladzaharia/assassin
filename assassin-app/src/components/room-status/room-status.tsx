@@ -7,6 +7,7 @@ import isMobile from 'is-mobile'
 import './room-status.css'
 import Popover from '../popover/popover'
 import { Room } from 'assassin-server-client'
+import useLocalStorage from 'use-local-storage'
 
 export interface RoomStatusContextProps {
 	room: Room | undefined
@@ -18,6 +19,7 @@ export interface RoomStatusContextProps {
 export const RoomStatusContext = createContext<RoomStatusContextProps | undefined>(undefined)
 
 function RoomStatus() {
+	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,7 +58,9 @@ function RoomStatus() {
 
 		switch (roomStatus?.status) {
 			case 'started':
-				return 'The game has started! Look up your opponent and get them!'
+				return roomStatus?.players.some((p) => p.name === name) ?
+					'The game has started! Look up your opponent and get them!' :
+					<><strong>The game has already started.</strong><br /><br /> You'll need to wait until the game ends or join another room.</>
 			case 'ready':
 				return 'The game is ready to start! Ask the GM to start the game.'
 			case 'not-ready':
@@ -93,12 +97,12 @@ function RoomStatus() {
 			<div
 				ref={popoverAnchor}
 				className={`room-status ${getStatusColor()}`}
-				onMouseEnter={() => {
+				onPointerEnter={() => {
 					if (!isMobile()) {
 						setPopoverOpen(true)
 					}
 				}}
-				onMouseLeave={() => {
+				onPointerLeave={() => {
 					if (!isMobile()) {
 						setPopoverOpen(false)
 					}
