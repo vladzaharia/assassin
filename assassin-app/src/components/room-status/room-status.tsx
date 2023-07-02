@@ -1,26 +1,16 @@
 import { faPlayCircle } from '@fortawesome/pro-regular-svg-icons'
 import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Room } from 'assassin-server-client'
 import isMobile from 'is-mobile'
-import { createContext, useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import useLocalStorage from 'use-local-storage'
+import { RoomContext } from '../../context/room'
 import Popover from '../popover/popover'
 import './room-status.css'
 
-export interface RoomStatusContextProps {
-	room: Room | undefined
-	playerIsGM: boolean
-	join: () => void
-	leave: () => void
-	lookup: () => void
-}
-
-export const RoomStatusContext = createContext<RoomStatusContextProps | undefined>(undefined)
-
 export default function RoomStatus({ showText }: { showText?: boolean }) {
 	const [name] = useLocalStorage('name', '')
-	const roomContext = useContext(RoomStatusContext)
+	const roomContext = useContext(RoomContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const popoverAnchor = useRef<any>(null)

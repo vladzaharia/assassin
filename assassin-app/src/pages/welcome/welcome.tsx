@@ -2,47 +2,49 @@ import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AxiosError, isAxiosError } from 'axios'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
 import './welcome.css'
+import { ErrorContext } from '../../context/error'
 
 export default function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
 	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
-	const [status, setStatus] = useState<string | undefined>(undefined)
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { error, setError } = useContext(ErrorContext)!
 	const navigate = useNavigate()
 
 	const roomApi = createRoomApi()
 
 	const fetchRoom = async () => {
 		if (!room || room === '') {
-			return setStatus('Enter a room to continue!')
+			return setError('Enter a room to continue!', 'room')
 		}
 
 		const roomResponse = await roomApi.getRoom(room).catch((e: Error | AxiosError) => {
 			if (isAxiosError(e)) {
 				if (e.response?.status === 404) {
-					setStatus('Room not found!')
+					setError('Room not found!', 'room')
 				} else {
-					setStatus('Something went wrong!')
+					setError('Something went wrong!', 'room')
 				}
 			}
 		})
 
 		if (roomResponse?.status === 200) {
-			setStatus('ok')
+			setError(undefined)
 			return navigate(`/room/${room}`)
 		}
 	}
 
 	const getButtonClass = () => {
-		if (status) {
-			return status === 'ok' ? 'green' : 'failed'
+		if (error) {
+			return error.message !== 'ok' && error.errorType === 'room' ? 'failed' : 'primary'
 		}
 
 		return 'primary'
@@ -113,7 +115,7 @@ export default function Welcome() {
 									placeholder="Room code"
 									value={room}
 									onChange={(e) => {
-										setStatus(undefined)
+										setError(undefined)
 										setRoom(e.target.value)
 									}}
 								/>
@@ -124,7 +126,6 @@ export default function Welcome() {
 						</motion.div>
 					) : undefined}
 				</AnimatePresence>
-				{status && status !== 'ok' ? <ErrorField className="bottom" message={status} /> : undefined}
 			</div>
 		</>
 	)

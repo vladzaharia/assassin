@@ -1,8 +1,10 @@
 import { faHexagonExclamation } from '@fortawesome/pro-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { createContext, useContext } from 'react'
+import { useContext } from 'react'
 import { Link, useRouteError } from 'react-router-dom'
+import { ErrorContext } from '../../context/error'
 import './error.css'
+import { motion } from 'framer-motion'
 
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
@@ -19,26 +21,23 @@ export const RouterErrorBoundary = () => {
 	)
 }
 
-export interface ErrorFieldContextProps {
-	message?: string
-	setMessage: React.Dispatch<React.SetStateAction<string | undefined>>
-}
-export const ErrorFieldContext = createContext<ErrorFieldContextProps | undefined>(undefined)
-
 export const ContextAwareErrorField = ({ className }: { className?: string }) => {
-	const context = useContext(ErrorFieldContext)
+	const context = useContext(ErrorContext)
 
 	// eslint-disable-next-line react/jsx-no-useless-fragment
-	return context && context.message && context.message !== 'ok' ? <ErrorField className={className} message={context.message} /> : <></>
+	return context && context.error && context.error.message !== 'ok' ? <ErrorField className={className} message={context.error.message} /> : <></>
 }
 
 export const ErrorField = ({ message, className }: { message: string; className?: string }) => {
 	return (
-		<div className={`error-field ${className}`}>
+		<motion.div
+			className={`error-field no-animate ${className}`}
+			transition={{ opacity: message ? 1 : 0 }}
+			exit={{ opacity: 0 }}>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
 				<span className="message">{message}</span>
 			</span>
-		</div>
+		</motion.div>
 	)
 }

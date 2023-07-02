@@ -1,26 +1,23 @@
-import { Player as PlayerResponse, Room as RoomResponse } from 'assassin-server-client'
-import { useEffect, useState } from 'react'
-import { Outlet, useFetcher, useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { Room as RoomResponse } from 'assassin-server-client'
+import { useEffect } from 'react'
+import { Outlet, useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
-import { createPlayerApi, createRoomApi } from '../../api'
-import { ContextAwareErrorField, ErrorFieldContext } from '../../components/error/error'
 import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
 import PlayerList from '../../components/player-list/player-list'
-import { RoomStatusContext } from '../../components/room-status/room-status'
+import { RoomContext } from '../../context/room'
 import './room.css'
 
 export default function Room() {
-	// const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
+	// const errorContext = useContext(ErrorContext)
 	const roomStatus = useLoaderData() as RoomResponse
-	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
-	const [requestError, setRequestError] = useState<string | undefined>(undefined)
+	// const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [name] = useLocalStorage<string>('name', '')
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 
-	const playerApi = createPlayerApi()
+	// const playerApi = createPlayerApi()
 
 	const { room } = useParams()
 
@@ -29,51 +26,27 @@ export default function Room() {
 		navigate('.', { relative: 'path' })
 	}
 
-	const getPlayer = async () => {
-		// Reset data
-		setPlayerInfo(undefined)
+	// const getPlayer = async () => {
+	// 	// Reset data
+	// 	setPlayerInfo(undefined)
 
-		const getPlayerResponse = await playerApi.getPlayer(room || '', name)
+	// 	const getPlayerResponse = await playerApi.getPlayer(room || '', name)
 
-		if (getPlayerResponse.status === 404) {
-			return setRequestError('Player not found!')
-		}
+	// 	if (getPlayerResponse.status === 404) {
+	// 		return errorContext?.setError('Player not found!', 'player')
+	// 	}
 
-		const json = getPlayerResponse.data
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const jsonAsAny = json as any
+	// 	const json = getPlayerResponse.data
+	// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// 	const jsonAsAny = json as any
 
-		if (jsonAsAny.message) {
-			setRequestError(jsonAsAny.message)
-		} else {
-			setPlayerInfo(json)
-			setRequestError('ok')
-		}
-	}
-
-	const addPlayer = async () => {
-		try {
-			const addPlayerResponse = await playerApi.putPlayer(room || '', name)
-			setRequestError(addPlayerResponse.data.message)
-			getRoom()
-		} catch (e) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const eAsAny = e as any
-			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
-		}
-	}
-
-	const deletePlayer = async () => {
-		try {
-			const deletePlayerResponse = await playerApi.deletePlayer(room || '', name)
-			setRequestError(deletePlayerResponse.data.message)
-			getRoom()
-		} catch (e) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const eAsAny = e as any
-			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
-		}
-	}
+	// 	if (jsonAsAny.message) {
+	// 		errorContext?.setError(jsonAsAny.message, 'player')
+	// 	} else {
+	// 		setPlayerInfo(json)
+	// 		errorContext?.setError(undefined, 'player')
+	// 	}
+	// }
 
 	/** Initially fetch data */
 	useEffect(() => {
@@ -96,55 +69,44 @@ export default function Room() {
 	}, [roomStatus])
 
 	return (
-		<RoomStatusContext.Provider
+		<RoomContext.Provider
 			value={{
 				room: roomStatus,
-				lookup: getPlayer,
-				join: addPlayer,
-				leave: deletePlayer,
 				playerIsGM: roomStatus?.players.filter((p) => p.isGM)[0]?.name === name,
 			}}
 		>
-			<ErrorFieldContext.Provider
-				value={{
-					message: requestError,
-					setMessage: setRequestError,
+			<Menu
+				headerProps={{
+					title: room,
+					onClick: () => navigate('/'),
+					status: true,
 				}}
 			>
-				<Menu
-					headerProps={{
-						title: room,
-						onClick: () => navigate('/'),
-						status: true,
-					}}
-				>
-					<PlayerActions requestError={requestError} />
-					<PlayerList />
-				</Menu>
-				<div className="room-content">
-					<Outlet />
-					{/* {playerInfo ? (
-						<div className="info">
-							<div className="target">
-								<label htmlFor="target">Your target is...</label>
-								<span id="target">
-									<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
-								</span>
-							</div>
-							<div className="words">
-								<label htmlFor="words">Your words are...</label>
-								<span id="words">
-									<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
-									Check your card(s)!
-								</span>
-							</div>
+				<PlayerActions />
+				<PlayerList />
+			</Menu>
+			<div className="room-content">
+				<Outlet />
+				{/* {playerInfo ? (
+					<div className="info">
+						<div className="target">
+							<label htmlFor="target">Your target is...</label>
+							<span id="target">
+								<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
+							</span>
 						</div>
-					) : (
-						<Instructions />
-					)} */}
-					<ContextAwareErrorField className="align-bottom" />
-				</div>
-			</ErrorFieldContext.Provider>
-		</RoomStatusContext.Provider>
+						<div className="words">
+							<label htmlFor="words">Your words are...</label>
+							<span id="words">
+								<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
+								Check your card(s)!
+							</span>
+						</div>
+					</div>
+				) : (
+					<Instructions />
+				)} */}
+			</div>
+		</RoomContext.Provider>
 	)
 }

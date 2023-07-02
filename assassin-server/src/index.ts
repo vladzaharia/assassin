@@ -117,6 +117,18 @@ app.get(
 	})
 )
 app.get(
+	'/room/:roomId/gm',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/room/:roomId/player',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
 	'/*',
 	serveStatic({
 		root: './app',

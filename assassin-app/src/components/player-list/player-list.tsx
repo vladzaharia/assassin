@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import isMobile from 'is-mobile'
 import { useContext, useRef, useState } from 'react'
-import useLocalStorage from 'use-local-storage'
-import Popover from '../popover/popover'
-import { RoomStatusContext } from '../room-status/room-status'
-import './player-list.css'
-import { ErrorFieldContext } from '../error/error'
 import { useLocation, useNavigate } from 'react-router-dom'
+import useLocalStorage from 'use-local-storage'
+import { createPlayerApi } from '../../api'
+import { ErrorContext } from '../../context/error'
+import { RoomContext } from '../../context/room'
 import Header from '../header/header'
+import Popover from '../popover/popover'
+import './player-list.css'
 
 const getPlayerColor = (player: BasicPlayer) => {
 	if (player.isGM) {
@@ -32,8 +33,8 @@ const getPlayerIcon = (player: BasicPlayer) => {
 
 export default function PlayerList() {
 	const [name] = useLocalStorage('name', '')
-	const roomContext = useContext(RoomStatusContext)
-	const errorContext = useContext(ErrorFieldContext)
+	const roomContext = useContext(RoomContext)
+	const errorContext = useContext(ErrorContext)
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -44,11 +45,36 @@ export default function PlayerList() {
 
 	const JoinLeaveButton = () => {
 		const playerInRoom = roomStatus?.players.some((p) => p.name === name)
+		const playerApi = createPlayerApi()
+
+		const addPlayer = async () => {
+			try {
+				const addPlayerResponse = await playerApi.putPlayer(roomContext?.room?.name || '', name)
+				errorContext?.setError(addPlayerResponse.data.message, 'join')
+				navigate('.', { relative: 'path' })
+			} catch (e) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const eAsAny = e as any
+				errorContext?.setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'join')
+			}
+		}
+
+		const deletePlayer = async () => {
+			try {
+				const deletePlayerResponse = await playerApi.deletePlayer(roomContext?.room?.name || '', name)
+				errorContext?.setError(deletePlayerResponse.data.message, 'leave')
+				navigate('.', { relative: 'path' })
+			} catch (e) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const eAsAny = e as any
+				errorContext?.setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'leave')
+			}
+		}
 
 		return (
 			<button
-				className={errorContext?.message && errorContext.message !== 'ok' ? 'failed' : 'primary'}
-				onClick={!playerInRoom ? roomContext?.join : roomContext?.leave}
+				className={errorContext?.error && errorContext.error.message !== 'ok' ? 'failed' : 'primary'}
+				onClick={!playerInRoom ? addPlayer : deletePlayer}
 				disabled={!roomStatus || roomStatus.status === 'started'}
 			>
 				<FontAwesomeIcon icon={!playerInRoom ? faUserPlus : faUserMinus} />

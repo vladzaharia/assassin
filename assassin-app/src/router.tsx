@@ -6,6 +6,7 @@ import { createRoomApi } from './api'
 import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './components/error/error'
 import Admin from './pages/admin/admin'
+import GM from './pages/gm/gm'
 import Instructions from './pages/instructions/instructions'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
 					},
 					{
 						path: 'gm',
-						element: <Instructions />,
+						element: <GM />,
 					},
 					{
 						path: 'player',
