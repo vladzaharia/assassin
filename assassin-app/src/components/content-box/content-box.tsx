@@ -7,7 +7,7 @@ export interface ContentBoxProps {
 	children?: ReactNode
 }
 
-function ContentBox({ children }: ContentBoxProps) {
+export default function ContentBox({ children }: ContentBoxProps) {
 	const location = useLocation()
 
 	return (
@@ -27,5 +27,3 @@ function ContentBox({ children }: ContentBoxProps) {
 		</div>
 	)
 }
-
-export default ContentBox

@@ -6,7 +6,7 @@ import RoomStatus from '../room-status/room-status'
 import './menu.css'
 
 export interface MenuProps {
-	header?: {
+	headerProps?: {
 		title?: string
 		icon?: IconDefinition
 		status?: boolean
@@ -15,7 +15,7 @@ export interface MenuProps {
 	children: ReactNode
 }
 
-function Menu({ header, children }: MenuProps) {
+export default function Menu({ headerProps: header, children }: MenuProps) {
 	return (
 		<div className="menu">
 			{header && (
@@ -33,5 +33,3 @@ function Menu({ header, children }: MenuProps) {
 		</div>
 	)
 }
-
-export default Menu

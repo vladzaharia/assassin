@@ -1,6 +1,6 @@
 import { useAuth } from 'react-oidc-context'
 
-function Admin() {
+export default function Admin() {
 	const auth = useAuth()
 
 	return auth.isAuthenticated ? (
@@ -13,5 +13,3 @@ function Admin() {
 		<button onClick={() => void auth.signinRedirect()}>Log in</button>
 	)
 }
-
-export default Admin

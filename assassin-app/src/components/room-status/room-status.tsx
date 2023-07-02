@@ -17,7 +17,7 @@ export interface RoomStatusContextProps {
 
 export const RoomStatusContext = createContext<RoomStatusContextProps | undefined>(undefined)
 
-function RoomStatus() {
+export default function RoomStatus() {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
@@ -132,5 +132,3 @@ function RoomStatus() {
 		</>
 	)
 }
-
-export default RoomStatus

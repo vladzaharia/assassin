@@ -10,7 +10,7 @@ import { createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
 import './welcome.css'
 
-function Welcome() {
+export default function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
 	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
@@ -129,5 +129,3 @@ function Welcome() {
 		</>
 	)
 }
-
-export default Welcome

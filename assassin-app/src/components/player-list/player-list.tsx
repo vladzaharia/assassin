@@ -12,7 +12,7 @@ export interface PlayerListProps {
 	requestError?: string
 }
 
-function PlayerList({ clickGM, requestError }: PlayerListProps) {
+export default function PlayerList({ clickGM, requestError }: PlayerListProps) {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 
@@ -92,5 +92,3 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 		</div>
 	)
 }
-
-export default PlayerList

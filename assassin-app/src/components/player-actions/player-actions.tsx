@@ -9,7 +9,7 @@ export interface PlayerActionsProps {
 	requestError?: string
 }
 
-function PlayerActions({ requestError }: PlayerActionsProps) {
+export default function PlayerActions({ requestError }: PlayerActionsProps) {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 	const roomStatus = roomContext?.room
@@ -22,5 +22,3 @@ function PlayerActions({ requestError }: PlayerActionsProps) {
 		</div>
 	) : null
 }
-
-export default PlayerActions

@@ -15,7 +15,7 @@ import PlayerList from '../../components/player-list/player-list'
 import { RoomStatusContext } from '../../components/room-status/room-status'
 import './room.css'
 
-function Room() {
+export default function Room() {
 	const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
 	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [requestError, setRequestError] = useState<string | undefined>(undefined)
@@ -108,7 +108,7 @@ function Room() {
 			}}
 		>
 			<Menu
-				header={{
+				headerProps={{
 					title: room,
 					onClick: () => navigate('/'),
 					status: true,
@@ -146,5 +146,3 @@ function Room() {
 		</RoomStatusContext.Provider>
 	)
 }
-
-export default Room

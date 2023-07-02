@@ -32,7 +32,7 @@ export interface PopoverProps extends PopoverContentProps {
 	onClose: () => void
 }
 
-const Popover = (props: PopoverProps) => {
+export default function Popover(props: PopoverProps) {
 	const { anchor, color, open, onClose } = props
 
 	return (
@@ -68,5 +68,3 @@ const Popover = (props: PopoverProps) => {
 		</MUIPopover>
 	)
 }
-
-export default Popover

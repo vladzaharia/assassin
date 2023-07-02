@@ -24,7 +24,7 @@ function Step({ icon, color, title, description }: StepProps) {
 	)
 }
 
-function Instructions() {
+export default function Instructions() {
 	return (
 		<div className="instructions">
 			<h2 className="title">How to Play</h2>
@@ -73,5 +73,3 @@ function Instructions() {
 		</div>
 	)
 }
-
-export default Instructions
