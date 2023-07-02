@@ -1,7 +1,7 @@
 import { Context, Next } from 'hono'
 import { jwt } from 'hono/jwt'
 
-import { Bindings } from './types'
+import { Bindings } from './bindings'
 import { findRoomGM } from './tables/player'
 import { findRoom } from './tables/room'
 

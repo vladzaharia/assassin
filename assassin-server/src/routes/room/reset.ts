@@ -1,7 +1,7 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
-import { createRoomsTable, findRoom } from '../../tables/room'
+import { Bindings } from '../../bindings'
 import { createPlayerTable, deletePlayersInRoom } from '../../tables/player'
+import { createRoomsTable, findRoom } from '../../tables/room'
 
 export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {

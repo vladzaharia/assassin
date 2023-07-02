@@ -1,7 +1,7 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
-import { createWordListTable, deleteWordList, findWordList } from '../../tables/wordlist'
+import { Bindings } from '../../bindings'
 import { createWordTable, deleteWord, listWordsInWordList } from '../../tables/word'
+import { createWordListTable, deleteWordList, findWordList } from '../../tables/wordlist'
 
 export const DeleteWordList = async (c: Context<{ Bindings: Bindings }>) => {
 	try {

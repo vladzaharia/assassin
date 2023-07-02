@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AxiosError, isAxiosError } from 'axios'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
-
 import { createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
-
 import './welcome.css'
-import { AnimatePresence, motion } from 'framer-motion'
-import { AxiosError, isAxiosError } from 'axios'
 
 function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')

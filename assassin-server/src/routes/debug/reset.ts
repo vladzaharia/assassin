@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
+import { Bindings } from '../../bindings'
 import { createPlayerTable, dropPlayerTable } from '../../tables/player'
 import { createRoomsTable, dropRoomTable } from '../../tables/room'
 import { createWordTable, dropWordTable } from '../../tables/word'

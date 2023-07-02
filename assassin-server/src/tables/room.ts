@@ -1,5 +1,5 @@
-import { RoomRecord } from '../types'
 import { getKyselyDb } from './db'
+import { convertBoolToInt } from './util'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -24,12 +24,23 @@ export async function findRoom(db: D1Database, room: string) {
 	return await getKyselyDb(db).selectFrom('room').selectAll().where('name', '=', room).executeTakeFirst()
 }
 
-export async function insertRoom(db: D1Database, room: string) {
+export async function insertRoom(db: D1Database, room: string, usesWords = true) {
 	return await getKyselyDb(db)
 		.insertInto('room')
 		.values({
-			name: room
+			name: room,
+			usesWords: convertBoolToInt(usesWords)
 		})
+		.execute()
+}
+
+export async function setUsesWords(db: D1Database, room: string, usesWords: boolean) {
+	return await getKyselyDb(db)
+		.updateTable('room')
+		.set({
+			usesWords: convertBoolToInt(usesWords)
+		})
+		.where('name', '=', room)
 		.execute()
 }
 

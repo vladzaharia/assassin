@@ -1,12 +1,10 @@
-import { useContext, useRef, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown, faUser, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
-import useLocalStorage from 'use-local-storage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import isMobile from 'is-mobile'
-
+import { useContext, useRef, useState } from 'react'
+import useLocalStorage from 'use-local-storage'
 import Popover from '../popover/popover'
 import { RoomStatusContext } from '../room-status/room-status'
-
 import './player-list.css'
 
 export interface PlayerListProps {

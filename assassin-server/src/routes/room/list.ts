@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
+import { Bindings } from '../../bindings'
 import { createRoomsTable, listRooms } from '../../tables/room'
 
 export const ListRooms = async (c: Context<{ Bindings: Bindings }>) => {

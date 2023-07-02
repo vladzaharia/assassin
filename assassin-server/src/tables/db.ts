@@ -10,6 +10,7 @@ export interface Database {
 
 export interface RoomTable {
 	name: string
+	usesWords: 0 | 1
 }
 
 export interface PlayerTable {

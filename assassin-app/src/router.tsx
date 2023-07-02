@@ -1,7 +1,12 @@
 import { StrictMode } from 'react'
 import * as ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import ContentBox from './components/content-box/content-box'
+import { RouterErrorBoundary } from './components/error/error'
+import Admin from './pages/admin/admin'
+import Room from './pages/room/room'
+import Welcome from './pages/welcome/welcome'
 
 /* Special Elite */
 import '@fontsource/special-elite'
@@ -15,12 +20,6 @@ import '@fontsource/barlow/800.css'
 
 /* Global styles */
 import './styles'
-
-import Admin from './pages/admin/admin'
-import Room from './pages/room/room'
-import Welcome from './pages/welcome/welcome'
-import ContentBox from './components/content-box/content-box'
-import { RouterErrorBoundary } from './components/error/error'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',

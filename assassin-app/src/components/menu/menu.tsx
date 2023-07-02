@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
-import './menu.css'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ReactNode } from 'react'
 import RoomStatus from '../room-status/room-status'
+import './menu.css'
 
 export interface MenuProps {
 	header?: {

@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
-import './content-box.css'
-import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { ReactNode } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
+import './content-box.css'
 
 export interface ContentBoxProps {
 	children?: ReactNode

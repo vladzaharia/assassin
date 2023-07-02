@@ -1,13 +1,12 @@
-import { createContext, useContext, useRef, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
 import { faPlayCircle } from '@fortawesome/pro-regular-svg-icons'
-import isMobile from 'is-mobile'
-
-import './room-status.css'
-import Popover from '../popover/popover'
+import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Room } from 'assassin-server-client'
+import isMobile from 'is-mobile'
+import { createContext, useContext, useRef, useState } from 'react'
 import useLocalStorage from 'use-local-storage'
+import Popover from '../popover/popover'
+import './room-status.css'
 
 export interface RoomStatusContextProps {
 	room: Room | undefined

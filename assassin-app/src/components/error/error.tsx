@@ -1,9 +1,7 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHexagonExclamation } from '@fortawesome/pro-regular-svg-icons'
-
-import './error.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, useRouteError } from 'react-router-dom'
+import './error.css'
 
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error

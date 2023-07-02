@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
+import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Player as PlayerResponse, Room as RoomResponse } from 'assassin-server-client'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
-
-import { Room as RoomResponse, Player as PlayerResponse } from 'assassin-server-client'
-
 import { createPlayerApi, createRoomApi } from '../../api'
 import { ErrorField } from '../../components/error/error'
-import { RoomStatusContext } from '../../components/room-status/room-status'
 import Instructions from '../../components/instructions/instructions'
 import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
 import PlayerList from '../../components/player-list/player-list'
-
+import { RoomStatusContext } from '../../components/room-status/room-status'
 import './room.css'
 
 function Room() {

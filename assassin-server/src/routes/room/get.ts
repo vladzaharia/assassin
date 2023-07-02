@@ -1,7 +1,7 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
-import { createRoomsTable, findRoom } from '../../tables/room'
+import { Bindings } from '../../bindings'
 import { createPlayerTable, listPlayersInRoom } from '../../tables/player'
+import { createRoomsTable, findRoom } from '../../tables/room'
 import { getRoomStatus } from '../../util'
 
 export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {

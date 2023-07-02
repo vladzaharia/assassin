@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faCrosshairs, faMagnifyingGlass, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './instructions.css'
 
 interface StepProps {

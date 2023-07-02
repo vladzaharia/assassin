@@ -75,7 +75,8 @@ paths:
         - Admin
       security:
         - JWTAuth: []
-
+      requestBody:
+        $ref: '#/components/requestBodies/AddRoomBody'
       parameters:
         - $ref: '#/components/parameters/RoomName'
       responses:
@@ -83,6 +84,26 @@ paths:
           $ref: '#/components/responses/Success'
         400:
           $ref: '#/components/responses/RoomExists'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      summary: Update room
+      description: Update an existing room's settings.
+      operationId: patchRoom
+      tags:
+        - Room
+        - Admin
+      security:
+        - JWTAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/AddRoomBody'
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -117,13 +138,6 @@ paths:
         - GMAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
-        - name: name
-          description: Name of player executing the action.
-          in: query
-          required: false
-          schema:
-            type: string
-            example: Vlad
       responses:
         200:
           $ref: '#/components/responses/Success'
@@ -148,13 +162,6 @@ paths:
         - GMAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
-        - name: name
-          description: Name of player executing the action.
-          in: query
-          required: false
-          schema:
-            type: string
-            example: Vlad
       responses:
         200:
           $ref: '#/components/responses/Success'
@@ -490,6 +497,18 @@ components:
       required: true
 
   requestBodies:
+    AddRoomBody:
+      description: Body for adding rooms.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoomBody'
+    UpdateRoomBody:
+      description: Body for updating rooms.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoomBody'
     AddWordlist:
       description: Body for adding wordlists.
       content:
@@ -663,6 +682,8 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/RoomName'
+        usesWords:
+          $ref: '#/components/schemas/RoomUsesWords'
         status:
           $ref: '#/components/schemas/RoomStatus'
         players:
@@ -672,8 +693,20 @@ components:
             $ref: '#/components/schemas/BasicPlayer'
       required:
         - name
+        - usesWords
         - status
         - players
+    RoomBody:
+      description: Body when adding or updating a room.
+      type: object
+      properties:
+        usesWords:
+          $ref: '#/components/schemas/RoomUsesWords'
+    RoomUsesWords:
+      type: boolean
+      description: Whether the room uses words or standard assassin.
+      example: true
+      default: true
     RoomName:
       description: Name of a room.
       type: string

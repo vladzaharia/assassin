@@ -1,7 +1,7 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
-import { createWordListTable, findWordList } from '../../tables/wordlist'
+import { Bindings } from '../../bindings'
 import { createWordTable, deleteWord } from '../../tables/word'
+import { createWordListTable, findWordList } from '../../tables/wordlist'
 
 interface DeleteWordsFromListBody {
 	words: string[]

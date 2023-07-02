@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { Bindings } from '../../types'
+import { Bindings } from '../../bindings'
 import { createWordListTable, findWordList, insertWordList } from '../../tables/wordlist'
 
 interface AddWordListBody {

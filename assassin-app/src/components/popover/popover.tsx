@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover as MUIPopover } from '@mui/material'
-
 import './popover.css'
 
 export type PopoverColor = "primary" | "blue" | "green" | "orange" | "grey-dark"

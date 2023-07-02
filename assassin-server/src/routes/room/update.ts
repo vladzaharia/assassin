@@ -1,25 +1,28 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, deletePlayersInRoom } from '../../tables/player'
-import { createRoomsTable, deleteRoom, findRoom } from '../../tables/room'
+import { createRoomsTable, findRoom, setUsesWords } from '../../tables/room'
 
-export const DeleteRoom = async (c: Context<{ Bindings: Bindings }>) => {
+interface UpdateRoomBody {
+	usesWords?: boolean
+}
+
+export const UpdateRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
+		const { usesWords } = await c.req.json<UpdateRoomBody>()
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
 		await createRoomsTable(db)
-		await createPlayerTable(db)
 
-		// Try to find room
 		const record = await findRoom(db, room)
 		if (!record) {
-			return c.json({ message: 'Room not found!' }, 404)
+			return c.json({ message: 'Room does not exist!' }, 404)
 		}
 
-		await deletePlayersInRoom(db, room)
-		await deleteRoom(db, room)
+		if (usesWords) {
+			await setUsesWords(db, room, usesWords)
+		}
 
 		return c.json({ message: 'ok' })
 	} catch (e) {

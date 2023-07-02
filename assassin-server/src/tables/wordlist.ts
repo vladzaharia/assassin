@@ -1,4 +1,3 @@
-import { WordListRecord } from '../types'
 import { getKyselyDb } from './db'
 
 export async function createWordListTable(db: D1Database) {

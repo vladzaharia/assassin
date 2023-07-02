@@ -3,26 +3,27 @@ import { serveStatic } from 'hono/cloudflare-workers'
 import { cors } from 'hono/cors'
 
 import { AuthMiddleware } from './auth'
-import { Bindings } from './types'
-import { ResetGame } from './routes/room/reset'
-import { StartGame } from './routes/room/start'
-import { GetPlayer } from './routes/player/get'
+import { Bindings } from './bindings'
+import { DemoDb } from './routes/debug/demo'
+import { ResetDb } from './routes/debug/reset'
+import { Ok } from './routes/ok'
 import { AddPlayer } from './routes/player/add'
 import { DeletePlayer } from './routes/player/delete'
-import { ListRooms } from './routes/room/list'
+import { GetPlayer } from './routes/player/get'
 import { AddRoom } from './routes/room/add'
-import { GetRoom } from './routes/room/get'
 import { DeleteRoom } from './routes/room/delete'
-import { ListWordLists } from './routes/wordlist/list'
-import { GetWordList } from './routes/wordlist/get'
-import { AddWordList } from './routes/wordlist/add'
-import { DeleteWordList } from './routes/wordlist/delete'
-import { AddWordsToList } from './routes/wordlist/addWords'
-import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
-import { Ok } from './routes/ok'
-import { ResetDb } from './routes/debug/reset'
-import { DemoDb } from './routes/debug/demo'
+import { GetRoom } from './routes/room/get'
 import { AssignGM } from './routes/room/gm'
+import { ListRooms } from './routes/room/list'
+import { ResetGame } from './routes/room/reset'
+import { StartGame } from './routes/room/start'
+import { UpdateRoom } from './routes/room/update'
+import { AddWordList } from './routes/wordlist/add'
+import { AddWordsToList } from './routes/wordlist/addWords'
+import { DeleteWordList } from './routes/wordlist/delete'
+import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
+import { GetWordList } from './routes/wordlist/get'
+import { ListWordLists } from './routes/wordlist/list'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -47,9 +48,10 @@ app.get('/api/', Ok)
 app.get('/api/room', ListRooms)
 app.get('/api/room/', ListRooms)
 
-// Get/Add/Delete room
+// Get/Add/Update/Delete room
 app.get('/api/room/:room', GetRoom)
 app.put('/api/room/:room', AddRoom)
+app.patch('/api/room/:room', UpdateRoom)
 app.delete('/api/room/:room', DeleteRoom)
 
 // Set room GM

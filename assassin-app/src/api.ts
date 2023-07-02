@@ -1,13 +1,14 @@
-import { AdminApi, Configuration, GMApi, PlayerApi, RoomApi, WordlistApi } from 'assassin-server-client'
+import { AdminApi, Configuration, ConfigurationParameters, GMApi, PlayerApi, RoomApi, WordlistApi } from 'assassin-server-client'
 
-const getApiConfig = () => {
+const getApiConfig = (parameters: Omit<ConfigurationParameters, 'basePath'> = {}) => {
 	return new Configuration({
+		... parameters,
 		basePath: import.meta.env.DEV ? 'http://localhost:8787/api' : undefined,
 	})
 }
 
-export const createAdminApi = () => {
-	return new AdminApi(getApiConfig())
+export const createAdminApi = (accessToken: string) => {
+	return new AdminApi(getApiConfig({ accessToken }))
 }
 
 export const createRoomApi = () => {
@@ -18,8 +19,8 @@ export const createPlayerApi = () => {
 	return new PlayerApi(getApiConfig())
 }
 
-export const createGMApi = () => {
-	return new GMApi(getApiConfig())
+export const createGMApi = (apiKey: string) => {
+	return new GMApi(getApiConfig({ apiKey }))
 }
 
 export const createWordlistApi = () => {
