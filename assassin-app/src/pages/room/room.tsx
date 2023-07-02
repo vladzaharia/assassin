@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import useLocalStorage from 'use-local-storage'
+import useSessionStorage from 'use-session-storage-state'
 
 import { Room as RoomResponse, Player as PlayerResponse } from 'assassin-server-client'
 
@@ -22,6 +23,7 @@ function Room() {
 	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [requestError, setRequestError] = useState<string | undefined>(undefined)
 	const [name] = useLocalStorage<string>('name', '')
+	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 
 	const roomApi = createRoomApi()
@@ -88,6 +90,8 @@ function Room() {
 		if (name) {
 			getRoom()
 		} else {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			roomSession[1](room!)
 			navigate("/")
 		}
 

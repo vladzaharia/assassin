@@ -25,7 +25,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		return c.json({
 			name: roomRecord.name,
 			status: getRoomStatus(playerRecords),
-			players: playerRecords.map((p) => { return { name: p.name, isGM: p.isGM === 1 }}),
+			players: playerRecords.map((p) => { return { name: p.name, isGM: p.isGM === 1, status: p.status }}),
 		})
 	} catch (e) {
 		console.error('err', e)

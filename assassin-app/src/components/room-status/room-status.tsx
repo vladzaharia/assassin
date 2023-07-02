@@ -60,9 +60,9 @@ function RoomStatus() {
 			case 'ready':
 				return 'The game is ready to start! Ask the GM to start the game.'
 			case 'not-ready':
-				return `There's not enough players to start a game. Get ${playersNeeded} more ${
+				return <>You must have at least 3 players in a room to start.<br /><br /> <strong>Get {playersNeeded} more {
 					playersNeeded === 1 ? 'player' : 'players'
-				} to join in order to start!`
+				} to join in order to begin playing!</strong></>
 			default:
 				return 'The status is unknown, check back later.'
 		}

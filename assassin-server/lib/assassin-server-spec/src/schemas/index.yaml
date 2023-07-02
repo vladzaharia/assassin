@@ -543,6 +543,8 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/PlayerName'
+        status:
+          $ref: '#/components/schemas/PlayerStatus'
         isGM:
           $ref: '#/components/schemas/PlayerIsGM'
       required:
