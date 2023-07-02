@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { faHexagonExclamation } from '@fortawesome/pro-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from 'react'
@@ -24,16 +25,16 @@ export const RouterErrorBoundary = () => {
 export const ContextAwareErrorField = ({ className }: { className?: string }) => {
 	const context = useContext(ErrorContext)
 
-	// eslint-disable-next-line react/jsx-no-useless-fragment
-	return context && context.error && context.error.message !== 'ok' ? <ErrorField className={className} message={context.error.message} /> : <></>
+	return context && context.error && context.error.message !== 'ok' ? (
+		<ErrorField className={className} message={context.error.message} />
+	) : (
+		<></>
+	)
 }
 
 export const ErrorField = ({ message, className }: { message: string; className?: string }) => {
 	return (
-		<motion.div
-			className={`error-field no-animate ${className}`}
-			transition={{ opacity: message ? 1 : 0 }}
-			exit={{ opacity: 0 }}>
+		<motion.div className={`error-field no-animate ${className}`} transition={{ opacity: message ? 1 : 0 }} exit={{ opacity: 0 }}>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
 				<span className="message">{message}</span>

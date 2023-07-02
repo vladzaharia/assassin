@@ -1,11 +1,11 @@
 import { faMagnifyingGlass } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import { ErrorContext } from '../../context/error'
 import { RoomContext } from '../../context/room'
 import './player-actions.css'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function PlayerActions() {
 	const [name] = useLocalStorage('name', '')
@@ -26,7 +26,8 @@ export default function PlayerActions() {
 					} else {
 						navigate('..', { relative: 'path' })
 					}
-				}}>
+				}}
+			>
 				<FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> Look up Target
 			</button>
 		</div>

@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
-import { ErrorField } from '../../components/error/error'
-import './welcome.css'
 import { ErrorContext } from '../../context/error'
+import './welcome.css'
 
 export default function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')

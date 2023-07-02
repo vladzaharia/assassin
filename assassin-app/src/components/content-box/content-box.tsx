@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ReactNode, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { ErrorContext, RequestError } from '../../context/error'
-import './content-box.css'
 import { ContextAwareErrorField } from '../error/error'
+import './content-box.css'
 
 export interface ContentBoxProps {
 	children?: ReactNode
@@ -17,7 +17,6 @@ export default function ContentBox({ children }: ContentBoxProps) {
 		const interval = setInterval(() => setRequestError(undefined), 5 * 1000)
 		return () => clearInterval(interval)
 	}, [requestError])
-
 
 	return (
 		<ErrorContext.Provider
@@ -39,7 +38,7 @@ export default function ContentBox({ children }: ContentBoxProps) {
 						{children ? children : <Outlet />}
 					</motion.div>
 				</AnimatePresence>
-				{requestError && requestError.message !== 'ok' ? <ContextAwareErrorField className="align-bottom" />: undefined}
+				{requestError && requestError.message !== 'ok' ? <ContextAwareErrorField className="align-bottom" /> : undefined}
 			</div>
 		</ErrorContext.Provider>
 	)

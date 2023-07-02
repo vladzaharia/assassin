@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ErrorContext } from '../../context/error'
 import { RoomContext } from '../../context/room'
 import './gm.css'
-import { ErrorContext } from '../../context/error'
 
 export default function GM() {
 	const roomStatus = useContext(RoomContext)
@@ -15,7 +15,7 @@ export default function GM() {
 			errorContext?.setError('You are not the GM of this room!')
 			navigate(`/room/${roomStatus?.room?.name}`)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
