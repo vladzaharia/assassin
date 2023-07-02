@@ -13,12 +13,14 @@ export interface RoomTable {
 	usesWords: 0 | 1
 }
 
+export type PlayerStatus = 'alive' | 'eliminated'
+
 export interface PlayerTable {
 	name: string
 	room: string
 	target?: string
 	words?: string
-	status: 'alive' | 'eliminated'
+	status: PlayerStatus
 	isGM: 0 | 1
 }
 

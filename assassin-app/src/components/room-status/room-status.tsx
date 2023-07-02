@@ -10,6 +10,7 @@ import './room-status.css'
 
 export interface RoomStatusContextProps {
 	room: Room | undefined
+	playerIsGM: boolean
 	join: () => void
 	leave: () => void
 	lookup: () => void
@@ -17,7 +18,7 @@ export interface RoomStatusContextProps {
 
 export const RoomStatusContext = createContext<RoomStatusContextProps | undefined>(undefined)
 
-export default function RoomStatus() {
+export default function RoomStatus({ showText }: { showText?: boolean }) {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
@@ -119,6 +120,7 @@ export default function RoomStatus() {
 				}}
 			>
 				<FontAwesomeIcon icon={getStatusIcon()} />
+				{showText ? getStatusLabel() : undefined}
 			</div>
 			<Popover
 				open={popoverOpen}

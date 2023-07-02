@@ -3,6 +3,16 @@ import { Bindings } from '../../bindings'
 import { createPlayerTable, listPlayersInRoom } from '../../tables/player'
 import { createRoomsTable, findRoom } from '../../tables/room'
 import { getRoomStatus } from '../../util'
+import { PlayerTable } from '../../tables/db'
+
+const buildPlayerRecords = (players: PlayerTable[]) => {
+	return [
+		... players.filter((p) => p.isGM),
+		... players.filter((p) => !p.isGM)
+	].map((p) =>{
+		return { name: p.name, isGM: p.isGM === 1, status: p.status }
+	})
+}
 
 export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -25,9 +35,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		return c.json({
 			name: roomRecord.name,
 			status: getRoomStatus(playerRecords),
-			players: playerRecords.map((p) => {
-				return { name: p.name, isGM: p.isGM === 1, status: p.status }
-			}),
+			players: buildPlayerRecords(playerRecords),
 		})
 	} catch (e) {
 		console.error('err', e)

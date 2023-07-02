@@ -30,11 +30,11 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 
 			if (players && players.length > 1) {
 				const otherPlayers = players!.filter((p) => !p.isGM)
-				await setGMStatus(db, otherPlayers[0].name, room, true)
+				await setGMStatus(db, room, otherPlayers[0].name, true)
 			}
 		}
 
-		await deletePlayer(db, name, room)
+		await deletePlayer(db, room, name)
 		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)

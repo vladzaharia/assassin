@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, insertPlayer } from '../../tables/player'
+import { createPlayerTable, insertPlayer, setPlayerStatus } from '../../tables/player'
 import { createRoomsTable, insertRoom } from '../../tables/room'
 import { createWordTable, insertWords } from '../../tables/word'
 import { createWordListTable, insertWordList } from '../../tables/wordlist'
@@ -22,10 +22,11 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 
 		// Insert demo room
 		await insertRoom(db, room)
-		await insertPlayer(db, name, room, true)
-		await insertPlayer(db, 'Foo', room)
-		await insertPlayer(db, 'Bar', room)
-		await insertPlayer(db, 'Baz', room)
+		await insertPlayer(db, room, name, true)
+		await insertPlayer(db, room, 'Foo')
+		await insertPlayer(db, room, 'Bar')
+		await insertPlayer(db, room, 'Baz')
+		await setPlayerStatus(db, room, 'Baz', 'eliminated')
 
 		if (addWords) {
 			// Insert demo wordlists
@@ -37,7 +38,6 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 			await insertWords(db, 'test-list', testWords)
 			const anotherWords = ['foo', 'bar', 'baz', 'foobar']
 			await insertWords(db, 'another-list', anotherWords)
-
 		}
 
 		return c.json({ message: 'ok' })

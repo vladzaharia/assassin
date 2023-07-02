@@ -42,7 +42,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 			// Update records
 			for (const result of results) {
-				await setPlayerTarget(db, result.name, room, result.target!)
+				await setPlayerTarget(db, room, result.name, result.target!)
 			}
 
 			return c.json({ message: 'ok' })

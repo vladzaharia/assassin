@@ -3,12 +3,11 @@ import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Player as PlayerResponse, Room as RoomResponse } from 'assassin-server-client'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createPlayerApi, createRoomApi } from '../../api'
-import { ErrorField } from '../../components/error/error'
-import Instructions from '../../components/instructions/instructions'
+import { ContextAwareErrorField, ErrorFieldContext } from '../../components/error/error'
 import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
 import PlayerList from '../../components/player-list/player-list'
@@ -30,8 +29,8 @@ export default function Room() {
 
 	const getRoom = async () => {
 		// Reset data
-		setPlayerInfo(undefined)
-		setRoomStatus(undefined)
+		// setPlayerInfo(undefined)
+		// setRoomStatus(undefined)
 
 		const status = (await roomApi.getRoom(room || '')).data
 		setRoomStatus(status)
@@ -83,6 +82,7 @@ export default function Room() {
 		}
 	}
 
+	/** Initially fetch data */
 	useEffect(() => {
 		// Set room name in session storage
 		if (room) {
@@ -98,6 +98,11 @@ export default function Room() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name])
 
+	useEffect(() => {
+		const interval = setInterval(getRoom, 15 * 1000);
+		return () => clearInterval(interval);
+	}, [getRoom, roomStatus])
+
 	return (
 		<RoomStatusContext.Provider
 			value={{
@@ -105,44 +110,48 @@ export default function Room() {
 				lookup: getPlayer,
 				join: addPlayer,
 				leave: deletePlayer,
+				playerIsGM: roomStatus?.players.filter((p) => p.isGM)[0]?.name === name
 			}}
 		>
-			<Menu
-				headerProps={{
-					title: room,
-					onClick: () => navigate('/'),
-					status: true,
-				}}
-			>
-				<PlayerActions requestError={requestError} />
-				<PlayerList
-					clickGM={() => {
-						return
+			<ErrorFieldContext.Provider
+				value={{
+					message: requestError,
+					setMessage: setRequestError
+				}}>
+				<Menu
+					headerProps={{
+						title: room,
+						onClick: () => navigate('/'),
+						status: true,
 					}}
-				/>
-			</Menu>
-			<div className="player-info">
-				{playerInfo ? (
-					<div className="info">
-						<div className="target">
-							<label htmlFor="target">Your target is...</label>
-							<span id="target">
-								<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
-							</span>
+				>
+					<PlayerActions requestError={requestError} />
+					<PlayerList />
+				</Menu>
+				<div className="room-content">
+					<Outlet />
+					{/* {playerInfo ? (
+						<div className="info">
+							<div className="target">
+								<label htmlFor="target">Your target is...</label>
+								<span id="target">
+									<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
+								</span>
+							</div>
+							<div className="words">
+								<label htmlFor="words">Your words are...</label>
+								<span id="words">
+									<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
+									Check your card(s)!
+								</span>
+							</div>
 						</div>
-						<div className="words">
-							<label htmlFor="words">Your words are...</label>
-							<span id="words">
-								<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
-								Check your card(s)!
-							</span>
-						</div>
-					</div>
-				) : (
-					<Instructions />
-				)}
-				{requestError && requestError !== 'ok' ? <ErrorField className="bottom" message={requestError} /> : undefined}
-			</div>
+					) : (
+						<Instructions />
+					)} */}
+					<ContextAwareErrorField className="bottom" />
+				</div>
+			</ErrorFieldContext.Provider>
 		</RoomStatusContext.Provider>
 	)
 }

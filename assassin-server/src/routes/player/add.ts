@@ -24,7 +24,7 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Player already exists!' }, 400)
 		}
 
-		await insertPlayer(db, name, room, players?.length === 0)
+		await insertPlayer(db, room, name, players?.length === 0)
 		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)

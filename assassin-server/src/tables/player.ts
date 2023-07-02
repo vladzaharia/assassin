@@ -1,4 +1,4 @@
-import { getKyselyDb } from './db'
+import { PlayerStatus, getKyselyDb } from './db'
 
 export async function createPlayerTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -19,7 +19,12 @@ export async function listPlayers(db: D1Database) {
 }
 
 export async function listPlayersInRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).execute()
+	return await getKyselyDb(db)
+		.selectFrom('player')
+		.selectAll()
+		.where('room', '=', room)
+		.orderBy('status', 'asc')
+		.execute()
 }
 
 export async function findPlayer(db: D1Database, name: string, room: string) {
@@ -38,7 +43,7 @@ export async function findRoomGM(db: D1Database, room: string) {
 		.executeTakeFirst()
 }
 
-export async function insertPlayer(db: D1Database, name: string, room: string, isGM = false) {
+export async function insertPlayer(db: D1Database, room: string, name: string, isGM = false) {
 	return await getKyselyDb(db)
 		.insertInto('player')
 		.values({
@@ -51,7 +56,7 @@ export async function insertPlayer(db: D1Database, name: string, room: string, i
 		.execute()
 }
 
-export async function setPlayerTarget(db: D1Database, name: string, room: string, target: string) {
+export async function setPlayerTarget(db: D1Database, room: string, name: string, target: string) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ target })
@@ -59,7 +64,7 @@ export async function setPlayerTarget(db: D1Database, name: string, room: string
 		.execute()
 }
 
-export async function setPlayerWords(db: D1Database, name: string, room: string, words: string[]) {
+export async function setPlayerWords(db: D1Database, room: string, name: string, words: string[]) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ words: JSON.stringify(words) })
@@ -67,7 +72,15 @@ export async function setPlayerWords(db: D1Database, name: string, room: string,
 		.execute()
 }
 
-export async function setGMStatus(db: D1Database, name: string, room: string, isGM: boolean) {
+export async function setPlayerStatus(db: D1Database, room: string, name: string, status: PlayerStatus) {
+	return await getKyselyDb(db)
+		.updateTable('player')
+		.set({ status })
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.execute()
+}
+
+export async function setGMStatus(db: D1Database, room: string, name: string, isGM: boolean) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ isGM: isGM ? 1 : 0 })
@@ -75,7 +88,7 @@ export async function setGMStatus(db: D1Database, name: string, room: string, is
 		.execute()
 }
 
-export async function deletePlayer(db: D1Database, name: string, room: string) {
+export async function deletePlayer(db: D1Database, room: string, name: string) {
 	return await getKyselyDb(db)
 		.deleteFrom('player')
 		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))

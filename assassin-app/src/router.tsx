@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './components/error/error'
 import Admin from './pages/admin/admin'
+import Instructions from './pages/instructions/instructions'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
@@ -49,9 +50,23 @@ const router = createBrowserRouter([
 			{
 				path: '/room/:room',
 				element: <Room />,
+				children: [
+					{
+						path: '',
+						element: <Instructions />,
+					},
+					{
+						path: 'gm',
+						element: <Instructions />,
+					},
+					{
+						path: 'player',
+						element: <Instructions />,
+					},
+				]
 			},
 			{
-				path: '/admin',
+				path: 'admin',
 				element: <Admin />,
 			},
 		],

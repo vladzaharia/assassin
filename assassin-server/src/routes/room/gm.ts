@@ -21,7 +21,7 @@ export const AssignGM = async (c: Context<{ Bindings: Bindings }>) => {
 		// Unassign GM status
 		const currentGM = await findRoomGM(db, room)
 		if (currentGM) {
-			await setGMStatus(db, currentGM.name, room, false)
+			await setGMStatus(db, room, currentGM.name, false)
 		}
 
 		// Reassign GM status
@@ -30,7 +30,7 @@ export const AssignGM = async (c: Context<{ Bindings: Bindings }>) => {
 
 			if (players && players.length > 1) {
 				const otherPlayers = players!.filter((p) => !p.isGM)
-				await setGMStatus(db, otherPlayers[0].name, room, true)
+				await setGMStatus(db, room, otherPlayers[0].name, true)
 			}
 		} else {
 			const playerRecord = await findPlayer(db, name, room)
@@ -38,7 +38,7 @@ export const AssignGM = async (c: Context<{ Bindings: Bindings }>) => {
 				return c.json({ message: 'Player not found!' }, 404)
 			}
 
-			await setGMStatus(db, name, room, true)
+			await setGMStatus(db, room, name, true)
 		}
 
 		return c.json({ message: 'ok' })
