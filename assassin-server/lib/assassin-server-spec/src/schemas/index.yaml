@@ -365,6 +365,49 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
+  /wordlist/{list}/word/{word}:
+    put:
+      summary: Add word to wordlist
+      description: |
+        Adds an individual word to an existing wordlist.
+      operationId: putWord
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+        - $ref: '#/components/parameters/Word'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/WordExists'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete word from wordlist
+      description: |
+        Deletes an individual word from an existing wordlist.
+      operationId: deleteWord
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+        - $ref: '#/components/parameters/Word'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}/words:
     put:
       summary: Add words to wordlist
@@ -495,6 +538,14 @@ components:
       example: card-assassins-poison
       in: path
       required: true
+    Word:
+      name: word
+      description: Word to add/delete.
+      schema:
+        $ref: '#/components/schemas/Word'
+      example: test
+      in: path
+      required: true
 
   requestBodies:
     AddRoomBody:
@@ -610,6 +661,32 @@ components:
                 type: string
                 description: Message for this error.
                 example: Wordlist not found!
+            required:
+              - message
+    WordExists:
+      description: Word already exists.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Word already exists!
+            required:
+              - message
+    WordNotFound:
+      description: Could not find word.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Word not found!
             required:
               - message
 

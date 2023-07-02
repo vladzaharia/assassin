@@ -34,7 +34,7 @@ export async function listWordsInWordList(db: D1Database, list: string) {
 		.execute()
 }
 
-export async function findWord(db: D1Database, word: string, list: string) {
+export async function findWord(db: D1Database, list: string, word: string) {
 	return await getKyselyDb(db)
 		.selectFrom('word')
 		.selectAll()
@@ -42,7 +42,7 @@ export async function findWord(db: D1Database, word: string, list: string) {
 		.executeTakeFirst()
 }
 
-export async function insertWord(db: D1Database, word: string, list: string) {
+export async function insertWord(db: D1Database, list: string, word: string) {
 	return await getKyselyDb(db)
 		.insertInto('word')
 		.values({
@@ -52,9 +52,28 @@ export async function insertWord(db: D1Database, word: string, list: string) {
 		.execute()
 }
 
-export async function deleteWord(db: D1Database, word: string, list: string) {
+export async function insertWords(db: D1Database, list: string, words: string[]) {
+	return await getKyselyDb(db)
+		.insertInto('word')
+		.values(words.map((word) => {
+			return {
+				word,
+				list
+			}
+		}))
+		.execute()
+}
+
+export async function deleteWord(db: D1Database, list: string, word: string) {
 	return await getKyselyDb(db)
 		.deleteFrom('word')
 		.where(({ and, cmpr }) => and([cmpr('word', '=', word), cmpr('list', '=', list)]))
 		.execute()
+}
+
+export async function deleteWords(db: D1Database, list: string, words: string[]) {
+	return await getKyselyDb(db)
+	.deleteFrom('word')
+	.where(({ and, cmpr }) => and([cmpr('word', 'in', words), cmpr('list', '=', list)]))
+	.execute()
 }

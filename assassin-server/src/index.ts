@@ -19,11 +19,13 @@ import { ResetGame } from './routes/room/reset'
 import { StartGame } from './routes/room/start'
 import { UpdateRoom } from './routes/room/update'
 import { AddWordList } from './routes/wordlist/add'
-import { AddWordsToList } from './routes/wordlist/addWords'
 import { DeleteWordList } from './routes/wordlist/delete'
-import { DeleteWordsFromList } from './routes/wordlist/deleteWords'
 import { GetWordList } from './routes/wordlist/get'
 import { ListWordLists } from './routes/wordlist/list'
+import { AddWord } from './routes/wordlist/word/add'
+import { AddWords } from './routes/wordlist/word/addWords'
+import { DeleteWord } from './routes/wordlist/word/delete'
+import { DeleteWords } from './routes/wordlist/word/deleteWords'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -78,8 +80,10 @@ app.put('/api/wordlist/:list', AddWordList)
 app.delete('/api/wordlist/:list', DeleteWordList)
 
 // Add/delete words from word lists
-app.put('/api/wordlist/:list/words', AddWordsToList)
-app.delete('/api/wordlist/:list/words', DeleteWordsFromList)
+app.put('/api/wordlist/:list/word/:word', AddWord)
+app.delete('/api/wordlist/:list/word/:word', DeleteWord)
+app.put('/api/wordlist/:list/words', AddWords)
+app.delete('/api/wordlist/:list/words', DeleteWords)
 
 // Debug endpoints
 app.put('/api/debug/demo', DemoDb)

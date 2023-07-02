@@ -1,13 +1,13 @@
 import { Context } from 'hono'
-import { Bindings } from '../../bindings'
-import { createWordTable, deleteWord } from '../../tables/word'
-import { createWordListTable, findWordList } from '../../tables/wordlist'
+import { Bindings } from '../../../bindings'
+import { createWordTable, deleteWords } from '../../../tables/word'
+import { createWordListTable, findWordList } from '../../../tables/wordlist'
 
 interface DeleteWordsFromListBody {
 	words: string[]
 }
 
-export const DeleteWordsFromList = async (c: Context<{ Bindings: Bindings }>) => {
+export const DeleteWords = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { list } = c.req.param()
 		const { words } = await c.req.json<DeleteWordsFromListBody>()
@@ -25,9 +25,7 @@ export const DeleteWordsFromList = async (c: Context<{ Bindings: Bindings }>) =>
 		}
 
 		// Delete all words from word list
-		for (const word of words) {
-			await deleteWord(db, word, list)
-		}
+		await deleteWords(db, list, words)
 
 		return c.json({ message: 'ok' })
 	} catch (e) {

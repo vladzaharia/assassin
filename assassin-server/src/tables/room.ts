@@ -3,7 +3,7 @@ import { convertBoolToInt } from './util'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY);`)
+		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, usesWords INTEGER);`)
 	console.info(`Create room table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
