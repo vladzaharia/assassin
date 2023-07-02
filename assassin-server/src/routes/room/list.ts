@@ -11,7 +11,7 @@ export const ListRooms = async (c: Context<{ Bindings: Bindings }>) => {
 
 		const records = await listRooms(db)
 
-		return c.json({ rooms: records.results ? records.results.map((r) => r.name) : [] })
+		return c.json({ rooms: records ? records.map((r) => r.name) : [] })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

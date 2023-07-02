@@ -19,18 +19,14 @@ export const DeleteWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Delete all words for word list
-		const words = (await listWordsInWordList(db, list)).results || []
+		const words = await listWordsInWordList(db, list)
 		for (const word of words) {
 			await deleteWord(db, word.word, word.list)
 		}
 
 		// Delete word list
-		const deleteResult = await deleteWordList(db, list)
-		if (deleteResult.success) {
-			return c.json({ message: 'ok' })
-		} else {
-			return c.json({ message: 'Something went wrong!', error: deleteResult.error }, 500)
-		}
+		await deleteWordList(db, list)
+		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

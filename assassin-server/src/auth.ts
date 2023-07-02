@@ -6,7 +6,7 @@ import { findRoomGM } from './tables/player'
 import { findRoom } from './tables/room'
 
 type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE'
-export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[], useGMAuth?: boolean }[] = [
+export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; useGMAuth?: boolean }[] = [
 	{
 		path: /debug.*$/,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -18,7 +18,7 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[], useGMAuth
 	{
 		path: /room\/\w*\/(start|reset)$/,
 		methods: ['POST'],
-		useGMAuth: true
+		useGMAuth: true,
 	},
 	{
 		path: /wordlist\/\w*$/,
@@ -50,13 +50,13 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
 
 			if (!roomRecord) {
-				return c.json({ message: "Room not found!" }, 404)
+				return c.json({ message: 'Room not found!' }, 404)
 			}
 
 			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
 
-			if (roomGM.name !== name) {
-				return jwt({ secret: secret || "" })(c, next)
+			if (roomGM?.name !== name) {
+				return jwt({ secret: secret || '' })(c, next)
 			}
 		} else if (secret) {
 			return jwt({ secret })(c, next)

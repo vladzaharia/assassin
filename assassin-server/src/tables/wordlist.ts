@@ -1,4 +1,5 @@
 import { WordListRecord } from '../types'
+import { getKyselyDb } from './db'
 
 export async function createWordListTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -12,27 +13,37 @@ export async function dropWordListTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS wordlist`)
 	console.info(`Drop word list table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
 
-return dropTableResult
+	return dropTableResult
 }
 
 export async function listWordLists(db: D1Database) {
-	return await db.prepare(`SELECT * FROM wordlist`).all<WordListRecord>()
-}
-
-export async function insertWordList(db: D1Database, name: string, description: string, icon?: string) {
-	const insertResult = await db.prepare(`INSERT INTO wordlist (name, description) VALUES(?, ?, ?)`).bind(name, description, icon).run()
-	console.info(`Insert word list => insertResult ${insertResult.error || insertResult.success}`)
-
-	return insertResult
+	return await getKyselyDb(db)
+		.selectFrom('wordlist')
+		.selectAll()
+		.execute()
 }
 
 export async function findWordList(db: D1Database, name: string) {
-	return await db.prepare(`SELECT * FROM wordlist WHERE name=?`).bind(name).first<WordListRecord>()
+	return await getKyselyDb(db)
+		.selectFrom('wordlist')
+		.selectAll()
+		.where('name', '=', name)
+		.executeTakeFirst()
+}
+
+export async function insertWordList(db: D1Database, name: string, description: string, icon?: string) {
+	return await getKyselyDb(db)
+		.insertInto('wordlist')
+		.values({
+			name,
+			description
+		})
+		.execute()
 }
 
 export async function deleteWordList(db: D1Database, name: string) {
-	const deleteRowsResult = await db.prepare(`DELETE FROM wordlist WHERE name=?`).bind(name).run()
-	console.info(`Delete word list => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
-
-	return deleteRowsResult
+	return await getKyselyDb(db)
+		.deleteFrom('wordlist')
+		.where('name', '=', name)
+		.execute()
 }

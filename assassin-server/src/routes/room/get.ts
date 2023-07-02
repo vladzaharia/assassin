@@ -20,12 +20,14 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Find players in room
-		const playerRecords = (await listPlayersInRoom(db, room)).results || []
+		const playerRecords = await listPlayersInRoom(db, room)
 
 		return c.json({
 			name: roomRecord.name,
 			status: getRoomStatus(playerRecords),
-			players: playerRecords.map((p) => { return { name: p.name, isGM: p.isGM === 1, status: p.status }}),
+			players: playerRecords.map((p) => {
+				return { name: p.name, isGM: p.isGM === 1, status: p.status }
+			}),
 		})
 	} catch (e) {
 		console.error('err', e)

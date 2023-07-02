@@ -15,13 +15,8 @@ export const AddRoom = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room already exists!' }, 400)
 		}
 
-		const insertResult = await insertRoom(db, room)
-
-		if (insertResult.success) {
-			return c.json({ message: 'ok' })
-		} else {
-			return c.json({ message: 'Something went wrong!', error: insertResult.error }, 500)
-		}
+		await insertRoom(db, room)
+		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

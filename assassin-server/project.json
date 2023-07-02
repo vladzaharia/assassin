@@ -31,7 +31,7 @@
 		},
 		"serve": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build", "assassin-server:build"],
+			"dependsOn": ["^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "NO_D1_WARNING=true wrangler dev"
@@ -39,7 +39,7 @@
 		},
 		"serve-remote": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-app:build", "assassin-server:build"],
+			"dependsOn": ["^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
 				"command": "NO_D1_WARNING=true wrangler dev --remote"

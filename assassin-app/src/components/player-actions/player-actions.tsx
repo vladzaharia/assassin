@@ -14,14 +14,13 @@ export interface PlayerActionsProps {
 function PlayerActions({ requestError }: PlayerActionsProps) {
 	const roomContext = useContext(RoomStatusContext)
 
-	return (
-		roomContext?.room?.status === 'started' ?
-			<div className="player-actions">
-				<button className={requestError && requestError !== 'ok' ? 'failed' : 'blue'} onClick={roomContext?.lookup}>
-					<FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> Look up Target
-				</button>
-			</div> : null
-	)
+	return roomContext?.room?.status === 'started' ? (
+		<div className="player-actions">
+			<button className={requestError && requestError !== 'ok' ? 'failed' : 'blue'} onClick={roomContext?.lookup}>
+				<FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> Look up Target
+			</button>
+		</div>
+	) : null
 }
 
 export default PlayerActions

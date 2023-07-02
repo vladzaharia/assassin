@@ -1,4 +1,5 @@
 import { RoomRecord } from '../types'
+import { getKyselyDb } from './db'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -12,31 +13,28 @@ export async function dropRoomTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS room`)
 	console.info(`Drop room table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
 
-return dropTableResult
+	return dropTableResult
 }
 
 export async function listRooms(db: D1Database) {
-	return await db.prepare(`SELECT * FROM room`).all<RoomRecord>()
-}
-
-export async function insertRoom(db: D1Database, room: string) {
-	const insertResult = await db.prepare(`INSERT INTO room (name) VALUES(?)`).bind(room).run()
-	console.info(`Insert room => insertResult ${insertResult.error || insertResult.success}`)
-
-	return insertResult
+	return await getKyselyDb(db).selectFrom('room').selectAll().execute()
 }
 
 export async function findRoom(db: D1Database, room: string) {
-	return await db.prepare(`SELECT * FROM room WHERE name=?`).bind(room).first<RoomRecord>()
+	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).executeTakeFirst()
 }
 
-export async function setRoomWords(db: D1Database, room: string, words: string[]) {
-	return await db.prepare(`UPDATE room SET words=? WHERE name=?`).bind(words, room).run()
+export async function insertRoom(db: D1Database, room: string) {
+	return await getKyselyDb(db)
+		.insertInto('room')
+		.values({
+			name: room
+		})
+		.execute()
 }
 
 export async function deleteRoom(db: D1Database, room: string) {
-	const deleteRowsResult = await db.prepare(`DELETE FROM room WHERE name=?`).bind(room).run()
-	console.info(`Delete room => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
-
-	return deleteRowsResult
+	return await getKyselyDb(db)
+		.deleteFrom('room')
+		.where('name', '=', room)
 }

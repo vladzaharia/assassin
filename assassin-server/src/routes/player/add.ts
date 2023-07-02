@@ -19,17 +19,13 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Check if player exists
-		const players = await (await listPlayersInRoom(db, room)).results
+		const players = await listPlayersInRoom(db, room)
 		if (players?.some((p) => p.name === name)) {
 			return c.json({ message: 'Player already exists!' }, 400)
 		}
 
-		const insertResult = await insertPlayer(db, name, room, players?.length === 0)
-		if (insertResult.success) {
-			return c.json({ message: 'ok' })
-		} else {
-			return c.json({ message: 'Something went wrong!', error: insertResult.error }, 500)
-		}
+		await insertPlayer(db, name, room, players?.length === 0)
+		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

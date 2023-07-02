@@ -15,7 +15,7 @@ export interface PlayerListProps {
 }
 
 function PlayerList({ clickGM, requestError }: PlayerListProps) {
-	const [name] = useLocalStorage("name", "")
+	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomStatusContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 	const popoverAnchor = useRef<HTMLButtonElement>(null)
@@ -28,39 +28,51 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 			<div className="header">
 				<h3>Player List</h3>
 				<div className="buttons">
-					{playerIsGM ?
-							<>
-								<button
-									className={'orange'}
-									onClick={clickGM}
-									ref={popoverAnchor}
-									onMouseEnter={() => {
-										if (!isMobile()) {
-											setPopoverOpen(true)
-										}
-									}}
-									onMouseLeave={() => {
-										if (!isMobile()) {
-											setPopoverOpen(false)
-										}
-									}}>
-									<FontAwesomeIcon icon={faCrown} />
-								</button>
-								<Popover
-									title="GM Options"
-									description={<>As the first player to join the room, you can control it! <br /><br /> <strong>Click here to set room options and start the game.</strong></>}
-									color="orange"
-									icon={faCrown}
-									anchor={popoverAnchor.current}
-									open={popoverOpen}
-									onClose={() => setPopoverOpen(false)} />
-							</> : undefined}
+					{playerIsGM ? (
+						<>
+							<button
+								className={'orange'}
+								onClick={clickGM}
+								ref={popoverAnchor}
+								onMouseEnter={() => {
+									if (!isMobile()) {
+										setPopoverOpen(true)
+									}
+								}}
+								onMouseLeave={() => {
+									if (!isMobile()) {
+										setPopoverOpen(false)
+									}
+								}}
+							>
+								<FontAwesomeIcon icon={faCrown} />
+							</button>
+							<Popover
+								title="GM Options"
+								description={
+									<>
+										As the first player to join the room, you can control it! <br />
+										<br /> <strong>Click here to set room options and start the game.</strong>
+									</>
+								}
+								color="orange"
+								icon={faCrown}
+								anchor={popoverAnchor.current}
+								open={popoverOpen}
+								onClose={() => setPopoverOpen(false)}
+							/>
+						</>
+					) : undefined}
 					{roomStatus?.players.some((p) => p.name === name) ? (
 						<button className={requestError && requestError !== 'ok' ? 'failed' : 'primary'} onClick={roomContext?.leave}>
 							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
 					) : (
-						<button className={requestError && requestError !== 'ok' ? 'failed' : 'green'} onClick={roomContext?.join} disabled={!roomStatus}>
+						<button
+							className={requestError && requestError !== 'ok' ? 'failed' : 'green'}
+							onClick={roomContext?.join}
+							disabled={!roomStatus}
+						>
 							<FontAwesomeIcon icon={faUserPlus} />
 						</button>
 					)}

@@ -19,7 +19,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const results = (await listPlayersInRoom(db, room)).results
+		const results = await listPlayersInRoom(db, room)
 		if (results && results.length > 2) {
 			// Check if targets have been assigned
 			if (results[0].target) {

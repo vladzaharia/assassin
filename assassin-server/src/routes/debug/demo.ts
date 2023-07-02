@@ -10,8 +10,8 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		const db = c.env.D1DATABASE
 
 		const { room: roomParam, name: nameParam } = c.req.query()
-		const room = roomParam || "test"
-		const name = nameParam || "Test"
+		const room = roomParam || 'test'
+		const name = nameParam || 'Test'
 
 		// Create D1 tables if needed
 		await createRoomsTable(db)
@@ -22,9 +22,9 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		// Insert demo room
 		await insertRoom(db, room)
 		await insertPlayer(db, name, room, true)
-		await insertPlayer(db, "Foo", room)
-		await insertPlayer(db, "Bar", room)
-		await insertPlayer(db, "Baz", room)
+		await insertPlayer(db, 'Foo', room)
+		await insertPlayer(db, 'Bar', room)
+		await insertPlayer(db, 'Baz', room)
 
 		return c.json({ message: 'ok' })
 	} catch (e) {

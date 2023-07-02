@@ -67,7 +67,7 @@ function Room() {
 			const addPlayerResponse = await playerApi.roomRoomPlayerNamePut(room || '', name)
 			setRequestError(addPlayerResponse.data.message)
 			getRoom()
-		} catch(e) {
+		} catch (e) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const eAsAny = e as any
 			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
@@ -79,7 +79,7 @@ function Room() {
 			const deletePlayerResponse = await playerApi.roomRoomPlayerNameDelete(room || '', name)
 			setRequestError(deletePlayerResponse.data.message)
 			getRoom()
-		} catch(e) {
+		} catch (e) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const eAsAny = e as any
 			setRequestError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!')
@@ -87,24 +87,29 @@ function Room() {
 	}
 
 	useEffect(() => {
+		// Set room name in session storage
+		if (room) {
+			roomSession[1](room)
+		}
+
 		if (name) {
 			getRoom()
 		} else {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			roomSession[1](room!)
-			navigate("/")
+			navigate('/')
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name])
 
 	return (
-		<RoomStatusContext.Provider value={{
-			room: roomStatus,
-			lookup: getPlayer,
-			join: addPlayer,
-			leave: deletePlayer
-		}}>
+		<RoomStatusContext.Provider
+			value={{
+				room: roomStatus,
+				lookup: getPlayer,
+				join: addPlayer,
+				leave: deletePlayer,
+			}}
+		>
 			<Menu
 				header={{
 					title: room,
@@ -112,11 +117,11 @@ function Room() {
 					status: true,
 				}}
 			>
-				<PlayerActions
-					requestError={requestError}
-				/>
+				<PlayerActions requestError={requestError} />
 				<PlayerList
-					clickGM={() => { return }}
+					clickGM={() => {
+						return
+					}}
 				/>
 			</Menu>
 			<div className="player-info">

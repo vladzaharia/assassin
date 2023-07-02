@@ -1,4 +1,4 @@
-import { WordRecord } from '../types'
+import { getKyselyDb } from './db'
 import { createWordListTable } from './wordlist'
 
 export async function createWordTable(db: D1Database) {
@@ -16,31 +16,45 @@ export async function dropWordTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS word`)
 	console.info(`Drop word table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
 
-return dropTableResult
+	return dropTableResult
 }
 
 export async function listWords(db: D1Database) {
-	return await db.prepare(`SELECT * FROM word`).all<WordRecord>()
+	return await getKyselyDb(db)
+		.selectFrom('word')
+		.selectAll()
+		.execute()
 }
 
 export async function listWordsInWordList(db: D1Database, list: string) {
-	return await db.prepare(`SELECT * FROM word where list=?`).bind(list).all<WordRecord>()
-}
-
-export async function insertWord(db: D1Database, word: string, list: string) {
-	const insertResult = await db.prepare(`INSERT INTO word (word, list) VALUES(?, ?)`).bind(word, list).run()
-	console.info(`Insert word => insertResult ${insertResult.error || insertResult.success}`)
-
-	return insertResult
+	return await getKyselyDb(db)
+		.selectFrom('word')
+		.selectAll()
+		.where('list', '=', list)
+		.execute()
 }
 
 export async function findWord(db: D1Database, word: string, list: string) {
-	return await db.prepare(`SELECT * FROM word WHERE word=? AND list=?`).bind(word, list).first<WordRecord>()
+	return await getKyselyDb(db)
+		.selectFrom('word')
+		.selectAll()
+		.where(({ and, cmpr }) => and([cmpr('word', '=', word), cmpr('list', '=', list)]))
+		.executeTakeFirst()
+}
+
+export async function insertWord(db: D1Database, word: string, list: string) {
+	return await getKyselyDb(db)
+		.insertInto('word')
+		.values({
+			word,
+			list
+		})
+		.execute()
 }
 
 export async function deleteWord(db: D1Database, word: string, list: string) {
-	const deleteRowsResult = await db.prepare(`DELETE FROM word WHERE word=? AND list=?`).bind(word, list).run()
-	console.info(`Delete word => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
-
-	return deleteRowsResult
+	return await getKyselyDb(db)
+		.deleteFrom('word')
+		.where(({ and, cmpr }) => and([cmpr('word', '=', word), cmpr('list', '=', list)]))
+		.execute()
 }

@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../types'
 import { createRoomsTable, findRoom } from '../../tables/room'
-import { createPlayerTable, deletePlayer, findPlayer, listPlayersInRoom, setPlayerAsGM } from '../../tables/player'
+import { createPlayerTable, deletePlayer, findPlayer, listPlayersInRoom, setGMStatus } from '../../tables/player'
 
 export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -26,21 +26,16 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 
 		// Reassign GM status
 		if (playerRecord.isGM) {
-			const players = (await listPlayersInRoom(db, room)).results
+			const players = await listPlayersInRoom(db, room)
 
 			if (players && players.length > 1) {
 				const otherPlayers = players!.filter((p) => !p.isGM)
-				setPlayerAsGM(db, otherPlayers[0].name, room)
+				await setGMStatus(db, otherPlayers[0].name, room, true)
 			}
 		}
 
-		const deleteResult = await deletePlayer(db, name, room)
-
-		if (deleteResult.success) {
-			return c.json({ message: 'ok' })
-		} else {
-			return c.json({ message: 'Something went wrong!', error: deleteResult.error }, 500)
-		}
+		await deletePlayer(db, name, room)
+		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

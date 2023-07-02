@@ -19,7 +19,7 @@ export const GetWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Try to find words in word list
-		const wordsRecord = (await listWordsInWordList(db, list)).results
+		const wordsRecord = await listWordsInWordList(db, list)
 
 		return c.json({
 			name: wordListRecord.name,

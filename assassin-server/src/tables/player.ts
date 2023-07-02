@@ -1,4 +1,4 @@
-import { PlayerRecord } from '../types'
+import { getKyselyDb } from './db'
 
 export async function createPlayerTable(db: D1Database) {
 	const createTableResult = await db.exec(`
@@ -11,55 +11,80 @@ export async function createPlayerTable(db: D1Database) {
 export async function dropPlayerTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS player`)
 	console.info(`Drop player table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
-
-return dropTableResult
+	return dropTableResult
 }
 
 export async function listPlayers(db: D1Database) {
-	return await db.prepare(`SELECT * FROM player`).all<PlayerRecord>()
+	return await getKyselyDb(db).selectFrom('player').selectAll().execute()
 }
 
 export async function listPlayersInRoom(db: D1Database, room: string) {
-	return await db.prepare(`SELECT * FROM player WHERE room=?`).bind(room).all<PlayerRecord>()
+	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).execute()
 }
 
 export async function findPlayer(db: D1Database, name: string, room: string) {
-	return await db.prepare(`SELECT * FROM player WHERE name=? AND room=?`).bind(name, room).first<PlayerRecord>()
+	return await getKyselyDb(db)
+		.selectFrom('player')
+		.selectAll()
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.executeTakeFirst()
 }
 
 export async function findRoomGM(db: D1Database, room: string) {
-	return await db.prepare(`SELECT * FROM player WHERE room=? AND isGM=1`).bind(room).first<PlayerRecord>()
+	return await getKyselyDb(db)
+		.selectFrom('player')
+		.selectAll()
+		.where(({ and, cmpr }) => and([cmpr('isGM', '=', 1), cmpr('room', '=', room)]))
+		.executeTakeFirst()
 }
 
 export async function insertPlayer(db: D1Database, name: string, room: string, isGM = false) {
-	const insertResult = await db.prepare(`INSERT INTO player (name, room, words, status, isGM) VALUES(?,?,?,'alive',?)`).bind(name, room, [], isGM ? 1 : 0).run()
-	console.info(`Insert player => insertResult ${insertResult.error || insertResult.success}`)
-
-	return insertResult
+	return await getKyselyDb(db)
+		.insertInto('player')
+		.values({
+			name,
+			room,
+			isGM: isGM ? 1 : 0,
+			status: 'alive',
+			words: JSON.stringify(['test'])
+		})
+		.execute()
 }
 
 export async function setPlayerTarget(db: D1Database, name: string, room: string, target: string) {
-	return await db.prepare(`UPDATE player SET target=? WHERE name=? AND room=?`).bind(target, name, room).run()
+	return await getKyselyDb(db)
+		.updateTable('player')
+		.set({ target })
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.execute()
 }
 
 export async function setPlayerWords(db: D1Database, name: string, room: string, words: string[]) {
-	return await db.prepare(`UPDATE player SET words=? WHERE name=? AND room=?`).bind(words, name, room).run()
+	return await getKyselyDb(db)
+		.updateTable('player')
+		.set({ words: JSON.stringify(words) })
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.execute()
 }
 
-export async function setPlayerAsGM(db: D1Database, name: string, room: string) {
-	return await db.prepare(`UPDATE player SET isGM=? WHERE name=? AND room=?`).bind(1, name, room).run()
+export async function setGMStatus(db: D1Database, name: string, room: string, isGM: boolean) {
+	return await getKyselyDb(db)
+		.updateTable('player')
+		.set({ isGM: isGM ? 1 : 0 })
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.execute()
 }
 
 export async function deletePlayer(db: D1Database, name: string, room: string) {
-	const deleteRowsResult = await db.prepare(`DELETE FROM player WHERE name=? AND room=?`).bind(name, room).run()
-	console.info(`Delete player => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
-
-	return deleteRowsResult
+	return await getKyselyDb(db)
+		.deleteFrom('player')
+		.where(({ and, cmpr }) => and([cmpr('name', '=', name), cmpr('room', '=', room)]))
+		.execute()
 }
 
 export async function deletePlayersInRoom(db: D1Database, room: string) {
-	const deleteRowsResult = await db.prepare(`DELETE FROM player WHERE room=?`).bind(room).run()
-	console.info(`Delete players in room => deleteRowsResult ${deleteRowsResult.error || deleteRowsResult.success}`)
-
-	return deleteRowsResult
+	return await getKyselyDb(db)
+		.deleteFrom('player')
+		.where('room', '=', room)
+		.execute()
 }
