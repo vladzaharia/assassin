@@ -2,7 +2,7 @@ import { AdminApi, Configuration, ConfigurationParameters, GMApi, PlayerApi, Roo
 
 const getApiConfig = (parameters: Omit<ConfigurationParameters, 'basePath'> = {}) => {
 	return new Configuration({
-		... parameters,
+		...parameters,
 		basePath: import.meta.env.DEV ? 'http://localhost:8787/api' : undefined,
 	})
 }

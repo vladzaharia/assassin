@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover as MUIPopover } from '@mui/material'
 import './popover.css'
 
-export type PopoverColor = "primary" | "blue" | "green" | "orange" | "grey-dark"
+export type PopoverColor = 'primary' | 'blue' | 'green' | 'orange' | 'grey-dark'
 
 export interface PopoverContentProps {
 	title?: string

@@ -29,7 +29,7 @@ export async function insertRoom(db: D1Database, room: string, usesWords = true)
 		.insertInto('room')
 		.values({
 			name: room,
-			usesWords: convertBoolToInt(usesWords)
+			usesWords: convertBoolToInt(usesWords),
 		})
 		.execute()
 }
@@ -38,14 +38,12 @@ export async function setUsesWords(db: D1Database, room: string, usesWords: bool
 	return await getKyselyDb(db)
 		.updateTable('room')
 		.set({
-			usesWords: convertBoolToInt(usesWords)
+			usesWords: convertBoolToInt(usesWords),
 		})
 		.where('name', '=', room)
 		.execute()
 }
 
 export async function deleteRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db)
-		.deleteFrom('room')
-		.where('name', '=', room)
+	return await getKyselyDb(db).deleteFrom('room').where('name', '=', room)
 }

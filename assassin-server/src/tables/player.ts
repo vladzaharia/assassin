@@ -46,7 +46,7 @@ export async function insertPlayer(db: D1Database, name: string, room: string, i
 			room,
 			isGM: isGM ? 1 : 0,
 			status: 'alive',
-			words: JSON.stringify(['test'])
+			words: JSON.stringify(['test']),
 		})
 		.execute()
 }
@@ -83,8 +83,5 @@ export async function deletePlayer(db: D1Database, name: string, room: string) {
 }
 
 export async function deletePlayersInRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db)
-		.deleteFrom('player')
-		.where('room', '=', room)
-		.execute()
+	return await getKyselyDb(db).deleteFrom('player').where('room', '=', room).execute()
 }

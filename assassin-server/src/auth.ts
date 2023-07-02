@@ -45,7 +45,7 @@ export const checkPath = (path: string, method: string) => {
 }
 
 export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
-	const secret = await c.env.OPENID.get('secret') || "test-secret"
+	const secret = (await c.env.OPENID.get('secret')) || 'test-secret'
 	const match = checkPath(c.req.path, c.req.method)
 	if (match) {
 		if (match.useGMAuth) {

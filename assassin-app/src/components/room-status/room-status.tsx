@@ -57,9 +57,15 @@ function RoomStatus() {
 
 		switch (roomStatus?.status) {
 			case 'started':
-				return roomStatus?.players.some((p) => p.name === name) ?
-					'The game has started! Look up your opponent and get them!' :
-					<><strong>The game has already started.</strong><br /><br /> You'll need to wait until the game ends or join another room.</>
+				return roomStatus?.players.some((p) => p.name === name) ? (
+					'The game has started! Look up your opponent and get them!'
+				) : (
+					<>
+						<strong>The game has already started.</strong>
+						<br />
+						<br /> You'll need to wait until the game ends or join another room.
+					</>
+				)
 			case 'ready':
 				return 'The game is ready to start! Ask the GM to start the game.'
 			case 'not-ready':

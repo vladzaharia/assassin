@@ -66,14 +66,15 @@ function PlayerList({ clickGM, requestError }: PlayerListProps) {
 						<button
 							className={requestError && requestError !== 'ok' ? 'failed' : 'primary'}
 							onClick={roomContext?.leave}
-							disabled={!roomStatus || roomStatus.status === "started"}>
+							disabled={!roomStatus || roomStatus.status === 'started'}
+						>
 							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
 					) : (
 						<button
 							className={requestError && requestError !== 'ok' ? 'failed' : 'green'}
 							onClick={roomContext?.join}
-							disabled={!roomStatus || roomStatus.status === "started"}
+							disabled={!roomStatus || roomStatus.status === 'started'}
 						>
 							<FontAwesomeIcon icon={faUserPlus} />
 						</button>

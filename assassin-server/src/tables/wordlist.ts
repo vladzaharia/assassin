@@ -16,18 +16,11 @@ export async function dropWordListTable(db: D1Database) {
 }
 
 export async function listWordLists(db: D1Database) {
-	return await getKyselyDb(db)
-		.selectFrom('wordlist')
-		.selectAll()
-		.execute()
+	return await getKyselyDb(db).selectFrom('wordlist').selectAll().execute()
 }
 
 export async function findWordList(db: D1Database, name: string) {
-	return await getKyselyDb(db)
-		.selectFrom('wordlist')
-		.selectAll()
-		.where('name', '=', name)
-		.executeTakeFirst()
+	return await getKyselyDb(db).selectFrom('wordlist').selectAll().where('name', '=', name).executeTakeFirst()
 }
 
 export async function insertWordList(db: D1Database, name: string, description: string, icon?: string) {
@@ -35,14 +28,11 @@ export async function insertWordList(db: D1Database, name: string, description: 
 		.insertInto('wordlist')
 		.values({
 			name,
-			description
+			description,
 		})
 		.execute()
 }
 
 export async function deleteWordList(db: D1Database, name: string) {
-	return await getKyselyDb(db)
-		.deleteFrom('wordlist')
-		.where('name', '=', name)
-		.execute()
+	return await getKyselyDb(db).deleteFrom('wordlist').where('name', '=', name).execute()
 }
