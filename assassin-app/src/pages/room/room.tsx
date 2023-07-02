@@ -1,9 +1,6 @@
-import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
-import { faCrosshairs } from '@fortawesome/pro-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Player as PlayerResponse, Room as RoomResponse } from 'assassin-server-client'
 import { useEffect, useState } from 'react'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useFetcher, useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createPlayerApi, createRoomApi } from '../../api'
@@ -15,25 +12,21 @@ import { RoomStatusContext } from '../../components/room-status/room-status'
 import './room.css'
 
 export default function Room() {
-	const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
+	// const [roomStatus, setRoomStatus] = useState<RoomResponse | undefined>(undefined)
+	const roomStatus = useLoaderData() as RoomResponse
 	const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [requestError, setRequestError] = useState<string | undefined>(undefined)
 	const [name] = useLocalStorage<string>('name', '')
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 
-	const roomApi = createRoomApi()
 	const playerApi = createPlayerApi()
 
 	const { room } = useParams()
 
 	const getRoom = async () => {
-		// Reset data
-		// setPlayerInfo(undefined)
-		// setRoomStatus(undefined)
-
-		const status = (await roomApi.getRoom(room || '')).data
-		setRoomStatus(status)
+		// Force reload of the current page
+		navigate('.', { relative: 'path' })
 	}
 
 	const getPlayer = async () => {
@@ -89,9 +82,7 @@ export default function Room() {
 			roomSession[1](room)
 		}
 
-		if (name) {
-			getRoom()
-		} else {
+		if (!name) {
 			navigate('/')
 		}
 
@@ -99,9 +90,10 @@ export default function Room() {
 	}, [name])
 
 	useEffect(() => {
-		const interval = setInterval(getRoom, 15 * 1000);
-		return () => clearInterval(interval);
-	}, [getRoom, roomStatus])
+		const interval = setInterval(getRoom, 15 * 1000)
+		return () => clearInterval(interval)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [roomStatus])
 
 	return (
 		<RoomStatusContext.Provider
@@ -110,14 +102,15 @@ export default function Room() {
 				lookup: getPlayer,
 				join: addPlayer,
 				leave: deletePlayer,
-				playerIsGM: roomStatus?.players.filter((p) => p.isGM)[0]?.name === name
+				playerIsGM: roomStatus?.players.filter((p) => p.isGM)[0]?.name === name,
 			}}
 		>
 			<ErrorFieldContext.Provider
 				value={{
 					message: requestError,
-					setMessage: setRequestError
-				}}>
+					setMessage: setRequestError,
+				}}
+			>
 				<Menu
 					headerProps={{
 						title: room,
@@ -149,7 +142,7 @@ export default function Room() {
 					) : (
 						<Instructions />
 					)} */}
-					<ContextAwareErrorField className="bottom" />
+					<ContextAwareErrorField className="align-bottom" />
 				</div>
 			</ErrorFieldContext.Provider>
 		</RoomStatusContext.Provider>

@@ -19,12 +19,7 @@ export async function listPlayers(db: D1Database) {
 }
 
 export async function listPlayersInRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db)
-		.selectFrom('player')
-		.selectAll()
-		.where('room', '=', room)
-		.orderBy('status', 'asc')
-		.execute()
+	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).orderBy('status', 'asc').execute()
 }
 
 export async function findPlayer(db: D1Database, name: string, room: string) {

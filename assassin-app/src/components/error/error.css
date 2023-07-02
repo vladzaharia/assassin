@@ -38,10 +38,8 @@
 	margin: 0 1.5rem;
 }
 
-.error-field.bottom {
+.error-field.align-bottom {
 	margin-bottom: 1rem;
-	position: absolute;
-	bottom: 0;
 }
 
 @media only screen and (max-width: 50rem) {

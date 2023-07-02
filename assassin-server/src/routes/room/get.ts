@@ -6,10 +6,7 @@ import { getRoomStatus } from '../../util'
 import { PlayerTable } from '../../tables/db'
 
 const buildPlayerRecords = (players: PlayerTable[]) => {
-	return [
-		... players.filter((p) => p.isGM),
-		... players.filter((p) => !p.isGM)
-	].map((p) =>{
+	return [...players.filter((p) => p.isGM), ...players.filter((p) => !p.isGM)].map((p) => {
 		return { name: p.name, isGM: p.isGM === 1, status: p.status }
 	})
 }

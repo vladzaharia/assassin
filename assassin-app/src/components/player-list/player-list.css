@@ -2,42 +2,45 @@
 	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: stretch;
 	padding: 0.5rem 0;
 	overflow-y: overlay;
 }
 
-.player-list .header {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-}
-
 .player-list .header h3 {
-	margin: 0.5rem;
-	margin-left: 1.25rem;
-}
-
-.player-list .header .buttons {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	margin-right: 0.75rem;
-}
-
-.player-list .header .buttons button {
-	height: 2rem;
-	width: 2rem;
-	text-align: center;
+	padding-left: 1.25rem;
 }
 
 .player-list .player {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-around;
-	padding: 0.5rem;
+	justify-content: center;
+	padding: 0.75rem;
+	gap: 0.25rem;
+}
+
+.player-list .player.primary {
+	background-color: var(--primary-light);
+	color: var(--primary);
+}
+
+.player-list .player.blue {
+	background-color: var(--blue-light);
+	color: var(--blue-dark);
+}
+
+.player-list .player.green {
+	background-color: var(--green-light);
+	color: var(--green-dark);
+}
+
+.player-list .player.purple {
+	background-color: var(--purple-light);
+	color: var(--purple-dark);
+}
+
+.player-list .player.orange {
+	background-color: var(--orange-light);
+	color: var(--orange-dark);
 }

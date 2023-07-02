@@ -9,11 +9,12 @@ import Popover from '../popover/popover'
 import { RoomStatusContext } from '../room-status/room-status'
 import './player-list.css'
 import { ErrorFieldContext } from '../error/error'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Header from '../header/header'
 
 const getPlayerColor = (player: BasicPlayer) => {
 	if (player.isGM) {
-		return 'orange'
+		return 'blue'
 	} else if (player.status === 'eliminated') {
 		return 'primary'
 	}
@@ -22,13 +23,11 @@ const getPlayerColor = (player: BasicPlayer) => {
 }
 
 const getPlayerIcon = (player: BasicPlayer) => {
-	if (player.isGM) {
-		return faCrown
-	} else if (player.status === 'eliminated') {
+	if (player.status === 'eliminated') {
 		return faCrosshairs
-	}
-
-	return faUser
+	} else if (player.isGM) {
+		return faCrown
+	} else return faUser
 }
 
 export default function PlayerList() {
@@ -36,6 +35,7 @@ export default function PlayerList() {
 	const roomContext = useContext(RoomStatusContext)
 	const errorContext = useContext(ErrorFieldContext)
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	const [gmPopoverOpen, setGMPopoverOpen] = useState<boolean>(false)
 	const gmPopoverAnchor = useRef<HTMLButtonElement>(null)
@@ -45,56 +45,69 @@ export default function PlayerList() {
 	const JoinLeaveButton = () => {
 		const playerInRoom = roomStatus?.players.some((p) => p.name === name)
 
-		return <button
-			className={errorContext?.message && errorContext.message !== 'ok' ? 'failed' : 'primary'}
-			onClick={!playerInRoom ? roomContext?.join : roomContext?.leave}
-			disabled={!roomStatus || roomStatus.status === 'started'}>
-			<FontAwesomeIcon icon={!playerInRoom ? faUserPlus : faUserMinus} />
-		</button>
+		return (
+			<button
+				className={errorContext?.message && errorContext.message !== 'ok' ? 'failed' : 'primary'}
+				onClick={!playerInRoom ? roomContext?.join : roomContext?.leave}
+				disabled={!roomStatus || roomStatus.status === 'started'}
+			>
+				<FontAwesomeIcon icon={!playerInRoom ? faUserPlus : faUserMinus} />
+			</button>
+		)
 	}
 
 	return (
 		<div className="player-list">
-			<div className="header">
-				<h3>Player List</h3>
-				<div className="buttons">
-					{roomContext?.playerIsGM ?
-						<>
-							<button
-								className={'blue'}
-								onClick={() => navigate("gm")}
-								ref={gmPopoverAnchor}
-								onPointerEnter={() => {
-									if (!isMobile()) {
-										setGMPopoverOpen(true)
+			<Header
+				title="Player List"
+				bottomBorder={false}
+				rightActions={
+					<>
+						{roomContext?.playerIsGM ? (
+							<>
+								<button
+									className={'blue'}
+									onClick={() => {
+										if (!location.pathname.includes('gm')) {
+											navigate('gm')
+										} else {
+											navigate('..', { relative: 'path' })
+										}
+									}}
+									ref={gmPopoverAnchor}
+									onPointerEnter={() => {
+										if (!isMobile()) {
+											setGMPopoverOpen(true)
+										}
+									}}
+									onPointerLeave={() => {
+										if (!isMobile()) {
+											setGMPopoverOpen(false)
+										}
+									}}
+								>
+									<FontAwesomeIcon icon={faCrown} />
+								</button>
+								<Popover
+									title="GM Options"
+									description={
+										<>
+											As the first player to join the room, you can control it! <br />
+											<br /> <strong>Click here to set room options and start the game.</strong>
+										</>
 									}
-								}}
-								onPointerLeave={() => {
-									if (!isMobile()) {
-										setGMPopoverOpen(false)
-									}
-								}}
-							>
-								<FontAwesomeIcon icon={faCrown} />
-							</button>
-							<Popover
-								title="GM Options"
-								description={
-									<>
-										As the first player to join the room, you can control it! <br />
-										<br /> <strong>Click here to set room options and start the game.</strong>
-									</>
-								}
-								color="blue"
-								icon={faCrown}
-								anchor={gmPopoverAnchor.current}
-								open={gmPopoverOpen}
-								onClose={() => setGMPopoverOpen(false)}
-							/>
-						</> : undefined}
-					<JoinLeaveButton />
-				</div>
-			</div>
+									color="blue"
+									icon={faCrown}
+									anchor={gmPopoverAnchor.current}
+									open={gmPopoverOpen}
+									onClose={() => setGMPopoverOpen(false)}
+								/>
+							</>
+						) : undefined}
+						<JoinLeaveButton />
+					</>
+				}
+			/>
 
 			{roomStatus?.players.map((player) => {
 				return (

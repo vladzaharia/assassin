@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { createRoomApi } from './api'
 import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './components/error/error'
 import Admin from './pages/admin/admin'
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/room/:room',
+				loader: async ({ params }) => {
+					const roomApi = createRoomApi()
+					return (await roomApi.getRoom(params.room || '')).data
+				},
 				element: <Room />,
 				children: [
 					{
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
 						path: 'player',
 						element: <Instructions />,
 					},
-				]
+				],
 			},
 			{
 				path: 'admin',

@@ -1,0 +1,19 @@
+.align-bottom {
+	position: absolute;
+	bottom: 0;
+}
+
+.align-top {
+	position: absolute;
+	top: 0;
+}
+
+.align-left {
+	position: absolute;
+	left: 0;
+}
+
+.align-right {
+	position: absolute;
+	right: 0;
+}

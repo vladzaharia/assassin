@@ -12,7 +12,7 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		const { room: roomParam, name: nameParam, addWordsParam } = c.req.query()
 		const room = roomParam || 'test'
 		const name = nameParam || 'Test'
-		const addWords = addWordsParam !== "false"
+		const addWords = addWordsParam !== 'false'
 
 		// Create D1 tables if needed
 		await createRoomsTable(db)
