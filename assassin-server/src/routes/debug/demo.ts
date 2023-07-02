@@ -9,9 +9,10 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 
-		const { room: roomParam, name: nameParam } = c.req.query()
+		const { room: roomParam, name: nameParam, addWordsParam } = c.req.query()
 		const room = roomParam || 'test'
 		const name = nameParam || 'Test'
+		const addWords = addWordsParam !== "false"
 
 		// Create D1 tables if needed
 		await createRoomsTable(db)
@@ -26,15 +27,18 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		await insertPlayer(db, 'Bar', room)
 		await insertPlayer(db, 'Baz', room)
 
-		// Insert demo wordlists
-		await insertWordList(db, 'test-list', 'This is a test list', 'vial')
-		await insertWordList(db, 'another-list', 'Another test list')
+		if (addWords) {
+			// Insert demo wordlists
+			await insertWordList(db, 'test-list', 'This is a test list', 'vial')
+			await insertWordList(db, 'another-list', 'Another test list')
 
-		// Insert demo words
-		const testWords = ['test', 'words', 'go', 'here']
-		await insertWords(db, 'test-list', testWords)
-		const anotherWords = ['foo', 'bar', 'baz', 'foobar']
-		await insertWords(db, 'another-list', anotherWords)
+			// Insert demo words
+			const testWords = ['test', 'words', 'go', 'here']
+			await insertWords(db, 'test-list', testWords)
+			const anotherWords = ['foo', 'bar', 'baz', 'foobar']
+			await insertWords(db, 'another-list', anotherWords)
+
+		}
 
 		return c.json({ message: 'ok' })
 	} catch (e) {

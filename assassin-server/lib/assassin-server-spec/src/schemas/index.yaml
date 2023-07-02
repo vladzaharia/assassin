@@ -473,14 +473,24 @@ paths:
           required: false
           schema:
             type: string
-            example: test
+            example: galactic
+            default: test
         - name: name
           description: Name of demo player, defaults to "Test"
           in: query
           required: false
           schema:
             type: string
-            example: Test
+            example: Vlad
+            default: Test
+        - name: addWords
+          description: Whether to add demo words and wordlists.
+          in: query
+          required: false
+          schema:
+            type: boolean
+            example: true
+            default: true
       responses:
         200:
           $ref: '#/components/responses/Success'
