@@ -6,10 +6,6 @@
 	justify-content: center;
 }
 
-.app > h1 {
-	color: white;
-}
-
 .content-box {
 	position: relative;
 	width: 75vw;
@@ -23,7 +19,7 @@
 	align-items: center;
 	justify-content: center;
 
-	background: var(--white);
+	background: var(--background);
 	border-radius: 1rem;
 	filter: drop-shadow(0 0.1875rem 0.9375rem rgba(0, 0, 0, 0.3));
 	backdrop-filter: blur(0);

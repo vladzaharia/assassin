@@ -13,7 +13,7 @@ button {
 	cursor: pointer;
 	margin: 0.125rem;
 	background-color: var(--grey-dark);
-	color: var(--white);
+	color: var(--foreground-alt);
 	border: none;
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;

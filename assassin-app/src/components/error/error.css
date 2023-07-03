@@ -28,7 +28,7 @@
 	padding: 1rem;
 	background: var(--failure);
 	border-radius: 0.5rem;
-	color: white;
+	color: var(--foreground-alt);
 	display: grid;
 	grid-template-columns: 1fr 5fr;
 	align-items: center;

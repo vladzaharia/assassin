@@ -3,12 +3,20 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	padding: 0.5rem 0;
+	margin: 0;
 	overflow-y: overlay;
 }
 
+.player-list .header {
+	background-color: var(--background);
+}
+
 .player-list .header h3 {
-	padding-left: 1.25rem;
+	margin-left: 1rem;
+}
+
+.player-list .header > * {
+	margin: 0.75rem;
 }
 
 .player-list .player {
@@ -43,4 +51,10 @@
 .player-list .player.orange {
 	background-color: var(--orange-light);
 	color: var(--orange-dark);
+}
+
+@media only screen and (max-width: 50rem) {
+	.player-list .header .right-actions {
+		margin: 1rem;
+	}
 }

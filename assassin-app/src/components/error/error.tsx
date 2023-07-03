@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { Link, useRouteError } from 'react-router-dom'
 import { ErrorContext } from '../../context/error'
 import './error.css'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
@@ -26,9 +26,7 @@ export const ContextAwareErrorField = ({ className }: { className?: string }) =>
 	const context = useContext(ErrorContext)
 
 	return (
-		<AnimatePresence>
-				<ErrorField className={className} message={context?.error?.message} show={context?.showError} />
-			</AnimatePresence>
+		<ErrorField className={className} message={context?.error?.message} show={context?.showError} />
 	)
 }
 

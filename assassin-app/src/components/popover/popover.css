@@ -4,6 +4,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: stretch;
+	background: var(--background);
 }
 
 .popover h3 {
@@ -25,7 +26,7 @@
 
 .popover h3.green {
 	background-color: var(--green);
-	color: var(--white);
+	color: var(--foreground-alt);
 }
 
 .popover h3.orange {
@@ -35,7 +36,7 @@
 
 .popover h3.blue {
 	background-color: var(--blue);
-	color: var(--white);
+	color: var(--foreground-alt);
 }
 
 .popover svg {

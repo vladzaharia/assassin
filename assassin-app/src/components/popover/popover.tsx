@@ -47,6 +47,8 @@ export default function Popover(props: PopoverProps) {
 						marginTop: '0.5rem',
 						border: `solid 1px var(--${color})`,
 						borderRadius: '0.5rem',
+						backgroundColor: 'var(--background)',
+						color: 'var(--foreground)'
 					},
 				},
 			}}

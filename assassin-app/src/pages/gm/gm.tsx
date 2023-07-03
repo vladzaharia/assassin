@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { ErrorContext } from '../../context/error'
 import { RoomContext } from '../../context/room'
 import './gm.css'
+import Header from '../../components/header/header'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/pro-solid-svg-icons'
 
 export default function GM() {
 	const roomStatus = useContext(RoomContext)
@@ -20,7 +23,15 @@ export default function GM() {
 
 	return (
 		<div className="gm-info">
-			<h2 className="title">How to Play</h2>
+			<Header
+				title='GM Options'
+				rightActions={
+					<button
+						className='primary'
+						onClick={() => navigate(`/room/${roomStatus?.room?.name}`)}>
+						<FontAwesomeIcon icon={faXmark} />
+					</button>}
+			/>
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 .content-box .room-content {
 	height: 100%;
-	border-left: 0.0625rem solid var(--grey-light);
+	border-left: 0.0625rem solid var(--border);
 	flex: 1 1 auto;
 
 	display: flex;
@@ -9,6 +9,12 @@
 	justify-content: space-between;
 	overflow-y: overlay;
 }
+
+.room-content > div {
+	height: 100%;
+	width: 100%;
+}
+
 /*
 .room-content .info {
 	flex: 1 1 auto;
@@ -58,7 +64,7 @@
 
 	.content-box .room-content {
 		border-left: none;
-		border-top: 0.0625rem solid var(--grey-light);
+		border-top: 0.0625rem solid var(--background);
 		margin-left: 0;
 		width: 100%;
 	}

@@ -4,7 +4,7 @@
 	align-items: center;
 	justify-content: center;
 	padding-top: 1rem;
-	border-bottom: 0.0625rem solid var(--grey-light);
+	border-bottom: 0.0625rem solid var(--border);
 }
 
 .player-actions button svg {
