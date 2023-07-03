@@ -10,6 +10,8 @@ export interface RequestError {
 export interface ErrorContextProps {
 	error?: RequestError
 	setError: (message: string | undefined, errorType?: RequestErrorType) => void
+	showError: boolean
+	setShowError: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const ErrorContext = createContext<ErrorContextProps | undefined>(undefined)
 

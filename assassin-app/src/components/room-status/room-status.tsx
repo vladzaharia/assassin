@@ -49,7 +49,7 @@ export default function RoomStatus({ showText }: { showText?: boolean }) {
 		switch (roomStatus?.status) {
 			case 'started':
 				return roomStatus?.players.some((p) => p.name === name) ? (
-					'The game has started! Look up your opponent and get them!'
+					'The game has started! Look your opponent up and eliminate them!'
 				) : (
 					<>
 						<strong>The game has already started.</strong>

@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { Link, useRouteError } from 'react-router-dom'
 import { ErrorContext } from '../../context/error'
 import './error.css'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
@@ -25,16 +25,16 @@ export const RouterErrorBoundary = () => {
 export const ContextAwareErrorField = ({ className }: { className?: string }) => {
 	const context = useContext(ErrorContext)
 
-	return context && context.error && context.error.message !== 'ok' ? (
-		<ErrorField className={className} message={context.error.message} />
-	) : (
-		<></>
+	return (
+		<AnimatePresence>
+				<ErrorField className={className} message={context?.error?.message} show={context?.showError} />
+			</AnimatePresence>
 	)
 }
 
-export const ErrorField = ({ message, className }: { message: string; className?: string }) => {
+export const ErrorField = ({ message, className, show }: { message?: string; className?: string, show?: boolean }) => {
 	return (
-		<motion.div className={`error-field no-animate ${className}`} transition={{ opacity: message ? 1 : 0 }} exit={{ opacity: 0 }}>
+		<motion.div className={`error-field no-animate ${className}`} initial={{ opacity: 0 }} animate={{ opacity: show ? 1 : 0 }} exit={{ opacity: 0 }}>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
 				<span className="message">{message}</span>

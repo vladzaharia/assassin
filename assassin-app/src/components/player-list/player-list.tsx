@@ -73,7 +73,7 @@ export default function PlayerList() {
 
 		return (
 			<button
-				className={errorContext?.error && errorContext.error.message !== 'ok' ? 'failed' : 'primary'}
+				className={errorContext?.showError && ['join', 'leave'].includes(errorContext?.error?.errorType || "")  ? 'failed' : 'primary'}
 				onClick={!playerInRoom ? addPlayer : deletePlayer}
 				disabled={!roomStatus || roomStatus.status === 'started'}
 			>

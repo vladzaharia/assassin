@@ -1,6 +1,6 @@
 import { Room as RoomResponse } from 'assassin-server-client'
 import { useEffect } from 'react'
-import { Outlet, useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useLoaderData, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import Menu from '../../components/menu/menu'
@@ -11,20 +11,13 @@ import './room.css'
 
 export default function Room() {
 	// const errorContext = useContext(ErrorContext)
-	const roomStatus = useLoaderData() as RoomResponse
+	const room = useLoaderData() as RoomResponse
 	// const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [name] = useLocalStorage<string>('name', '')
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 
 	// const playerApi = createPlayerApi()
-
-	const { room } = useParams()
-
-	const getRoom = async () => {
-		// Force reload of the current page
-		navigate('.', { relative: 'path' })
-	}
 
 	// const getPlayer = async () => {
 	// 	// Reset data
@@ -48,13 +41,13 @@ export default function Room() {
 	// 	}
 	// }
 
-	/** Initially fetch data */
 	useEffect(() => {
-		// Set room name in session storage
-		if (room) {
-			roomSession[1](room)
+		// Keep room name in session storage
+		if (room.name) {
+			roomSession[1](room.name)
 		}
 
+		// Go home if user is not set
 		if (!name) {
 			navigate('/')
 		}
@@ -63,21 +56,21 @@ export default function Room() {
 	}, [name])
 
 	useEffect(() => {
-		const interval = setInterval(getRoom, 15 * 1000)
+		const interval = setInterval(() => navigate('.', { relative: 'path' }), 15 * 1000)
 		return () => clearInterval(interval)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [roomStatus])
+	}, [room])
 
 	return (
 		<RoomContext.Provider
 			value={{
-				room: roomStatus,
-				playerIsGM: roomStatus?.players.filter((p) => p.isGM)[0]?.name === name,
+				room: room,
+				playerIsGM: room?.players.filter((p) => p.isGM)[0]?.name === name,
 			}}
 		>
 			<Menu
 				headerProps={{
-					title: room,
+					title: room.name,
 					onClick: () => navigate('/'),
 					status: true,
 				}}

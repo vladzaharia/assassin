@@ -12,9 +12,10 @@ export interface ContentBoxProps {
 export default function ContentBox({ children }: ContentBoxProps) {
 	const location = useLocation()
 	const [requestError, setRequestError] = useState<RequestError | undefined>(undefined)
+	const [showError, setShowError] = useState<boolean>(false)
 
 	useEffect(() => {
-		const interval = setInterval(() => setRequestError(undefined), 5 * 1000)
+		const interval = setInterval(() => setShowError(false), 5 * 1000)
 		return () => clearInterval(interval)
 	}, [requestError])
 
@@ -22,7 +23,16 @@ export default function ContentBox({ children }: ContentBoxProps) {
 		<ErrorContext.Provider
 			value={{
 				error: requestError,
-				setError: (message, errorType) => setRequestError(message ? { message, errorType } : undefined),
+				setError: (message, errorType) => {
+					if (message) {
+						setRequestError({ message, errorType })
+						setShowError(message !== 'ok')
+					} else {
+						setShowError(false)
+					}
+				},
+				showError,
+				setShowError
 			}}
 		>
 			<div className="app">
@@ -38,7 +48,7 @@ export default function ContentBox({ children }: ContentBoxProps) {
 						{children ? children : <Outlet />}
 					</motion.div>
 				</AnimatePresence>
-				{requestError && requestError.message !== 'ok' ? <ContextAwareErrorField className="align-bottom" /> : undefined}
+				<ContextAwareErrorField className="align-bottom" />
 			</div>
 		</ErrorContext.Provider>
 	)

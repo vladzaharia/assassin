@@ -2,12 +2,13 @@ import { StrictMode } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { createRoomApi } from './api'
+import { createPlayerApi, createRoomApi } from './api'
 import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './components/error/error'
 import Admin from './pages/admin/admin'
 import GM from './pages/gm/gm'
 import Instructions from './pages/instructions/instructions'
+import Player from './pages/player/player'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
@@ -35,6 +36,7 @@ const oidcConfig: AuthProviderProps = {
 const router = createBrowserRouter([
 	{
 		element: <ContentBox />,
+		id: "root",
 		errorElement: (
 			<ContentBox>
 				<RouterErrorBoundary />
@@ -43,14 +45,17 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
+				id: "welcome",
 				element: <Welcome />,
 			},
 			{
 				path: 'room/',
+				id: "room-error",
 				element: <RouterErrorBoundary />,
 			},
 			{
 				path: '/room/:room',
+				id: "room",
 				loader: async ({ params }) => {
 					const roomApi = createRoomApi()
 					return (await roomApi.getRoom(params.room || '')).data
@@ -59,15 +64,29 @@ const router = createBrowserRouter([
 				children: [
 					{
 						path: '',
+						id: "instructions",
 						element: <Instructions />,
 					},
 					{
 						path: 'gm',
+						id: "gm",
 						element: <GM />,
 					},
 					{
 						path: 'player',
-						element: <Instructions />,
+						id: "player",
+						loader: async ({ params }) => {
+							try {
+								const name = localStorage.getItem("name")
+								if (name) {
+									const playerApi = createPlayerApi()
+									return (await playerApi.getPlayer(params.room || '', JSON.parse(name))).data
+								}
+							} catch {
+								return {}
+							}
+						},
+						element: <Player />,
 					},
 				],
 			},

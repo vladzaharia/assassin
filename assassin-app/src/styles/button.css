@@ -1,5 +1,5 @@
 button {
-	outline: 0.0625rem solid var(--grey-dark);
+	border: 0.0625rem solid var(--grey-dark);
 	margin-top: 0.625em;
 	border-radius: 0.3rem;
 	font-size: 0.9rem;
@@ -21,32 +21,32 @@ button {
 
 button.primary {
 	background-color: var(--primary);
-	outline-color: var(--primary);
+	border-color: var(--primary);
 }
 
 button.blue {
 	background-color: var(--blue);
-	outline-color: var(--blue);
+	border-color: var(--blue);
 }
 
 button.green {
 	background-color: var(--green);
-	outline-color: var(--green);
+	border-color: var(--green);
 }
 
 button.orange {
 	background-color: var(--orange);
-	outline-color: var(--orange);
+	border-color: var(--orange);
 }
 
 button.failed {
 	background-color: var(--failure);
-	outline: 0.0625rem solid var(--failure);
+	border: 0.0625rem solid var(--failure);
 }
 
 button:disabled {
 	background-color: var(--grey-light);
-	outline: 0.0625rem solid var(--grey-light);
+	border: 0.0625rem solid var(--grey-light);
 	color: var(--grey-dark);
 	cursor: default;
 }

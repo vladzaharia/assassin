@@ -15,7 +15,7 @@ export default function Welcome() {
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
 	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const { error, setError } = useContext(ErrorContext)!
+	const { error, setError, showError } = useContext(ErrorContext)!
 	const navigate = useNavigate()
 
 	const roomApi = createRoomApi()
@@ -43,7 +43,7 @@ export default function Welcome() {
 
 	const getButtonClass = () => {
 		if (error) {
-			return error.message !== 'ok' && error.errorType === 'room' ? 'failed' : 'primary'
+			return showError && error.errorType === 'room' ? 'failed' : 'primary'
 		}
 
 		return 'primary'
