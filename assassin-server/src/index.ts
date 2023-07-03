@@ -123,7 +123,7 @@ app.get(
 	})
 )
 app.get(
-	'/room/:roomId/player',
+	'/room/:roomId/mission',
 	serveStatic({
 		path: './app/index.html',
 	})
