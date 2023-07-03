@@ -28,7 +28,7 @@ const getPlayerIcon = (player: BasicPlayer) => {
 		return faCrosshairs
 	} else if (player.isGM) {
 		return faCrown
-	} else return faUser
+	}
 }
 
 export default function PlayerList() {
@@ -73,7 +73,13 @@ export default function PlayerList() {
 
 		return (
 			<button
-				className={errorContext?.showError && ['join', 'leave'].includes(errorContext?.error?.errorType || "")  ? 'failed' : (!playerInRoom ? 'green' : 'primary')}
+				className={
+					errorContext?.showError && ['join', 'leave'].includes(errorContext?.error?.errorType || '')
+						? 'failed'
+						: !playerInRoom
+						? 'green'
+						: 'primary'
+				}
 				onClick={!playerInRoom ? addPlayer : deletePlayer}
 				disabled={!roomStatus || roomStatus.status === 'started'}
 			>
@@ -136,9 +142,11 @@ export default function PlayerList() {
 			/>
 
 			{roomStatus?.players.map((player) => {
+				const icon = getPlayerIcon(player)
 				return (
 					<div className={`player ${getPlayerColor(player)}`} key={player.name}>
-						<FontAwesomeIcon icon={getPlayerIcon(player)} /> {player.name}
+						<span>{player.name}</span>
+						{icon ? <FontAwesomeIcon icon={icon} /> : undefined}
 					</div>
 				)
 			})}

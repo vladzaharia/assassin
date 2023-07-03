@@ -17,6 +17,7 @@ export default function PlayerActions() {
 	return roomStatus?.status === 'started' && roomStatus?.players.some((p) => p.name === name) ? (
 		<div className="player-actions">
 			<button
+				className="blue"
 				onClick={() => {
 					if (!location.pathname.includes('player')) {
 						navigate('player')

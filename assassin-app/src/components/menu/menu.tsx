@@ -22,7 +22,7 @@ export default function Menu({ headerProps: header, children }: MenuProps) {
 			{header && (
 				<Header
 					title={header.title}
-					className='center'
+					className="center"
 					leftActions={
 						header.onClick ? (
 							<button className="primary" onClick={header.onClick}>

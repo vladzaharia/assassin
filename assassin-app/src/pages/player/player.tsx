@@ -29,12 +29,12 @@ export default function Player() {
 
 	return (
 		<div className="player-info">
-			{hasPlayer ?
+			{hasPlayer ? (
 				<>
 					<h2 className="title">How to Play</h2>
 					<span>{player && player.name}</span>
 				</>
-				: undefined}
+			) : undefined}
 		</div>
 	)
 }

@@ -10,6 +10,7 @@
 	margin-top: 1rem;
 	padding: 1rem;
 	background-color: var(--grey-light);
+	color: var(--foreground-alt);
 	border-radius: 0.3rem;
 }
 

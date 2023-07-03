@@ -36,7 +36,7 @@ const oidcConfig: AuthProviderProps = {
 const router = createBrowserRouter([
 	{
 		element: <ContentBox />,
-		id: "root",
+		id: 'root',
 		errorElement: (
 			<ContentBox>
 				<RouterErrorBoundary />
@@ -45,17 +45,17 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				id: "welcome",
+				id: 'welcome',
 				element: <Welcome />,
 			},
 			{
 				path: 'room/',
-				id: "room-error",
+				id: 'room-error',
 				element: <RouterErrorBoundary />,
 			},
 			{
 				path: '/room/:room',
-				id: "room",
+				id: 'room',
 				loader: async ({ params }) => {
 					const roomApi = createRoomApi()
 					return (await roomApi.getRoom(params.room || '')).data
@@ -64,20 +64,20 @@ const router = createBrowserRouter([
 				children: [
 					{
 						path: '',
-						id: "instructions",
+						id: 'instructions',
 						element: <Instructions />,
 					},
 					{
 						path: 'gm',
-						id: "gm",
+						id: 'gm',
 						element: <GM />,
 					},
 					{
 						path: 'player',
-						id: "player",
+						id: 'player',
 						loader: async ({ params }) => {
 							try {
-								const name = localStorage.getItem("name")
+								const name = localStorage.getItem('name')
 								if (name) {
 									const playerApi = createPlayerApi()
 									return (await playerApi.getPlayer(params.room || '', JSON.parse(name))).data

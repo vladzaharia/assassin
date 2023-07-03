@@ -50,3 +50,12 @@ button:disabled {
 	color: var(--grey-dark);
 	cursor: default;
 }
+
+@media (prefers-color-scheme: dark) {
+	button:disabled {
+		background-color: var(--grey-dark);
+		border: 0.0625rem solid var(--grey-dark);
+		color: var(--grey-light);
+		cursor: default;
+	}
+}

@@ -35,5 +35,5 @@ a {
 
 a:hover {
 	background-color: var(--primary);
-	color: var(--white);
+	color: var(--foreground-alt);
 }

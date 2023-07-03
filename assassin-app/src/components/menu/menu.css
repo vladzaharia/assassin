@@ -6,10 +6,6 @@
 	flex-direction: column;
 }
 
-.menu > * {
-	margin: 1rem;
-}
-
 .menu > .header {
 	margin: 0;
 }

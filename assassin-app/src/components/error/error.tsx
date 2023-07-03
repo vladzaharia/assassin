@@ -25,14 +25,17 @@ export const RouterErrorBoundary = () => {
 export const ContextAwareErrorField = ({ className }: { className?: string }) => {
 	const context = useContext(ErrorContext)
 
-	return (
-		<ErrorField className={className} message={context?.error?.message} show={context?.showError} />
-	)
+	return <ErrorField className={className} message={context?.error?.message} show={context?.showError} />
 }
 
-export const ErrorField = ({ message, className, show }: { message?: string; className?: string, show?: boolean }) => {
+export const ErrorField = ({ message, className, show }: { message?: string; className?: string; show?: boolean }) => {
 	return (
-		<motion.div className={`error-field no-animate ${className}`} initial={{ opacity: 0 }} animate={{ opacity: show ? 1 : 0 }} exit={{ opacity: 0 }}>
+		<motion.div
+			className={`error-field no-animate ${className}`}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: show ? 1 : 0 }}
+			exit={{ opacity: 0 }}
+		>
 			<span>
 				<FontAwesomeIcon fontSize={'2rem'} icon={faHexagonExclamation} />
 				<span className="message">{message}</span>

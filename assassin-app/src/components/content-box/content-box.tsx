@@ -32,7 +32,7 @@ export default function ContentBox({ children }: ContentBoxProps) {
 					}
 				},
 				showError,
-				setShowError
+				setShowError,
 			}}
 		>
 			<div className="app">

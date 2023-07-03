@@ -24,13 +24,12 @@ export default function GM() {
 	return (
 		<div className="gm-info">
 			<Header
-				title='GM Options'
+				title="GM Options"
 				rightActions={
-					<button
-						className='primary'
-						onClick={() => navigate(`/room/${roomStatus?.room?.name}`)}>
+					<button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)}>
 						<FontAwesomeIcon icon={faXmark} />
-					</button>}
+					</button>
+				}
 			/>
 		</div>
 	)
