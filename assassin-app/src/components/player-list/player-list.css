@@ -60,11 +60,6 @@
 }
 
 @media only screen and (max-width: 50rem) {
-	.player-list {
-		height: 15vh;
-		max-height: 25vh;
-	}
-
 	.player-list .header .right-actions {
 		margin: 1rem;
 	}

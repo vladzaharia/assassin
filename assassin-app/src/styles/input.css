@@ -1,6 +1,8 @@
 input[type='text'] {
 	height: 1.5rem;
-	outline: 0.1rem solid var(--grey-light);
+	outline: 0.1rem solid var(--border);
+	background: var(--background);
+	color: var(--foreground);
 	border: none;
 	border-radius: 0.3rem;
 	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
