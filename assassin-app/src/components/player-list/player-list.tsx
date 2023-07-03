@@ -13,6 +13,7 @@ import Header from '../header/header'
 import Popover from '../popover/popover'
 import './player-list.css'
 import Button from '../button/button'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const getPlayerColor = (player: BasicPlayer) => {
 	if (player.isGM) {
@@ -76,7 +77,7 @@ export default function PlayerList() {
 			<Button
 				className={
 					showNotification && ['join', 'leave'].includes(notification?.source || '')
-						? (notification?.notificationType || 'primary')
+						? notification?.notificationType || 'primary'
 						: !playerInRoom
 						? 'green'
 						: 'primary'
@@ -141,15 +142,25 @@ export default function PlayerList() {
 				}
 			/>
 
-			{roomStatus?.players.map((player) => {
-				const icon = getPlayerIcon(player)
-				return (
-					<div className={`player ${getPlayerColor(player)}`} key={player.name}>
-						<span>{player.name}</span>
-						{icon ? <FontAwesomeIcon icon={icon} /> : undefined}
-					</div>
-				)
-			})}
+			{roomStatus?.players && (
+				<AnimatePresence mode="sync">
+					{roomStatus?.players.map((player) => {
+						const icon = getPlayerIcon(player)
+						return (
+							<motion.div
+								className={`player no-animate ${getPlayerColor(player)}`}
+								key={player.name}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+							>
+								<span>{player.name}</span>
+								{icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+							</motion.div>
+						)
+					})}
+				</AnimatePresence>
+			)}
 		</div>
 	)
 }

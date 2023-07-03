@@ -3,7 +3,7 @@
 }
 
 .no-animate {
-	transition: none;
+	transition: none !important;
 }
 
 html,
@@ -13,6 +13,6 @@ html,
 
 @media (prefers-color-scheme: dark) {
 	* {
-		transition: all 0.1s ease;
+		transition: all 0.2s ease;
 	}
 }

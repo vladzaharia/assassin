@@ -24,6 +24,14 @@ export default function Notification() {
 
 	const icon = getIcon()
 
+	const getDefaultTimeout = () => {
+		if (notification?.notificationType === 'success') {
+			return 2000
+		}
+
+		return 5000
+	}
+
 	return (
 		<Snackbar
 			open={showNotification}
@@ -32,14 +40,18 @@ export default function Notification() {
 				vertical: 'bottom',
 				horizontal: 'center',
 			}}
-			autoHideDuration={notification?.timeout || 5000}
+			autoHideDuration={notification?.timeout || getDefaultTimeout()}
 		>
 			<div className={`no-animate notification ${notification?.notificationType || ''}`}>
-				<span>
+				<div>
 					{icon && <FontAwesomeIcon className="icon" size="xl" icon={icon} />}
 					<span className="message">{notification?.message}</span>
-					{notification?.dismissable && <FontAwesomeIcon className="close" icon={faXmark} size="lg" onClick={() => (false)} />}
-				</span>
+					{notification?.dismissable !== false && (
+						<span className="close" onClick={onClose}>
+							<FontAwesomeIcon icon={faXmark} size="lg" />
+						</span>
+					)}
+				</div>
 			</div>
 		</Snackbar>
 	)

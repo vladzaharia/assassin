@@ -27,7 +27,7 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		await insertPlayer(db, room, name, players?.length === 0)
-		return c.json({ message: 'Successfully added player!' })
+		return c.json({ message: `Successfully joined ${room} room!` })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

@@ -35,9 +35,12 @@
 	--foreground-alt: var(--white);
 	--border: var(--grey-light);
 
-	--success: #32853C;
+	--success: #32853c;
+	--success-dark: #27682f;
 	--failure: #cc0033;
-	--warning: #C77400;
+	--failure-dark: #a30029;
+	--warning: #c77400;
+	--warning-dark: #a35f00;
 	--notification-foreground: var(--white);
 }
 
@@ -45,7 +48,7 @@
 	.app.dark {
 		--primary: #ff8597;
 		--primary-light: #8a213135;
-		--primary-dark: #cf3a50;
+		--primary-dark: #ff4763;
 
 		--grey-light: #dad2d2;
 		--grey-dark: #5a4949;
@@ -53,11 +56,11 @@
 
 		--green: #89d291;
 		--green-light: #52aa5e25;
-		--green-dark: #7acd84;
+		--green-dark: #5cc168;
 
 		--blue: #68d0f3;
 		--blue-light: #17acdd25;
-		--blue-dark: #55caf1;
+		--blue-dark: #2fbeee;
 
 		--purple: #d99be8;
 		--purple-light: #ba4bd625;
@@ -65,7 +68,7 @@
 
 		--orange: #ffc370;
 		--orange-light: #ff9f1c25;
-		--orange-dark: #ffb347;
+		--orange-dark: #ffaa33;
 
 		--yellow: #fede86;
 		--yellow-light: #fdca4025;

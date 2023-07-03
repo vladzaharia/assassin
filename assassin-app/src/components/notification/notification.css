@@ -4,15 +4,9 @@
 	justify-content: center;
 	max-width: 35rem;
 }
-
-.notification span {
-	font-size: 1rem;
-	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
-}
-
-.notification > span {
+.notification div {
+	height: 3.5rem;
 	width: 100%;
-	padding: 1rem;
 	background: var(--background);
 	color: var(--notification-foreground);
 	border-radius: 0.5rem;
@@ -23,29 +17,51 @@
 	align-items: center;
 }
 
-.notification.failed > span {
+.notification.failed > div {
 	background: var(--failure);
 }
 
-.notification.success > span {
+.notification.success > div {
 	background: var(--success);
 }
 
-.notification.warning > span {
+.notification.warning > div {
 	background: var(--warning);
 }
 
 .notification .icon {
-	margin-right: 1rem;
+	/* margin-right: 1rem; */
+	padding: 1rem;
+	padding-right: 0;
 }
 
 .notification .message {
 	flex: 1 1 auto;
+	padding: 1rem;
 }
 
 .notification .close {
-	margin-left: 1.5rem;
 	cursor: pointer;
+	height: 3.5rem;
+	width: 3.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+}
+
+.notification.failed .close:hover {
+	background: var(--failure-dark);
+}
+
+.notification.success .close:hover {
+	background: var(--success-dark);
+}
+
+.notification.warning .close:hover {
+	background: var(--warning-dark);
 }
 
 @media only screen and (max-width: 62.5rem) {

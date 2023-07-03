@@ -1,6 +1,6 @@
 import { Room as RoomResponse } from 'assassin-server-client'
 import { useEffect } from 'react'
-import { Outlet, useLoaderData, useNavigate } from 'react-router-dom'
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import Menu from '../../components/menu/menu'
@@ -8,6 +8,7 @@ import PlayerActions from '../../components/player-actions/player-actions'
 import PlayerList from '../../components/player-list/player-list'
 import { RoomContext } from '../../context/room'
 import './room.css'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Room() {
 	// const errorContext = useContext(ErrorContext)
@@ -16,6 +17,7 @@ export default function Room() {
 	const [name] = useLocalStorage<string>('name', '')
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	// const playerApi = createPlayerApi()
 
@@ -79,7 +81,19 @@ export default function Room() {
 				<PlayerList />
 			</Menu>
 			<div className="room-content">
-				<Outlet />
+				<AnimatePresence mode="popLayout">
+					<motion.div
+						className="room-content no-animate"
+						key={location.pathname}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.5 }}
+					>
+						<Outlet />
+					</motion.div>
+				</AnimatePresence>
+
 				{/* {playerInfo ? (
 					<div className="info">
 						<div className="target">

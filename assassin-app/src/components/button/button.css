@@ -17,6 +17,7 @@
 	border: none;
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;
+	transition: all 0.2s ease;
 }
 
 .button.lg {
@@ -28,62 +29,74 @@
 	margin-right: 0.5rem;
 }
 
-.button.primary {
+.button.primary,
+.button.primary-dark:hover {
 	background-color: var(--primary);
 	border-color: var(--primary);
 }
 
-.button.primary-dark {
+.button.primary-dark,
+.button.primary:hover {
 	background-color: var(--primary-dark);
 	border-color: var(--primary-dark);
 }
 
-.button.blue {
+.button.blue,
+.button.blue-dark:hover {
 	background-color: var(--blue);
 	border-color: var(--blue);
 }
 
-.button.blue {
+.button.blue-dark,
+.button.blue:hover {
 	background-color: var(--blue-dark);
 	border-color: var(--blue-dark);
 }
 
-.button.green {
+.button.green,
+.button.green-dark:hover {
 	background-color: var(--green);
 	border-color: var(--green);
 }
 
-.button.green-dark {
+.button.green-dark,
+.button.green:hover {
 	background-color: var(--green-dark);
 	border-color: var(--green-dark);
 }
 
-.button.orange {
+.button.orange,
+.button.orange-dark:hover {
 	background-color: var(--orange);
 	border-color: var(--orange);
 }
 
-.button.orange-dark {
+.button.orange-dark,
+.button.orange:hover {
 	background-color: var(--orange-dark);
 	border-color: var(--orange-dark);
 }
 
-.button.purple {
+.button.purple,
+.button.purple-dark:hover {
 	background-color: var(--purple);
 	border-color: var(--purple);
 }
 
-.button.purple-dark {
+.button.purple-dark,
+.button.purple:hover {
 	background-color: var(--purple-dark);
 	border-color: var(--purple-dark);
 }
 
-.button.yellow {
+.button.yellow,
+.button.yellow-dark:hover {
 	background-color: var(--yellow);
 	border-color: var(--yellow);
 }
 
-.button.yellow-dark {
+.button.yellow-dark,
+.button.yellow:hover {
 	background-color: var(--yellow-dark);
 	border-color: var(--yellow-dark);
 }
@@ -94,16 +107,31 @@
 	color: var(--notification-foreground);
 }
 
+.button.failed:hover {
+	background-color: var(--failure-dark);
+	border-color: var(--failure-dark);
+}
+
 .button.success {
 	background-color: var(--success);
 	border-color: var(--success);
 	color: var(--notification-foreground);
 }
 
+.button.success:hover {
+	background-color: var(--success-dark);
+	border-color: var(--success-dark);
+}
+
 .button.warning {
 	background-color: var(--warning);
 	border-color: var(--warning);
 	color: var(--notification-foreground);
+}
+
+.button.warning:hover {
+	background-color: var(--warning-dark);
+	border-color: var(--warning-dark);
 }
 
 .button:disabled {
