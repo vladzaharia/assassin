@@ -33,13 +33,13 @@
 	text-align: center;
 }
 
-.header button {
+.header .button {
 	height: 2rem;
 	width: 2rem;
 	text-align: center;
 }
 
-.header button svg {
+.header .button svg {
 	margin-right: 0;
 }
 

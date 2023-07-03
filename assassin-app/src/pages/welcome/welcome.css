@@ -25,7 +25,7 @@
 	text-align: center;
 }
 
-.welcome form button {
+.welcome form .button {
 	margin-left: 1rem;
 	height: 3.2rem;
 	width: 3.2rem;

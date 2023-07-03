@@ -19,6 +19,11 @@
 	margin-right: 0.25rem;
 }
 
+.button.lg {
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
 .button svg:has(+ span) {
 	margin-right: 0.5rem;
 }
@@ -28,9 +33,19 @@
 	border-color: var(--primary);
 }
 
+.button.primary-dark {
+	background-color: var(--primary-dark);
+	border-color: var(--primary-dark);
+}
+
 .button.blue {
 	background-color: var(--blue);
 	border-color: var(--blue);
+}
+
+.button.blue {
+	background-color: var(--blue-dark);
+	border-color: var(--blue-dark);
 }
 
 .button.green {
@@ -38,14 +53,39 @@
 	border-color: var(--green);
 }
 
+.button.green-dark {
+	background-color: var(--green-dark);
+	border-color: var(--green-dark);
+}
+
 .button.orange {
 	background-color: var(--orange);
 	border-color: var(--orange);
 }
 
+.button.orange-dark {
+	background-color: var(--orange-dark);
+	border-color: var(--orange-dark);
+}
+
+.button.purple {
+	background-color: var(--purple);
+	border-color: var(--purple);
+}
+
 .button.purple-dark {
 	background-color: var(--purple-dark);
 	border-color: var(--purple-dark);
+}
+
+.button.yellow {
+	background-color: var(--yellow);
+	border-color: var(--yellow);
+}
+
+.button.yellow-dark {
+	background-color: var(--yellow-dark);
+	border-color: var(--yellow-dark);
 }
 
 .button.failed {

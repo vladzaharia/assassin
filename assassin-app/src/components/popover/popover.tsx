@@ -2,6 +2,8 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover as MUIPopover } from '@mui/material'
 import './popover.css'
+import { useContext } from 'react'
+import { PopoverContainerContext } from '../../context/popover'
 
 export type PopoverColor = 'primary' | 'blue' | 'green' | 'orange' | 'grey-dark'
 
@@ -34,12 +36,14 @@ export interface PopoverProps extends PopoverContentProps {
 
 export default function Popover(props: PopoverProps) {
 	const { anchor, color, open, onClose } = props
+	const popoverContext = useContext(PopoverContainerContext)
 
 	return (
 		<MUIPopover
 			open={open}
 			anchorEl={anchor}
 			onClose={onClose}
+			container={popoverContext?.current}
 			slotProps={{
 				paper: {
 					elevation: 0,
