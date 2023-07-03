@@ -91,7 +91,7 @@
 .button.failed {
 	background-color: var(--failure);
 	border: 0.0625rem solid var(--failure);
-	color: var(--failure-foreground);
+	color: var(--notification-foreground);
 }
 
 .button:disabled {

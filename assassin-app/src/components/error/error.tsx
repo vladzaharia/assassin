@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { faHexagonExclamation } from '@fortawesome/pro-regular-svg-icons'
+import { faHexagonExclamation } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from 'react'
 import { Link, useRouteError } from 'react-router-dom'
@@ -36,9 +36,8 @@ export const ContextAwareErrorField = ({ className }: { className?: string }) =>
 	if (context) {
 		return (
 			<Notification
-				icon={faHexagonExclamation}
 				showClose={true}
-				color="failed"
+				notificationType="failed"
 				message={context.error?.message || ''}
 				open={context.showError}
 				setOpen={context.setShowError}

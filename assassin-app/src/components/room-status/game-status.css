@@ -1,0 +1,31 @@
+.game-status {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0.0625rem solid var(--grey-light);
+	background-color: var(--white);
+	color: var(--grey-dark);
+	height: 2rem;
+	width: 2rem;
+	border-radius: 0.5rem;
+	font-size: 1.25rem;
+}
+
+.game-status svg {
+	margin: 0;
+}
+
+.game-status.orange {
+	border-color: var(--orange);
+	color: var(--orange);
+}
+
+.game-status.blue {
+	border-color: var(--blue);
+	color: var(--blue);
+}
+
+.game-status.green {
+	border-color: var(--green);
+	color: var(--green);
+}

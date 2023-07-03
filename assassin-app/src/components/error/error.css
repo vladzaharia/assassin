@@ -51,7 +51,7 @@
 .error-field > span {
 	padding: 1rem;
 	background: var(--failure);
-	color: var(--failure-foreground);
+	color: var(--notification-foreground);
 	border-radius: 0.5rem;
 	display: grid;
 	grid-template-columns: 1fr 5fr;
