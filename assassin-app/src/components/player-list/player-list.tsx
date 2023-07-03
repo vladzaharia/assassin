@@ -7,7 +7,7 @@ import { useContext, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import { createPlayerApi } from '../../api'
-import { ErrorContext } from '../../context/error'
+import { NotificationContext } from '../../context/notification'
 import { RoomContext } from '../../context/room'
 import Header from '../header/header'
 import Popover from '../popover/popover'
@@ -35,7 +35,7 @@ const getPlayerIcon = (player: BasicPlayer) => {
 export default function PlayerList() {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomContext)
-	const errorContext = useContext(ErrorContext)
+	const { notification, setError, setNotification, showNotification } = useContext(NotificationContext)
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -51,32 +51,32 @@ export default function PlayerList() {
 		const addPlayer = async () => {
 			try {
 				const addPlayerResponse = await playerApi.putPlayer(roomContext?.room?.name || '', name)
-				errorContext?.setError(addPlayerResponse.data.message, 'join')
+				setNotification(addPlayerResponse.data.message, 'join', addPlayerResponse.status === 200 ? 'success' : 'failed')
 				navigate('.', { relative: 'path' })
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const eAsAny = e as any
-				errorContext?.setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'join')
+				setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'join')
 			}
 		}
 
 		const deletePlayer = async () => {
 			try {
 				const deletePlayerResponse = await playerApi.deletePlayer(roomContext?.room?.name || '', name)
-				errorContext?.setError(deletePlayerResponse.data.message, 'leave')
+				setNotification(deletePlayerResponse.data.message, 'leave', deletePlayerResponse.status === 200 ? 'success' : 'failed')
 				navigate('.', { relative: 'path' })
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const eAsAny = e as any
-				errorContext?.setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'leave')
+				setError(eAsAny.response?.data.message || eAsAny.response?.data || 'Something went wrong!', 'leave')
 			}
 		}
 
 		return (
 			<Button
 				className={
-					errorContext?.showError && ['join', 'leave'].includes(errorContext?.error?.errorType || '')
-						? 'failed'
+					showNotification && ['join', 'leave'].includes(notification?.source || '')
+						? (notification?.notificationType || 'primary')
 						: !playerInRoom
 						? 'green'
 						: 'primary'

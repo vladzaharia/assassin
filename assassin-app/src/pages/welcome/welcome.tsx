@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
-import { ErrorContext } from '../../context/error'
+import { NotificationContext } from '../../context/notification'
 import './welcome.css'
 import Button from '../../components/button/button'
 
@@ -15,7 +15,7 @@ export default function Welcome() {
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
 	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const { error, setError, showError } = useContext(ErrorContext)!
+	const { notification, setError, showNotification, setShowNotification } = useContext(NotificationContext)
 	const navigate = useNavigate()
 
 	const roomApi = createRoomApi()
@@ -36,14 +36,14 @@ export default function Welcome() {
 		})
 
 		if (roomResponse?.status === 200) {
-			setError(undefined)
+			setShowNotification(false)
 			return navigate(`/room/${room}`)
 		}
 	}
 
 	const getButtonClass = () => {
-		if (error) {
-			return showError && error.errorType === 'room' ? 'failed' : 'primary'
+		if (notification && showNotification) {
+			return notification.notificationType || 'primary'
 		}
 
 		return 'primary'
@@ -112,7 +112,7 @@ export default function Welcome() {
 									placeholder="Room code"
 									value={room}
 									onChange={(e) => {
-										setError(undefined)
+										setShowNotification(false)
 										setRoom(e.target.value)
 									}}
 								/>

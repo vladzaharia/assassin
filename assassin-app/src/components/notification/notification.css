@@ -14,7 +14,7 @@
 	width: 100%;
 	padding: 1rem;
 	background: var(--background);
-	color: var(--foreground);
+	color: var(--notification-foreground);
 	border-radius: 0.5rem;
 	display: grid;
 	grid-template-columns: 1fr 5fr;
@@ -25,17 +25,14 @@
 
 .notification.failed > span {
 	background: var(--failure);
-	color: var(--notification-foreground);
 }
 
 .notification.success > span {
-	background: var(--green-dark);
-	color: var(--foreground-alt);
+	background: var(--success);
 }
 
 .notification.warning > span {
-	background: var(--orange-dark);
-	color: var(--foreground-alt);
+	background: var(--warning);
 }
 
 .notification .icon {

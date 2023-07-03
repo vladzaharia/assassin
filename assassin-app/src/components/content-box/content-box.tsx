@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ReactNode, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { ErrorContext, RequestError } from '../../context/error'
-import { ContextAwareErrorField } from '../error/error'
+import { NotificationContext, NotificationDetails } from '../../context/notification'
 import './content-box.css'
+import Notification from '../notification/notification'
 
 export interface ContentBoxProps {
 	children?: ReactNode
@@ -11,23 +11,31 @@ export interface ContentBoxProps {
 
 export default function ContentBox({ children }: ContentBoxProps) {
 	const location = useLocation()
-	const [requestError, setRequestError] = useState<RequestError | undefined>(undefined)
-	const [showError, setShowError] = useState<boolean>(false)
+	const [notification, setError] = useState<NotificationDetails | undefined>(undefined)
+	const [showNotification, setShowNotification] = useState<boolean>(false)
 
 	return (
-		<ErrorContext.Provider
+		<NotificationContext.Provider
 			value={{
-				error: requestError,
-				setError: (message, errorType) => {
+				notification,
+				setNotification: (message, source, notificationType, dismissable, timeout) => {
 					if (message) {
-						setRequestError({ message, errorType })
-						setShowError(message !== 'ok')
+						setError({ message, source, notificationType, dismissable, timeout })
+						setShowNotification(message !== 'ok')
 					} else {
-						setShowError(false)
+						setShowNotification(false)
 					}
 				},
-				showError,
-				setShowError,
+				setError: (message, source, dismissable, timeout) => {
+					if (message) {
+						setError({ message, source, notificationType: 'failed', dismissable, timeout })
+						setShowNotification(message !== 'ok')
+					} else {
+						setShowNotification(false)
+					}
+				},
+				showNotification,
+				setShowNotification,
 			}}
 		>
 			<AnimatePresence mode="popLayout">
@@ -42,7 +50,7 @@ export default function ContentBox({ children }: ContentBoxProps) {
 					{children ? children : <Outlet />}
 				</motion.div>
 			</AnimatePresence>
-			<ContextAwareErrorField className="align-bottom" />
-		</ErrorContext.Provider>
+			<Notification />
+		</NotificationContext.Provider>
 	)
 }

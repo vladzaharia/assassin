@@ -3,26 +3,16 @@ import './notification.css'
 import { faXmark } from '@fortawesome/pro-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareCheck, faSquareExclamation, faTriangleExclamation } from '@fortawesome/pro-solid-svg-icons'
+import { NotificationContext } from '../../context/notification'
+import { useContext } from 'react'
 
-export type NotificationType = 'default' | 'success' | 'failed' | 'warning'
+export default function Notification() {
+	const { notification, showNotification, setShowNotification } = useContext(NotificationContext)
 
-export interface NotificationContentProps {
-	className?: string
-	notificationType: NotificationType
-	message: string | JSX.Element
-	showClose: boolean
-}
-
-export interface NotificationProps extends NotificationContentProps {
-	open: boolean
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export default function Notification({ className, notificationType, message, showClose, open, setOpen }: NotificationProps) {
-	const onClose = () => setOpen(false)
+	const onClose = () => setShowNotification(false)
 
 	const getIcon = () => {
-		switch (notificationType) {
+		switch (notification?.notificationType) {
 			case 'success':
 				return faSquareCheck
 			case 'failed':
@@ -36,19 +26,19 @@ export default function Notification({ className, notificationType, message, sho
 
 	return (
 		<Snackbar
-			open={open}
+			open={showNotification}
 			onClose={onClose}
 			anchorOrigin={{
 				vertical: 'bottom',
 				horizontal: 'center',
 			}}
-			autoHideDuration={5000}
+			autoHideDuration={notification?.timeout || 5000}
 		>
-			<div className={`notification ${notificationType} ${className || ''}`}>
+			<div className={`no-animate notification ${notification?.notificationType || ''}`}>
 				<span>
 					{icon && <FontAwesomeIcon className="icon" size="xl" icon={icon} />}
-					<span className="message">{message}</span>
-					{showClose && <FontAwesomeIcon className="close" icon={faXmark} size="lg" onClick={() => setOpen(false)} />}
+					<span className="message">{notification?.message}</span>
+					{notification?.dismissable && <FontAwesomeIcon className="close" icon={faXmark} size="lg" onClick={() => (false)} />}
 				</span>
 			</div>
 		</Snackbar>

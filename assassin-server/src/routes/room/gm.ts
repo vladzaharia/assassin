@@ -41,7 +41,7 @@ export const AssignGM = async (c: Context<{ Bindings: Bindings }>) => {
 			await setGMStatus(db, room, name, true)
 		}
 
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Successfully reassigned GM status!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

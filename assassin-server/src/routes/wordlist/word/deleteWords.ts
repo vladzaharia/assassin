@@ -27,7 +27,7 @@ export const DeleteWords = async (c: Context<{ Bindings: Bindings }>) => {
 		// Delete all words from word list
 		await deleteWords(db, list, words)
 
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Successfully deleted words!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

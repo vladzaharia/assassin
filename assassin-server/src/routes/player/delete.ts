@@ -40,7 +40,7 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		await deletePlayer(db, room, name)
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Successfully deleted player!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

@@ -46,7 +46,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				await setPlayerTarget(db, room, result.name, result.target!)
 			}
 
-			return c.json({ message: 'ok' })
+			return c.json({ message: 'Successfully started game!' })
 		} else {
 			return c.json({ message: 'Must have at least 3 people signed up!' }, 400)
 		}

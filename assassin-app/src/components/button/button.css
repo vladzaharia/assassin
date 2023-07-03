@@ -90,20 +90,31 @@
 
 .button.failed {
 	background-color: var(--failure);
-	border: 0.0625rem solid var(--failure);
+	border-color: var(--failure);
+	color: var(--notification-foreground);
+}
+
+.button.success {
+	background-color: var(--success);
+	border-color: var(--success);
+	color: var(--notification-foreground);
+}
+
+.button.warning {
+	background-color: var(--warning);
+	border-color: var(--warning);
 	color: var(--notification-foreground);
 }
 
 .button:disabled {
 	background-color: var(--grey-light);
-	border: 0.0625rem solid var(--grey-light);
+	border-color: var(--grey-light);
 	color: var(--grey-dark);
 	cursor: default;
 }
 
 .app.dark .button:disabled {
 	background-color: var(--grey-dark);
-	border: 0.0625rem solid var(--grey-dark);
+	border-color: var(--grey-dark);
 	color: var(--grey-light);
-	cursor: default;
 }

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ErrorContext } from '../../context/error'
+import { NotificationContext } from '../../context/notification'
 import { RoomContext } from '../../context/room'
 import './gm.css'
 import Header from '../../components/header/header'
@@ -9,13 +9,13 @@ import Button from '../../components/button/button'
 
 export default function GM() {
 	const roomStatus = useContext(RoomContext)
-	const errorContext = useContext(ErrorContext)
+	const { setError } = useContext(NotificationContext)
 
 	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (!roomStatus?.playerIsGM) {
-			errorContext?.setError('You are not the GM of this room!')
+			setError('You are not the GM of this room!')
 			navigate(`/room/${roomStatus?.room?.name}`)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

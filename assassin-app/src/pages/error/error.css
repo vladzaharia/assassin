@@ -37,35 +37,6 @@
 	text-align: center;
 }
 
-.error-field {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.error-field span {
-	font-size: 1rem;
-	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
-}
-
-.error-field > span {
-	padding: 1rem;
-	background: var(--failure);
-	color: var(--notification-foreground);
-	border-radius: 0.5rem;
-	display: grid;
-	grid-template-columns: 1fr 5fr;
-	align-items: center;
-}
-
-.error-field .message {
-	margin: 0 1.5rem;
-}
-
-.error-field.align-bottom {
-	margin-bottom: 1rem;
-}
-
 .app.dark .error-boundary .details {
 	background-color: var(--grey-dark);
 	color: var(--white);

@@ -29,7 +29,7 @@ export const AddWordList = async (c: Context<{ Bindings: Bindings }>) => {
 
 		// Insert word list
 		await insertWordList(db, list, description, icon)
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Successfully added word list!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

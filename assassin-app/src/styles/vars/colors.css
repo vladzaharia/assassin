@@ -35,9 +35,10 @@
 	--foreground-alt: var(--white);
 	--border: var(--grey-light);
 
-	--success: var(--green);
-	--failure: #db2955;
-	--notification-foreground: var(--foreground-alt);
+	--success: #32853C;
+	--failure: #cc0033;
+	--warning: #C77400;
+	--notification-foreground: var(--white);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,8 +75,5 @@
 		--foreground: var(--grey-light);
 		--foreground-alt: var(--grey-darker);
 		--border: var(--grey-dark);
-
-		--failure: #cc0033;
-		--notification-foreground: var(--foreground);
 	}
 }
