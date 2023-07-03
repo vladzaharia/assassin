@@ -1,10 +1,10 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ReactNode } from 'react'
 import RoomStatus from '../room-status/room-status'
 import './menu.css'
 import Header from '../header/header'
+import Button from '../button/button'
 
 export interface MenuProps {
 	headerProps?: {
@@ -25,12 +25,16 @@ export default function Menu({ headerProps: header, children }: MenuProps) {
 					className="center"
 					leftActions={
 						header.onClick ? (
-							<button className="primary" onClick={header.onClick}>
-								<FontAwesomeIcon icon={header.icon || faChevronLeft} />
-							</button>
+							<Button
+								className="primary"
+								onClick={header.onClick}
+								iconProps={{
+									icon: header.icon || faChevronLeft,
+								}}
+							/>
 						) : undefined
 					}
-					rightActions={header.status ? <RoomStatus /> : undefined}
+					rightActions={header.status ? <RoomStatus showPopover /> : undefined}
 				/>
 			)}
 			{children}

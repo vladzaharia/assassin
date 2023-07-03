@@ -3,9 +3,12 @@ import { useContext, useEffect } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { ErrorContext } from '../../context/error'
 import { RoomContext } from '../../context/room'
-import './player.css'
+import './mission.css'
+import Header from '../../components/header/header'
+import Button from '../../components/button/button'
+import { faXmark } from '@fortawesome/pro-solid-svg-icons'
 
-export default function Player() {
+export default function Mission() {
 	const roomStatus = useContext(RoomContext)
 	const errorContext = useContext(ErrorContext)
 	const player = useLoaderData() as PlayerResponse
@@ -30,9 +33,14 @@ export default function Player() {
 	return (
 		<div className="player-info">
 			{hasPlayer ? (
+				// eslint-disable-next-line react/jsx-no-useless-fragment
 				<>
-					<h2 className="title">How to Play</h2>
-					<span>{player && player.name}</span>
+					<Header
+						title="Mission"
+						rightActions={
+							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
+						}
+					/>
 				</>
 			) : undefined}
 		</div>

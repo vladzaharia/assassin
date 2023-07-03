@@ -1,4 +1,4 @@
-button {
+.button {
 	border: 0.0625rem solid var(--grey-dark);
 	margin-top: 0.625em;
 	border-radius: 0.3rem;
@@ -19,32 +19,37 @@ button {
 	margin-right: 0.25rem;
 }
 
-button.primary {
+.button svg:has(+ span) {
+	margin-right: 0.5rem;
+}
+
+.button.primary {
 	background-color: var(--primary);
 	border-color: var(--primary);
 }
 
-button.blue {
+.button.blue {
 	background-color: var(--blue);
 	border-color: var(--blue);
 }
 
-button.green {
+.button.green {
 	background-color: var(--green);
 	border-color: var(--green);
 }
 
-button.orange {
+.button.orange {
 	background-color: var(--orange);
 	border-color: var(--orange);
 }
 
-button.failed {
+.button.failed {
 	background-color: var(--failure);
 	border: 0.0625rem solid var(--failure);
+	color: var(--failure-foreground);
 }
 
-button:disabled {
+.button:disabled {
 	background-color: var(--grey-light);
 	border: 0.0625rem solid var(--grey-light);
 	color: var(--grey-dark);
@@ -52,7 +57,7 @@ button:disabled {
 }
 
 @media (prefers-color-scheme: dark) {
-	button:disabled {
+	.button:disabled {
 		background-color: var(--grey-dark);
 		border: 0.0625rem solid var(--grey-dark);
 		color: var(--grey-light);

@@ -20,10 +20,11 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		const results = await listPlayersInRoom(db, room)
+
 		if (results && results.length > 2) {
 			// Check if targets have been assigned
 			if (results[0].target) {
-				return c.json({ message: 'Game already started!' }, 400)
+				return c.json({ message: 'Game has already started!' }, 400)
 			}
 
 			const matched: string[] = []

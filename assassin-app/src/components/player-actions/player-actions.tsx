@@ -1,10 +1,10 @@
-import { faMagnifyingGlass } from '@fortawesome/pro-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../context/room'
 import './player-actions.css'
+import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
+import Button from '../button/button'
 
 export default function PlayerActions() {
 	const [name] = useLocalStorage('name', '')
@@ -16,18 +16,21 @@ export default function PlayerActions() {
 
 	return roomStatus?.status === 'started' && roomStatus?.players.some((p) => p.name === name) ? (
 		<div className="player-actions">
-			<button
-				className="blue"
+			<Button
+				className="primary"
+				text="Retrieve mission"
+				iconProps={{
+					icon: faUserSecret,
+					size: 'xl',
+				}}
 				onClick={() => {
-					if (!location.pathname.includes('player')) {
-						navigate('player')
+					if (!location.pathname.includes('mission')) {
+						navigate('mission')
 					} else {
 						navigate('..', { relative: 'path' })
 					}
 				}}
-			>
-				<FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> Look up Target
-			</button>
+			/>
 		</div>
 	) : null
 }

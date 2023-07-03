@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { faCrosshairs, faCrown, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCrown, faTombstoneBlank, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import isMobile from 'is-mobile'
@@ -12,6 +12,7 @@ import { RoomContext } from '../../context/room'
 import Header from '../header/header'
 import Popover from '../popover/popover'
 import './player-list.css'
+import Button from '../button/button'
 
 const getPlayerColor = (player: BasicPlayer) => {
 	if (player.isGM) {
@@ -25,7 +26,7 @@ const getPlayerColor = (player: BasicPlayer) => {
 
 const getPlayerIcon = (player: BasicPlayer) => {
 	if (player.status === 'eliminated') {
-		return faCrosshairs
+		return faTombstoneBlank
 	} else if (player.isGM) {
 		return faCrown
 	}
@@ -72,7 +73,7 @@ export default function PlayerList() {
 		}
 
 		return (
-			<button
+			<Button
 				className={
 					errorContext?.showError && ['join', 'leave'].includes(errorContext?.error?.errorType || '')
 						? 'failed'
@@ -80,11 +81,10 @@ export default function PlayerList() {
 						? 'green'
 						: 'primary'
 				}
+				iconProps={{ icon: !playerInRoom ? faUserPlus : faUserMinus }}
 				onClick={!playerInRoom ? addPlayer : deletePlayer}
 				disabled={!roomStatus || roomStatus.status === 'started'}
-			>
-				<FontAwesomeIcon icon={!playerInRoom ? faUserPlus : faUserMinus} />
-			</button>
+			/>
 		)
 	}
 
@@ -98,7 +98,7 @@ export default function PlayerList() {
 						{roomContext?.playerIsGM ? (
 							<>
 								<button
-									className={'blue'}
+									className={'button blue'}
 									onClick={() => {
 										if (!location.pathname.includes('gm')) {
 											navigate('gm')

@@ -1,5 +1,4 @@
 import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AxiosError, isAxiosError } from 'axios'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useContext, useState } from 'react'
@@ -9,6 +8,7 @@ import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
 import { ErrorContext } from '../../context/error'
 import './welcome.css'
+import Button from '../../components/button/button'
 
 export default function Welcome() {
 	const [name, setName] = useLocalStorage<string>('name', '')
@@ -84,9 +84,7 @@ export default function Welcome() {
 										setName(e.target.value)
 									}}
 								/>
-								<button type="submit" className={getButtonClass()}>
-									<FontAwesomeIcon icon={faChevronRight} size="xl" />
-								</button>
+								<Button type="submit" className={getButtonClass()} iconProps={{ icon: faChevronRight, size: 'xl' }} />
 							</form>
 						</motion.div>
 					) : undefined}
@@ -118,9 +116,7 @@ export default function Welcome() {
 										setRoom(e.target.value)
 									}}
 								/>
-								<button type="submit" className={getButtonClass()}>
-									<FontAwesomeIcon icon={faCheck} size="xl" />
-								</button>
+								<Button type="submit" className={getButtonClass()} iconProps={{ icon: faCheck, size: 'xl' }} />
 							</form>
 						</motion.div>
 					) : undefined}

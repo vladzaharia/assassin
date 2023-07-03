@@ -1,0 +1,20 @@
+.app {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+@media only screen and (max-width: 50rem) {
+	html,
+	body,
+	.root,
+	.app {
+		overflow-y: hidden;
+	}
+
+	.app > h1 {
+		display: none;
+	}
+}

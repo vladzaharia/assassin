@@ -243,6 +243,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Player'
+        400:
+          $ref: '#/components/responses/GameStarted'
         404:
           $ref: '#/components/responses/PlayerNotFound'
         500:
@@ -697,6 +699,19 @@ components:
                 type: string
                 description: Message for this error.
                 example: Word not found!
+            required:
+              - message
+    GameStarted:
+      description: Game has already started.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Game has already started!
             required:
               - message
 

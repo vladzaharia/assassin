@@ -8,7 +8,7 @@ import { RouterErrorBoundary } from './components/error/error'
 import Admin from './pages/admin/admin'
 import GM from './pages/gm/gm'
 import Instructions from './pages/instructions/instructions'
-import Player from './pages/player/player'
+import Mission from './pages/mission/mission'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
@@ -73,8 +73,8 @@ const router = createBrowserRouter([
 						element: <GM />,
 					},
 					{
-						path: 'player',
-						id: 'player',
+						path: 'mission',
+						id: 'mission',
 						loader: async ({ params }) => {
 							try {
 								const name = localStorage.getItem('name')
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
 								return {}
 							}
 						},
-						element: <Player />,
+						element: <Mission />,
 					},
 				],
 			},

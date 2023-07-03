@@ -4,8 +4,8 @@ import { ErrorContext } from '../../context/error'
 import { RoomContext } from '../../context/room'
 import './gm.css'
 import Header from '../../components/header/header'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/pro-solid-svg-icons'
+import Button from '../../components/button/button'
 
 export default function GM() {
 	const roomStatus = useContext(RoomContext)
@@ -26,9 +26,7 @@ export default function GM() {
 			<Header
 				title="GM Options"
 				rightActions={
-					<button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)}>
-						<FontAwesomeIcon icon={faXmark} />
-					</button>
+					<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} />
 				}
 			/>
 		</div>

@@ -35,7 +35,8 @@
 			"outputs": ["{options.outputFile}"],
 			"options": {
 				"lintFilePatterns": ["./assassin-app/**/*.{ts,tsx,js,jsx}"],
-				"maxWarnings": 0
+				"maxWarnings": 0,
+				"fix": true
 			}
 		},
 		"format": {

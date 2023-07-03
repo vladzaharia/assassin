@@ -24,6 +24,11 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Player not found!' }, 404)
 		}
 
+		// Check if game has already started
+		if (playerRecord.target) {
+			return c.json({ message: 'Game has already started!' }, 400)
+		}
+
 		// Reassign GM status
 		if (playerRecord.isGM) {
 			const players = await listPlayersInRoom(db, room)

@@ -1,7 +1,8 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faCrosshairs, faMagnifyingGlass, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './instructions.css'
+import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 
 interface StepProps {
 	icon: IconDefinition
@@ -41,16 +42,16 @@ export default function Instructions() {
 				color="orange"
 			/>
 			<Step
-				title="Look up your target"
-				description='Enter your first name and click "Lookup" to find who your target is.'
-				icon={faMagnifyingGlass}
-				color="blue"
+				title="Retrieve your mission"
+				description="Once the game starts, you can look up who your target is by clicking the button in the menu."
+				icon={faUserSecret}
+				color="primary"
 			/>
 			<Step
 				title="Eliminate your target!"
 				description="Try to get your target to say one of your words through the day."
 				icon={faCrosshairs}
-				color="primary"
+				color="primary-dark"
 			/>
 			<Step
 				title="Record your assassination"

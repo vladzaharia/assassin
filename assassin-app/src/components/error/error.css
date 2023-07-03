@@ -3,19 +3,38 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	height: 100%;
+	width: 100%;
 }
 
-.error-boundary span {
-	margin-top: 1rem;
+.error-boundary h1 {
+	margin-top: 0;
 }
 
 .error-boundary .details {
 	font-size: smaller;
-	margin-top: 1.5rem;
-	padding: 1rem;
+	margin: 1.5rem 0;
 	background-color: var(--grey-light);
 	color: var(--foreground-alt);
 	border-radius: 0.3rem;
+	display: flex;
+	flex-direction: column;
+	min-width: 35%;
+	max-width: 50%;
+}
+
+.error-boundary .details label {
+	padding: 0.5rem;
+	padding-bottom: 0;
+	color: var(--grey-dark);
+}
+
+.error-boundary .details span {
+	padding: 1rem 2rem;
+	margin-top: 0.5rem;
+	border-top: 1px solid var(--border);
+	font-size: 0.95rem;
+	text-align: center;
 }
 
 .error-field {
@@ -32,8 +51,8 @@
 .error-field > span {
 	padding: 1rem;
 	background: var(--failure);
+	color: var(--failure-foreground);
 	border-radius: 0.5rem;
-	color: var(--foreground-alt);
 	display: grid;
 	grid-template-columns: 1fr 5fr;
 	align-items: center;
@@ -47,9 +66,31 @@
 	margin-bottom: 1rem;
 }
 
+@media (prefers-color-scheme: dark) {
+	.error-boundary .details {
+		background-color: var(--grey-dark);
+		color: var(--white);
+	}
+
+	.error-boundary .details span {
+		border-color: var(--grey-light);
+	}
+
+	.error-boundary .details label {
+		color: var(--foreground);
+	}
+}
+
+@media only screen and (max-width: 82.5rem) {
+	.error-boundary .details {
+		min-width: 45%;
+		max-width: 65%;
+	}
+}
+
 @media only screen and (max-width: 50rem) {
-	.error-field.bottom {
-		width: 90%;
-		bottom: 1rem;
+	.error-boundary .details {
+		width: 65%;
+		max-width: 85%;
 	}
 }

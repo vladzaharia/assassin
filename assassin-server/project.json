@@ -18,7 +18,8 @@
 			"outputs": ["{options.outputFile}"],
 			"options": {
 				"lintFilePatterns": ["./assassin-server/**/*.{ts,tsx,js,jsx}"],
-				"maxWarnings": 0
+				"maxWarnings": 0,
+				"fix": true
 			}
 		},
 		"format": {

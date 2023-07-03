@@ -16,3 +16,9 @@ input[type='text']:focus {
 	outline: 0.2rem var(--blue) solid;
 	border: none;
 }
+
+@media (prefers-color-scheme: dark) {
+	input[type='text'] {
+		color: var(--white);
+	}
+}

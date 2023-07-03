@@ -6,7 +6,3 @@
 	padding: 1rem 0;
 	border-bottom: 0.0625rem solid var(--border);
 }
-
-.player-actions button svg {
-	margin-right: 1rem;
-}

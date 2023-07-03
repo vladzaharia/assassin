@@ -1,10 +1,11 @@
 :root {
 	--primary: #8a2131;
 	--primary-light: #f2667235;
-	--primary-dark: #21080c;
+	--primary-dark: #631823;
 
-	--grey-light: #e7e5e5;
-	--grey-dark: #5e6472;
+	--grey-light: #ede9e9;
+	--grey-dark: #5a4949;
+	--grey-darker: #382e2e;
 
 	--green: #52aa5e;
 	--green-light: #52aa5e35;
@@ -30,22 +31,24 @@
 	--black: #000;
 
 	--background: var(--white);
-	--foreground: var(--black);
+	--foreground: var(--grey-darker);
 	--foreground-alt: var(--white);
 	--border: var(--grey-light);
 
 	--success: var(--green);
 	--failure: #db2955;
+	--failure-foreground: var(--foreground-alt);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--primary: #ff8597;
 		--primary-light: #8a213135;
-		--primary-dark: #db6b7c;
+		--primary-dark: #cf3a50;
 
-		--grey-light: #e7e5e5;
-		--grey-dark: #5e6472;
+		--grey-light: #dad2d2;
+		--grey-dark: #5a4949;
+		--grey-darker: #2e2626;
 
 		--green: #89d291;
 		--green-light: #52aa5e25;
@@ -67,11 +70,12 @@
 		--yellow-light: #fdca4025;
 		--yellow-dark: #fdcd49;
 
-		--background: #3a2d2d;
+		--background: var(--grey-darker);
 		--foreground: var(--grey-light);
-		--foreground-alt: var(--black);
+		--foreground-alt: var(--grey-darker);
 		--border: var(--grey-dark);
 
-		--failure: #ffa3ba;
+		--failure: #cc0033;
+		--failure-foreground: var(--foreground);
 	}
 }

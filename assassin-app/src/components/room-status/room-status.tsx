@@ -1,5 +1,4 @@
-import { faPlayCircle } from '@fortawesome/pro-regular-svg-icons'
-import { faCheck, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faPlay, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import isMobile from 'is-mobile'
 import { useContext, useRef, useState } from 'react'
@@ -8,7 +7,7 @@ import { RoomContext } from '../../context/room'
 import Popover from '../popover/popover'
 import './room-status.css'
 
-export default function RoomStatus({ showText }: { showText?: boolean }) {
+export default function RoomStatus({ showText, showPopover }: { showText?: boolean; showPopover?: boolean }) {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomContext)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
@@ -20,7 +19,7 @@ export default function RoomStatus({ showText }: { showText?: boolean }) {
 	const getStatusIcon = () => {
 		switch (roomStatus?.status) {
 			case 'started':
-				return faPlayCircle
+				return faPlay
 			case 'ready':
 				return faCheck
 			case 'not-ready':
@@ -49,7 +48,7 @@ export default function RoomStatus({ showText }: { showText?: boolean }) {
 		switch (roomStatus?.status) {
 			case 'started':
 				return roomStatus?.players.some((p) => p.name === name) ? (
-					'The game has started! Look your opponent up and eliminate them!'
+					'The game has started! Look your target up and eliminate them!'
 				) : (
 					<>
 						<strong>The game has already started.</strong>
@@ -113,7 +112,7 @@ export default function RoomStatus({ showText }: { showText?: boolean }) {
 				{showText ? getStatusLabel() : undefined}
 			</div>
 			<Popover
-				open={popoverOpen}
+				open={popoverOpen && !!showPopover}
 				anchor={popoverAnchor.current}
 				color={getStatusColor()}
 				title={getStatusLabel()}

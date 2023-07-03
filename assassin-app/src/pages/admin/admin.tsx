@@ -1,3 +1,4 @@
+import Button from '../../components/button/button'
 import { useAuth } from 'react-oidc-context'
 
 export default function Admin() {
@@ -10,6 +11,6 @@ export default function Admin() {
 	) : auth.isLoading ? (
 		<div>Loading...</div>
 	) : (
-		<button onClick={() => void auth.signinRedirect()}>Log in</button>
+		<Button text="Log in" onClick={() => void auth.signinRedirect()} />
 	)
 }
