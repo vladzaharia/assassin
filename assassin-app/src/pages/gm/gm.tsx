@@ -19,7 +19,7 @@ export default function GM() {
 	}, [])
 
 	return (
-		<div className="instructions">
+		<div className="gm-info">
 			<h2 className="title">How to Play</h2>
 		</div>
 	)
