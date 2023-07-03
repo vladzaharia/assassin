@@ -35,21 +35,19 @@ export default function ContentBox({ children }: ContentBoxProps) {
 				setShowError,
 			}}
 		>
-			<div className="app">
-				<AnimatePresence mode="popLayout">
-					<motion.div
-						className="content-box no-animate"
-						key={location.pathname}
-						initial={{ opacity: 0.5 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0.75 }}
-						transition={{ duration: 0.5 }}
-					>
-						{children ? children : <Outlet />}
-					</motion.div>
-				</AnimatePresence>
-				<ContextAwareErrorField className="align-bottom" />
-			</div>
+			<AnimatePresence mode="popLayout">
+				<motion.div
+					className="content-box no-animate"
+					key={location.pathname}
+					initial={{ opacity: 0.5 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0.75 }}
+					transition={{ duration: 0.5 }}
+				>
+					{children ? children : <Outlet />}
+				</motion.div>
+			</AnimatePresence>
+			<ContextAwareErrorField className="align-bottom" />
 		</ErrorContext.Provider>
 	)
 }

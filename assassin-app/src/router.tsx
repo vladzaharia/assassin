@@ -24,6 +24,7 @@ import '@fontsource/barlow/800.css'
 
 /* Global styles */
 import './styles'
+import App from './components/app/app'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -102,7 +103,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<StrictMode>
 		<AuthProvider {...oidcConfig}>
-			<RouterProvider router={router} />
+			<App>
+				<RouterProvider router={router} />
+			</App>
 		</AuthProvider>
 	</StrictMode>
 )

@@ -12,7 +12,7 @@ export default function Button({ className, disabled, text, iconProps, onClick, 
 	return (
 		<button
 			{...buttonProps}
-			className={`button ${className}`}
+			className={`button ${className || ''}`}
 			disabled={disabled}
 			onClick={
 				onClick ||

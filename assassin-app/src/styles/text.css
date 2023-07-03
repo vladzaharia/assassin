@@ -6,7 +6,6 @@ body {
 	background-image: url('/background.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
-	color: var(--foreground);
 }
 
 h1 {

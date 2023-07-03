@@ -1,4 +1,4 @@
-:root {
+.app, .popover {
 	--primary: #8a2131;
 	--primary-light: #f2667235;
 	--primary-dark: #631823;
@@ -41,7 +41,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
+	.app.dark {
 		--primary: #ff8597;
 		--primary-light: #8a213135;
 		--primary-dark: #cf3a50;

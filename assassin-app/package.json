@@ -60,6 +60,7 @@
 		"react-oidc-context": "^2.2.2",
 		"react-router-dom": "^6.14.0",
 		"use-local-storage": "^3.0.0",
+		"use-prefers-color-scheme": "^1.1.3",
 		"use-session-storage-state": "^18.2.0"
 	}
 }

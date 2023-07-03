@@ -17,8 +17,6 @@ input[type='text']:focus {
 	border: none;
 }
 
-@media (prefers-color-scheme: dark) {
-	input[type='text'] {
-		color: var(--white);
-	}
+.app.dark input[type='text'] {
+	color: var(--white);
 }

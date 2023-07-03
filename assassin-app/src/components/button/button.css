@@ -43,6 +43,11 @@
 	border-color: var(--orange);
 }
 
+.button.purple-dark {
+	background-color: var(--purple-dark);
+	border-color: var(--purple-dark);
+}
+
 .button.failed {
 	background-color: var(--failure);
 	border: 0.0625rem solid var(--failure);
@@ -56,11 +61,9 @@
 	cursor: default;
 }
 
-@media (prefers-color-scheme: dark) {
-	.button:disabled {
-		background-color: var(--grey-dark);
-		border: 0.0625rem solid var(--grey-dark);
-		color: var(--grey-light);
-		cursor: default;
-	}
+.app.dark .button:disabled {
+	background-color: var(--grey-dark);
+	border: 0.0625rem solid var(--grey-dark);
+	color: var(--grey-light);
+	cursor: default;
 }
