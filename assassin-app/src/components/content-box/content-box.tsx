@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { ErrorContext, RequestError } from '../../context/error'
 import { ContextAwareErrorField } from '../error/error'
@@ -13,11 +13,6 @@ export default function ContentBox({ children }: ContentBoxProps) {
 	const location = useLocation()
 	const [requestError, setRequestError] = useState<RequestError | undefined>(undefined)
 	const [showError, setShowError] = useState<boolean>(false)
-
-	useEffect(() => {
-		const interval = setInterval(() => setShowError(false), 5 * 1000)
-		return () => clearInterval(interval)
-	}, [requestError])
 
 	return (
 		<ErrorContext.Provider

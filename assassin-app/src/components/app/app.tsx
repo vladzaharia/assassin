@@ -4,7 +4,8 @@ import isMobile from 'is-mobile'
 import Button from '../button/button'
 import { faMoon, faSun } from '@fortawesome/pro-solid-svg-icons'
 import usePrefersColorScheme from 'use-prefers-color-scheme'
-import { PopoverContainerContext } from '../../context/popover'
+import { ContainerContext } from '../../context/container'
+import { motion } from 'framer-motion'
 
 export interface AppProps {
 	children?: ReactNode
@@ -17,23 +18,33 @@ export default function App({ children }: AppProps) {
 	const defaultTheme = usePrefersColorScheme()
 	const appRef = useRef<HTMLDivElement>(null)
 
+	const isDark = theme === 'dark'
+
 	useEffect(() => {
 		setTheme(defaultTheme === 'dark' ? 'dark' : 'light')
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
-		<PopoverContainerContext.Provider value={appRef}>
+		<ContainerContext.Provider value={appRef}>
 			<div className={`app ${theme}`} ref={appRef}>
 				{!isMobile() ? (
-					<Button
-						className={`theme ${theme === 'dark' ? 'orange' : 'purple-dark'}`}
-						iconProps={{ icon: theme === 'dark' ? faSun : faMoon, size: 'xl' }}
-						onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-					/>
+					<motion.div
+						className={`no-animate`}
+						initial={{ opacity: 0 }}
+						whileHover={{
+							opacity: 1,
+						}}
+					>
+						<Button
+							className={`theme ${isDark ? 'orange' : 'purple-dark'}`}
+							iconProps={{ icon: isDark ? faSun : faMoon, size: 'xl' }}
+							onClick={() => setTheme(isDark ? 'light' : 'dark')}
+						/>
+					</motion.div>
 				) : undefined}
 				{children}
 			</div>
-		</PopoverContainerContext.Provider>
+		</ContainerContext.Provider>
 	)
 }

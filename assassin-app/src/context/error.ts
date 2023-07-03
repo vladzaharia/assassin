@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from 'react'
+import { createContext } from 'react'
 
 export type RequestErrorType = 'join' | 'leave' | 'gm' | 'room' | 'player'
 
@@ -14,7 +14,3 @@ export interface ErrorContextProps {
 	setShowError: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const ErrorContext = createContext<ErrorContextProps | undefined>(undefined)
-
-export interface ErrorContextProviderProps {
-	children?: ReactNode
-}

@@ -7,7 +7,7 @@
 	color: var(--foreground);
 }
 
-.app > .theme {
+.app button.theme {
 	position: absolute;
 	top: 1rem;
 	right: 1rem;

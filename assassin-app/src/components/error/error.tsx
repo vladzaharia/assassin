@@ -6,6 +6,7 @@ import { Link, useRouteError } from 'react-router-dom'
 import { ErrorContext } from '../../context/error'
 import './error.css'
 import { motion } from 'framer-motion'
+import Notification from '../notification/notification'
 
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
@@ -32,7 +33,20 @@ export const RouterErrorBoundary = () => {
 export const ContextAwareErrorField = ({ className }: { className?: string }) => {
 	const context = useContext(ErrorContext)
 
-	return <ErrorField className={className} message={context?.error?.message} show={context?.showError} />
+	if (context) {
+		return (
+			<Notification
+				icon={faHexagonExclamation}
+				showClose={true}
+				color="failed"
+				message={context.error?.message || ''}
+				open={context.showError}
+				setOpen={context.setShowError}
+			/>
+		)
+	}
+
+	return <></>
 }
 
 export const ErrorField = ({ message, className, show }: { message?: string; className?: string; show?: boolean }) => {
