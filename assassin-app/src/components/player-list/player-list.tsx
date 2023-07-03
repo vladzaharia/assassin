@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { faCrosshairs, faCrown, faUser, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCrosshairs, faCrown, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import isMobile from 'is-mobile'

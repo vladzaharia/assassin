@@ -17,7 +17,8 @@
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["./assassin-server/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["./assassin-server/**/*.{ts,tsx,js,jsx}"],
+				"maxWarnings": 0
 			}
 		},
 		"format": {

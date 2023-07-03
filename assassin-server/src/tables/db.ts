@@ -27,6 +27,7 @@ export interface PlayerTable {
 export interface WordListTable {
 	name: string
 	description: string
+	icon?: string
 }
 
 export interface WordTable {

@@ -29,6 +29,7 @@ export async function insertWordList(db: D1Database, name: string, description: 
 		.values({
 			name,
 			description,
+			icon,
 		})
 		.execute()
 }
