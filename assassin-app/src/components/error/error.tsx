@@ -15,7 +15,7 @@ export const RouterErrorBoundary = () => {
 		<div className="error-boundary">
 			<h1>Something went wrong!</h1>
 			<span>
-				Go back to the <Link to="/">start page</Link> to continue.
+				<Link to="." relative='path'>Try again</Link> or go back to the <Link to="/">start page</Link> to continue.
 			</span>
 			{error && error.message && (
 				<div className="details align-bottom">
