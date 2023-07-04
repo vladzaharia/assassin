@@ -1,9 +1,9 @@
-import { getKyselyDb } from './db'
+import { RoomStatus, getKyselyDb } from './db'
 import { convertBoolToInt } from './util'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, usesWords INTEGER);`)
+		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, status TEXT, usesWords INTEGER, wordlists TEXT);`)
 	console.info(`Create room table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
@@ -30,7 +30,19 @@ export async function insertRoom(db: D1Database, room: string, usesWords = true)
 		.values({
 			name: room,
 			usesWords: convertBoolToInt(usesWords),
+			wordlists: JSON.stringify([]),
+			status: 'not-ready'
 		})
+		.execute()
+}
+
+export async function setStatus(db: D1Database, room: string, status: RoomStatus) {
+	return await getKyselyDb(db)
+		.updateTable('room')
+		.set({
+			status,
+		})
+		.where('name', '=', room)
 		.execute()
 }
 
@@ -39,6 +51,16 @@ export async function setUsesWords(db: D1Database, room: string, usesWords: bool
 		.updateTable('room')
 		.set({
 			usesWords: convertBoolToInt(usesWords),
+		})
+		.where('name', '=', room)
+		.execute()
+}
+
+export async function setWordLists(db: D1Database, room: string, wordLists: string[]) {
+	return await getKyselyDb(db)
+		.updateTable('room')
+		.set({
+			wordlists: JSON.stringify(wordLists)
 		})
 		.where('name', '=', room)
 		.execute()

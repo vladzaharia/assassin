@@ -31,7 +31,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 
 		return c.json({
 			name: roomRecord.name,
-			status: getRoomStatus(playerRecords),
+			status: getRoomStatus(roomRecord.status, playerRecords),
 			players: buildPlayerRecords(playerRecords),
 		})
 	} catch (e) {

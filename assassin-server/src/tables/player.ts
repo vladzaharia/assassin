@@ -51,7 +51,7 @@ export async function insertPlayer(db: D1Database, room: string, name: string, i
 		.execute()
 }
 
-export async function setPlayerTarget(db: D1Database, room: string, name: string, target: string) {
+export async function setTarget(db: D1Database, room: string, name: string, target: string) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ target })
@@ -59,7 +59,7 @@ export async function setPlayerTarget(db: D1Database, room: string, name: string
 		.execute()
 }
 
-export async function setPlayerWords(db: D1Database, room: string, name: string, words: string[]) {
+export async function setWords(db: D1Database, room: string, name: string, words: string[]) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ words: JSON.stringify(words) })
@@ -67,7 +67,7 @@ export async function setPlayerWords(db: D1Database, room: string, name: string,
 		.execute()
 }
 
-export async function setPlayerStatus(db: D1Database, room: string, name: string, status: PlayerStatus) {
+export async function setStatus(db: D1Database, room: string, name: string, status: PlayerStatus) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ status })

@@ -22,7 +22,7 @@ export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		const players = await listPlayersInRoom(db, room)
 		if (players?.some((p) => p.name === name)) {
 			return c.json({ message: 'Player already exists!' }, 400)
-		} else if (players[0] && players[0].target) {
+		} else if (roomRecord.status !== 'not-ready') {
 			return c.json({ message: 'Game has already started!' }, 400)
 		}
 

@@ -18,6 +18,8 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 
 	const getStatusIcon = () => {
 		switch (roomStatus?.status) {
+			case 'completed':
+				return faPlay
 			case 'started':
 				return faPlay
 			case 'ready':
@@ -31,6 +33,8 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 
 	const getStatusLabel = () => {
 		switch (roomStatus?.status) {
+			case 'completed':
+				return 'Game completed!'
 			case 'started':
 				return 'Game started!'
 			case 'ready':
@@ -46,6 +50,8 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 		const playersNeeded = 3 - (roomStatus?.players.length || 0)
 
 		switch (roomStatus?.status) {
+			case 'completed':
+				return 'The game has finished! Ask the GM to reset the room to play again.'
 			case 'started':
 				return roomStatus?.players.some((p) => p.name === name) ? (
 					'The game has started! Look your target up and eliminate them!'
@@ -76,6 +82,8 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 
 	const getStatusColor = () => {
 		switch (roomStatus?.status) {
+			case 'completed':
+				return 'yellow'
 			case 'started':
 				return 'green'
 			case 'ready':

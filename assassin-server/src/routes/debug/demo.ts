@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, insertPlayer, setPlayerStatus } from '../../tables/player'
+import { createPlayerTable, insertPlayer, setStatus } from '../../tables/player'
 import { createRoomsTable, insertRoom } from '../../tables/room'
 import { createWordTable, insertWords } from '../../tables/word'
 import { createWordListTable, insertWordList } from '../../tables/wordlist'
@@ -26,7 +26,7 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		await insertPlayer(db, room, 'Foo')
 		await insertPlayer(db, room, 'Bar')
 		await insertPlayer(db, room, 'Baz')
-		await setPlayerStatus(db, room, 'Baz', 'eliminated')
+		await setStatus(db, room, 'Baz', 'eliminated')
 
 		if (addWords) {
 			// Insert demo wordlists

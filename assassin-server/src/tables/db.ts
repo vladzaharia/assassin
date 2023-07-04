@@ -8,9 +8,13 @@ export interface Database {
 	wordlist: WordListTable
 }
 
+export type RoomStatus = 'not-ready' | 'started' | 'completed'
+
 export interface RoomTable {
 	name: string
+	status: RoomStatus
 	usesWords: 0 | 1
+	wordlists: string
 }
 
 export type PlayerStatus = 'alive' | 'eliminated'

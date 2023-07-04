@@ -9,24 +9,20 @@ export interface ContentBoxProps {
 }
 
 export default function ContentBox({ children }: ContentBoxProps) {
-	const [notification, setError] = useState<NotificationDetails | undefined>(undefined)
+	const [notification, setNotification] = useState<NotificationDetails | undefined>(undefined)
 	const [showNotification, setShowNotification] = useState<boolean>(false)
 
 	return (
 		<NotificationContext.Provider
 			value={{
 				notification,
-				setNotification: (message, source, notificationType, dismissable, timeout) => {
-					if (message) {
-						setError({ message, source, notificationType, dismissable, timeout })
-						setShowNotification(message !== 'ok')
-					} else {
-						setShowNotification(false)
-					}
+				setNotification: (notification) => {
+					setNotification(notification)
+					setShowNotification(true)
 				},
-				setError: (message, source, dismissable, timeout) => {
+				setError: (message, source) => {
 					if (message) {
-						setError({ message, source, notificationType: 'failed', dismissable, timeout })
+						setNotification({ message, source, notificationType: 'failed' })
 						setShowNotification(message !== 'ok')
 					} else {
 						setShowNotification(false)

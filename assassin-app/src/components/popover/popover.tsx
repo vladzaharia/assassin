@@ -5,7 +5,7 @@ import './popover.css'
 import { useContext } from 'react'
 import { ContainerContext } from '../../context/container'
 
-export type PopoverColor = 'primary' | 'blue' | 'green' | 'orange' | 'grey-dark'
+export type PopoverColor = 'primary' | 'blue' | 'green' | 'orange' | 'yellow' | 'grey-dark'
 
 export interface PopoverContentProps {
 	title?: string

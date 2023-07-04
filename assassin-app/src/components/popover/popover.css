@@ -24,6 +24,11 @@
 	color: var(--primary);
 }
 
+.popover h3.blue {
+	background-color: var(--blue);
+	color: var(--foreground-alt);
+}
+
 .popover h3.green {
 	background-color: var(--green);
 	color: var(--foreground-alt);
@@ -34,9 +39,9 @@
 	color: var(--black);
 }
 
-.popover h3.blue {
-	background-color: var(--blue);
-	color: var(--foreground-alt);
+.popover h3.yellow {
+	background-color: var(--yellow);
+	color: var(--black);
 }
 
 .popover svg {

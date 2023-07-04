@@ -1,8 +1,8 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, listPlayersInRoom, setPlayerTarget } from '../../tables/player'
-import { createRoomsTable, findRoom } from '../../tables/room'
+import { createPlayerTable, listPlayersInRoom, setTarget } from '../../tables/player'
+import { createRoomsTable, findRoom, setStatus } from '../../tables/room'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -23,7 +23,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 		if (results && results.length > 2) {
 			// Check if targets have been assigned
-			if (results[0].target) {
+			if (roomRecord.status !== 'not-ready') {
 				return c.json({ message: 'Game has already started!' }, 400)
 			}
 
@@ -41,10 +41,13 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				matched.push(result.target)
 			}
 
-			// Update records
+			// Update player records
 			for (const result of results) {
-				await setPlayerTarget(db, room, result.name, result.target!)
+				await setTarget(db, room, result.name, result.target!)
 			}
+
+			// Update room record
+			await setStatus(db, room, 'started')
 
 			return c.json({ message: 'Successfully started game!' })
 		} else {

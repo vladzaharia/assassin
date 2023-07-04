@@ -802,8 +802,12 @@ components:
       description: Body when adding or updating a room.
       type: object
       properties:
+        status:
+          $ref: '#/components/schemas/RoomStatus'
         usesWords:
           $ref: '#/components/schemas/RoomUsesWords'
+        wordlists:
+          $ref: '#/components/schemas/WordlistArray'
     RoomUsesWords:
       type: boolean
       description: Whether the room uses words or standard assassin.
@@ -817,6 +821,7 @@ components:
       description: The status of the game within a room.
       type: string
       enum:
+        - completed
         - started
         - ready
         - not-ready
@@ -840,7 +845,7 @@ components:
     WordlistArray:
       type: array
       description: A list of words that can be used by players to eliminate their opponents.
-      example: ['foo', 'bar', 'baz']
+      example: ['assassin-poison', 'assassin-dagger', 'pokemon']
       items:
         $ref: '#/components/schemas/Word'
     WordlistBody:

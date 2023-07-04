@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { faCrown, faTombstoneBlank, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import { faCrown, faDoorOpen, faFaceSadTear, faTombstoneBlank, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import isMobile from 'is-mobile'
@@ -52,7 +52,7 @@ export default function PlayerList() {
 		const addPlayer = async () => {
 			try {
 				const addPlayerResponse = await playerApi.putPlayer(roomContext?.room?.name || '', name)
-				setNotification(addPlayerResponse.data.message, 'join', addPlayerResponse.status === 200 ? 'success' : 'failed')
+				setNotification({ message: addPlayerResponse.data.message, icon: faDoorOpen, source: 'join', notificationType: addPlayerResponse.status === 200 ? 'success' : 'failed'})
 				navigate('.', { relative: 'path' })
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +64,7 @@ export default function PlayerList() {
 		const deletePlayer = async () => {
 			try {
 				const deletePlayerResponse = await playerApi.deletePlayer(roomContext?.room?.name || '', name)
-				setNotification(deletePlayerResponse.data.message, 'leave', deletePlayerResponse.status === 200 ? 'success' : 'failed')
+				setNotification({message: deletePlayerResponse.data.message, icon: faFaceSadTear, source: 'leave', notificationType: deletePlayerResponse.status === 200 ? 'success' : 'failed'})
 				navigate('.', { relative: 'path' })
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any

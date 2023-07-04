@@ -1,3 +1,4 @@
+import { IconDefinition } from '@fortawesome/pro-regular-svg-icons'
 import { createContext } from 'react'
 
 export type NotificationSource = 'join' | 'leave' | 'gm' | 'room' | 'player'
@@ -5,6 +6,7 @@ export type NotificationType = 'success' | 'failed' | 'warning'
 
 export interface NotificationDetails {
 	message: string
+	icon?: IconDefinition
 	notificationType?: NotificationType
 	source?: NotificationSource
 	dismissable?: boolean
@@ -13,14 +15,8 @@ export interface NotificationDetails {
 
 export interface NotificationContextProps {
 	notification?: NotificationDetails
-	setNotification: (
-		message?: string,
-		source?: NotificationSource,
-		notificationType?: NotificationType,
-		dismissable?: boolean,
-		timeout?: number
-	) => void
-	setError: (message?: string, source?: NotificationSource, dismissable?: boolean, timeout?: number) => void
+	setNotification: React.Dispatch<React.SetStateAction<NotificationDetails | undefined>>
+	setError: (message?: string, source?: NotificationSource) => void
 	showNotification: boolean
 	setShowNotification: React.Dispatch<React.SetStateAction<boolean>>
 }

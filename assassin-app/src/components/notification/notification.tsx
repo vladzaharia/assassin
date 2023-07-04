@@ -22,11 +22,11 @@ export default function Notification() {
 		}
 	}
 
-	const icon = getIcon()
+	const icon = notification?.icon || getIcon()
 
 	const getDefaultTimeout = () => {
 		if (notification?.notificationType === 'success') {
-			return 2000
+			return 3000
 		}
 
 		return 5000

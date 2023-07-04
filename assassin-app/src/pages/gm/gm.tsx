@@ -29,6 +29,7 @@ export default function GM() {
 					<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} />
 				}
 			/>
+
 		</div>
 	)
 }
