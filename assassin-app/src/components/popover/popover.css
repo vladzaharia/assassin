@@ -21,7 +21,7 @@
 
 .popover h3.primary {
 	background-color: var(--primary);
-	color: var(--primary);
+	color: var(--foreground-alt);
 }
 
 .popover h3.blue {

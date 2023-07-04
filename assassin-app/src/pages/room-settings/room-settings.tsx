@@ -2,12 +2,12 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NotificationContext } from '../../context/notification'
 import { RoomContext } from '../../context/room'
-import './gm.css'
+import './room-settings.css'
 import Header from '../../components/header/header'
 import { faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Button from '../../components/button/button'
 
-export default function GM() {
+export default function RoomSettings() {
 	const roomStatus = useContext(RoomContext)
 	const { setError } = useContext(NotificationContext)
 
@@ -22,14 +22,13 @@ export default function GM() {
 	}, [])
 
 	return (
-		<div className="gm-info">
+		<div className="room-settings">
 			<Header
-				title="GM Options"
+				title="Settings"
 				rightActions={
 					<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} />
 				}
 			/>
-
 		</div>
 	)
 }

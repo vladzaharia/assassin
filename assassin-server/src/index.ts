@@ -117,7 +117,7 @@ app.get(
 	})
 )
 app.get(
-	'/room/:roomId/gm',
+	'/room/:roomId/settings',
 	serveStatic({
 		path: './app/index.html',
 	})

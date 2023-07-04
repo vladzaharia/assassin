@@ -31,7 +31,7 @@ export async function insertRoom(db: D1Database, room: string, usesWords = true)
 			name: room,
 			usesWords: convertBoolToInt(usesWords),
 			wordlists: JSON.stringify([]),
-			status: 'not-ready'
+			status: 'not-ready',
 		})
 		.execute()
 }
@@ -60,7 +60,7 @@ export async function setWordLists(db: D1Database, room: string, wordLists: stri
 	return await getKyselyDb(db)
 		.updateTable('room')
 		.set({
-			wordlists: JSON.stringify(wordLists)
+			wordlists: JSON.stringify(wordLists),
 		})
 		.where('name', '=', room)
 		.execute()

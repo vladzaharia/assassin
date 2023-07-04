@@ -96,7 +96,7 @@ paths:
       security:
         - JWTAuth: []
       requestBody:
-        $ref: '#/components/requestBodies/AddRoomBody'
+        $ref: '#/components/requestBodies/UpdateRoomBody'
       parameters:
         - $ref: '#/components/parameters/RoomName'
       responses:
@@ -565,13 +565,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RoomBody'
+            $ref: '#/components/schemas/AddRoomBody'
     UpdateRoomBody:
       description: Body for updating rooms.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RoomBody'
+            $ref: '#/components/schemas/UpdateRoomBody'
     AddWordlist:
       description: Body for adding wordlists.
       content:
@@ -798,7 +798,13 @@ components:
         - usesWords
         - status
         - players
-    RoomBody:
+    AddRoomBody:
+      description: Body when adding or updating a room.
+      type: object
+      properties:
+        usesWords:
+          $ref: '#/components/schemas/RoomUsesWords'
+    UpdateRoomBody:
       description: Body when adding or updating a room.
       type: object
       properties:
@@ -806,7 +812,7 @@ components:
           $ref: '#/components/schemas/RoomStatus'
         usesWords:
           $ref: '#/components/schemas/RoomUsesWords'
-        wordlists:
+        wordLists:
           $ref: '#/components/schemas/WordlistArray'
     RoomUsesWords:
       type: boolean

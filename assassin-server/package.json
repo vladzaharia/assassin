@@ -9,7 +9,9 @@
 		"wrangler": "^3.0.0"
 	},
 	"dependencies": {
+		"array-shuffle": "^3.0.0",
 		"hono": "^3.2.5",
-		"array-shuffle": "^3.0.0"
+		"kysely": "^0.25.0",
+		"kysely-d1": "^0.3.0"
 	}
 }

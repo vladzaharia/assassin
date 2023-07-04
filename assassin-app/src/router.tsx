@@ -6,21 +6,11 @@ import { createPlayerApi, createRoomApi } from './api'
 import ContentBox from './components/content-box/content-box'
 import { RouterErrorBoundary } from './pages/error/error'
 import Admin from './pages/admin/admin'
-import GM from './pages/gm/gm'
+import RoomSettings from './pages/room-settings/room-settings'
 import Instructions from './pages/instructions/instructions'
 import Mission from './pages/mission/mission'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
-
-/* Special Elite */
-import '@fontsource/special-elite'
-
-/* Barlow */
-import '@fontsource/barlow'
-import '@fontsource/barlow/200.css'
-import '@fontsource/barlow/600.css'
-import '@fontsource/barlow/700.css'
-import '@fontsource/barlow/800.css'
 
 /* Global styles */
 import './styles'
@@ -69,9 +59,9 @@ const router = createBrowserRouter([
 						element: <Instructions />,
 					},
 					{
-						path: 'gm',
-						id: 'gm',
-						element: <GM />,
+						path: 'settings',
+						id: 'room-settings',
+						element: <RoomSettings />,
 					},
 					{
 						path: 'mission',

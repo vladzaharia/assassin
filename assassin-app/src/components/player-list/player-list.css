@@ -23,7 +23,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 1rem;
+	padding: 1rem 1.5rem;
 }
 
 .player-list .player span {
@@ -67,5 +67,9 @@
 	.player-list .header .right-actions .button {
 		margin-left: 0.5rem;
 		margin-right: 0.5rem;
+	}
+
+	.player-list .player {
+		padding: 1rem 2.125rem;
 	}
 }

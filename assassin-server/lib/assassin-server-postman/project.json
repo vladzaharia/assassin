@@ -1,0 +1,22 @@
+{
+	"name": "assassin-server-postman",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "assassin-server/lib/assassin-server-postman/dist",
+	"implicitDependencies": ["assassin-server-spec"],
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
+			"options": {
+				"useDockerBuild": true,
+				"generator": "postman-collection",
+				"sourceSpecPathOrUrl": "/local/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml",
+				"additionalProperties": "folderStrategy=paths,pathParamsAsVariables=true",
+				"globalProperties": ""
+			},
+			"inputs": ["{workspaceRoot}/assassin-server/lib/assassin-server-spec/src/schemas/index.yaml"],
+			"outputs": ["{projectRoot}/src/**/*"]
+		}
+	},
+	"tags": []
+}
