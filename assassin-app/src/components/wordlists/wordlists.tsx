@@ -3,14 +3,15 @@ import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../context/room'
 import './wordlists.css'
 import { createGMApi, createWordlistApi } from '../../api'
-import { useNavigate } from 'react-router-dom'
+import { useRevalidator } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 import { NotificationContext } from '../../context/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'
 import { faMessageMinus, faMessagePlus, faMessageText } from '@fortawesome/pro-solid-svg-icons'
-import { Card, CardContent } from '@mui/material'
+import { Card, CardContent, Switch } from '@mui/material'
+import GMAction from '../gm-action/gm-action'
 
 interface WordListProps {
 	name: string
@@ -51,18 +52,19 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 }
 
 export default function WordLists() {
-	const navigate = useNavigate()
+	const { revalidate } = useRevalidator()
 	const [name] = useLocalStorage('name', '')
 	const gmApi = createGMApi(name)
 
 	const wordlistApi = createWordlistApi()
 	const [wordLists, setWordLists] = useState<Wordlist[]>([])
 
-	const notificationContext = useContext(NotificationContext)
+	const { setError, setNotification } = useContext(NotificationContext)
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
 	const isPlaying = roomStatus?.status === 'started'
+	const [usesWords, setUsesWords] = useState<boolean>(roomStatus?.usesWords || false)
 
 	const getWordLists = async () => {
 		try {
@@ -76,20 +78,20 @@ export default function WordLists() {
 			setWordLists(wordLists)
 		} catch (e) {
 			if (isAxiosError(e)) {
-				notificationContext.setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
+				setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
 			} else {
-				notificationContext.setError('Failed to fetch wordlists!', 'gm-reset')
+				setError('Failed to fetch wordlists!', 'gm-reset')
 			}
 		}
 	}
 
-	const setWordListsAsync = async (name: string) => {
+	const updateWordLists = async (name: string) => {
 		try {
 			if (roomStatus?.wordLists?.includes(name)) {
 				await gmApi.patchRoom(roomStatus.name, {
 					wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
 				})
-				notificationContext.setNotification({
+				setNotification({
 					message: `Removed ${name} successfully!`,
 					notificationType: 'success',
 					source: 'wordlist',
@@ -99,7 +101,7 @@ export default function WordLists() {
 				await gmApi.patchRoom(roomStatus?.name || '', {
 					wordLists: [...(roomStatus?.wordLists || []), name],
 				})
-				notificationContext.setNotification({
+				setNotification({
 					message: `Added ${name} successfully!`,
 					notificationType: 'success',
 					source: 'wordlist',
@@ -107,12 +109,29 @@ export default function WordLists() {
 				})
 			}
 
-			navigate('.', { relative: 'path' })
+			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
-				notificationContext.setError(e.response?.data || e.message, 'gm-reset')
+				setError(e.response?.data || e.message, 'gm-reset')
 			} else {
-				notificationContext.setError('Something went wrong!', 'gm-reset')
+				setError('Something went wrong!', 'gm-reset')
+			}
+		}
+	}
+
+	const updateUsesWords = async () => {
+		try {
+			const newValue = !roomContext?.room?.usesWords
+			await gmApi.patchRoom(roomContext?.room?.name || '', {
+				usesWords: newValue,
+			})
+			setUsesWords(newValue)
+			revalidate()
+		} catch (e) {
+			if (isAxiosError(e)) {
+				setError(e.response?.data || e.message, 'wordlist')
+			} else {
+				setError('Something went wrong!', 'wordlist')
 			}
 		}
 	}
@@ -123,16 +142,31 @@ export default function WordLists() {
 	}, [])
 
 	return (
-		<div className="wordlists">
-			{wordLists.map((wl) => (
-				<WordList
-					{...(wl as WordListProps)}
-					key={wl.name}
-					disabled={isPlaying || !roomStatus?.usesWords}
-					selected={roomStatus?.wordLists?.includes(wl.name) || false}
-					onClick={() => setWordListsAsync(wl.name)}
+		<div className="wordlists-wrapper">
+			<h3>Word list settings</h3>
+			<GMAction text="Use word lists?" description="Whether to use word lists for this room, or play standard assassin.">
+				<Switch
+					disabled={isPlaying}
+					checked={usesWords}
+					onChange={() => updateUsesWords()}
+					className={`toggle primary ${usesWords ? 'checked' : ''} ${isPlaying ? 'disabled' : ''}`}
 				/>
-			))}
+			</GMAction>
+			{roomStatus?.usesWords ? (
+				<GMAction text="Word lists" className="wordlists">
+					<div className="wordlists">
+					{wordLists.map((wl) => (
+						<WordList
+							{...(wl as WordListProps)}
+							key={wl.name}
+							disabled={isPlaying || !roomStatus?.usesWords}
+							selected={roomStatus?.wordLists?.includes(wl.name) || false}
+							onClick={() => updateWordLists(wl.name)}
+						/>
+					))}
+				</div>
+				</GMAction>
+			) : undefined}
 		</div>
 	)
 }

@@ -5,5 +5,63 @@
 	align-items: center;
 }
 
+.gm-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
+	width: 100%;
+}
+
+.gm-actions .action-wrapper h3 {
+	padding: 1rem;
+	padding-top: 2rem;
+	border-bottom: 0.0625rem solid var(--border);
+	margin: 0;
+}
+
+.gm-actions .action {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 0.0625rem solid var(--border);
+	padding: 1rem;
+}
+
+.gm-actions .action:last-child {
+	border-bottom: none;
+}
+
+.gm-actions .action.wordlists {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0.5rem;
+}
+
+.gm-actions .action .text {
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+}
+
+.gm-actions .action .title {
+	font-weight: 500;
+}
+
+.gm-actions .action .text .description {
+	font-size: 0.9rem;
+}
+
+.gm-actions .action .button {
+	height: 2rem;
+	width: 2rem;
+	text-align: center;
+}
+
+.gm-actions .action .button svg {
+	margin-right: 0;
+}
+
 @media only screen and (max-width: 50rem) {
 }

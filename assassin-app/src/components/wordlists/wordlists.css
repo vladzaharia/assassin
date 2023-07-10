@@ -69,6 +69,29 @@
 	align-self: center;
 }
 
+.wordlists-wrapper h3 {
+	padding: 1rem;
+	padding-top: 2rem;
+	border-bottom: 0.0625rem solid var(--border);
+	margin: 0;
+}
+
+.wordlists-wrapper .toggle.primary.checked .MuiSwitch-thumb {
+	background-color: var(--primary);
+}
+
+.wordlists-wrapper .toggle.primary.checked .MuiSwitch-track {
+	background-color: var(--primary-dark);
+}
+
+.wordlists-wrapper .toggle.primary.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.wordlists-wrapper .toggle.primary.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
 @media only screen and (max-width: 50rem) {
 	.wordlists {
 		justify-content: center;
