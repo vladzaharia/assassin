@@ -37,10 +37,12 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 					<FontAwesomeIcon icon={icon || faMessageText} size="lg" />
 					<span className="name">{name}</span>
 				</div>
-				<span className="description">{description}</span>
-				<span className="words">
-					<em>{words.length} words</em>
-				</span>
+				<div className="additional">
+					<span className="description">{description}</span>
+					<span className="words">
+						<em>{words.length} words</em>
+					</span>
+				</div>
 			</CardContent>
 		</Card>
 	)

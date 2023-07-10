@@ -68,4 +68,8 @@
 	.gm-actions .action {
 		padding-right: 1.3rem;
 	}
+
+	.gm-actions .action .text .description {
+		width: 90%;
+	}
 }

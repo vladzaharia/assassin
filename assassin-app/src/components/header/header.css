@@ -45,6 +45,10 @@
 }
 
 @media only screen and (max-width: 50rem) {
+	.header {
+		z-index: 100;
+	}
+
 	.header > * {
 		margin: 1.5rem;
 	}

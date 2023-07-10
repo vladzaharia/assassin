@@ -42,6 +42,13 @@
 	border-bottom: 0.0625rem solid var(--border);
 }
 
+.wordlists .wordlist .additional {
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem 1rem;
+	gap: 0.5rem;
+}
+
 .wordlists .wordlist .description {
 	padding-top: 0.5rem;
 }
@@ -49,4 +56,22 @@
 .wordlists .wordlist .words {
 	font-size: 0.9rem;
 	align-self: center;
+}
+
+@media only screen and (max-width: 50rem) {
+	.wordlists {
+		justify-content: center;
+	}
+
+	.wordlists .MuiCard-root {
+		width: 100%;
+	}
+
+	.wordlists .wordlist .title {
+		justify-content: center;
+	}
+
+	.wordlists .wordlist .words {
+		padding-bottom: 0;
+	}
 }
