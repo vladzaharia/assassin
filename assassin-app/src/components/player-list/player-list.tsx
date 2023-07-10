@@ -150,11 +150,11 @@ export default function PlayerList() {
 	}
 
 	return (
-		<div className="player-list">
-			<Header title="Player List" bottomBorder={false} rightActions={<JoinLeaveButton />} />
+		<div className="player-list" key="list">
+			<Header title="Player List" bottomBorder={false} rightActions={<JoinLeaveButton />} key="header" />
 
 			{roomStatus?.players && (
-				<AnimatePresence mode="sync">
+				<AnimatePresence mode="sync" key="players-animate">
 					{roomStatus?.players.map((player) => (
 						<PlayerEntry player={player} key={player.name} />
 					))}

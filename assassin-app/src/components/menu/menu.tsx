@@ -20,11 +20,12 @@ export interface MenuProps {
 export default function Menu({ headerProps: header, children }: MenuProps) {
 	return (
 		<div className="menu">
-			<AnimatePresence mode="popLayout">
+			<AnimatePresence mode="popLayout" key="menu-animate">
 				{header && (
 					<Header
 						title={header.title}
 						className="center"
+						key="header"
 						leftActions={
 							header.onClick ? (
 								<Button

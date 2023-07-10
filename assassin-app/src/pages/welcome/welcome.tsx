@@ -1,5 +1,5 @@
 import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
-import { AxiosError, isAxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,7 @@ export default function Welcome() {
 			return setError('Enter a room to continue!', 'room')
 		}
 
-		const roomResponse = await roomApi.getRoom(room).catch((e: Error | AxiosError) => {
+		const roomResponse = await roomApi.getRoom(room).catch((e) => {
 			if (isAxiosError(e)) {
 				if (e.response?.status === 404) {
 					setError('Room not found!', 'room')

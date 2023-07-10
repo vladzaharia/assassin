@@ -58,7 +58,7 @@ export default function Room() {
 	}, [name])
 
 	useEffect(() => {
-		const interval = setInterval(() => navigate('.', { relative: 'path' }), 15 * 1000)
+		const interval = setInterval(() => navigate('.', { relative: 'path' }), 5 * 1000)
 		return () => clearInterval(interval)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [room])
@@ -77,8 +77,8 @@ export default function Room() {
 					status: true,
 				}}
 			>
-				<PlayerActions />
-				<PlayerList />
+				<PlayerActions key="actions" />
+				<PlayerList key="list" />
 			</Menu>
 			<div className="room-content">
 				<AnimatePresence mode="popLayout">

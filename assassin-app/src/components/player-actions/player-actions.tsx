@@ -50,6 +50,7 @@ export default function PlayerActions() {
 		<div className="player-actions">
 			{isPlaying ? (
 				<PlayerAction
+					key="mission"
 					className="primary"
 					text="Retrieve mission"
 					icon={faUserSecret}
@@ -70,6 +71,7 @@ export default function PlayerActions() {
 			) : undefined}
 			{isGM ? (
 				<PlayerAction
+					key="gm"
 					className="blue"
 					text="Room settings"
 					icon={faCog}

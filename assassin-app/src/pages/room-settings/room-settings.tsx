@@ -6,6 +6,7 @@ import './room-settings.css'
 import Header from '../../components/header/header'
 import { faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Button from '../../components/button/button'
+import GMActions from '../../components/gm-actions/gm-actions'
 
 export default function RoomSettings() {
 	const roomStatus = useContext(RoomContext)
@@ -19,7 +20,7 @@ export default function RoomSettings() {
 			navigate(`/room/${roomStatus?.room?.name}`)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [roomStatus])
 
 	return (
 		<div className="room-settings">
@@ -29,6 +30,7 @@ export default function RoomSettings() {
 					<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} />
 				}
 			/>
+			<GMActions />
 		</div>
 	)
 }

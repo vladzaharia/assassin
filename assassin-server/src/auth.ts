@@ -50,7 +50,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 	if (match) {
 		if (match.useGMAuth) {
 			const { room } = c.req.param()
-			const { 'X-Assassin-User': name } = c.req.header()
+			const name = c.req.header('X-Assassin-User')
 
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
 
@@ -59,6 +59,8 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			}
 
 			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
+
+			console.log(`GM Auth: ${name}, gm = ${roomGM?.name}, headers=${JSON.stringify(c.req.headers)}`)
 
 			if (roomGM?.name !== name) {
 				return jwt({ secret })(c, next)

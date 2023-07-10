@@ -4,6 +4,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
+	background-color: var(--background);
 	border-bottom: 0.0625rem solid var(--border);
 	position: sticky;
 	top: 0;

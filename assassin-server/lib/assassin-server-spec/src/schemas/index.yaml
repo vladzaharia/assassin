@@ -93,6 +93,7 @@ paths:
       tags:
         - Room
         - Admin
+        - GM
       security:
         - JWTAuth: []
       requestBody:
@@ -786,6 +787,8 @@ components:
           $ref: '#/components/schemas/RoomName'
         usesWords:
           $ref: '#/components/schemas/RoomUsesWords'
+        wordLists:
+          $ref: '#/components/schemas/WordlistArray'
         status:
           $ref: '#/components/schemas/RoomStatus'
         players:
