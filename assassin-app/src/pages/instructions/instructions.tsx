@@ -1,8 +1,10 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import { faCheck, faCrosshairs, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from 'react'
+import { RoomContext } from '../../context/room'
 import './instructions.css'
-import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 
 interface StepProps {
 	icon: IconDefinition
@@ -26,42 +28,59 @@ function Step({ icon, color, title, description }: StepProps) {
 }
 
 export default function Instructions() {
+	const roomContext = useContext(RoomContext)
+	const usesWords = roomContext?.room?.usesWords
+
 	return (
 		<div className="instructions">
 			<h2 className="title">How to Play</h2>
 			<Step
 				title="Join the game"
-				description='Enter your first name and click "Join" to add your name to the list.'
+				description="Click the join button by the player list to join this room!"
 				icon={faUserPlus}
 				color="green"
 			/>
 			<Step
 				title="Wait for the game to start..."
-				description="Once enough players join, the game can start. Until then, study your first card and the words on it."
+				description="Once enough players join, the game can start. Get your friends and coworkers to join you by sharing this room link."
 				icon={faTimer}
 				color="orange"
 			/>
 			<Step
 				title="Retrieve your mission"
-				description="Once the game starts, you can look up who your target is by clicking the button in the menu."
+				description={
+					usesWords
+						? 'Once the game starts, retrieve your mission to find your target and words.'
+						: 'Once the game starts, retrieve your mission to find your target.'
+				}
 				icon={faUserSecret}
 				color="primary"
 			/>
 			<Step
 				title="Eliminate your target!"
-				description="Try to get your target to say one of your words through the day."
+				description={
+					usesWords ? 'Try to get your target to say one of your words to eliminate them!' : 'Tag your target to eliminate them!'
+				}
 				icon={faCrosshairs}
 				color="primary-dark"
 			/>
 			<Step
 				title="Record your assassination"
-				description="Once you've assassinated your target, rceord which word you used here."
+				description={
+					usesWords
+						? "Once you've eliminated your target, record which word you used here."
+						: "Once you've eliminated your target, record your elimination here."
+				}
 				icon={faCheck}
 				color="blue-dark"
 			/>
 			<Step
 				title="Take your target's words and target"
-				description="You'll be assigned your target's words and target. You can use any unused words to eliminate your new target!"
+				description={
+					usesWords
+						? "You'll be assigned your target's words and target. You can use any unused words to eliminate your new target!"
+						: "You'll be assigned your target's target; eliminate them!"
+				}
 				icon={faRetweet}
 				color="purple"
 			/>

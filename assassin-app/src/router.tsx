@@ -4,17 +4,17 @@ import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { createPlayerApi, createRoomApi } from './api'
 import ContentBox from './components/content-box/content-box'
-import { RouterErrorBoundary } from './pages/error/error'
 import Admin from './pages/admin/admin'
-import RoomSettings from './pages/room-settings/room-settings'
+import { RouterErrorBoundary } from './pages/error/error'
 import Instructions from './pages/instructions/instructions'
 import Mission from './pages/mission/mission'
+import RoomSettings from './pages/room-settings/room-settings'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
 /* Global styles */
-import './styles'
 import App from './components/app/app'
+import './styles'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',

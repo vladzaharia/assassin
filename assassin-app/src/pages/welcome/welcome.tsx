@@ -25,7 +25,9 @@ export default function Welcome() {
 			return setError('Enter a room to continue!', 'room')
 		}
 
-		const roomResponse = await roomApi.getRoom(room).catch((e) => {
+		const normalizedRoom = room.toLowerCase()
+
+		const roomResponse = await roomApi.getRoom(normalizedRoom).catch((e) => {
 			if (isAxiosError(e)) {
 				if (e.response?.status === 404) {
 					setError('Room not found!', 'room')
@@ -37,7 +39,7 @@ export default function Welcome() {
 
 		if (roomResponse?.status === 200) {
 			setShowNotification(false)
-			return navigate(`/room/${room}`)
+			return navigate(`/room/${normalizedRoom}`)
 		}
 	}
 
