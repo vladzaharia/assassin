@@ -155,16 +155,16 @@ export default function WordLists() {
 			{roomStatus?.usesWords ? (
 				<GMAction text="Word lists" className="wordlists">
 					<div className="wordlists">
-					{wordLists.map((wl) => (
-						<WordList
-							{...(wl as WordListProps)}
-							key={wl.name}
-							disabled={isPlaying || !roomStatus?.usesWords}
-							selected={roomStatus?.wordLists?.includes(wl.name) || false}
-							onClick={() => updateWordLists(wl.name)}
-						/>
-					))}
-				</div>
+						{wordLists.map((wl) => (
+							<WordList
+								{...(wl as WordListProps)}
+								key={wl.name}
+								disabled={isPlaying || !roomStatus?.usesWords}
+								selected={roomStatus?.wordLists?.includes(wl.name) || false}
+								onClick={() => updateWordLists(wl.name)}
+							/>
+						))}
+					</div>
 				</GMAction>
 			) : undefined}
 		</div>

@@ -6,10 +6,10 @@ import './room-settings.css'
 import Header from '../../components/header/header'
 import { faPlay, faRotateLeft, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Button from '../../components/button/button'
-import GMAction from 'assassin-app/src/components/gm-action/gm-action'
-import WordLists from 'assassin-app/src/components/wordlists/wordlists'
+import GMAction from '../../components/gm-action/gm-action'
+import WordLists from '../../components/wordlists/wordlists'
 import { isAxiosError } from 'axios'
-import { createGMApi } from 'assassin-app/src/api'
+import { createGMApi } from '../../api'
 import useLocalStorage from 'use-local-storage'
 
 export default function RoomSettings() {
@@ -56,7 +56,6 @@ export default function RoomSettings() {
 		}
 	}
 
-
 	const getColor = (baseColor: string, source: NotificationSource) => {
 		if (showNotification && notification?.source === source) {
 			return notification?.notificationType
@@ -77,9 +76,7 @@ export default function RoomSettings() {
 		<div className="room-settings">
 			<Header
 				title="Room settings"
-				rightActions={
-					<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.name}`)} />
-				}
+				rightActions={<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
 			/>
 			<div className="gm-actions">
 				<GMAction
