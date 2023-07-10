@@ -9,7 +9,7 @@ import { NotificationContext } from '../../context/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'
-import { faMessageText } from '@fortawesome/pro-solid-svg-icons'
+import { faMessageMinus, faMessagePlus, faMessageText } from '@fortawesome/pro-solid-svg-icons'
 import { Card, CardContent } from '@mui/material'
 
 interface WordListProps {
@@ -26,9 +26,11 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 	return (
 		<Card
 			onClick={onClick}
-			variant="outlined"
+			variant="elevation"
+			elevation={3}
 			sx={{
-				borderColor: selected ? 'var(--green)' : disabled ? 'var(--grey-dark)' : 'var(--border)',
+				border: '0.0625rem solid var(--border)',
+				borderColor: disabled ? 'var(--disabled)' : selected ? 'var(--green)' : 'var(--border)',
 				transition: 'all 0.3s ease',
 			}}
 		>
@@ -74,7 +76,7 @@ export default function WordLists() {
 			setWordLists(wordLists)
 		} catch (e) {
 			if (isAxiosError(e)) {
-				notificationContext.setError(e.response?.data || e.message, 'gm-reset')
+				notificationContext.setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
 			} else {
 				notificationContext.setError('Failed to fetch wordlists!', 'gm-reset')
 			}
@@ -87,12 +89,22 @@ export default function WordLists() {
 				await gmApi.patchRoom(roomStatus.name, {
 					wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
 				})
-				notificationContext.setNotification({ message: `Removed ${name} successfully!`, notificationType: 'success', source: 'wordlist' })
+				notificationContext.setNotification({
+					message: `Removed ${name} successfully!`,
+					notificationType: 'success',
+					source: 'wordlist',
+					icon: faMessageMinus,
+				})
 			} else {
 				await gmApi.patchRoom(roomStatus?.name || '', {
 					wordLists: [...(roomStatus?.wordLists || []), name],
 				})
-				notificationContext.setNotification({ message: `Added ${name} successfully!`, notificationType: 'success', source: 'wordlist' })
+				notificationContext.setNotification({
+					message: `Added ${name} successfully!`,
+					notificationType: 'success',
+					source: 'wordlist',
+					icon: faMessagePlus,
+				})
 			}
 
 			navigate('.', { relative: 'path' })
@@ -115,6 +127,7 @@ export default function WordLists() {
 			{wordLists.map((wl) => (
 				<WordList
 					{...(wl as WordListProps)}
+					key={wl.name}
 					disabled={isPlaying || !roomStatus?.usesWords}
 					selected={roomStatus?.wordLists?.includes(wl.name) || false}
 					onClick={() => setWordListsAsync(wl.name)}

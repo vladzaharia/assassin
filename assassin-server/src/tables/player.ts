@@ -46,7 +46,7 @@ export async function insertPlayer(db: D1Database, room: string, name: string, i
 			room,
 			isGM: isGM ? 1 : 0,
 			status: 'alive',
-			words: JSON.stringify(['test']),
+			words: JSON.stringify([]),
 		})
 		.execute()
 }

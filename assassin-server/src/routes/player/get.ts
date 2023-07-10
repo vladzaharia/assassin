@@ -26,8 +26,8 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		const { isGM, ...recordProps } = record
 
 		return c.json({
-			isGM: isGM === 1,
 			...recordProps,
+			isGM: isGM === 1,
 		})
 	} catch (e) {
 		console.error('err', e)

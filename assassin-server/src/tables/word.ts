@@ -27,6 +27,11 @@ export async function listWordsInWordList(db: D1Database, list: string) {
 	return await getKyselyDb(db).selectFrom('word').selectAll().where('list', '=', list).execute()
 }
 
+export async function listWordsInWordLists(db: D1Database, lists: string[]) {
+	console.log(`list words in ${lists}`)
+	return await getKyselyDb(db).selectFrom('word').selectAll().where('list', 'in', lists).execute()
+}
+
 export async function findWord(db: D1Database, list: string, word: string) {
 	return await getKyselyDb(db)
 		.selectFrom('word')

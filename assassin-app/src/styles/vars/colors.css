@@ -34,6 +34,7 @@
 	--foreground: var(--grey-darker);
 	--foreground-alt: var(--white);
 	--border: var(--grey-light);
+	--disabled: var(--grey-light);
 
 	--success: #32853c;
 	--success-dark: #27682f;
@@ -78,5 +79,6 @@
 		--foreground: var(--grey-light);
 		--foreground-alt: var(--grey-darker);
 		--border: var(--grey-dark);
+		--disabled: var(--grey-dark);
 	}
 }

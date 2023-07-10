@@ -5,7 +5,7 @@ import { RoomContext } from '../../context/room'
 import Button from '../button/button'
 import './gm-actions.css'
 import { createGMApi } from '../../api'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useRevalidator } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 import { NotificationContext, NotificationSource } from '../../context/notification'
 import WordLists from '../wordlists/wordlists'
@@ -32,6 +32,7 @@ function GMAction({ text, description, className, children }: GMActionProps) {
 
 export default function GMActions() {
 	const navigate = useNavigate()
+	const { revalidate } = useRevalidator()
 
 	const [name] = useLocalStorage('name', '')
 	const gmApi = createGMApi(name)
@@ -47,10 +48,11 @@ export default function GMActions() {
 		try {
 			await gmApi.resetRoom(roomContext?.room?.name || '')
 			notificationContext.setNotification({ message: 'Room reset successfully!', notificationType: 'success', source: 'gm-reset' })
-			navigate('..', { relative: 'path' })
+			navigate('..', { relative: 'path', replace: true })
+			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
-				notificationContext.setError(e.response?.data || e.message, 'gm-reset')
+				notificationContext.setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
 			} else {
 				notificationContext.setError('Something went wrong!', 'gm-reset')
 			}
@@ -61,10 +63,11 @@ export default function GMActions() {
 		try {
 			await gmApi.startRoom(roomContext?.room?.name || '')
 			notificationContext.setNotification({ message: 'Game started successfully!', notificationType: 'success', source: 'gm-start' })
-			navigate('..', { relative: 'path' })
+			navigate('..', { relative: 'path', replace: true })
+			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
-				notificationContext.setError(e.response?.data || e.message, 'gm-start')
+				notificationContext.setError(e.response?.data?.message || e.response?.data || e.message, 'gm-start')
 			} else {
 				notificationContext.setError('Something went wrong!', 'gm-start')
 			}
@@ -78,7 +81,7 @@ export default function GMActions() {
 				usesWords: newValue,
 			})
 			setUsesWords(newValue)
-			navigate('.', { relative: 'path' })
+			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
 				notificationContext.setError(e.response?.data || e.message, 'wordlist')
@@ -102,7 +105,7 @@ export default function GMActions() {
 				text="Reset game"
 				description={
 					isPlaying
-						? "The game has started; you'll need to wait to reset the game."
+						? 'Click here to stop the game, remove everyone from the room and reset it.'
 						: 'Click here to remove everyone from the room and reset it.'
 				}
 			>
@@ -111,7 +114,6 @@ export default function GMActions() {
 					iconProps={{
 						icon: faRotateLeft,
 					}}
-					disabled={isPlaying}
 					onClick={() => resetGame()}
 				/>
 			</GMAction>
@@ -137,7 +139,12 @@ export default function GMActions() {
 			<div className="action-wrapper">
 				<h3>Wordlist settings</h3>
 				<GMAction text="Use wordlists?" description="Whether to use wordlists for this room, or play standard assassin.">
-					<Switch checked={usesWords} onChange={() => updateUsesWords()} className={`toggle primary ${usesWords ? 'checked' : ''}`} />
+					<Switch
+						disabled={isPlaying}
+						checked={usesWords}
+						onChange={() => updateUsesWords()}
+						className={`toggle primary ${usesWords ? 'checked' : ''} ${isPlaying ? 'disabled' : ''}`}
+					/>
 				</GMAction>
 				{roomStatus?.usesWords ? (
 					<GMAction text="Wordlists" className="wordlists">

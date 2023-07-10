@@ -25,9 +25,20 @@
 	cursor: initial;
 }
 
+.wordlists .wordlist.disabled .title {
+	border-bottom-color: var(--disabled);
+}
+
 .wordlists .wordlist.selected .title {
 	border-bottom-color: var(--green);
+}
+
+.wordlists .wordlist.selected {
 	color: var(--green);
+}
+
+.wordlists .wordlist.disabled {
+	color: var(--disabled);
 }
 
 .wordlists .wordlist .title {

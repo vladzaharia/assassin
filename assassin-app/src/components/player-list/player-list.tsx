@@ -3,7 +3,7 @@ import { faCrown, faDoorOpen, faFaceSadTear, faTombstoneBlank, faUserMinus, faUs
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import { useContext, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRevalidator } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import { createPlayerApi } from '../../api'
 import { NotificationContext } from '../../context/notification'
@@ -92,7 +92,7 @@ export default function PlayerList() {
 	const [name] = useLocalStorage('name', '')
 	const roomContext = useContext(RoomContext)
 	const { notification, setError, setNotification, showNotification } = useContext(NotificationContext)
-	const navigate = useNavigate()
+	const { revalidate } = useRevalidator()
 	const roomStatus = roomContext?.room
 
 	const JoinLeaveButton = () => {
@@ -108,7 +108,7 @@ export default function PlayerList() {
 					source: 'join',
 					notificationType: addPlayerResponse.status === 200 ? 'success' : 'failed',
 				})
-				navigate('.', { relative: 'path' })
+				revalidate()
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const eAsAny = e as any
@@ -125,7 +125,7 @@ export default function PlayerList() {
 					source: 'leave',
 					notificationType: deletePlayerResponse.status === 200 ? 'success' : 'failed',
 				})
-				navigate('.', { relative: 'path' })
+				revalidate()
 			} catch (e) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const eAsAny = e as any

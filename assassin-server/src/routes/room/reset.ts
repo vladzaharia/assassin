@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { createPlayerTable, deletePlayersInRoom } from '../../tables/player'
-import { createRoomsTable, findRoom } from '../../tables/room'
+import { createRoomsTable, findRoom, setStatus } from '../../tables/room'
 
 export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -19,6 +19,7 @@ export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		await deletePlayersInRoom(db, room)
+		await setStatus(db, room, 'not-ready')
 		return c.json({ message: 'ok' })
 	} catch (e) {
 		console.error('err', e)

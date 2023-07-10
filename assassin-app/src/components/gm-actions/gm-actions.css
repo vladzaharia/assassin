@@ -64,6 +64,14 @@
 	background-color: var(--primary-dark);
 }
 
+.gm-actions .toggle.primary.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.gm-actions .toggle.primary.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
 @media only screen and (max-width: 50rem) {
 	.gm-actions .action {
 		padding-right: 1.3rem;

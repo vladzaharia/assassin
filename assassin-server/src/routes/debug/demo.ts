@@ -34,9 +34,9 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 			await insertWordList(db, 'another-list', 'Another test list')
 
 			// Insert demo words
-			const testWords = ['test', 'words', 'go', 'here']
+			const testWords = ['test', 'words', 'go', 'here', 'more', 'wordaronies', 'also']
 			await insertWords(db, 'test-list', testWords)
-			const anotherWords = ['foo', 'bar', 'baz', 'foobar']
+			const anotherWords = ['foo', 'bar', 'baz', 'foobar', 'foobaz', 'barbaz']
 			await insertWords(db, 'another-list', anotherWords)
 		}
 

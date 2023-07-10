@@ -1,8 +1,9 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, listPlayersInRoom, setTarget } from '../../tables/player'
+import { createPlayerTable, listPlayersInRoom, setTarget, setWords } from '../../tables/player'
 import { createRoomsTable, findRoom, setStatus } from '../../tables/room'
+import { listWordsInWordLists } from '../../tables/word'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -27,9 +28,20 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				return c.json({ message: 'Game has already started!' }, 400)
 			}
 
+			// Get all words
+			const words = await listWordsInWordLists(db, JSON.parse(roomRecord.wordlists))
+			const shuffledWords = words
+				.map((value) => ({ value, sort: Math.random() }))
+				.sort((a, b) => a.sort - b.sort)
+				.map(({ value }) => value)
+
+			if (roomRecord.usesWords === 1 && words.length < results.length * 3) {
+				return c.json({ message: 'There are not enough words to distribute!' }, 400)
+			}
+
 			const matched: string[] = []
 
-			// Match people
+			// Match people and get words
 			for (const result of results) {
 				const unmatched = results.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
 
@@ -39,11 +51,21 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				result.target = arrayShuffle(unmatched)[0]?.name
 				console.log(`${result?.name} => ${result.target}`)
 				matched.push(result.target)
+
+				if (roomRecord.usesWords === 1) {
+					result.words = JSON.stringify(shuffledWords.splice(0, 3).map((w) => w.word))
+				}
 			}
+
+			// Get words
 
 			// Update player records
 			for (const result of results) {
 				await setTarget(db, room, result.name, result.target!)
+
+				if (result.words) {
+					await setWords(db, room, result.name, JSON.parse(result.words))
+				}
 			}
 
 			// Update room record
