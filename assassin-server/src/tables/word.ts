@@ -51,17 +51,19 @@ export async function insertWord(db: D1Database, list: string, word: string) {
 }
 
 export async function insertWords(db: D1Database, list: string, words: string[]) {
-	return await getKyselyDb(db)
-		.insertInto('word')
-		.values(
-			words.map((word) => {
-				return {
-					word,
-					list,
-				}
-			})
-		)
-		.execute()
+	if (words.length > 0) {
+		return await getKyselyDb(db)
+			.insertInto('word')
+			.values(
+				words.map((word) => {
+					return {
+						word,
+						list,
+					}
+				})
+			)
+			.execute()
+	}
 }
 
 export async function deleteWord(db: D1Database, list: string, word: string) {

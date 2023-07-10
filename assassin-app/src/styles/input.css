@@ -1,4 +1,5 @@
-input[type='text'] {
+input[type='text'],
+input[type='number'] {
 	height: 1.5rem;
 	outline: 0.1rem solid var(--border);
 	background: var(--background);
@@ -8,15 +9,18 @@ input[type='text'] {
 	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
 }
 
-input[type='text']::placeholder {
+input[type='text']::placeholder,
+input[type='number']::placeholder {
 	font-weight: 200;
 }
 
-input[type='text']:focus {
-	outline: 0.2rem var(--blue) solid;
+input[type='text']:focus,
+input[type='number']:focus {
+	outline: 0.2rem var(--primary) solid;
 	border: none;
 }
 
-.app.dark input[type='text'] {
+.app.dark input[type='text'],
+.app.dark input[type='number'] {
 	color: var(--white);
 }

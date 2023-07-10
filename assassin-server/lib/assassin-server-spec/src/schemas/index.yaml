@@ -494,9 +494,20 @@ paths:
             type: boolean
             example: true
             default: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wordlists:
+                  $ref: '#/components/schemas/WordlistArray'
+              description: Wordlist body, specified if `addWords` is `true`.
       responses:
         200:
           $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/NoWordlist'
         500:
           $ref: '#/components/responses/InternalServerError'
   /debug/reset:
@@ -548,7 +559,7 @@ components:
       description: Name of word list to use.
       schema:
         $ref: '#/components/schemas/WordlistName'
-      example: card-assassins-poison
+      example: card-poison
       in: path
       required: true
     Word:
@@ -648,6 +659,19 @@ components:
                 type: string
                 description: Message for this error.
                 example: Player not found!
+            required:
+              - message
+    NoWordlist:
+      description: No wordlist specified.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Need to specify wordlists in body!
             required:
               - message
     WordlistExists:
@@ -787,6 +811,8 @@ components:
           $ref: '#/components/schemas/RoomName'
         usesWords:
           $ref: '#/components/schemas/RoomUsesWords'
+        numWords:
+          $ref: '#/components/schemas/NumWords'
         wordLists:
           $ref: '#/components/schemas/WordlistArray'
         status:
@@ -817,6 +843,8 @@ components:
           $ref: '#/components/schemas/RoomUsesWords'
         wordLists:
           $ref: '#/components/schemas/WordlistArray'
+        numWords:
+          $ref: '#/components/schemas/NumWords'
     RoomUsesWords:
       type: boolean
       description: Whether the room uses words or standard assassin.
@@ -839,6 +867,11 @@ components:
       type: string
       description: A word the player can use to eliminate their target.
       example: foo
+    NumWords:
+      type: number
+      description: Number of words to provide players on game start, defaults to 3.
+      example: 3
+      default: 3
     Wordlist:
       allOf:
         - type: object
@@ -854,7 +887,7 @@ components:
     WordlistArray:
       type: array
       description: A list of words that can be used by players to eliminate their opponents.
-      example: ['assassin-poison', 'assassin-dagger', 'pokemon']
+      example: ['card-poison', 'card-dagger', 'pokemon']
       items:
         $ref: '#/components/schemas/Word'
     WordlistBody:

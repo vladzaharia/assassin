@@ -35,7 +35,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				.sort((a, b) => a.sort - b.sort)
 				.map(({ value }) => value)
 
-			if (roomRecord.usesWords === 1 && words.length < results.length * 3) {
+			if (roomRecord.usesWords === 1 && words.length < results.length * roomRecord.numWords) {
 				return c.json({ message: 'There are not enough words to distribute!' }, 400)
 			}
 
@@ -53,7 +53,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				matched.push(result.target)
 
 				if (roomRecord.usesWords === 1) {
-					result.words = JSON.stringify(shuffledWords.splice(0, 3).map((w) => w.word))
+					result.words = JSON.stringify(shuffledWords.splice(0, roomRecord.numWords).map((w) => w.word))
 				}
 			}
 

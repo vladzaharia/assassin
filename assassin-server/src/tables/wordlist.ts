@@ -16,7 +16,7 @@ export async function dropWordListTable(db: D1Database) {
 }
 
 export async function listWordLists(db: D1Database) {
-	return await getKyselyDb(db).selectFrom('wordlist').selectAll().execute()
+	return await getKyselyDb(db).selectFrom('wordlist').selectAll().orderBy('name', 'asc').execute()
 }
 
 export async function findWordList(db: D1Database, name: string) {

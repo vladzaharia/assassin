@@ -3,7 +3,7 @@ import { convertBoolToInt } from './util'
 
 export async function createRoomsTable(db: D1Database) {
 	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, status TEXT, usesWords INTEGER, wordlists TEXT);`)
+		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, status TEXT, usesWords INTEGER, numWords INTEGER, wordlists TEXT);`)
 	console.info(`Create room table => createTableResult ${createTableResult.error || createTableResult.success}`)
 
 	return createTableResult
@@ -30,6 +30,7 @@ export async function insertRoom(db: D1Database, room: string, usesWords = true)
 		.values({
 			name: room,
 			usesWords: convertBoolToInt(usesWords),
+			numWords: 3,
 			wordlists: JSON.stringify([]),
 			status: 'not-ready',
 		})
@@ -51,6 +52,16 @@ export async function setUsesWords(db: D1Database, room: string, usesWords: bool
 		.updateTable('room')
 		.set({
 			usesWords: convertBoolToInt(usesWords),
+		})
+		.where('name', '=', room)
+		.execute()
+}
+
+export async function setNumWords(db: D1Database, room: string, numWords: number) {
+	return await getKyselyDb(db)
+		.updateTable('room')
+		.set({
+			numWords,
 		})
 		.where('name', '=', room)
 		.execute()

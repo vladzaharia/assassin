@@ -83,8 +83,8 @@ export default function RoomSettings() {
 					text="Reset game"
 					description={
 						isPlaying
-							? 'Click here to stop the game, remove everyone from the room and reset it.'
-							: 'Click here to remove everyone from the room and reset it.'
+							? 'Click the button to stop the game, remove everyone from the room and reset it.'
+							: 'Click the button to remove everyone from the room and reset it.'
 					}
 				>
 					<Button
@@ -102,7 +102,7 @@ export default function RoomSettings() {
 							? "The game has started; you'll need to wait to start the game."
 							: roomStatus?.status === 'not-ready'
 							? "There's not enough players in the room to start the game."
-							: "There's enough players to start the game! Click here to assign targets and words to players."
+							: "There's enough players to start the game! Click the button to assign targets and words to players."
 					}
 				>
 					<Button

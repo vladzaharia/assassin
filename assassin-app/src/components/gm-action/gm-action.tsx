@@ -10,7 +10,7 @@ interface GMActionProps {
 
 export default function GMAction({ text, description, className, children }: GMActionProps) {
 	return (
-		<div className={`action ${className}`}>
+		<div className={`action ${className || ''}`}>
 			<div className="text">
 				<span className="title">{text}</span>
 				<span className="description">{description}</span>

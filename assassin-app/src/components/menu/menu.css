@@ -4,6 +4,7 @@
 	max-width: 17.5rem;
 	display: flex;
 	flex-direction: column;
+	flex: 0 0 auto;
 }
 
 .menu > .header {

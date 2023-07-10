@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from 'react'
 import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../context/room'
@@ -7,9 +8,23 @@ import { useRevalidator } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 import { NotificationContext } from '../../context/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { IconProp, library } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'
-import { faMessageMinus, faMessagePlus, faMessageText } from '@fortawesome/pro-solid-svg-icons'
+import {
+	faChartLineUp,
+	faCircleHalfStroke,
+	faComputerClassic,
+	faDagger,
+	faEarthAmericas,
+	faFlag,
+	faFlask,
+	faFlaskRoundPoison,
+	faMessageMinus,
+	faMessagePlus,
+	faMessageText,
+	faPlanetRinged,
+	faStars,
+} from '@fortawesome/pro-solid-svg-icons'
 import { Card, CardContent, Switch } from '@mui/material'
 import GMAction from '../gm-action/gm-action'
 
@@ -24,6 +39,19 @@ interface WordListProps {
 }
 
 function WordList({ name, description, icon, words, selected, disabled, onClick }: WordListProps) {
+	library.add(
+		faFlask,
+		faFlaskRoundPoison,
+		faPlanetRinged,
+		faCircleHalfStroke,
+		faDagger,
+		faChartLineUp,
+		faComputerClassic,
+		faStars,
+		faFlag,
+		faEarthAmericas
+	)
+
 	return (
 		<Card
 			onClick={onClick}
@@ -33,11 +61,16 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 				border: '0.0625rem solid var(--border)',
 				borderColor: disabled ? 'var(--disabled)' : selected ? 'var(--green)' : 'var(--border)',
 				transition: 'all 0.3s ease',
+				width: '30%',
+				backgroundColor: 'var(--background)',
+				color: 'var(--foreground)',
 			}}
 		>
 			<CardContent className={`wordlist ${disabled ? 'disabled' : ''} ${selected ? 'selected' : ''}`} sx={{ padding: '0' }}>
 				<div className="title">
-					<FontAwesomeIcon icon={icon || faMessageText} size="lg" />
+					<div className="icon">
+						<FontAwesomeIcon icon={icon || faMessageText} rotation={icon === 'circle-half-stroke' ? 90 : (0 as any)} size="lg" />
+					</div>
 					<span className="name">{name}</span>
 				</div>
 				<div className="additional">
@@ -65,6 +98,7 @@ export default function WordLists() {
 	const roomStatus = roomContext?.room
 	const isPlaying = roomStatus?.status === 'started'
 	const [usesWords, setUsesWords] = useState<boolean>(roomStatus?.usesWords || false)
+	const [numWords, setNumWords] = useState<number>(roomStatus?.numWords || 0)
 
 	const getWordLists = async () => {
 		try {
@@ -136,6 +170,22 @@ export default function WordLists() {
 		}
 	}
 
+	const updateNumWords = async (newValue: number) => {
+		try {
+			await gmApi.patchRoom(roomContext?.room?.name || '', {
+				numWords: newValue,
+			})
+			setNumWords(newValue)
+			revalidate()
+		} catch (e) {
+			if (isAxiosError(e)) {
+				setError(e.response?.data || e.message, 'wordlist')
+			} else {
+				setError('Something went wrong!', 'wordlist')
+			}
+		}
+	}
+
 	useEffect(() => {
 		getWordLists()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,8 +193,8 @@ export default function WordLists() {
 
 	return (
 		<div className="wordlists-wrapper">
-			<h3>Word list settings</h3>
-			<GMAction text="Use word lists?" description="Whether to use word lists for this room, or play standard assassin.">
+			<h3>Word settings</h3>
+			<GMAction text="Use words?" description="Whether to use words for this room, or play standard assassin.">
 				<Switch
 					disabled={isPlaying}
 					checked={usesWords}
@@ -153,19 +203,33 @@ export default function WordLists() {
 				/>
 			</GMAction>
 			{roomStatus?.usesWords ? (
-				<GMAction text="Word lists" className="wordlists">
-					<div className="wordlists">
-						{wordLists.map((wl) => (
-							<WordList
-								{...(wl as WordListProps)}
-								key={wl.name}
-								disabled={isPlaying || !roomStatus?.usesWords}
-								selected={roomStatus?.wordLists?.includes(wl.name) || false}
-								onClick={() => updateWordLists(wl.name)}
+				<>
+					<GMAction text="Number of words" description="Number of words to assign to each player on game start." className="num-words">
+						<div className="input">
+							<input
+								type="number"
+								name="numWords"
+								max={10}
+								min={1}
+								value={numWords}
+								onInput={(e) => updateNumWords(parseInt(e.currentTarget.value, 10))}
 							/>
-						))}
-					</div>
-				</GMAction>
+						</div>
+					</GMAction>
+					<GMAction text="Word lists" className="wordlists">
+						<div className="wordlists">
+							{wordLists.map((wl) => (
+								<WordList
+									{...(wl as WordListProps)}
+									key={wl.name}
+									disabled={isPlaying || !roomStatus?.usesWords}
+									selected={roomStatus?.wordLists?.includes(wl.name) || false}
+									onClick={() => updateWordLists(wl.name)}
+								/>
+							))}
+						</div>
+					</GMAction>
+				</>
 			) : undefined}
 		</div>
 	)

@@ -1,19 +1,20 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createRoomsTable, findRoom, setStatus, setUsesWords, setWordLists } from '../../tables/room'
+import { createRoomsTable, findRoom, setNumWords, setStatus, setUsesWords, setWordLists } from '../../tables/room'
 import { RoomStatus } from '../../tables/db'
 import { findWordList } from '../../tables/wordlist'
 
 interface UpdateRoomBody {
 	status?: RoomStatus
 	usesWords?: boolean
+	numWords?: number
 	wordLists?: string[]
 }
 
 export const UpdateRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
-		const { status, usesWords, wordLists } = await c.req.json<UpdateRoomBody>()
+		const { status, usesWords, numWords, wordLists } = await c.req.json<UpdateRoomBody>()
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
@@ -30,6 +31,10 @@ export const UpdateRoom = async (c: Context<{ Bindings: Bindings }>) => {
 
 		if (usesWords !== undefined) {
 			await setUsesWords(db, room, usesWords)
+		}
+
+		if (numWords !== undefined) {
+			await setNumWords(db, room, numWords)
 		}
 
 		if (wordLists !== undefined) {

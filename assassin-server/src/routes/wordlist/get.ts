@@ -25,6 +25,7 @@ export const GetWordList = async (c: Context<{ Bindings: Bindings }>) => {
 			name: wordListRecord.name,
 			description: wordListRecord.description,
 			words: wordsRecord?.map((w) => w.word),
+			icon: wordListRecord.icon,
 		})
 	} catch (e) {
 		console.error('err', e)

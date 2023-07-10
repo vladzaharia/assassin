@@ -14,6 +14,7 @@ export interface RoomTable {
 	name: string
 	status: RoomStatus
 	usesWords: 0 | 1
+	numWords: number
 	wordlists: string
 }
 
