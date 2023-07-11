@@ -19,7 +19,7 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Try to find player
-		const playerRecord = await findPlayer(db, name, room)
+		const playerRecord = await findPlayer(db, room, name)
 		if (!playerRecord) {
 			return c.json({ message: 'Player not found!' }, 404)
 		}

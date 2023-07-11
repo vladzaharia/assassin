@@ -1,68 +1,69 @@
-.gm-actions .action {
+.action {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 	border-bottom: 0.0625rem solid var(--border);
 	padding: 1rem;
+	gap: 2rem;
 }
 
-.gm-actions .action:last-child {
+.action:last-child {
 	border-bottom: none;
 }
 
-.gm-actions .action.wordlists {
+.action.column {
 	flex-direction: column;
 	align-items: stretch;
 	gap: 0.5rem;
 }
 
-.gm-actions .action .text {
+.action .text {
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
 }
 
-.gm-actions .action .title {
+.action .title {
 	font-weight: 500;
 }
 
-.gm-actions .action .text .description {
+.action .text .description {
 	font-size: 0.9rem;
 }
 
-.gm-actions .action .button {
+.action .button {
 	height: 2rem;
 	width: 2rem;
 	text-align: center;
 }
 
-.gm-actions .action .button svg {
+.action .button svg {
 	margin-right: 0;
 }
 
-.gm-actions .toggle.primary.checked .MuiSwitch-thumb {
+.toggle.primary.checked .MuiSwitch-thumb {
 	background-color: var(--primary);
 }
 
-.gm-actions .toggle.primary.checked .MuiSwitch-track {
+.toggle.primary.checked .MuiSwitch-track {
 	background-color: var(--primary-dark);
 }
 
-.gm-actions .toggle.primary.disabled .MuiSwitch-thumb {
+.toggle.primary.disabled .MuiSwitch-thumb {
 	background-color: var(--disabled);
 }
 
-.gm-actions .toggle.primary.disabled .MuiSwitch-track {
+.toggle.primary.disabled .MuiSwitch-track {
 	background-color: var(--disabled);
 }
 
 @media only screen and (max-width: 50rem) {
-	.gm-actions .action {
+	.action {
 		padding-right: 1.3rem;
 	}
 
-	.gm-actions .action .text .description {
+	.action .text .description {
 		width: 90%;
 	}
 }

@@ -5,7 +5,7 @@
 	justify-content: center;
 }
 
-.player-actions .action {
+.player-actions .player-action {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -15,22 +15,22 @@
 	padding-right: 0.75rem;
 }
 
-.player-actions .action span {
+.player-actions .player-action span {
 	font-weight: 500;
 }
 
-.player-actions .action .button {
+.player-actions .player-action .button {
 	height: 2rem;
 	width: 2rem;
 	text-align: center;
 }
 
-.player-actions .action .button svg {
+.player-actions .player-action .button svg {
 	margin-right: 0;
 }
 
 @media only screen and (max-width: 50rem) {
-	.player-actions .action {
+	.player-actions .player-action {
 		padding-right: 1.3rem;
 	}
 }

@@ -19,6 +19,7 @@
 	flex-wrap: wrap;
 	gap: 1.5rem;
 	justify-content: center;
+	margin: 1rem 0;
 }
 
 .wordlists .text {
@@ -46,12 +47,12 @@
 	border-bottom-color: var(--green);
 }
 
-.wordlists .wordlist.selected {
-	color: var(--green);
-}
-
 .wordlists .wordlist.disabled {
 	color: var(--disabled);
+}
+
+.wordlists .wordlist.selected {
+	color: var(--green);
 }
 
 .wordlists .wordlist .title {
@@ -115,13 +116,21 @@
 	background-color: var(--disabled);
 }
 
+@media only screen and (max-width: 87.5rem) {
+	.wordlists .MuiCard-root {
+		width: 40%;
+	}
+}
+
+@media only screen and (max-width: 62.5rem) {
+	.wordlists .MuiCard-root {
+		width: 100%;
+	}
+}
+
 @media only screen and (max-width: 50rem) {
 	.wordlists {
 		justify-content: center;
-	}
-
-	.wordlists .MuiCard-root {
-		width: 100%;
 	}
 
 	.wordlists .wordlist .title {

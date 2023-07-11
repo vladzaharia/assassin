@@ -9,6 +9,7 @@ import { ResetDb } from './routes/debug/reset'
 import { Ok } from './routes/ok'
 import { AddPlayer } from './routes/player/add'
 import { DeletePlayer } from './routes/player/delete'
+import { EliminatePlayer } from './routes/player/eliminate'
 import { GetPlayer } from './routes/player/get'
 import { AddRoom } from './routes/room/add'
 import { DeleteRoom } from './routes/room/delete'
@@ -69,6 +70,7 @@ app.post('/api/room/:room/start', StartGame)
 app.get('/api/room/:room/player/:name', GetPlayer)
 app.put('/api/room/:room/player/:name', AddPlayer)
 app.delete('/api/room/:room/player/:name', DeletePlayer)
+app.post('/api/room/:room/player/:name/eliminate', EliminatePlayer)
 
 // List word lists
 app.get('/api/wordlist', ListWordLists)

@@ -18,7 +18,7 @@ export interface RoomTable {
 	wordlists: string
 }
 
-export type PlayerStatus = 'alive' | 'eliminated'
+export type PlayerStatus = 'alive' | 'eliminated' | 'champion'
 
 export interface PlayerTable {
 	name: string

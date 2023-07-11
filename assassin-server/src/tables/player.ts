@@ -22,7 +22,7 @@ export async function listPlayersInRoom(db: D1Database, room: string) {
 	return await getKyselyDb(db).selectFrom('player').selectAll().where('room', '=', room).orderBy('status', 'asc').execute()
 }
 
-export async function findPlayer(db: D1Database, name: string, room: string) {
+export async function findPlayer(db: D1Database, room: string, name: string) {
 	return await getKyselyDb(db)
 		.selectFrom('player')
 		.selectAll()
@@ -51,7 +51,7 @@ export async function insertPlayer(db: D1Database, room: string, name: string, i
 		.execute()
 }
 
-export async function setTarget(db: D1Database, room: string, name: string, target: string) {
+export async function setTarget(db: D1Database, room: string, name: string, target?: string) {
 	return await getKyselyDb(db)
 		.updateTable('player')
 		.set({ target })

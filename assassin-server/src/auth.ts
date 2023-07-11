@@ -7,41 +7,46 @@ import { findRoom } from './tables/room'
 
 type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE'
 type AuthType = 'gm' | 'player' | 'jwt'
-export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[]; }[] = [
+export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[] }[] = [
 	{
 		path: /debug.*$/,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
-		authTypes: ['jwt']
+		authTypes: ['jwt'],
 	},
 	{
 		path: /room\/\w*$/,
 		methods: ['PUT', 'DELETE'],
-		authTypes: ['jwt']
+		authTypes: ['jwt'],
 	},
 	{
 		path: /room\/\w*\/player\/\w*$/,
 		methods: ['GET', 'PUT', 'DELETE'],
-		authTypes: ['player', 'jwt']
+		authTypes: ['player', 'jwt'],
+	},
+	{
+		path: /room\/\w*\/player\/\w*\/eliminate$/,
+		methods: ['POST'],
+		authTypes: ['player', 'jwt'],
 	},
 	{
 		path: /room\/\w*\/(start|reset)$/,
 		methods: ['POST'],
-		authTypes: ['gm', 'jwt']
+		authTypes: ['gm', 'jwt'],
 	},
 	{
 		path: /room\/\w*\/gm\/?(\w+)?$/,
 		methods: ['POST'],
-		authTypes: ['gm', 'jwt']
+		authTypes: ['gm', 'jwt'],
 	},
 	{
 		path: /wordlist\/\w*$/,
 		methods: ['PUT', 'DELETE'],
-		authTypes: ['jwt']
+		authTypes: ['jwt'],
 	},
 	{
 		path: /wordlist\/\w*\/words$/,
 		methods: ['PUT', 'DELETE'],
-		authTypes: ['jwt']
+		authTypes: ['jwt'],
 	},
 ]
 
@@ -59,7 +64,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 	const match = checkPath(c.req.path, c.req.method)
 	if (match) {
 		if (match.authTypes.includes('gm') || match.authTypes.includes('player')) {
-			const { room, nameParam } = c.req.param()
+			const { room, name: nameParam } = c.req.param()
 			const name = c.req.header('X-Assassin-User')
 
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
@@ -72,12 +77,12 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 
 			if (match.authTypes.includes('gm')) {
 				console.log(`GM Auth: ${name}, gm = ${roomGM?.name}`)
-				result = roomGM?.name !== name
+				result = roomGM?.name === name
 			}
 
 			if (match.authTypes.includes('player') && !result) {
 				console.log(`Player Auth: ${name}, param = ${nameParam}`)
-				result = nameParam !== name
+				result = nameParam === name
 			}
 
 			if (!result && match.authTypes.includes('jwt')) {

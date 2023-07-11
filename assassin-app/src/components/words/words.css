@@ -1,0 +1,46 @@
+.words {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.words .MuiCard-root {
+	width: 25%;
+}
+
+.mission-modal .words .MuiCard-root {
+	width: 40%;
+}
+
+.mission-modal .words .clickable {
+	cursor: pointer;
+}
+
+.words .word {
+	font-size: 1.5rem;
+	font-weight: 500;
+	flex: 1 1 auto;
+	text-align: center;
+}
+
+@media only screen and (max-width: 87.5rem) {
+	.words .MuiCard-root {
+		width: 40%;
+	}
+}
+
+@media only screen and (max-width: 62.5rem) {
+	.words .MuiCard-root {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 50rem) {
+	.words {
+		justify-content: center;
+	}
+}

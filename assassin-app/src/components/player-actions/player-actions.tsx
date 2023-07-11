@@ -17,7 +17,7 @@ function PlayerAction({ text, icon, className, destination, ...buttonProps }: Pl
 	const location = useLocation()
 
 	return (
-		<div className="action">
+		<div className="player-action">
 			<span className="text">{text}</span>
 			<Button
 				className={className}

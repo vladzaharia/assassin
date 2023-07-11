@@ -55,18 +55,17 @@ export async function insertWords(db: D1Database, list: string, words: string[])
 		const wordsCopy = words.slice()
 
 		while (wordsCopy.length > 0) {
-			return await getKyselyDb(db)
-			.insertInto('word')
-			.values(
-				wordsCopy.splice(0, 25).map((word) => {
-					return {
-						word,
-						list,
-					}
-				})
-			)
-			.execute()
-
+			await getKyselyDb(db)
+				.insertInto('word')
+				.values(
+					wordsCopy.splice(0, 25).map((word) => {
+						return {
+							word,
+							list,
+						}
+					})
+				)
+				.execute()
 		}
 	}
 }

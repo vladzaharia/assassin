@@ -1,14 +1,14 @@
 import { ReactNode } from 'react'
-import './gm-action.css'
+import './action.css'
 
-interface GMActionProps {
+interface ActionProps {
 	text: string
 	description?: string
 	className?: string
 	children: ReactNode
 }
 
-export default function GMAction({ text, description, className, children }: GMActionProps) {
+export default function Action({ text, description, className, children }: ActionProps) {
 	return (
 		<div className={`action ${className || ''}`}>
 			<div className="text">

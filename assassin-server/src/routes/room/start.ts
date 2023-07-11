@@ -1,8 +1,8 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, listPlayersInRoom, setTarget, setWords } from '../../tables/player'
-import { createRoomsTable, findRoom, setStatus } from '../../tables/room'
+import { createPlayerTable, deletePlayer, insertPlayer, listPlayersInRoom, setTarget, setWords } from '../../tables/player'
+import { createRoomsTable, findRoom, setStatus as setRoomStatus } from '../../tables/room'
 import { listWordsInWordLists } from '../../tables/word'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
@@ -20,12 +20,20 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const results = await listPlayersInRoom(db, room)
+		const players = await listPlayersInRoom(db, room)
 
-		if (results && results.length > 2) {
-			// Check if targets have been assigned
-			if (roomRecord.status !== 'not-ready') {
+		if (players && players.length > 2) {
+			// Check if game has already started
+			if (roomRecord.status === 'started') {
 				return c.json({ message: 'Game has already started!' }, 400)
+			}
+
+			// Reset room if needed
+			if (roomRecord.status === 'completed') {
+				for (let i = 0; i < players.length; i++) {
+					await deletePlayer(db, room, players[i].name)
+					await insertPlayer(db, room, players[i].name, i === 0)
+				}
 			}
 
 			// Get all words
@@ -35,15 +43,15 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				.sort((a, b) => a.sort - b.sort)
 				.map(({ value }) => value)
 
-			if (roomRecord.usesWords === 1 && words.length < results.length * roomRecord.numWords) {
+			if (roomRecord.usesWords === 1 && words.length < players.length * roomRecord.numWords) {
 				return c.json({ message: 'There are not enough words to distribute!' }, 400)
 			}
 
 			const matched: string[] = []
 
 			// Match people and get words
-			for (const result of results) {
-				const unmatched = results.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
+			for (const result of players) {
+				const unmatched = players.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
 
 				console.log('matched', matched)
 				console.log('unmatched', unmatched)
@@ -60,7 +68,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			// Get words
 
 			// Update player records
-			for (const result of results) {
+			for (const result of players) {
 				await setTarget(db, room, result.name, result.target!)
 
 				if (result.words) {
@@ -69,7 +77,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			}
 
 			// Update room record
-			await setStatus(db, room, 'started')
+			await setRoomStatus(db, room, 'started')
 
 			return c.json({ message: 'Successfully started game!' })
 		} else {

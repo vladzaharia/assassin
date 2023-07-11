@@ -1,4 +1,4 @@
-import { faCheck, faPlay, faQuestion, faTimer } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faPlay, faQuestion, faTimer, faTrophyStar } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import isMobile from 'is-mobile'
 import { useContext, useRef, useState } from 'react'
@@ -19,7 +19,7 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 	const getStatusIcon = () => {
 		switch (roomStatus?.status) {
 			case 'completed':
-				return faPlay
+				return faTrophyStar
 			case 'started':
 				return faPlay
 			case 'ready':
@@ -83,7 +83,7 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 	const getStatusColor = () => {
 		switch (roomStatus?.status) {
 			case 'completed':
-				return 'yellow'
+				return 'orange'
 			case 'started':
 				return 'green'
 			case 'ready':

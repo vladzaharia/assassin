@@ -26,7 +26,7 @@ import {
 	faStars,
 } from '@fortawesome/pro-solid-svg-icons'
 import { Card, CardContent, Switch } from '@mui/material'
-import GMAction from '../gm-action/gm-action'
+import Action from '../action/action'
 
 interface WordListProps {
 	name: string
@@ -59,7 +59,7 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 			elevation={3}
 			sx={{
 				border: '0.0625rem solid var(--border)',
-				borderColor: disabled ? 'var(--disabled)' : selected ? 'var(--green)' : 'var(--border)',
+				borderColor: selected ? 'var(--green)' : disabled ? 'var(--disabled)' : 'var(--border)',
 				transition: 'all 0.3s ease',
 				width: '30%',
 				backgroundColor: 'var(--background)',
@@ -120,68 +120,74 @@ export default function WordLists() {
 	}
 
 	const updateWordLists = async (name: string) => {
-		try {
-			if (roomStatus?.wordLists?.includes(name)) {
-				await gmApi.patchRoom(roomStatus.name, {
-					wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
-				})
-				setNotification({
-					message: `Removed ${name} successfully!`,
-					notificationType: 'success',
-					source: 'wordlist',
-					icon: faMessageMinus,
-				})
-			} else {
-				await gmApi.patchRoom(roomStatus?.name || '', {
-					wordLists: [...(roomStatus?.wordLists || []), name],
-				})
-				setNotification({
-					message: `Added ${name} successfully!`,
-					notificationType: 'success',
-					source: 'wordlist',
-					icon: faMessagePlus,
-				})
-			}
+		if (roomStatus?.status !== 'started') {
+			try {
+				if (roomStatus?.wordLists?.includes(name)) {
+					await gmApi.patchRoom(roomStatus.name, {
+						wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
+					})
+					setNotification({
+						message: `Removed ${name} successfully!`,
+						notificationType: 'success',
+						source: 'wordlist',
+						icon: faMessageMinus,
+					})
+				} else {
+					await gmApi.patchRoom(roomStatus?.name || '', {
+						wordLists: [...(roomStatus?.wordLists || []), name],
+					})
+					setNotification({
+						message: `Added ${name} successfully!`,
+						notificationType: 'success',
+						source: 'wordlist',
+						icon: faMessagePlus,
+					})
+				}
 
-			revalidate()
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'gm-reset')
-			} else {
-				setError('Something went wrong!', 'gm-reset')
+				revalidate()
+			} catch (e) {
+				if (isAxiosError(e)) {
+					setError(e.response?.data || e.message, 'gm-reset')
+				} else {
+					setError('Something went wrong!', 'gm-reset')
+				}
 			}
 		}
 	}
 
 	const updateUsesWords = async () => {
-		try {
-			const newValue = !roomContext?.room?.usesWords
-			await gmApi.patchRoom(roomContext?.room?.name || '', {
-				usesWords: newValue,
-			})
-			setUsesWords(newValue)
-			revalidate()
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'wordlist')
-			} else {
-				setError('Something went wrong!', 'wordlist')
+		if (roomStatus?.status !== 'started') {
+			try {
+				const newValue = !roomContext?.room?.usesWords
+				await gmApi.patchRoom(roomContext?.room?.name || '', {
+					usesWords: newValue,
+				})
+				setUsesWords(newValue)
+				revalidate()
+			} catch (e) {
+				if (isAxiosError(e)) {
+					setError(e.response?.data || e.message, 'wordlist')
+				} else {
+					setError('Something went wrong!', 'wordlist')
+				}
 			}
 		}
 	}
 
 	const updateNumWords = async (newValue: number) => {
-		try {
-			await gmApi.patchRoom(roomContext?.room?.name || '', {
-				numWords: newValue,
-			})
-			setNumWords(newValue)
-			revalidate()
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'wordlist')
-			} else {
-				setError('Something went wrong!', 'wordlist')
+		if (roomStatus?.status !== 'started') {
+			try {
+				await gmApi.patchRoom(roomContext?.room?.name || '', {
+					numWords: newValue,
+				})
+				setNumWords(newValue)
+				revalidate()
+			} catch (e) {
+				if (isAxiosError(e)) {
+					setError(e.response?.data || e.message, 'wordlist')
+				} else {
+					setError('Something went wrong!', 'wordlist')
+				}
 			}
 		}
 	}
@@ -194,17 +200,17 @@ export default function WordLists() {
 	return (
 		<div className="wordlists-wrapper">
 			<h3>Word settings</h3>
-			<GMAction text="Use words?" description="Whether to use words for this room, or play standard assassin.">
+			<Action text="Use words?" description="Whether to use words for this room, or play standard assassin.">
 				<Switch
 					disabled={isPlaying}
 					checked={usesWords}
 					onChange={() => updateUsesWords()}
 					className={`toggle primary ${usesWords ? 'checked' : ''} ${isPlaying ? 'disabled' : ''}`}
 				/>
-			</GMAction>
+			</Action>
 			{roomStatus?.usesWords ? (
 				<>
-					<GMAction text="Number of words" description="Number of words to assign to each player on game start." className="num-words">
+					<Action text="Number of words" description="Number of words to assign to each player on game start." className="num-words">
 						<div className="input">
 							<input
 								type="number"
@@ -215,8 +221,8 @@ export default function WordLists() {
 								onInput={(e) => updateNumWords(parseInt(e.currentTarget.value, 10))}
 							/>
 						</div>
-					</GMAction>
-					<GMAction text="Word lists" className="wordlists">
+					</Action>
+					<Action text="Word lists" className="column">
 						<div className="wordlists">
 							{wordLists.map((wl) => (
 								<WordList
@@ -228,7 +234,7 @@ export default function WordLists() {
 								/>
 							))}
 						</div>
-					</GMAction>
+					</Action>
 				</>
 			) : undefined}
 		</div>

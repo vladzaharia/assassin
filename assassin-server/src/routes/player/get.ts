@@ -18,7 +18,7 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const record = await findPlayer(db, name, room)
+		const record = await findPlayer(db, room, name)
 		if (!record) {
 			return c.json({ message: 'Player not found!' }, 404)
 		}
@@ -27,6 +27,7 @@ export const GetPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 
 		return c.json({
 			...recordProps,
+			words: JSON.parse(recordProps.words || '[]'),
 			isGM: isGM === 1,
 		})
 	} catch (e) {

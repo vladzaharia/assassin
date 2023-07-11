@@ -6,7 +6,7 @@ import './room-settings.css'
 import Header from '../../components/header/header'
 import { faPlay, faRotateLeft, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Button from '../../components/button/button'
-import GMAction from '../../components/gm-action/gm-action'
+import Action from '../../components/action/action'
 import WordLists from '../../components/wordlists/wordlists'
 import { isAxiosError } from 'axios'
 import { createGMApi } from '../../api'
@@ -79,7 +79,7 @@ export default function RoomSettings() {
 				rightActions={<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
 			/>
 			<div className="gm-actions">
-				<GMAction
+				<Action
 					text="Reset game"
 					description={
 						isPlaying
@@ -94,8 +94,8 @@ export default function RoomSettings() {
 						}}
 						onClick={() => resetGame()}
 					/>
-				</GMAction>
-				<GMAction
+				</Action>
+				<Action
 					text="Start game"
 					description={
 						isPlaying
@@ -113,7 +113,7 @@ export default function RoomSettings() {
 						disabled={isPlaying || roomStatus?.status === 'not-ready'}
 						onClick={() => startGame()}
 					/>
-				</GMAction>
+				</Action>
 				<WordLists />
 			</div>
 		</div>

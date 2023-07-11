@@ -70,7 +70,7 @@ const router = createBrowserRouter([
 							try {
 								const name = localStorage.getItem('name')
 								if (name) {
-									const playerApi = createPlayerApi()
+									const playerApi = createPlayerApi(name.replace(/"/gi, ''))
 									return (await playerApi.getPlayer(params.room || '', JSON.parse(name))).data
 								}
 							} catch {

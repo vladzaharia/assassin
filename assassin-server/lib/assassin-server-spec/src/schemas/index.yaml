@@ -291,6 +291,36 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
+  /room/{room}/player/{name}/eliminate:
+    post:
+      summary: Eliminate target
+      description: Eliminates player's target, and assigns their target and words to player.
+      operationId: eliminatePlayer
+      tags:
+        - Player
+      security:
+        - UserAuth: []
+      parameters:
+        - $ref: '#/components/parameters/RoomName'
+        - $ref: '#/components/parameters/PlayerName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  $ref: '#/components/schemas/Word'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/PlayerEliminated'
+        404:
+          $ref: '#/components/responses/RoomNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
   /wordlist:
     get:
       summary: List wordlists
@@ -488,7 +518,7 @@ paths:
                 players:
                   description: Players to add to room.
                   type: array
-                  example: ["Vlad", "George", "David"]
+                  example: ['Vlad', 'George', 'David']
                   items:
                     type: string
                     example: Vlad
@@ -624,6 +654,19 @@ components:
                 type: string
                 description: Message for this error.
                 example: Room not found!
+            required:
+              - message
+    PlayerEliminated:
+      description: Player has already been eliminated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Player is not alive!
             required:
               - message
     PlayerExists:
@@ -785,6 +828,7 @@ components:
       enum:
         - alive
         - eliminated
+        - champion
       example: alive
     PlayerIsGM:
       description: Whether the player is the room's GM (first player added).

@@ -1,5 +1,13 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { faCrown, faDoorOpen, faFaceSadTear, faTombstoneBlank, faUserMinus, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
+import {
+	faCrown,
+	faDoorOpen,
+	faFaceSadTear,
+	faTombstoneBlank,
+	faUserMinus,
+	faUserPlus,
+	faTrophyStar,
+} from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import { useContext, useRef, useState } from 'react'
@@ -20,10 +28,12 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 
 	const getPlayerColor = () => {
-		if (player.isGM) {
-			return 'blue'
+		if (player.status === 'champion') {
+			return 'orange'
 		} else if (player.status === 'eliminated') {
 			return 'primary'
+		} else if (player.isGM) {
+			return 'blue'
 		}
 
 		return 'grey-dark'
@@ -32,8 +42,30 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 	const getPlayerIcon = () => {
 		if (player.status === 'eliminated') {
 			return faTombstoneBlank
+		} else if (player.status === 'champion') {
+			return faTrophyStar
 		} else if (player.isGM) {
 			return faCrown
+		}
+	}
+
+	const getPopoverTitle = () => {
+		if (player.status === 'eliminated') {
+			return 'Eliminated'
+		} else if (player.status === 'champion') {
+			return 'Champion!'
+		} else if (player.isGM) {
+			return 'GM'
+		}
+	}
+
+	const getPopoverDescription = () => {
+		if (player.status === 'eliminated') {
+			return 'This player has been eliminated from the competition.'
+		} else if (player.status === 'champion') {
+			return 'This player has won the game!'
+		} else if (player.isGM) {
+			return 'This player is the GM of the room. They can set settings and start the game.'
 		}
 	}
 
@@ -72,14 +104,8 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 						color={color}
 						onClose={() => setPopoverOpen(false)}
 						open={popoverOpen}
-						title={player.isGM ? 'GM' : player.status === 'eliminated' ? 'Eliminated' : undefined}
-						description={
-							player.isGM
-								? 'This player is the GM of the room. They can set settings and start the game.'
-								: player.status === 'eliminated'
-								? 'This player has been eliminated from the competition.'
-								: undefined
-						}
+						title={getPopoverTitle()}
+						description={getPopoverDescription()}
 						icon={icon}
 					/>
 				</div>

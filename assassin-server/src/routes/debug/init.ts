@@ -182,7 +182,6 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'karate',
 				]
 				await insertWords(db, 'card-poison', words)
-
 			}
 			//#endregion
 
@@ -317,7 +316,6 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'karaoke',
 				]
 				await insertWords(db, 'card-dagger', words)
-
 			}
 			//#endregion
 
@@ -573,7 +571,6 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'Zimbabwe',
 				]
 				await insertWords(db, 'countries', words)
-
 			}
 			//#endregion
 

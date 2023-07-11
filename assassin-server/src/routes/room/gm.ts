@@ -33,7 +33,7 @@ export const AssignGM = async (c: Context<{ Bindings: Bindings }>) => {
 				await setGMStatus(db, room, otherPlayers[0].name, true)
 			}
 		} else {
-			const playerRecord = await findPlayer(db, name, room)
+			const playerRecord = await findPlayer(db, room, name)
 			if (!playerRecord) {
 				return c.json({ message: 'Player not found!' }, 404)
 			}

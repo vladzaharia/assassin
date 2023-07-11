@@ -1,51 +1,38 @@
-.player-info {
-	flex: 1 1 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.5rem;
+.mission .target {
+	font-size: 1.5rem;
+	font-weight: 500;
+	padding: 0.5rem;
 }
 
-.player-info .title {
-	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
-	font-size: 2rem;
-	margin: 0;
-	margin-top: 1rem;
-	margin-bottom: 0.5rem;
-	color: var(--primary);
+.mission-modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40vw;
+	max-height: 50vh;
+	background-color: var(--background);
+	border: 0.0625rem solid var(--border);
+	overflow-y: auto;
 }
 
-.player-info .step {
-	display: grid;
-	grid-template-columns: 1fr 7fr;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 1rem;
-	width: 75%;
+.mission-modal .confirm {
+	padding: 0 1rem;
 }
 
-.introduction .step:last-child {
-	margin-bottom: 0;
+.mission-modal .words {
+	margin: 2rem 0;
 }
 
-.player-info .step h3 {
-	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
-}
-
-.player-info .step .icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
+@media only screen and (max-width: 87.5rem) {
+	.mission-modal {
+		width: 50vw;
+	}
 }
 
 @media only screen and (max-width: 50rem) {
-	.player-info .title {
-		margin-top: 1.5rem;
-	}
-	.player-info .step {
-		width: 90%;
+	.mission-modal {
+		width: 90vw;
+		max-height: 75vh;
 	}
 }
