@@ -5,20 +5,17 @@ import { createRoomsTable, insertRoom } from '../../tables/room'
 import { createWordTable, insertWords } from '../../tables/word'
 import { createWordListTable, insertWordList } from '../../tables/wordlist'
 
-interface DemoBody {
+interface InitializeBody {
+	room?: string
+	players?: string[]
 	wordlists?: string[]
 }
 
-export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
+export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 
-		const { wordlists } = await c.req.json<DemoBody>()
-
-		const { room: roomParam, name: nameParam, addWordsParam } = c.req.query()
-		const room = roomParam || 'test'
-		const name = nameParam || 'Test'
-		const addWords = addWordsParam !== 'false'
+		const { room, players, wordlists } = await c.req.json<InitializeBody>()
 
 		// Create D1 tables if needed
 		await createRoomsTable(db)
@@ -27,18 +24,24 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 		await createWordTable(db)
 
 		// Insert demo room
-		await insertRoom(db, room)
-		await insertPlayer(db, room, name, true)
-		await insertPlayer(db, room, 'Foo')
-		await insertPlayer(db, room, 'Bar')
-		await insertPlayer(db, room, 'Baz')
-		await setStatus(db, room, 'Baz', 'eliminated')
-
-		if (addWords) {
-			if (!wordlists || wordlists.length === 0) {
-				return c.json({ message: 'Need to specify wordlists in body!' }, 400)
+		if (room !== undefined) {
+			try {
+				await insertRoom(db, room)
+			} catch {
+				//nop
 			}
+		}
+		if (players !== undefined && players.length > 0) {
+			for (let i = 0; i < players.length; i++) {
+				await insertPlayer(db, room!, players[i], i === 0)
 
+				if (i === players.length - 1) {
+					await setStatus(db, room!, players[i], 'eliminated')
+				}
+			}
+		}
+
+		if (wordlists && wordlists.length > 0) {
 			//#region test-list
 			if (wordlists?.includes('test-list')) {
 				console.log('Adding test-list wordlist')
@@ -179,6 +182,7 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'karate',
 				]
 				await insertWords(db, 'card-poison', words)
+
 			}
 			//#endregion
 
@@ -313,6 +317,7 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'karaoke',
 				]
 				await insertWords(db, 'card-dagger', words)
+
 			}
 			//#endregion
 
@@ -568,6 +573,7 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'Zimbabwe',
 				]
 				await insertWords(db, 'countries', words)
+
 			}
 			//#endregion
 
@@ -1588,10 +1594,10 @@ export const DemoDb = async (c: Context<{ Bindings: Bindings }>) => {
 					'Walking Wake',
 					'Iron Leaves',
 				]
-				//#endregion
 
 				await insertWords(db, 'pokemon', words)
 			}
+			//#endregion
 		}
 
 		return c.json({ message: 'ok' })

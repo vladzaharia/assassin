@@ -4,7 +4,7 @@ import { cors } from 'hono/cors'
 
 import { AuthMiddleware } from './auth'
 import { Bindings } from './bindings'
-import { DemoDb } from './routes/debug/demo'
+import { InitializeDb } from './routes/debug/init'
 import { ResetDb } from './routes/debug/reset'
 import { Ok } from './routes/ok'
 import { AddPlayer } from './routes/player/add'
@@ -86,7 +86,7 @@ app.put('/api/wordlist/:list/words', AddWords)
 app.delete('/api/wordlist/:list/words', DeleteWords)
 
 // Debug endpoints
-app.put('/api/debug/demo', DemoDb)
+app.put('/api/debug/init', InitializeDb)
 app.put('/api/debug/reset', ResetDb)
 
 // OpenAPI

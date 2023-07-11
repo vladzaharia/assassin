@@ -9,7 +9,14 @@ interface AddRoomBody {
 export const AddRoom = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
-		const { usesWords } = await c.req.json<AddRoomBody>()
+		let usesWords = false
+
+		if (c.req.body) {
+			const usesWordsBody = (await c.req.json<AddRoomBody>()).usesWords
+			if (usesWordsBody) {
+				usesWords = usesWordsBody
+			}
+		}
 		const db = c.env.D1DATABASE
 
 		// Create D1 table if needed
@@ -21,7 +28,7 @@ export const AddRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		await insertRoom(db, room, usesWords)
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Room created successfully!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

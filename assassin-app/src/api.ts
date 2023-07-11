@@ -15,8 +15,8 @@ export const createRoomApi = () => {
 	return new RoomApi(getApiConfig())
 }
 
-export const createPlayerApi = () => {
-	return new PlayerApi(getApiConfig())
+export const createPlayerApi = (apiKey: string) => {
+	return new PlayerApi(getApiConfig({ apiKey }))
 }
 
 export const createGMApi = (apiKey: string) => {

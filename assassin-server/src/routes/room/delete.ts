@@ -21,7 +21,7 @@ export const DeleteRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		await deletePlayersInRoom(db, room)
 		await deleteRoom(db, room)
 
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Room deleted successfully!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

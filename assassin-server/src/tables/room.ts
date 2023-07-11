@@ -78,5 +78,5 @@ export async function setWordLists(db: D1Database, room: string, wordLists: stri
 }
 
 export async function deleteRoom(db: D1Database, room: string) {
-	return await getKyselyDb(db).deleteFrom('room').where('name', '=', room)
+	return await getKyselyDb(db).deleteFrom('room').where('name', '=', room).execute()
 }

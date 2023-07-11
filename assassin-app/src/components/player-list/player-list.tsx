@@ -97,7 +97,7 @@ export default function PlayerList() {
 
 	const JoinLeaveButton = () => {
 		const playerInRoom = roomStatus?.players.some((p) => p.name === name)
-		const playerApi = createPlayerApi()
+		const playerApi = createPlayerApi(name)
 
 		const addPlayer = async () => {
 			try {
