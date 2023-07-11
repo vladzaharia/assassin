@@ -30,7 +30,7 @@ export const EliminatePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Check if word is available for use
-		if (roomRecord.usesWords) {
+		if (roomRecord.usesWords === 1) {
 			const words: string[] = JSON.parse(player.words!)
 			if (!words.includes(word)) {
 				return c.json({ message: 'Word is not available for use!' }, 400)
@@ -49,14 +49,14 @@ export const EliminatePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		if (target.target! === player.name) {
 			await setStatus(db, room, name, 'champion')
 			await setRoomStatus(db, room, 'completed')
-			return c.json({ message: 'Congratulations, you are the champion!' }, 200)
+			return c.json({ message: 'Congratulations, you have won the game!' }, 299)
 		}
 
 		// Assign target's target
 		await setTarget(db, room, name, target.target!)
 
 		// Add target's words to player's
-		if (roomRecord.usesWords) {
+		if (roomRecord.usesWords === 1) {
 			const oldWords: string[] = JSON.parse(player.words!).filter((w: string) => w !== word)
 			const targetWords: string = JSON.parse(target!.words!)
 

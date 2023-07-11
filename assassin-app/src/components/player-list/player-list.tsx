@@ -74,6 +74,7 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 
 	return (
 		<motion.div
+			ref={popoverAnchor}
 			className={`player no-animate ${color}`}
 			key={player.name}
 			initial={{ opacity: 0 }}
@@ -97,7 +98,7 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 		>
 			<span>{player.name}</span>
 			{icon ? (
-				<div className="icon" ref={popoverAnchor}>
+				<div className="icon">
 					<FontAwesomeIcon icon={icon} />
 					<Popover
 						anchor={popoverAnchor.current}
@@ -177,7 +178,7 @@ export default function PlayerList() {
 
 	return (
 		<div className="player-list" key="list">
-			<Header title="Player List" bottomBorder={false} rightActions={<JoinLeaveButton />} key="header" />
+			<Header title="Player list" bottomBorder={false} rightActions={<JoinLeaveButton />} key="header" />
 
 			{roomStatus?.players && (
 				<AnimatePresence mode="sync" key="players-animate">

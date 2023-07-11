@@ -6,12 +6,13 @@ import { RoomContext } from '../../context/room'
 import './mission.css'
 import Header from '../../components/header/header'
 import Button from '../../components/button/button'
-import { faCrosshairs, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../../components/action/action'
 import Words from '../../components/words/words'
 import { Modal } from '@mui/material'
 import { createPlayerApi } from '../../api'
 import { isAxiosError } from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Mission() {
 	const [showModal, setShowModal] = useState<boolean>(false)
@@ -27,17 +28,30 @@ export default function Mission() {
 	const hasPlayer = Object.keys(player).length > 0
 	const usesWords = roomStatus?.room?.usesWords
 
-	const eliminatePlayer = async (word: string) => {
+	const eliminatePlayer = async (word?: string) => {
 		try {
-			await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word })
-			setNotification({
-				message: `${player.target} eliminated successfully!`,
-				icon: faCrosshairs,
-				source: 'eliminate',
-				notificationType: 'success',
-			})
+			const eliminateResult = await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word })
+
+			if (eliminateResult.status === 299) {
+				setNotification({
+					message: eliminateResult.data.message,
+					icon: faTrophyStar,
+					source: 'eliminate',
+					notificationType: 'success',
+				})
+				navigate(`/room/${roomStatus?.room?.name}`)
+				revalidate()
+			} else {
+				setNotification({
+					message: `${player.target} eliminated successfully!`,
+					icon: faCrosshairs,
+					source: 'eliminate',
+					notificationType: 'success',
+				})
+				revalidate()
+			}
+
 			setShowModal(false)
-			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
 				setError(e.response?.data || e.message, 'eliminate')
@@ -57,6 +71,11 @@ export default function Mission() {
 			setError('You are not in this room!', 'room')
 			navigate(`/room/${roomStatus?.room?.name}`)
 		}
+
+		if (player.status === 'eliminated') {
+			setError('You have been eliminated from the game!', 'room')
+			navigate(`/room/${roomStatus?.room?.name}`)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [roomStatus])
 
@@ -67,6 +86,8 @@ export default function Mission() {
 				<>
 					<Header
 						title="Mission"
+						className="with-icon"
+						leftActions={<FontAwesomeIcon icon={faUserSecret} size="lg" />}
 						rightActions={
 							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
 						}
@@ -99,17 +120,30 @@ export default function Mission() {
 				<div className="mission-modal">
 					<Header
 						title="Confirm elimination"
+						className="with-icon"
+						leftActions={<FontAwesomeIcon icon={faCrosshairs} size="lg" />}
 						rightActions={<Button className="primary" onClick={() => setShowModal(false)} iconProps={{ icon: faXmark }} />}
 					/>
 					<div className="confirm">
 						<p>
 							Congratulations on eliminating <strong>{player.target}</strong>!
-							{roomStatus?.room?.usesWords
+							{usesWords
 								? ' Choose the word you used to eliminate them to confirm your elimination.'
 								: ' Click the button to confirm your elimination.'}
 						</p>
 					</div>
-					<Words words={player.words} onClick={eliminatePlayer} />
+					{usesWords ? (
+						<Words words={player.words} onClick={eliminatePlayer} />
+					) : (
+						<div className="button-wrapper">
+							<Button
+								text="Confirm elimination"
+								className="green"
+								iconProps={{ icon: faCheck, size: 'xl' }}
+								onClick={() => eliminatePlayer()}
+							/>
+						</div>
+					)}
 				</div>
 			</Modal>
 		</div>

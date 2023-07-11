@@ -20,7 +20,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'Room not found!' }, 404)
 		}
 
-		const players = await listPlayersInRoom(db, room)
+		let players = await listPlayersInRoom(db, room)
 
 		if (players && players.length > 2) {
 			// Check if game has already started
@@ -34,6 +34,8 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 					await deletePlayer(db, room, players[i].name)
 					await insertPlayer(db, room, players[i].name, i === 0)
 				}
+
+				players = await listPlayersInRoom(db, room)
 			}
 
 			// Get all words

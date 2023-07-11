@@ -4,13 +4,14 @@ import { NotificationContext, NotificationSource } from '../../context/notificat
 import { RoomContext } from '../../context/room'
 import './room-settings.css'
 import Header from '../../components/header/header'
-import { faPlay, faRotateLeft, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faCrown, faPlay, faRotateLeft, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Button from '../../components/button/button'
 import Action from '../../components/action/action'
 import WordLists from '../../components/wordlists/wordlists'
 import { isAxiosError } from 'axios'
 import { createGMApi } from '../../api'
 import useLocalStorage from 'use-local-storage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomSettings() {
 	const navigate = useNavigate()
@@ -75,7 +76,9 @@ export default function RoomSettings() {
 	return (
 		<div className="room-settings">
 			<Header
-				title="Room settings"
+				className="with-icon"
+				title="GM settings"
+				leftActions={<FontAwesomeIcon icon={faCrown} size="lg" />}
 				rightActions={<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
 			/>
 			<div className="gm-actions">

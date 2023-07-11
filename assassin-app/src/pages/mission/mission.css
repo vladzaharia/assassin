@@ -18,9 +18,17 @@
 
 .mission-modal .confirm {
 	padding: 0 1rem;
+	text-align: center;
 }
 
 .mission-modal .words {
+	margin: 2rem 0;
+}
+
+.mission-modal .button-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	margin: 2rem 0;
 }
 

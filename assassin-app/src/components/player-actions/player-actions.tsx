@@ -1,5 +1,5 @@
 import { IconDefinition, faUserSecret } from '@fortawesome/pro-regular-svg-icons'
-import { faCog } from '@fortawesome/pro-solid-svg-icons'
+import { faCrown } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
@@ -44,40 +44,46 @@ export default function PlayerActions() {
 	const roomStatus = roomContext?.room
 
 	const isPlaying = roomStatus?.status === 'started' && roomStatus?.players.some((p) => p.name === name)
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const player = roomStatus!.players.filter((p) => p.name === name)
 	const isGM = roomContext?.playerIsGM
 
 	return isPlaying || isGM ? (
 		<div className="player-actions">
 			{isPlaying ? (
-				<PlayerAction
-					key="mission"
-					className="primary"
-					text="Retrieve mission"
-					icon={faUserSecret}
-					destination="mission"
-					popoverProps={{
-						title: 'Retrieve Mission',
-						description: (
-							<>
-								<strong>The game has started!</strong> <br />
-								<br />
-								Click here to retrieve your mission and play the game!
-							</>
-						),
-						color: 'primary',
-						icon: faCog,
-					}}
-				/>
+				player.length > 0 && player[0].status === 'eliminated' ? (
+					<span className="eliminated">You have been eliminated!</span>
+				) : (
+					<PlayerAction
+						key="mission"
+						className="primary"
+						text="Retrieve mission"
+						icon={faUserSecret}
+						destination="mission"
+						popoverProps={{
+							title: 'Retrieve Mission',
+							description: (
+								<>
+									<strong>The game has started!</strong> <br />
+									<br />
+									Click here to retrieve your mission and play the game!
+								</>
+							),
+							color: 'primary',
+							icon: faUserSecret,
+						}}
+					/>
+				)
 			) : undefined}
 			{isGM ? (
 				<PlayerAction
 					key="gm"
 					className="blue"
-					text="Room settings"
-					icon={faCog}
+					text="GM settings"
+					icon={faCrown}
 					destination="settings"
 					popoverProps={{
-						title: 'Room Settings',
+						title: 'GM settings',
 						description: (
 							<>
 								Congratulations, you are the GM! <br />
@@ -85,7 +91,7 @@ export default function PlayerActions() {
 							</>
 						),
 						color: 'blue',
-						icon: faCog,
+						icon: faCrown,
 					}}
 				/>
 			) : undefined}

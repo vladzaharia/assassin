@@ -11,37 +11,11 @@ import './room.css'
 import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Room() {
-	// const errorContext = useContext(ErrorContext)
 	const room = useLoaderData() as RoomResponse
-	// const [playerInfo, setPlayerInfo] = useState<PlayerResponse | undefined>(undefined)
 	const [name] = useLocalStorage<string>('name', '')
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 	const location = useLocation()
-
-	// const playerApi = createPlayerApi()
-
-	// const getPlayer = async () => {
-	// 	// Reset data
-	// 	setPlayerInfo(undefined)
-
-	// 	const getPlayerResponse = await playerApi.getPlayer(room || '', name)
-
-	// 	if (getPlayerResponse.status === 404) {
-	// 		return errorContext?.setError('Player not found!', 'player')
-	// 	}
-
-	// 	const json = getPlayerResponse.data
-	// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	// 	const jsonAsAny = json as any
-
-	// 	if (jsonAsAny.message) {
-	// 		errorContext?.setError(jsonAsAny.message, 'player')
-	// 	} else {
-	// 		setPlayerInfo(json)
-	// 		errorContext?.setError(undefined, 'player')
-	// 	}
-	// }
 
 	useEffect(() => {
 		// Keep room name in session storage
@@ -93,26 +67,6 @@ export default function Room() {
 						<Outlet />
 					</motion.div>
 				</AnimatePresence>
-
-				{/* {playerInfo ? (
-					<div className="info">
-						<div className="target">
-							<label htmlFor="target">Your target is...</label>
-							<span id="target">
-								<FontAwesomeIcon icon={faUserSecret} color="#f26671" size="xl" /> {playerInfo.target}
-							</span>
-						</div>
-						<div className="words">
-							<label htmlFor="words">Your words are...</label>
-							<span id="words">
-								<FontAwesomeIcon icon={faCrosshairs} color="#f26671" size="lg" />
-								Check your card(s)!
-							</span>
-						</div>
-					</div>
-				) : (
-					<Instructions />
-				)} */}
 			</div>
 		</RoomContext.Provider>
 	)
