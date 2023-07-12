@@ -1,0 +1,22 @@
+@room = test
+@name = Vlad
+
+###
+# Get player
+GET {{host}}/api/room/{{room}}/player/{{name}}
+X-Assassin-User: {{name}}
+
+###
+# Add player to room
+PUT {{host}}/api/room/{{room}}/player/{{name}}
+X-Assassin-User: {{name}}
+
+###
+# Eliminate player's target.
+POST {{host}}/api/room/{{room}}/player/{{name}}/eliminate
+X-Assassin-User: {{name}}
+
+###
+# Remove player from room
+DELETE {{host}}/api/room/{{room}}/player/{{name}}
+X-Assassin-User: {{name}}

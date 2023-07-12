@@ -1,0 +1,26 @@
+@name = test-list
+
+###
+# List wordlists
+GET {{host}}/api/wordlist
+
+###
+# Get wordlist
+GET {{host}}/api/wordlist/{{name}}
+
+###
+# Add wordlist
+# @prompt description The description of this wordlist.
+# @prompt icon Icon to use for this wordlist.
+PUT {{host}}/api/wordlist/{{name}}
+Authorization: Bearer {{$dotenv %token}}
+
+{
+	"description": "{{description}}",
+	"icon": "{{icon}}"
+}
+
+###
+# Delete wordlist
+DELETE {{host}}/api/wordlist/{{name}}
+Authorization: Bearer {{$dotenv %token}}

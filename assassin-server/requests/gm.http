@@ -1,0 +1,22 @@
+@room = test
+
+###
+# Reset room
+POST {{host}}/api/room/{{room}}/reset
+Authorization: Bearer {{$dotenv %token}}
+
+###
+# Start room
+POST {{host}}/api/room/{{room}}/start
+Authorization: Bearer {{$dotenv %token}}
+
+###
+# Randomly assign GM to one player
+POST {{host}}/api/room/{{room}}/gm
+Authorization: Bearer {{$dotenv %token}}
+
+###
+# Assign specific player as GM
+# @prompt name Player's name.
+POST {{host}}/api/room/{{room}}/gm/{{name}}
+Authorization: Bearer {{$dotenv %token}}

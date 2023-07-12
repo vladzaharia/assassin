@@ -86,6 +86,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			}
 
 			if (!result && match.authTypes.includes('jwt')) {
+				console.log(`JWT Auth`)
 				return jwt({ secret })(c, next)
 			}
 		} else if (match.authTypes.includes('jwt')) {
