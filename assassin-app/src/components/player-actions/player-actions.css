@@ -6,24 +6,113 @@
 }
 
 .player-actions .eliminated {
+	background-color: var(--primary-light);
+	color: var(--primary);
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	border-bottom: 0.0625rem solid var(--border);
+	border-bottom: 0.0625rem solid var(--primary-dark);
 	padding: 1.5rem;
 	text-align: center;
 	justify-content: center;
+	gap: 0.5rem;
+}
+
+.player-actions .eliminated .title {
 	font-size: 1.1rem;
-	font-weight: 400;
+	font-weight: 500;
+}
+
+.player-actions .eliminated .description {
+	font-size: 0.85rem;
 }
 
 .player-actions .player-action {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
 	border-bottom: 0.0625rem solid var(--border);
 	padding: 1rem;
 	padding-right: 0.75rem;
+	gap: 1rem;
+}
+
+.player-actions .player-action:hover button {
+	background-color: var(--background);
+}
+
+.player-actions .player-action:hover {
+	color: var(--background) !important;
+}
+
+.player-actions .player-action.primary {
+	background-color: var(--primary-light);
+	color: var(--primary);
+	border-bottom: none;
+}
+
+.player-actions .player-action.primary:hover {
+	background-color: var(--primary-dark);
+}
+
+.player-actions .player-action.primary:hover button {
+	color: var(--primary-dark);
+}
+
+.player-actions .player-action.blue {
+	background-color: var(--blue-light);
+	color: var(--blue);
+	border-bottom: none;
+}
+
+.player-actions .player-action.blue:hover {
+	background-color: var(--blue-dark);
+}
+
+.player-actions .player-action.blue:hover button {
+	color: var(--blue-dark);
+}
+
+.player-actions .player-action.green {
+	background-color: var(--green-light);
+	color: var(--green);
+	border-bottom: none;
+}
+
+.player-actions .player-action.green:hover {
+	background-color: var(--green-dark);
+}
+
+.player-actions .player-action.green:hover button {
+	color: var(--green-dark);
+}
+
+.player-actions .player-action.purple {
+	background-color: var(--purple-light);
+	color: var(--purple);
+	border-bottom: none;
+}
+
+.player-actions .player-action.purple:hover {
+	background-color: var(--purple-dark);
+}
+
+.player-actions .player-action.purple:hover button {
+	color: var(--purple-dark);
+}
+
+.player-actions .player-action.orange {
+	background-color: var(--orange-light);
+	color: var(--orange);
+	border-bottom: none;
+}
+
+.player-actions .player-action.orange:hover {
+	background-color: var(--orange-dark);
+}
+
+.player-actions .player-action.orange:hover button {
+	color: var(--orange-dark);
 }
 
 .player-actions .player-action span {

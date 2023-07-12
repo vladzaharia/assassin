@@ -2,9 +2,10 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import { faCheck, faCrosshairs, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { RoomContext } from '../../context/room'
 import './instructions.css'
+import { useNavigate } from 'react-router-dom'
 
 interface StepProps {
 	icon: IconDefinition
@@ -30,6 +31,17 @@ function Step({ icon, color, title, description }: StepProps) {
 export default function Instructions() {
 	const roomContext = useContext(RoomContext)
 	const usesWords = roomContext?.room?.usesWords
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		const room = roomContext?.room
+
+		if (room?.status === 'completed') {
+			navigate(`/room/${room?.name}/complete`)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [roomContext?.room])
 
 	return (
 		<div className="instructions">

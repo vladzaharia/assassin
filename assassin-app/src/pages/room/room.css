@@ -10,57 +10,11 @@
 	overflow-y: overlay;
 }
 
-/*
-.room-content .info {
-	flex: 1 1 auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
-.room-content .target,
-.room-content .words {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding-bottom: 2.5rem;
-}
-
-.room-content .words span {
-	font-size: 1.5rem;
-	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
-}
-
-.target label,
-.words label {
-	font-size: 1.2rem;
-	margin-bottom: 0.5rem;
-}
-
-.target span,
-.words span {
-	display: block;
-	font-size: 2rem;
-	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
-	font-weight: 700;
-}
-
-.room-content svg {
-	margin-right: 0.5rem;
-} */
-
 @media only screen and (max-width: 50rem) {
 	.room-content {
 		border-left: none;
 		border-top: 0.0625rem solid var(--border);
 		margin-left: 0;
 		width: 100%;
-	}
-
-	.room-content .target,
-	.room-content .words {
-		padding-bottom: 1rem;
 	}
 }

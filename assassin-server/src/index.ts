@@ -131,6 +131,12 @@ app.get(
 	})
 )
 app.get(
+	'/room/:roomId/complete',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
 	'/*',
 	serveStatic({
 		root: './app',

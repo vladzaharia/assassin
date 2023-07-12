@@ -76,10 +76,10 @@ export default function RoomSettings() {
 	return (
 		<div className="room-settings">
 			<Header
-				className="with-icon"
-				title="GM settings"
+				className="blue corner-right with-icon"
+				title="GM Settings"
 				leftActions={<FontAwesomeIcon icon={faCrown} size="lg" />}
-				rightActions={<Button iconProps={{ icon: faXmark }} className="primary" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
+				rightActions={<Button iconProps={{ icon: faXmark }} className="blue" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
 			/>
 			<div className="gm-actions">
 				<Action
@@ -91,7 +91,7 @@ export default function RoomSettings() {
 					}
 				>
 					<Button
-						className={getColor('blue', 'gm-reset')}
+						className={getColor('primary', 'gm-reset')}
 						iconProps={{
 							icon: faRotateLeft,
 						}}

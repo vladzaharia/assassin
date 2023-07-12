@@ -178,7 +178,7 @@ export default function PlayerList() {
 
 	return (
 		<div className="player-list" key="list">
-			<Header title="Player list" bottomBorder={false} rightActions={<JoinLeaveButton />} key="header" />
+			<Header title="Player List" bottomBorder={false} rightActions={<JoinLeaveButton />} key="header" />
 
 			{roomStatus?.players && (
 				<AnimatePresence mode="sync" key="players-animate">

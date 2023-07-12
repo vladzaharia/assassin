@@ -16,11 +16,8 @@
 	width: 40%;
 }
 
-.mission-modal .words .clickable {
-	cursor: pointer;
-}
-
 .words .word {
+	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 1.5rem;
 	font-weight: 500;
 	flex: 1 1 auto;

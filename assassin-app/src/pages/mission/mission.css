@@ -1,7 +1,9 @@
 .mission .target {
+	font-family: 'Special Elite', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 1.5rem;
 	font-weight: 500;
 	padding: 0.5rem;
+	padding-bottom: 0;
 }
 
 .mission-modal {
@@ -13,7 +15,7 @@
 	max-height: 50vh;
 	background-color: var(--background);
 	border: 0.0625rem solid var(--border);
-	overflow-y: auto;
+	overflow-y: overlay;
 }
 
 .mission-modal .confirm {

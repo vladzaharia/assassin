@@ -34,13 +34,13 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 	const getStatusLabel = () => {
 		switch (roomStatus?.status) {
 			case 'completed':
-				return 'Game completed!'
+				return 'Game Completed!'
 			case 'started':
-				return 'Game started!'
+				return 'Game Started!'
 			case 'ready':
-				return 'Ready to start!'
+				return 'Ready to Start!'
 			case 'not-ready':
-				return 'Not ready'
+				return 'Not Ready'
 			default:
 				return 'Unknown'
 		}
@@ -51,10 +51,14 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 
 		switch (roomStatus?.status) {
 			case 'completed':
-				return 'The game has finished! Ask the GM to reset the room to play again.'
+				return roomContext?.playerIsGM ? (
+					<>Go into GM Settings and start the game again or reset the room.</>
+				) : (
+					<>Ask the GM to start the game again.</>
+				)
 			case 'started':
 				return roomStatus?.players.some((p) => p.name === name) ? (
-					'The game has started! Look your target up and eliminate them!'
+					'The game has started! Retreive your mission up and eliminate your target!'
 				) : (
 					<>
 						<strong>The game has already started.</strong>
@@ -63,7 +67,7 @@ export default function RoomStatus({ showText, showPopover }: { showText?: boole
 					</>
 				)
 			case 'ready':
-				return 'The game is ready to start! Ask the GM to start the game.'
+				return roomContext?.playerIsGM ? <>Go into GM Settings and start the game.</> : <>Ask the GM to start the game.</>
 			case 'not-ready':
 				return (
 					<>

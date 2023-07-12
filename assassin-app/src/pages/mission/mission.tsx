@@ -86,7 +86,7 @@ export default function Mission() {
 				<>
 					<Header
 						title="Mission"
-						className="with-icon"
+						className="primary corner-right with-icon"
 						leftActions={<FontAwesomeIcon icon={faUserSecret} size="lg" />}
 						rightActions={
 							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
@@ -102,7 +102,7 @@ export default function Mission() {
 					>
 						<span className="target">{player.target}</span>
 					</Action>
-					<Action text="Record elimination" description="Click this button once you have eliminated your target.">
+					<Action text="Record Elimination" description="Click this button once you have eliminated your target.">
 						<Button
 							className={showNotification && notification?.source === 'eliminate' ? notification?.notificationType : 'green'}
 							iconProps={{ icon: faCrosshairs }}
@@ -119,7 +119,7 @@ export default function Mission() {
 			<Modal container={modalContainer.current} open={showModal} onClose={() => setShowModal(false)}>
 				<div className="mission-modal">
 					<Header
-						title="Confirm elimination"
+						title="Confirm Elimination"
 						className="with-icon"
 						leftActions={<FontAwesomeIcon icon={faCrosshairs} size="lg" />}
 						rightActions={<Button className="primary" onClick={() => setShowModal(false)} iconProps={{ icon: faXmark }} />}
@@ -127,9 +127,11 @@ export default function Mission() {
 					<div className="confirm">
 						<p>
 							Congratulations on eliminating <strong>{player.target}</strong>!
+						</p>
+						<p>
 							{usesWords
-								? ' Choose the word you used to eliminate them to confirm your elimination.'
-								: ' Click the button to confirm your elimination.'}
+								? ' Choose the word you used to eliminate them to confirm your elimination:'
+								: ' Click the button to confirm your elimination:'}
 						</p>
 					</div>
 					{usesWords ? (
@@ -137,7 +139,7 @@ export default function Mission() {
 					) : (
 						<div className="button-wrapper">
 							<Button
-								text="Confirm elimination"
+								text="Confirm Elimination"
 								className="green"
 								iconProps={{ icon: faCheck, size: 'xl' }}
 								onClick={() => eliminatePlayer()}

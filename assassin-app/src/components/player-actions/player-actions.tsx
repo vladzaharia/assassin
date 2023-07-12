@@ -1,5 +1,5 @@
-import { IconDefinition, faUserSecret } from '@fortawesome/pro-regular-svg-icons'
-import { faCrown } from '@fortawesome/pro-solid-svg-icons'
+import { IconDefinition } from '@fortawesome/pro-regular-svg-icons'
+import { faCrown, faUserSecret } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
@@ -17,22 +17,24 @@ function PlayerAction({ text, icon, className, destination, ...buttonProps }: Pl
 	const location = useLocation()
 
 	return (
-		<div className="player-action">
-			<span className="text">{text}</span>
+		<div
+			className={`player-action clickable ${className || ''}`}
+			onClick={() => {
+				if (!location.pathname.includes(destination)) {
+					navigate(destination)
+				} else {
+					navigate('..', { relative: 'path' })
+				}
+			}}
+		>
 			<Button
 				className={className}
 				iconProps={{
 					icon: icon,
 				}}
-				onClick={() => {
-					if (!location.pathname.includes(destination)) {
-						navigate(destination)
-					} else {
-						navigate('..', { relative: 'path' })
-					}
-				}}
 				{...buttonProps}
 			/>
+			<span className="text">{text}</span>
 		</div>
 	)
 }
@@ -52,49 +54,15 @@ export default function PlayerActions() {
 		<div className="player-actions">
 			{isPlaying ? (
 				player.length > 0 && player[0].status === 'eliminated' ? (
-					<span className="eliminated">You have been eliminated!</span>
+					<div className="eliminated">
+						<span className="title">You have been eliminated!</span>
+						<span className="description">Wait until the game ends to play again.</span>
+					</div>
 				) : (
-					<PlayerAction
-						key="mission"
-						className="primary"
-						text="Retrieve mission"
-						icon={faUserSecret}
-						destination="mission"
-						popoverProps={{
-							title: 'Retrieve Mission',
-							description: (
-								<>
-									<strong>The game has started!</strong> <br />
-									<br />
-									Click here to retrieve your mission and play the game!
-								</>
-							),
-							color: 'primary',
-							icon: faUserSecret,
-						}}
-					/>
+					<PlayerAction key="mission" className="primary" text="Mission" icon={faUserSecret} destination="mission" />
 				)
 			) : undefined}
-			{isGM ? (
-				<PlayerAction
-					key="gm"
-					className="blue"
-					text="GM settings"
-					icon={faCrown}
-					destination="settings"
-					popoverProps={{
-						title: 'GM settings',
-						description: (
-							<>
-								Congratulations, you are the GM! <br />
-								<br /> <strong>Click here to set room settings and start the game.</strong>
-							</>
-						),
-						color: 'blue',
-						icon: faCrown,
-					}}
-				/>
-			) : undefined}
+			{isGM ? <PlayerAction key="gm" className="blue" text="GM Settings" icon={faCrown} destination="settings" /> : undefined}
 		</div>
 	) : null
 }

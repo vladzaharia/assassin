@@ -3,8 +3,10 @@ import * as ReactDOM from 'react-dom/client'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { createPlayerApi, createRoomApi } from './api'
+import App from './components/app/app'
 import ContentBox from './components/content-box/content-box'
 import Admin from './pages/admin/admin'
+import Complete from './pages/complete/complete'
 import { RouterErrorBoundary } from './pages/error/error'
 import Instructions from './pages/instructions/instructions'
 import Mission from './pages/mission/mission'
@@ -13,7 +15,6 @@ import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
 /* Global styles */
-import App from './components/app/app'
 import './styles'
 
 const oidcConfig: AuthProviderProps = {
@@ -77,6 +78,11 @@ const router = createBrowserRouter([
 							}
 						},
 						element: <Mission />,
+					},
+					{
+						path: 'complete',
+						id: 'complete',
+						element: <Complete />,
 					},
 				],
 			},

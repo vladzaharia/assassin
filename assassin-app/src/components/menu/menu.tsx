@@ -24,7 +24,7 @@ export default function Menu({ headerProps: header, children }: MenuProps) {
 				{header && (
 					<Header
 						title={header.title}
-						className="center"
+						className="center corner-left"
 						key="header"
 						leftActions={
 							header.onClick ? (
