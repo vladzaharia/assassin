@@ -135,7 +135,7 @@ export default function Mission() {
 						</p>
 					</div>
 					{usesWords ? (
-						<Words words={player.words} onClick={eliminatePlayer} />
+						<Words words={player.words} onWordClick={eliminatePlayer} />
 					) : (
 						<div className="button-wrapper">
 							<Button

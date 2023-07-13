@@ -30,7 +30,7 @@ function Word({ word, disabled, onClick }: WordProps) {
 	)
 }
 
-export default function Words({ words, onClick }: { words?: string[]; onClick?: (word: string) => void }) {
+export default function Words({ words, onWordClick }: { words?: string[]; onWordClick?: (word: string) => void }) {
 	return (
 		<div className="words">
 			{words ? (
@@ -38,11 +38,11 @@ export default function Words({ words, onClick }: { words?: string[]; onClick?: 
 					<Word
 						key={w}
 						word={w}
-						disabled={!onClick}
+						disabled={!onWordClick}
 						onClick={
-							onClick
+							onWordClick
 								? () => {
-										onClick(w)
+										onWordClick(w)
 								  }
 								: undefined
 						}
