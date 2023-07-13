@@ -1,22 +1,27 @@
-@room = test
-@name = Vlad
-
 ###
 # Get player
+# @prompt room Name of room
+# @prompt name Name of player
 GET {{host}}/api/room/{{room}}/player/{{name}}
 X-Assassin-User: {{name}}
 
 ###
 # Add player to room
+# @prompt room Name of room
+# @prompt name Name of player
 PUT {{host}}/api/room/{{room}}/player/{{name}}
 X-Assassin-User: {{name}}
 
 ###
 # Eliminate player's target.
+# @prompt room Name of room
+# @prompt name Name of player
 POST {{host}}/api/room/{{room}}/player/{{name}}/eliminate
 X-Assassin-User: {{name}}
 
 ###
 # Remove player from room
+# @prompt room Name of room
+# @prompt name Name of player
 DELETE {{host}}/api/room/{{room}}/player/{{name}}
 X-Assassin-User: {{name}}

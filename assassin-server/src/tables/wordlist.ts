@@ -34,6 +34,26 @@ export async function insertWordList(db: D1Database, name: string, description: 
 		.execute()
 }
 
+export async function setDescription(db: D1Database, name: string, description: string) {
+	return await getKyselyDb(db)
+		.updateTable('wordlist')
+		.set({
+			description,
+		})
+		.where('name', '=', name)
+		.execute()
+}
+
+export async function setIcon(db: D1Database, name: string, icon: string) {
+	return await getKyselyDb(db)
+		.updateTable('wordlist')
+		.set({
+			icon,
+		})
+		.where('name', '=', name)
+		.execute()
+}
+
 export async function deleteWordList(db: D1Database, name: string) {
 	return await getKyselyDb(db).deleteFrom('wordlist').where('name', '=', name).execute()
 }

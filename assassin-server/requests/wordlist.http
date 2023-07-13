@@ -1,19 +1,19 @@
-@name = test-list
-
 ###
 # List wordlists
 GET {{host}}/api/wordlist
 
 ###
 # Get wordlist
-GET {{host}}/api/wordlist/{{name}}
+# @prompt wordlist Name of wordlist
+GET {{host}}/api/wordlist/{{wordlist}}
 
 ###
 # Add wordlist
-# @prompt description The description of this wordlist.
-# @prompt icon Icon to use for this wordlist.
-PUT {{host}}/api/wordlist/{{name}}
-Authorization: Bearer {{$dotenv %token}}
+# @prompt wordlist Name of wordlist
+# @prompt description The description of this wordlist
+# @prompt icon Icon to use for this wordlist
+PUT {{host}}/api/wordlist/{{wordlist}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
 	"description": "{{description}}",
@@ -21,6 +21,29 @@ Authorization: Bearer {{$dotenv %token}}
 }
 
 ###
+# Update wordlist description
+# @prompt wordlist Name of wordlist
+# @prompt description The description of this wordlist
+PATCH {{host}}/api/wordlist/{{wordlist}}
+Authorization: Bearer {{$processEnv %token}}
+
+{
+	"description": "{{description}}"
+}
+
+###
+# Update wordlist icon
+# @prompt wordlist Name of wordlist
+# @prompt icon Icon to use for this wordlist
+PATCH {{host}}/api/wordlist/{{wordlist}}
+Authorization: Bearer {{$processEnv %token}}
+
+{
+	"icon": "{{icon}}"
+}
+
+###
 # Delete wordlist
-DELETE {{host}}/api/wordlist/{{name}}
-Authorization: Bearer {{$dotenv %token}}
+# @prompt wordlist Name of wordlist
+DELETE {{host}}/api/wordlist/{{wordlist}}
+Authorization: Bearer {{$processEnv %token}}

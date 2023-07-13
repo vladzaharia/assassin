@@ -336,13 +336,13 @@ paths:
               schema:
                 type: object
                 properties:
-                  wordlists:
+                  wordLists:
                     type: array
                     items:
                       $ref: '#/components/schemas/WordlistName'
                     example: ['card-assassins-poison', 'card-assassins-dagger', 'pokemon', 'ptcs']
                 required:
-                  - wordlists
+                  - wordLists
         500:
           $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}:
@@ -383,6 +383,26 @@ paths:
           $ref: '#/components/responses/Success'
         400:
           $ref: '#/components/responses/WordlistExists'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      summary: Update wordlist
+      description: Update wordlist's properties.
+      operationId: patchWordList
+      tags:
+        - Wordlist
+        - Admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateWordlist'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -522,7 +542,7 @@ paths:
                   items:
                     type: string
                     example: Vlad
-                wordlists:
+                wordLists:
                   $ref: '#/components/schemas/WordlistArray'
       responses:
         200:
@@ -611,6 +631,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WordlistBody'
+    UpdateWordlist:
+      description: Body for updating wordlists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateWordlistBody'
     WordlistWords:
       description: Body for adding words to wordlists.
       content:
@@ -925,17 +951,28 @@ components:
       example: ['card-poison', 'card-dagger', 'pokemon']
       items:
         $ref: '#/components/schemas/Word'
+    WordlistDescription:
+      type: string
+      description: Description to use when showing this word list to admins.
+      example: This is a default word list provided by the 'Card Assassins' game.
+    WordlistIcon:
+      type: string
+      description: FontAwesome icon class to use, if set. Do **not** include `fa-`
+      example: plus
+    UpdateWordlistBody:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/WordlistDescription'
+        icon:
+          $ref: '#/components/schemas/WordlistIcon'
     WordlistBody:
       type: object
       properties:
         description:
-          type: string
-          description: Description to use when showing this word list to admins.
-          example: This is a default word list provided by the 'Card Assassins' game.
+          $ref: '#/components/schemas/WordlistDescription'
         icon:
-          type: string
-          description: FontAwesome icon class to use, if set. Do **not** include `fa-`
-          example: plus
+          $ref: '#/components/schemas/WordlistIcon'
       required:
         - description
     WordlistName:

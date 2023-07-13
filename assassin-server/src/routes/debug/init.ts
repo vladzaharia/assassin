@@ -8,14 +8,14 @@ import { createWordListTable, insertWordList } from '../../tables/wordlist'
 interface InitializeBody {
 	room?: string
 	players?: string[]
-	wordlists?: string[]
+	wordLists?: string[]
 }
 
 export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 
-		const { room, players, wordlists } = await c.req.json<InitializeBody>()
+		const { room, players, wordLists } = await c.req.json<InitializeBody>()
 
 		// Create D1 tables if needed
 		await createRoomsTable(db)
@@ -41,9 +41,9 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			}
 		}
 
-		if (wordlists && wordlists.length > 0) {
+		if (wordLists && wordLists.length > 0) {
 			//#region test-list
-			if (wordlists?.includes('test-list')) {
+			if (wordLists?.includes('test-list')) {
 				console.log('Adding test-list wordlist')
 				await insertWordList(db, 'test-list', 'This is a list of test words to use.')
 				const words = ['test', 'words', 'go', 'here', 'more', 'also', 'foo', 'bar', 'baz', 'foobar', 'foobaz', 'barbaz']
@@ -52,7 +52,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region card-poison
-			if (wordlists?.includes('card-poison')) {
+			if (wordLists?.includes('card-poison')) {
 				console.log('Adding card-poison wordlist')
 
 				await insertWordList(db, 'card-poison', '"Poison" wordlist from the Card Assassins game.', 'flask-round-poison')
@@ -186,7 +186,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region card-dagger
-			if (wordlists?.includes('card-dagger')) {
+			if (wordLists?.includes('card-dagger')) {
 				console.log('Adding card-dagger wordlist')
 
 				await insertWordList(db, 'card-dagger', '"Dagger" wordlist from the Card Assassins game.', 'dagger')
@@ -320,7 +320,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region team-galactic
-			if (wordlists?.includes('team-galactic')) {
+			if (wordLists?.includes('team-galactic')) {
 				console.log('Adding team-galactic wordlist')
 
 				await insertWordList(db, 'team-galactic', 'Words for TPCi Team Galactic.', 'stars')
@@ -330,7 +330,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region team-green
-			if (wordlists?.includes('team-green')) {
+			if (wordLists?.includes('team-green')) {
 				console.log('Adding team-green wordlist')
 
 				await insertWordList(db, 'team-green', 'Words for Azure Monitor Green Team.', 'chart-line-up')
@@ -340,7 +340,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region technology
-			if (wordlists?.includes('technology')) {
+			if (wordLists?.includes('technology')) {
 				console.log('Adding technology wordlist')
 
 				await insertWordList(db, 'technology', 'General technology terms and concepts.', 'computer-classic')
@@ -350,7 +350,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region countries
-			if (wordlists?.includes('countries')) {
+			if (wordLists?.includes('countries')) {
 				console.log('Adding countries wordlist')
 
 				await insertWordList(db, 'countries', 'Names of countries around the world.', 'earth-americas')
@@ -575,7 +575,7 @@ export const InitializeDb = async (c: Context<{ Bindings: Bindings }>) => {
 			//#endregion
 
 			//#region pokemon
-			if (wordlists?.includes('pokemon')) {
+			if (wordLists?.includes('pokemon')) {
 				console.log('Adding pokemon wordlist')
 
 				await insertWordList(db, 'pokemon', 'Names of Pokémon from across generations.', 'circle-half-stroke')

@@ -1,63 +1,68 @@
-@room = test
-
 ###
 # List rooms
 GET {{host}}/api/room/
 
 ###
 # Get room
+# @prompt room Name of room
 GET {{host}}/api/room/{{room}}
 
 ###
 # Add room
+# @prompt room Name of room
 PUT {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
-    "usesWords": true
+	"usesWords": true
 }
 
 ###
 # Update room status
-# @prompt status Room status, one of "not-ready", "started", or "completed".
+# @prompt room Name of room
+# @prompt status Room status, one of "not-ready", "started", or "completed"
 PATCH {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
-    "status": {{status}}
+	"status": {{status}}
 }
 
 ###
 # Update whether the room uses words
-# @prompt usesWords Whether the room uses words, true or false.
+# @prompt room Name of room
+# @prompt usesWords Whether the room uses words, true or false
 PATCH {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
-    "usesWords": {{usesWords}}
+	"usesWords": {{usesWords}}
 }
 
 ###
 # Update room's wordlists
-# @prompt wordLists Wordlists, as comma-separated double-quoted strings.
+# @prompt room Name of room
+# @prompt wordLists Wordlists, as comma-separated double-quoted strings
 PATCH {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
-    "wordLists": [{{wordLists}}]
+	"wordLists": [{{wordLists}}]
 }
 
 ###
 # Update room's numWords
-# @prompt numWords Number of words to distribute on game start.
+# @prompt room Name of room
+# @prompt numWords Number of words to distribute on game start
 PATCH {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}
 
 {
-    "numWords": {{numWords}}
+	"numWords": {{numWords}}
 }
 
 ###
 # Delete room
+# @prompt room Name of room
 DELETE {{host}}/api/room/{{room}}
-Authorization: Bearer {{$dotenv %token}}
+Authorization: Bearer {{$processEnv %token}}

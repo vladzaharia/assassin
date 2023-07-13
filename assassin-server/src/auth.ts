@@ -5,7 +5,7 @@ import { Bindings } from './bindings'
 import { findRoomGM } from './tables/player'
 import { findRoom } from './tables/room'
 
-type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'DELETE'
+type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 type AuthType = 'gm' | 'player' | 'jwt'
 export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[] }[] = [
 	{
@@ -17,6 +17,11 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes
 		path: /room\/\w*$/,
 		methods: ['PUT', 'DELETE'],
 		authTypes: ['jwt'],
+	},
+	{
+		path: /room\/\w*$/,
+		methods: ['PATCH'],
+		authTypes: ['gm', 'jwt'],
 	},
 	{
 		path: /room\/\w*\/player\/\w*$/,
@@ -40,7 +45,7 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes
 	},
 	{
 		path: /wordlist\/\w*$/,
-		methods: ['PUT', 'DELETE'],
+		methods: ['PUT', 'DELETE', 'PATCH'],
 		authTypes: ['jwt'],
 	},
 	{

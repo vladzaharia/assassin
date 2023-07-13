@@ -27,6 +27,7 @@ import { AddWord } from './routes/wordlist/word/add'
 import { AddWords } from './routes/wordlist/word/addWords'
 import { DeleteWord } from './routes/wordlist/word/delete'
 import { DeleteWords } from './routes/wordlist/word/deleteWords'
+import { UpdateWordList } from './routes/wordlist/update'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -79,6 +80,7 @@ app.get('/api/wordlist/', ListWordLists)
 // Get/add/delete word lists
 app.get('/api/wordlist/:list', GetWordList)
 app.put('/api/wordlist/:list', AddWordList)
+app.patch('/api/wordlist/:list', UpdateWordList)
 app.delete('/api/wordlist/:list', DeleteWordList)
 
 // Add/delete words from word lists

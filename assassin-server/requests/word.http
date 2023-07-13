@@ -1,10 +1,9 @@
-@name = test-list
-
 ###
 # Add words to wordlist
-# @prompt words Comma-separated double-quoted words.
-PUT {{host}}/api/wordlist/{{name}}/words
-Authorization: Bearer {{$dotenv %token}}
+# @prompt wordlist Name of wordlist
+# @prompt words Words, as comma-separated double-quoted strings
+PUT {{host}}/api/wordlist/{{wordlist}}/words
+Authorization: Bearer {{$processEnv %token}}
 
 {
 	"words": [{{words}}]
@@ -12,9 +11,10 @@ Authorization: Bearer {{$dotenv %token}}
 
 ###
 # Delete words from wordlist
-# @prompt words Comma-separated double-quoted words.
-DELETE {{host}}/api/wordlist/{{name}}/words
-Authorization: Bearer {{$dotenv %token}}
+# @prompt wordlist Name of wordlist
+# @prompt words Words, as comma-separated double-quoted strings
+DELETE {{host}}/api/wordlist/{{wordlist}}/words
+Authorization: Bearer {{$processEnv %token}}
 
 {
 	"words": [{{words}}]
