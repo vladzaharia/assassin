@@ -1,11 +1,11 @@
 ###
 # Reset database
-PUT {{host}}/api/debug/reset
+PUT {{host}}/debug/reset
 Authorization: Bearer {{$processEnv %token}}
 
 ###
 # Initialize database with demo data
-PUT {{host}}/api/debug/init
+PUT {{host}}/debug/init
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -18,7 +18,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Initialize room and players
 # @prompt room Name of the room.
 # @prompt players Name of players, comma-separated and double-quoted.
-PUT {{host}}/api/debug/init
+PUT {{host}}/debug/init
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -30,7 +30,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Add wordlists
 # @prompt wordlists Name of wordlists, as comma-separated double-quoted strings.
 # Possible wordlists: "test-list", "card-poison", "card-dagger", "team-galactic", "team-green", "countries", "technology", "pokemon"
-PUT {{host}}/api/debug/init
+PUT {{host}}/debug/init
 Authorization: Bearer {{$processEnv %token}}
 
 {

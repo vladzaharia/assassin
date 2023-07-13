@@ -1,16 +1,16 @@
 ###
 # List rooms
-GET {{host}}/api/room/
+GET {{host}}/room/
 
 ###
 # Get room
 # @prompt room Name of room
-GET {{host}}/api/room/{{room}}
+GET {{host}}/room/{{room}}
 
 ###
 # Add room
 # @prompt room Name of room
-PUT {{host}}/api/room/{{room}}
+PUT {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -21,7 +21,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update room status
 # @prompt room Name of room
 # @prompt status Room status, one of "not-ready", "started", or "completed"
-PATCH {{host}}/api/room/{{room}}
+PATCH {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -32,7 +32,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update whether the room uses words
 # @prompt room Name of room
 # @prompt usesWords Whether the room uses words, true or false
-PATCH {{host}}/api/room/{{room}}
+PATCH {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -43,7 +43,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update room's wordlists
 # @prompt room Name of room
 # @prompt wordLists Wordlists, as comma-separated double-quoted strings
-PATCH {{host}}/api/room/{{room}}
+PATCH {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -54,7 +54,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update room's numWords
 # @prompt room Name of room
 # @prompt numWords Number of words to distribute on game start
-PATCH {{host}}/api/room/{{room}}
+PATCH {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -64,5 +64,5 @@ Authorization: Bearer {{$processEnv %token}}
 ###
 # Delete room
 # @prompt room Name of room
-DELETE {{host}}/api/room/{{room}}
+DELETE {{host}}/room/{{room}}
 Authorization: Bearer {{$processEnv %token}}

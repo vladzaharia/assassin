@@ -9,6 +9,9 @@ import PlayerList from '../../components/player-list/player-list'
 import { RoomContext } from '../../context/room'
 import './room.css'
 import { AnimatePresence, motion } from 'framer-motion'
+import Button from '../../components/button/button'
+import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
+import RoomStatus from '../../components/room-status/room-status'
 
 export default function Room() {
 	const room = useLoaderData() as RoomResponse
@@ -47,8 +50,16 @@ export default function Room() {
 			<Menu
 				headerProps={{
 					title: room.name,
-					onClick: () => navigate('/'),
-					status: true,
+					leftActions: (
+						<Button
+							className="primary"
+							onClick={() => navigate('/')}
+							iconProps={{
+								icon: faChevronLeft,
+							}}
+						/>
+					),
+					rightActions: <RoomStatus />,
 				}}
 			>
 				<PlayerActions key="actions" />

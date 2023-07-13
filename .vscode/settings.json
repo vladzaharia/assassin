@@ -2,11 +2,11 @@
 	"rest-client.environmentVariables": {
 		"$shared": {},
 		"local": {
-			"host": "http://localhost:8787",
+			"host": "http://localhost:8787/api",
 			"token": "ASSASSIN_TOKEN_LOCAL"
 		},
 		"prod": {
-			"host": "https://assassin.vlad.gg",
+			"host": "https://assassin.vlad.gg/api",
 			"token": "ASSASSIN_TOKEN_PROD"
 		}
 	},

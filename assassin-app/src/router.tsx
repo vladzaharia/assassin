@@ -2,20 +2,24 @@ import { StrictMode } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { createPlayerApi, createRoomApi } from './api'
 import App from './components/app/app'
 import ContentBox from './components/content-box/content-box'
 import Admin from './pages/admin/admin'
-import Complete from './pages/complete/complete'
+import Complete from './pages/room/complete/complete'
 import { RouterErrorBoundary } from './pages/error/error'
-import Instructions from './pages/instructions/instructions'
-import Mission from './pages/mission/mission'
-import RoomSettings from './pages/room-settings/room-settings'
+import Instructions from './pages/room/instructions/instructions'
+import Mission from './pages/room/mission/mission'
+import RoomSettings from './pages/room/settings/room-settings'
 import Room from './pages/room/room'
 import Welcome from './pages/welcome/welcome'
 
 /* Global styles */
 import './styles'
+import RoomLoader from './loaders/room'
+import PlayerLoader from './loaders/player'
+import RoomsLoader from './loaders/rooms'
+import WordlistLoader from './loaders/wordlist'
+import WordlistsLoader from './loaders/wordlists'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -45,12 +49,9 @@ const router = createBrowserRouter([
 				element: <RouterErrorBoundary />,
 			},
 			{
-				path: '/room/:room',
+				path: 'room/:room',
 				id: 'room',
-				loader: async ({ params }) => {
-					const roomApi = createRoomApi()
-					return (await roomApi.getRoom(params.room || '')).data
-				},
+				loader: RoomLoader,
 				element: <Room />,
 				children: [
 					{
@@ -66,17 +67,7 @@ const router = createBrowserRouter([
 					{
 						path: 'mission',
 						id: 'mission',
-						loader: async ({ params }) => {
-							try {
-								const name = localStorage.getItem('name')
-								if (name) {
-									const playerApi = createPlayerApi(name.replace(/"/gi, ''))
-									return (await playerApi.getPlayer(params.room || '', JSON.parse(name))).data
-								}
-							} catch {
-								return {}
-							}
-						},
+						loader: PlayerLoader,
 						element: <Mission />,
 					},
 					{
@@ -89,6 +80,37 @@ const router = createBrowserRouter([
 			{
 				path: 'admin',
 				element: <Admin />,
+				children: [
+					{
+						path: 'room',
+						id: 'admin-room-list',
+						loader: RoomsLoader,
+						element: <Instructions />,
+					},
+					{
+						path: 'room/:room',
+						id: 'admin-room',
+						loader: RoomLoader,
+						element: <Instructions />,
+					},
+					{
+						path: 'wordlist',
+						id: 'admin-wordlist-list',
+						loader: WordlistsLoader,
+						element: <Instructions />,
+					},
+					{
+						path: 'wordlist/:list',
+						id: 'admin-wordlist',
+						loader: WordlistLoader,
+						element: <Instructions />,
+					},
+					{
+						path: 'debug',
+						id: 'admin-debug',
+						element: <Instructions />,
+					},
+				],
 			},
 		],
 	},

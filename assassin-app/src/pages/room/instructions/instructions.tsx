@@ -3,7 +3,7 @@ import { faUserSecret } from '@fortawesome/pro-regular-svg-icons'
 import { faCheck, faCrosshairs, faRetweet, faTimer, faTrophyStar, faUserPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect } from 'react'
-import { RoomContext } from '../../context/room'
+import { RoomContext } from '../../../context/room'
 import './instructions.css'
 import { useNavigate } from 'react-router-dom'
 

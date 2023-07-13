@@ -109,6 +109,36 @@ app.get(
 	})
 )
 app.get(
+	'/admin/room',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/admin/room/:roomId',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/admin/wordlist',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/admin/wordlist/:listId',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
+	'/admin/debug',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
 	'/room/',
 	serveStatic({
 		path: './app/index.html',

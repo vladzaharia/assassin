@@ -1,24 +1,24 @@
 ###
 # Reset room
 # @prompt room Name of room
-POST {{host}}/api/room/{{room}}/reset
+POST {{host}}/room/{{room}}/reset
 Authorization: Bearer {{$processEnv %token}}
 
 ###
 # Start room
 # @prompt room Name of room
-POST {{host}}/api/room/{{room}}/start
+POST {{host}}/room/{{room}}/start
 Authorization: Bearer {{$processEnv %token}}
 
 ###
 # Randomly assign GM to one player
 # @prompt room Name of room
-POST {{host}}/api/room/{{room}}/gm
+POST {{host}}/room/{{room}}/gm
 Authorization: Bearer {{$processEnv %token}}
 
 ###
 # Assign specific player as GM
 # @prompt room Name of room
 # @prompt name Name of player
-POST {{host}}/api/room/{{room}}/gm/{{name}}
+POST {{host}}/room/{{room}}/gm/{{name}}
 Authorization: Bearer {{$processEnv %token}}

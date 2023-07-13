@@ -2,7 +2,7 @@
 # Add words to wordlist
 # @prompt wordlist Name of wordlist
 # @prompt words Words, as comma-separated double-quoted strings
-PUT {{host}}/api/wordlist/{{wordlist}}/words
+PUT {{host}}/wordlist/{{wordlist}}/words
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -13,7 +13,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Delete words from wordlist
 # @prompt wordlist Name of wordlist
 # @prompt words Words, as comma-separated double-quoted strings
-DELETE {{host}}/api/wordlist/{{wordlist}}/words
+DELETE {{host}}/wordlist/{{wordlist}}/words
 Authorization: Bearer {{$processEnv %token}}
 
 {

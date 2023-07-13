@@ -1,18 +1,18 @@
 ###
 # List wordlists
-GET {{host}}/api/wordlist
+GET {{host}}/wordlist
 
 ###
 # Get wordlist
 # @prompt wordlist Name of wordlist
-GET {{host}}/api/wordlist/{{wordlist}}
+GET {{host}}/wordlist/{{wordlist}}
 
 ###
 # Add wordlist
 # @prompt wordlist Name of wordlist
 # @prompt description The description of this wordlist
 # @prompt icon Icon to use for this wordlist
-PUT {{host}}/api/wordlist/{{wordlist}}
+PUT {{host}}/wordlist/{{wordlist}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -24,7 +24,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update wordlist description
 # @prompt wordlist Name of wordlist
 # @prompt description The description of this wordlist
-PATCH {{host}}/api/wordlist/{{wordlist}}
+PATCH {{host}}/wordlist/{{wordlist}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -35,7 +35,7 @@ Authorization: Bearer {{$processEnv %token}}
 # Update wordlist icon
 # @prompt wordlist Name of wordlist
 # @prompt icon Icon to use for this wordlist
-PATCH {{host}}/api/wordlist/{{wordlist}}
+PATCH {{host}}/wordlist/{{wordlist}}
 Authorization: Bearer {{$processEnv %token}}
 
 {
@@ -45,5 +45,5 @@ Authorization: Bearer {{$processEnv %token}}
 ###
 # Delete wordlist
 # @prompt wordlist Name of wordlist
-DELETE {{host}}/api/wordlist/{{wordlist}}
+DELETE {{host}}/wordlist/{{wordlist}}
 Authorization: Bearer {{$processEnv %token}}
