@@ -86,7 +86,7 @@ export default function Mission() {
 				<>
 					<Header
 						title="Mission"
-						className="primary corner-right with-icon"
+						className="primary corner-right"
 						leftActions={<FontAwesomeIcon icon={faUserSecret} size="lg" />}
 						rightActions={
 							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />

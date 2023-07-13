@@ -3,7 +3,7 @@ import './header.css'
 
 export interface HeaderProps {
 	className?: string
-	title?: string
+	title?: string | JSX.Element
 	leftActions?: ReactNode
 	rightActions?: ReactNode
 	bottomBorder?: boolean

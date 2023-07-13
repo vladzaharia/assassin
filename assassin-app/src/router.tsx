@@ -20,6 +20,12 @@ import PlayerLoader from './loaders/player'
 import RoomsLoader from './loaders/rooms'
 import WordlistLoader from './loaders/wordlist'
 import WordlistsLoader from './loaders/wordlists'
+import AdminHome from './pages/admin/home/home'
+import RoomsAdmin from './pages/admin/rooms/rooms'
+import RoomAdmin from './pages/admin/room/room'
+import WordlistsAdmin from './pages/admin/wordlists/wordlists'
+import WordlistAdmin from './pages/admin/wordlist/wordlist'
+import AdminDebug from './pages/admin/debug/debug'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -82,33 +88,38 @@ const router = createBrowserRouter([
 				element: <Admin />,
 				children: [
 					{
+						path: 'home',
+						id: 'admin-home',
+						element: <AdminHome />,
+					},
+					{
 						path: 'room',
 						id: 'admin-room-list',
 						loader: RoomsLoader,
-						element: <Instructions />,
+						element: <RoomsAdmin />,
 					},
 					{
 						path: 'room/:room',
 						id: 'admin-room',
 						loader: RoomLoader,
-						element: <Instructions />,
+						element: <RoomAdmin />,
 					},
 					{
 						path: 'wordlist',
 						id: 'admin-wordlist-list',
 						loader: WordlistsLoader,
-						element: <Instructions />,
+						element: <WordlistsAdmin />,
 					},
 					{
 						path: 'wordlist/:list',
 						id: 'admin-wordlist',
 						loader: WordlistLoader,
-						element: <Instructions />,
+						element: <WordlistAdmin />,
 					},
 					{
 						path: 'debug',
 						id: 'admin-debug',
-						element: <Instructions />,
+						element: <AdminDebug />,
 					},
 				],
 			},

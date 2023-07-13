@@ -67,7 +67,7 @@
 	gap: 0.25rem;
 }
 
-.header.with-icon h3 {
+.header h3:not(:first-child) {
 	margin-left: 0;
 }
 

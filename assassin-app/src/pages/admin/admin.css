@@ -10,6 +10,13 @@
 	overflow-y: overlay;
 }
 
+.admin-content .login {
+	display: flex;
+	align-self: center;
+	align-items: center;
+	height: 100%;
+}
+
 @media only screen and (max-width: 50rem) {
 	.admin-content {
 		border-left: none;

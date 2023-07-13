@@ -153,7 +153,7 @@ export default function RoomSettings() {
 	return (
 		<div className="room-settings">
 			<Header
-				className="blue corner-right with-icon"
+				className="blue corner-right"
 				title="GM Settings"
 				leftActions={<FontAwesomeIcon icon={faCrown} size="lg" />}
 				rightActions={<Button iconProps={{ icon: faXmark }} className="blue" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
