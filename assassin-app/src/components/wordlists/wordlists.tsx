@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from 'react'
-import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../context/room'
 import './wordlists.css'
-import { createGMApi, createWordlistApi } from '../../api'
-import { useRevalidator } from 'react-router-dom'
+import { createWordlistApi } from '../../api'
 import { isAxiosError } from 'axios'
 import { NotificationContext } from '../../context/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,14 +17,11 @@ import {
 	faFlag,
 	faFlask,
 	faFlaskRoundPoison,
-	faMessageMinus,
-	faMessagePlus,
 	faMessageText,
 	faPlanetRinged,
 	faStars,
 } from '@fortawesome/pro-solid-svg-icons'
-import { Card, CardContent, Switch } from '@mui/material'
-import Action from '../action/action'
+import { Card, CardContent } from '@mui/material'
 
 interface WordListProps {
 	name: string
@@ -84,25 +79,18 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 	)
 }
 
-export default function WordLists() {
-	const { revalidate } = useRevalidator()
-	const [name] = useLocalStorage('name', '')
-	const gmApi = createGMApi(name)
-
+export default function WordLists({ onWordListClick }: { onWordListClick: (name: string) => void }) {
+	const { setError } = useContext(NotificationContext)
 	const wordlistApi = createWordlistApi()
 	const [wordLists, setWordLists] = useState<Wordlist[]>([])
-
-	const { setError, setNotification } = useContext(NotificationContext)
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
 	const isPlaying = roomStatus?.status === 'started'
-	const [usesWords, setUsesWords] = useState<boolean>(roomStatus?.usesWords || false)
-	const [numWords, setNumWords] = useState<number>(roomStatus?.numWords || 0)
 
 	const getWordLists = async () => {
 		try {
-			const allWordLists = (await wordlistApi.listWordList()).data.wordlists
+			const allWordLists = (await wordlistApi.listWordList()).data.wordLists
 
 			const wordLists: Wordlist[] = []
 			for (const listName of allWordLists || []) {
@@ -119,124 +107,22 @@ export default function WordLists() {
 		}
 	}
 
-	const updateWordLists = async (name: string) => {
-		if (roomStatus?.status !== 'started') {
-			try {
-				if (roomStatus?.wordLists?.includes(name)) {
-					await gmApi.patchRoom(roomStatus.name, {
-						wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
-					})
-					setNotification({
-						message: `Removed ${name} successfully!`,
-						notificationType: 'success',
-						source: 'wordlist',
-						icon: faMessageMinus,
-					})
-				} else {
-					await gmApi.patchRoom(roomStatus?.name || '', {
-						wordLists: [...(roomStatus?.wordLists || []), name],
-					})
-					setNotification({
-						message: `Added ${name} successfully!`,
-						notificationType: 'success',
-						source: 'wordlist',
-						icon: faMessagePlus,
-					})
-				}
-
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'gm-reset')
-				} else {
-					setError('Something went wrong!', 'gm-reset')
-				}
-			}
-		}
-	}
-
-	const updateUsesWords = async () => {
-		if (roomStatus?.status !== 'started') {
-			try {
-				const newValue = !roomContext?.room?.usesWords
-				await gmApi.patchRoom(roomContext?.room?.name || '', {
-					usesWords: newValue,
-				})
-				setUsesWords(newValue)
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'wordlist')
-				} else {
-					setError('Something went wrong!', 'wordlist')
-				}
-			}
-		}
-	}
-
-	const updateNumWords = async (newValue: number) => {
-		if (roomStatus?.status !== 'started') {
-			try {
-				await gmApi.patchRoom(roomContext?.room?.name || '', {
-					numWords: newValue,
-				})
-				setNumWords(newValue)
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'wordlist')
-				} else {
-					setError('Something went wrong!', 'wordlist')
-				}
-			}
-		}
-	}
-
 	useEffect(() => {
 		getWordLists()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
-		<div className="wordlists-wrapper">
-			<h3>Word settings</h3>
-			<Action text="Use words?" description="Whether to use words for this room, or play standard assassin.">
-				<Switch
-					disabled={isPlaying}
-					checked={usesWords}
-					onChange={() => updateUsesWords()}
-					className={`toggle primary ${usesWords ? 'checked' : ''} ${isPlaying ? 'disabled' : ''}`}
+		<div className="wordlists">
+			{wordLists.map((wl) => (
+				<WordList
+					{...(wl as WordListProps)}
+					key={wl.name}
+					disabled={isPlaying || !roomStatus?.usesWords}
+					selected={roomStatus?.wordLists?.includes(wl.name) || false}
+					onClick={() => onWordListClick(wl.name)}
 				/>
-			</Action>
-			{roomStatus?.usesWords ? (
-				<>
-					<Action text="Number of words" description="Number of words to assign to each player on game start." className="num-words">
-						<div className="input">
-							<input
-								type="number"
-								name="numWords"
-								max={10}
-								min={1}
-								value={numWords}
-								onInput={(e) => updateNumWords(parseInt(e.currentTarget.value, 10))}
-							/>
-						</div>
-					</Action>
-					<Action text="Word lists" className="column">
-						<div className="wordlists">
-							{wordLists.map((wl) => (
-								<WordList
-									{...(wl as WordListProps)}
-									key={wl.name}
-									disabled={isPlaying || !roomStatus?.usesWords}
-									selected={roomStatus?.wordLists?.includes(wl.name) || false}
-									onClick={() => updateWordLists(wl.name)}
-								/>
-							))}
-						</div>
-					</Action>
-				</>
-			) : undefined}
+			))}
 		</div>
 	)
 }

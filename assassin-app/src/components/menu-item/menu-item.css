@@ -1,0 +1,107 @@
+.menu-item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-bottom: 0.0625rem solid var(--border);
+	padding: 1rem;
+	padding-right: 0.75rem;
+	gap: 1rem;
+}
+
+.menu-item:hover button {
+	background-color: var(--background);
+}
+
+.menu-item:hover {
+	color: var(--background) !important;
+}
+
+.menu-item.primary {
+	background-color: var(--primary-light);
+	color: var(--primary);
+	border-bottom: none;
+}
+
+.menu-item.primary:hover {
+	background-color: var(--primary-dark);
+}
+
+.menu-item.primary:hover button {
+	color: var(--primary-dark);
+}
+
+.menu-item.blue {
+	background-color: var(--blue-light);
+	color: var(--blue);
+	border-bottom: none;
+}
+
+.menu-item.blue:hover {
+	background-color: var(--blue-dark);
+}
+
+.menu-item.blue:hover button {
+	color: var(--blue-dark);
+}
+
+.menu-item.green {
+	background-color: var(--green-light);
+	color: var(--green);
+	border-bottom: none;
+}
+
+.menu-item.green:hover {
+	background-color: var(--green-dark);
+}
+
+.menu-item.green:hover button {
+	color: var(--green-dark);
+}
+
+.menu-item.purple {
+	background-color: var(--purple-light);
+	color: var(--purple);
+	border-bottom: none;
+}
+
+.menu-item.purple:hover {
+	background-color: var(--purple-dark);
+}
+
+.menu-item.purple:hover button {
+	color: var(--purple-dark);
+}
+
+.menu-item.orange {
+	background-color: var(--orange-light);
+	color: var(--orange);
+	border-bottom: none;
+}
+
+.menu-item.orange:hover {
+	background-color: var(--orange-dark);
+}
+
+.menu-item.orange:hover button {
+	color: var(--orange-dark);
+}
+
+.menu-item span {
+	font-weight: 500;
+}
+
+.menu-item .button {
+	height: 2rem;
+	width: 2rem;
+	text-align: center;
+}
+
+.menu-item .button svg {
+	margin-right: 0;
+}
+
+@media only screen and (max-width: 50rem) {
+	.menu-item {
+		padding-right: 1.3rem;
+	}
+}
