@@ -46,18 +46,22 @@ export default function Admin() {
 					</>
 				) : undefined}
 			</Menu>
-				<AnimatePresence mode="popLayout">
-					<motion.div
-						className="admin-content no-animate"
-						key={location.pathname}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.5 }}
-					>
-						{auth.isAuthenticated ? <Outlet /> : <div className="login">{auth.isLoading ? 'Logging in...' : 'Press the login button to continue.'}</div>}
-					</motion.div>
-				</AnimatePresence>
+			<AnimatePresence mode="popLayout">
+				<motion.div
+					className="admin-content no-animate"
+					key={location.pathname}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.5 }}
+				>
+					{auth.isAuthenticated ? (
+						<Outlet />
+					) : (
+						<div className="login">{auth.isLoading ? 'Logging in...' : 'Press the login button to continue.'}</div>
+					)}
+				</motion.div>
+			</AnimatePresence>
 		</>
 	)
 }

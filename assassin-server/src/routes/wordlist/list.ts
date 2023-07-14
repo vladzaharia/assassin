@@ -24,7 +24,7 @@ export const ListWordLists = async (c: Context<{ Bindings: Bindings }>) => {
 			wordListResponses.push({
 				name: wordlist.name,
 				icon: wordlist.icon,
-				numWords: words.length
+				numWords: words.length,
 			})
 		}
 

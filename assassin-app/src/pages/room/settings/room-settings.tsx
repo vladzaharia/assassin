@@ -35,8 +35,8 @@ export default function RoomSettings() {
 				rightActions={<Button iconProps={{ icon: faXmark }} className="blue" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
 			/>
 			<div className="gm-actions">
-				<RoomSettingsActions apiType='gm' />
-				<RoomSettingsWordlist apiType='gm' />
+				<RoomSettingsActions apiType="gm" />
+				<RoomSettingsWordlist apiType="gm" />
 			</div>
 		</div>
 	)

@@ -6,22 +6,11 @@ import { createWordlistApi } from '../../api'
 import { isAxiosError } from 'axios'
 import { NotificationContext } from '../../context/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp, library } from '@fortawesome/fontawesome-svg-core'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'
-import {
-	faChartLineUp,
-	faCircleHalfStroke,
-	faComputerClassic,
-	faDagger,
-	faEarthAmericas,
-	faFlag,
-	faFlask,
-	faFlaskRoundPoison,
-	faMessageText,
-	faPlanetRinged,
-	faStars,
-} from '@fortawesome/pro-solid-svg-icons'
+import { faMessageText } from '@fortawesome/pro-solid-svg-icons'
 import { Card, CardContent } from '@mui/material'
+import { AddToLibrary } from '../icons/icons'
 
 interface WordListProps {
 	name: string
@@ -34,18 +23,7 @@ interface WordListProps {
 }
 
 function WordList({ name, description, icon, words, selected, disabled, onClick }: WordListProps) {
-	library.add(
-		faFlask,
-		faFlaskRoundPoison,
-		faPlanetRinged,
-		faCircleHalfStroke,
-		faDagger,
-		faChartLineUp,
-		faComputerClassic,
-		faStars,
-		faFlag,
-		faEarthAmericas
-	)
+	AddToLibrary()
 
 	return (
 		<Card

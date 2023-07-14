@@ -1,17 +1,17 @@
-import { faRotateLeft, faPlay } from "@fortawesome/pro-solid-svg-icons"
-import { createAdminApi, createGMApi } from "../../api"
-import { NotificationContext, NotificationSource } from "../../context/notification"
-import { RoomContext } from "../../context/room"
-import { useContext } from "react"
-import { useNavigate, useRevalidator } from "react-router-dom"
-import useLocalStorage from "use-local-storage"
-import Action from "../action/action"
-import { isAxiosError } from "axios"
-import Button from "../button/button"
-import { RoomSettingsComponentProps } from "../../types"
-import { useAuth } from "react-oidc-context"
-import { AdminApi, GMApi } from "assassin-server-client"
-import SectionTitle from "../section-title/section-title"
+import { faRotateLeft, faPlay } from '@fortawesome/pro-solid-svg-icons'
+import { createAdminApi, createGMApi } from '../../api'
+import { NotificationContext, NotificationSource } from '../../context/notification'
+import { RoomContext } from '../../context/room'
+import { useContext } from 'react'
+import { useNavigate, useRevalidator } from 'react-router-dom'
+import useLocalStorage from 'use-local-storage'
+import Action from '../action/action'
+import { isAxiosError } from 'axios'
+import Button from '../button/button'
+import { RoomSettingsComponentProps } from '../../types'
+import { useAuth } from 'react-oidc-context'
+import { AdminApi, GMApi } from 'assassin-server-client'
+import SectionTitle from '../section-title/section-title'
 
 export default function RoomSettingsActions({ apiType }: RoomSettingsComponentProps) {
 	const navigate = useNavigate()
@@ -21,7 +21,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 
 	let api: GMApi | AdminApi
 
-	if (apiType === "admin") {
+	if (apiType === 'admin') {
 		api = createAdminApi(auth.user?.access_token || '')
 	} else {
 		api = createGMApi(name)
@@ -74,7 +74,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 
 	return (
 		<>
-		<SectionTitle>Actions</SectionTitle>
+			<SectionTitle>Actions</SectionTitle>
 			<Action
 				text="Reset game"
 				description={

@@ -22,23 +22,30 @@ export default function RoomsAdmin() {
 			<Table
 				className="blue"
 				headers={[
-					"Room Name",
-					"# Players",
-					"Uses Words?",
-					"# Word Lists",
-					<div className='buttons'><Button className="green" iconProps={{ icon: faPlus }} /></div>
+					'Room Name',
+					'# Players',
+					'Uses Words?',
+					'# Word Lists',
+					<div className="buttons">
+						<Button className="green" iconProps={{ icon: faPlus }} />
+					</div>,
 				]}
-				rows={rooms.map((room) => { return {
-					name: room.name,
-					cells: [
-						<strong>{room.name}</strong>,
-						room.numPlayers.toString(),
-						<FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} />,
-						room.numWordLists.toString(),
-						<div className='buttons'><Button className='orange' iconProps={{icon: faEdit}} onClick={() => navigate(room.name)} /> <Button className='primary' iconProps={{icon: faTrash}} /></div>,
-					],
-					onClick: () => navigate(room.name)
-				}})}
+				rows={rooms.map((room) => {
+					return {
+						name: room.name,
+						cells: [
+							<strong>{room.name}</strong>,
+							room.numPlayers.toString(),
+							<FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} />,
+							room.numWordLists.toString(),
+							<div className="buttons">
+								<Button className="orange" iconProps={{ icon: faEdit }} onClick={() => navigate(room.name)} />{' '}
+								<Button className="primary" iconProps={{ icon: faTrash }} />
+							</div>,
+						],
+						onClick: () => navigate(room.name),
+					}
+				})}
 			/>
 		</div>
 	)

@@ -2,11 +2,10 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import './app.css'
 import isMobile from 'is-mobile'
 import Button from '../button/button'
-import { faCog, faMoon, faSun } from '@fortawesome/pro-solid-svg-icons'
+import { faMoon, faSun } from '@fortawesome/pro-solid-svg-icons'
 import usePrefersColorScheme from 'use-prefers-color-scheme'
 import { ContainerContext } from '../../context/container'
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 
 export interface AppProps {
 	children?: ReactNode

@@ -1,19 +1,19 @@
-import Action from "../action/action"
-import WordLists from "../wordlists/wordlists"
-import { faMessageMinus, faMessagePlus } from "@fortawesome/pro-solid-svg-icons"
-import { createAdminApi, createGMApi } from "../../api"
-import { NotificationContext } from "../../context/notification"
-import { RoomContext } from "../../context/room"
-import { useContext, useState } from "react"
-import { useRevalidator } from "react-router-dom"
-import useLocalStorage from "use-local-storage"
+import Action from '../action/action'
+import WordLists from '../wordlists/wordlists'
+import { faMessageMinus, faMessagePlus } from '@fortawesome/pro-solid-svg-icons'
+import { createAdminApi, createGMApi } from '../../api'
+import { NotificationContext } from '../../context/notification'
+import { RoomContext } from '../../context/room'
+import { useContext, useState } from 'react'
+import { useRevalidator } from 'react-router-dom'
+import useLocalStorage from 'use-local-storage'
 import { isAxiosError } from 'axios'
 import './room-settings-word.css'
-import { GMApi, AdminApi } from "assassin-server-client"
-import { useAuth } from "react-oidc-context"
-import { RoomSettingsComponentProps } from "../../types"
-import Toggle from "../toggle/toggle"
-import SectionTitle from "../section-title/section-title"
+import { GMApi, AdminApi } from 'assassin-server-client'
+import { useAuth } from 'react-oidc-context'
+import { RoomSettingsComponentProps } from '../../types'
+import Toggle from '../toggle/toggle'
+import SectionTitle from '../section-title/section-title'
 
 export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentProps) {
 	const { revalidate } = useRevalidator()
@@ -23,7 +23,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 
 	let api: GMApi | AdminApi
 
-	if (apiType === "admin") {
+	if (apiType === 'admin') {
 		api = createAdminApi(auth.user?.access_token || '')
 	} else {
 		api = createGMApi(name)
