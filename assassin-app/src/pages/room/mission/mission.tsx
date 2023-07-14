@@ -13,6 +13,7 @@ import { Modal } from '@mui/material'
 import { createPlayerApi } from '../../../api'
 import { isAxiosError } from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import SectionTitle from '../../../components/section-title/section-title'
 
 export default function Mission() {
 	const [showModal, setShowModal] = useState<boolean>(false)
@@ -92,8 +93,9 @@ export default function Mission() {
 							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
 						}
 					/>
+					<SectionTitle className="primary">Target</SectionTitle>
 					<Action
-						text="Target"
+						text="Target name"
 						description={
 							usesWords
 								? 'This is your target; get them to use one of the words below to eliminate them!'
@@ -102,7 +104,7 @@ export default function Mission() {
 					>
 						<span className="target">{player.target}</span>
 					</Action>
-					<Action text="Record Elimination" description="Click this button once you have eliminated your target.">
+					<Action text="Record elimination" description="Click this button once you have eliminated your target.">
 						<Button
 							className={showNotification && notification?.source === 'eliminate' ? notification?.notificationType : 'green'}
 							iconProps={{ icon: faCrosshairs }}
@@ -110,9 +112,12 @@ export default function Mission() {
 						/>
 					</Action>
 					{usesWords ? (
-						<Action text="Words" className="column" description="Use these words to eliminate your target.">
-							<Words words={player.words} />
-						</Action>
+						<>
+							<SectionTitle className="primary">Words</SectionTitle>
+							<Action className="column" description="Use these words to eliminate your target.">
+								<Words words={player.words} />
+							</Action>
+						</>
 					) : undefined}
 				</>
 			) : undefined}

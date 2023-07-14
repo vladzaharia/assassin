@@ -1,7 +1,6 @@
 .header-wrapper {
 	width: 100%;
 	background-color: var(--background);
-	border-bottom: 0.0625rem solid var(--border);
 	position: sticky;
 	top: 0;
 	z-index: 100;
@@ -13,6 +12,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
+	border-bottom: 0.0625rem solid var(--border);
 }
 
 .header.corner-left,
@@ -28,26 +28,31 @@
 .header.primary {
 	background-color: var(--primary-trans);
 	color: var(--primary-dark);
+	border-bottom-color: var(--primary-light);
 }
 
 .header.blue {
 	background-color: var(--blue-trans);
 	color: var(--blue-dark);
+	border-bottom-color: var(--blue-light);
 }
 
 .header.green {
 	background-color: var(--green-trans);
 	color: var(--green-dark);
+	border-bottom-color: var(--green-light);
 }
 
 .header.purple {
 	background-color: var(--purple-trans);
 	color: var(--purple-dark);
+	border-bottom-color: var(--purple-light);
 }
 
 .header.orange {
 	background-color: var(--orange-trans);
 	color: var(--orange-dark);
+	border-bottom-color: var(--orange-light);
 }
 
 .header > * {

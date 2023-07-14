@@ -1,4 +1,4 @@
-import { faRotateLeft, faPlay } from '@fortawesome/pro-solid-svg-icons'
+import { faRotateLeft, faPlay, faSparkles } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminApi, createGMApi } from '../../api'
 import { NotificationContext, NotificationSource } from '../../context/notification'
 import { RoomContext } from '../../context/room'
@@ -12,6 +12,7 @@ import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import { AdminApi, GMApi } from 'assassin-server-client'
 import SectionTitle from '../section-title/section-title'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomSettingsActions({ apiType }: RoomSettingsComponentProps) {
 	const navigate = useNavigate()
@@ -74,7 +75,9 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 
 	return (
 		<>
-			<SectionTitle>Actions</SectionTitle>
+			<SectionTitle className="blue">
+				<FontAwesomeIcon className="mr-05" icon={faSparkles} /> Actions
+			</SectionTitle>
 			<Action
 				text="Reset game"
 				description={

@@ -16,14 +16,14 @@ export default function Table({ className, headers, rows }: TableProps) {
 			{headers && (
 				<div className="table-row table-header">
 					{headers.map((header, i) => (
-						<div className="table-cell" key={`table-${className}-header-${i}`}>
+						<div className="table-cell" key={`table-${className}-${i}-header`}>
 							{i === 0 ? <strong>{header}</strong> : header}
 						</div>
 					))}
 				</div>
 			)}
 			{rows.map((row, i) => (
-				<div key={row.name} className={`table-row ${row.onClick ? 'clickable' : ''}`} onClick={row.onClick}>
+				<div key={`table-${className}-${i}-row`} className={`table-row ${row.onClick ? 'clickable' : ''}`} onClick={row.onClick}>
 					{row.cells.map((cell, j) => (
 						<div className="table-cell" key={`table-${className}-${i}-${j}-cell`}>
 							{cell}

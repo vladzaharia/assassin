@@ -140,7 +140,20 @@
 	cursor: default;
 }
 
+.button:disabled:hover {
+	background-color: var(--grey-light);
+	border-color: var(--grey-light);
+	color: var(--grey-dark);
+	cursor: default;
+}
+
 .app.dark .button:disabled {
+	background-color: var(--grey-dark);
+	border-color: var(--grey-dark);
+	color: var(--grey-light);
+}
+
+.app.dark .button:disabled:hover {
 	background-color: var(--grey-dark);
 	border-color: var(--grey-dark);
 	color: var(--grey-light);

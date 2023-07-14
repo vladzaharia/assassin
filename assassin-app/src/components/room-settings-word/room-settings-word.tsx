@@ -1,6 +1,6 @@
 import Action from '../action/action'
 import WordLists from '../wordlists/wordlists'
-import { faMessageMinus, faMessagePlus } from '@fortawesome/pro-solid-svg-icons'
+import { faMessageMinus, faMessagePlus, faTextSize } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminApi, createGMApi } from '../../api'
 import { NotificationContext } from '../../context/notification'
 import { RoomContext } from '../../context/room'
@@ -14,6 +14,7 @@ import { useAuth } from 'react-oidc-context'
 import { RoomSettingsComponentProps } from '../../types'
 import Toggle from '../toggle/toggle'
 import SectionTitle from '../section-title/section-title'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentProps) {
 	const { revalidate } = useRevalidator()
@@ -113,7 +114,10 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 
 	return (
 		<div className="wordlists-wrapper">
-			<SectionTitle>Word settings</SectionTitle>
+			<SectionTitle className="blue">
+				<FontAwesomeIcon className="mr-05" icon={faTextSize} />
+				Word settings
+			</SectionTitle>
 			<Action text="Use words?" description="Whether to use words for this room, or play standard assassin.">
 				<Toggle
 					disabled={isPlaying}

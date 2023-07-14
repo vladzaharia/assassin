@@ -3,7 +3,7 @@ import { Room as RoomResponse } from 'assassin-server-client'
 import './room.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
-import { faChevronLeft, faDoorOpen, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faChevronLeft, faDoorOpen, faUsers, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import RoomSettingsActions from '../../../components/room-settings-actions/room-settings-actions'
 import RoomSettingsWordlist from '../../../components/room-settings-word/room-settings-word'
 import { RoomContext } from '../../../context/room'
@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function RoomAdmin() {
 	const room = useLoaderData() as RoomResponse
 	const navigate = useNavigate()
+
+	console.log(faChevronLeft.iconName)
 
 	return (
 		<RoomContext.Provider
@@ -33,7 +35,9 @@ export default function RoomAdmin() {
 					leftActions={<Button className="blue" onClick={() => navigate(`/admin/room`)} iconProps={{ icon: faChevronLeft }} />}
 					rightActions={<Button className="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 				/>
-				<SectionTitle>Player List</SectionTitle>
+				<SectionTitle className="blue">
+					<FontAwesomeIcon className="mr-05" icon={faUsers} /> Player List
+				</SectionTitle>
 				<RoomSettingsActions apiType="admin" />
 				<RoomSettingsWordlist apiType="admin" />
 			</div>
