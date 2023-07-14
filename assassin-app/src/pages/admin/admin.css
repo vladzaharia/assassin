@@ -17,11 +17,29 @@
 	height: 100%;
 }
 
+.admin-content .table {
+	flex: 1 1 auto;
+}
+
+.admin-content .list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	padding-bottom: 1rem;
+	flex: 1 1 auto;
+}
+
 @media only screen and (max-width: 50rem) {
 	.admin-content {
 		border-left: none;
 		border-top: 0.0625rem solid var(--border);
 		margin-left: 0;
 		width: 100%;
+	}
+
+	.admin-content .list {
+		gap: 0;
+		padding-bottom: 0;
 	}
 }

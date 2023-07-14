@@ -1,0 +1,79 @@
+.toggle.primary.checked .MuiSwitch-thumb {
+	background-color: var(--primary);
+}
+
+.toggle.primary.checked .MuiSwitch-track {
+	background-color: var(--primary-dark);
+}
+
+.toggle.primary.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.toggle.primary.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
+.toggle.blue.checked .MuiSwitch-thumb {
+	background-color: var(--blue);
+}
+
+.toggle.blue.checked .MuiSwitch-track {
+	background-color: var(--blue-dark);
+}
+
+.toggle.blue.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.toggle.blue.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
+.toggle.green.checked .MuiSwitch-thumb {
+	background-color: var(--green);
+}
+
+.toggle.green.checked .MuiSwitch-track {
+	background-color: var(--green-dark);
+}
+
+.toggle.green.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.toggle.green.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
+.toggle.purple.checked .MuiSwitch-thumb {
+	background-color: var(--purple);
+}
+
+.toggle.purple.checked .MuiSwitch-track {
+	background-color: var(--purple-dark);
+}
+
+.toggle.purple.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.toggle.purple.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}
+
+.toggle.orange.checked .MuiSwitch-thumb {
+	background-color: var(--orange);
+}
+
+.toggle.orange.checked .MuiSwitch-track {
+	background-color: var(--orange-dark);
+}
+
+.toggle.orange.disabled .MuiSwitch-thumb {
+	background-color: var(--disabled);
+}
+
+.toggle.orange.disabled .MuiSwitch-track {
+	background-color: var(--disabled);
+}

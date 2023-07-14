@@ -1,14 +1,14 @@
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import './button.css'
 import Popover, { PopoverProps } from '../popover/popover'
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import isMobile from 'is-mobile'
 
 export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	className?: string
 	text?: string
 	iconProps?: FontAwesomeIconProps
-	onClick?: () => void
+	onClick?: React.MouseEventHandler<HTMLButtonElement>
 	popoverProps?: Omit<PopoverProps, 'anchor' | 'open' | 'onClose'>
 }
 

@@ -40,8 +40,7 @@ paths:
                   rooms:
                     type: array
                     items:
-                      $ref: '#/components/schemas/RoomName'
-                    example: ['galactic', 'saturn', 'charon']
+                      $ref: '#/components/schemas/BasicRoom'
                 required:
                   - rooms
         500:
@@ -339,8 +338,7 @@ paths:
                   wordLists:
                     type: array
                     items:
-                      $ref: '#/components/schemas/WordlistName'
-                    example: ['card-assassins-poison', 'card-assassins-dagger', 'pokemon', 'ptcs']
+                      $ref: '#/components/schemas/BasicWordlist'
                 required:
                   - wordLists
         500:
@@ -864,6 +862,27 @@ components:
       description: Name of a player within a room.
       type: string
       example: Vlad
+    BasicRoom:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/RoomName'
+        status:
+          $ref: '#/components/schemas/RoomStatus'
+        numPlayers:
+          type: number
+          description: Number of players in room
+        usesWords:
+          $ref: '#/components/schemas/RoomUsesWords'
+        numWordLists:
+          type: number
+          description: Number of word lists used in room.
+      required:
+        - name
+        - status
+        - numPlayers
+        - usesWords
+        - numWordLists
     Room:
       description: Room information
       type: object
@@ -933,6 +952,19 @@ components:
       description: Number of words to provide players on game start, defaults to 3.
       example: 3
       default: 3
+    BasicWordlist:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/WordlistName'
+        icon:
+          $ref: '#/components/schemas/WordlistIcon'
+        numWords:
+          type: number
+          description: Number of words in room
+      required:
+        - name
+        - numWords
     Wordlist:
       allOf:
         - type: object

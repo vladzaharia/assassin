@@ -21,9 +21,9 @@ import RoomsLoader from './loaders/rooms'
 import WordlistLoader from './loaders/wordlist'
 import WordlistsLoader from './loaders/wordlists'
 import AdminHome from './pages/admin/home/home'
-import RoomsAdmin from './pages/admin/rooms/rooms'
+import RoomsAdmin from './pages/admin/room-list/room-list'
 import RoomAdmin from './pages/admin/room/room'
-import WordlistsAdmin from './pages/admin/wordlists/wordlists'
+import WordlistsAdmin from './pages/admin/wordlist-list/wordlist-list'
 import WordlistAdmin from './pages/admin/wordlist/wordlist'
 import AdminDebug from './pages/admin/debug/debug'
 
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
 				element: <Admin />,
 				children: [
 					{
-						path: 'home',
+						path: '',
 						id: 'admin-home',
 						element: <AdminHome />,
 					},

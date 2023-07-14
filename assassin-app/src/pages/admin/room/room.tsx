@@ -3,20 +3,35 @@ import { Room as RoomResponse } from 'assassin-server-client'
 import './room.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
-import { faChevronLeft, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faChevronLeft, faDoorOpen, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import RoomSettingsActions from '../../../components/room-settings-actions/room-settings-actions'
+import RoomSettingsWordlist from '../../../components/room-settings-word/room-settings-word'
+import { RoomContext } from '../../../context/room'
+import SectionTitle from 'assassin-app/src/components/section-title/section-title'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomAdmin() {
 	const room = useLoaderData() as RoomResponse
 	const navigate = useNavigate()
 
 	return (
-		<div className="room">
-			<Header
-				title={room.name}
-				className="primary corner-right"
-				leftActions={<Button className="primary" onClick={() => navigate(`/admin/room`)} iconProps={{ icon: faChevronLeft }} />}
-				rightActions={<Button className="primary" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
-			/>
-		</div>
+		<RoomContext.Provider
+			value={{
+				room: room,
+				playerIsGM: true
+			}}
+		>
+			<div className="admin-room">
+				<Header
+					title={<><FontAwesomeIcon className='mr-05' icon={faDoorOpen} />{room.name}</>}
+					className="blue corner-right"
+					leftActions={<Button className="blue" onClick={() => navigate(`/admin/room`)} iconProps={{ icon: faChevronLeft }} />}
+					rightActions={<Button className="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
+				/>
+				<SectionTitle>Player List</SectionTitle>
+				<RoomSettingsActions apiType='admin' />
+				<RoomSettingsWordlist apiType='admin' />
+			</div>
+		</RoomContext.Provider>
 	)
 }

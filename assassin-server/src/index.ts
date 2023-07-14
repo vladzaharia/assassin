@@ -109,12 +109,6 @@ app.get(
 	})
 )
 app.get(
-	'/admin/home',
-	serveStatic({
-		path: './app/index.html',
-	})
-)
-app.get(
 	'/admin/room',
 	serveStatic({
 		path: './app/index.html',

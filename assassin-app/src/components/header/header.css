@@ -98,4 +98,14 @@
 	.header .right-actions {
 		margin: 1.5rem;
 	}
+
+	.header.corner-left,
+	.header-wrapper.corner-left {
+		border-top-left-radius: 0;
+	}
+
+	.header.corner-right,
+	.header-wrapper.corner-right {
+		border-top-right-radius: 0;
+	}
 }

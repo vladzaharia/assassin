@@ -1,0 +1,78 @@
+.content-box .table {
+	width: 95%;
+	border: 0.0625rem solid var(--border);
+	border-radius: 0.5rem;
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
+.table .MuiTableCell-root {
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	color: var(--foreground);
+	border-color: var(--border);
+}
+
+.table .MuiTableCell-head {
+	background-color: var(--grey-dark);
+	border-color: var(--border);
+	color: var(--grey-light);
+}
+
+.table .MuiTableRow-root.clickable:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	cursor: pointer;
+}
+
+.table.primary .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	background-color: var(--primary-light);
+	color: var(--primary);
+}
+
+.table.blue .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	background-color: var(--blue-light);
+	color: var(--blue);
+}
+
+.table.green .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	background-color: var(--green-light);
+	color: var(--green);
+}
+
+.table.purple .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	background-color: var(--purple-light);
+	color: var(--purple);
+}
+
+.table.orange .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
+	background-color: var(--orange-light);
+	color: var(--orange);
+}
+
+.table .MuiTableRow-head .MuiTableCell-root:has(.button) {
+	padding: 0.7rem;
+	border-bottom: none;
+}
+
+.table .MuiTableCell-root:has(.button) {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding: 0.5rem;
+}
+
+.table .button {
+	height: 2rem;
+	width: 2rem;
+}
+
+@media only screen and (max-width: 87.5rem) {
+	.table .MuiTableCell-root:not(:first-child):not(:last-child) {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 50rem) {
+	.content-box .table {
+		width: 100%;
+		border-radius: 0;
+	}
+}

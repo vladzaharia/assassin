@@ -1,0 +1,5 @@
+.section-title {
+	padding: 1rem;
+	border-bottom: 0.0625rem solid var(--border);
+	margin: 0;
+}

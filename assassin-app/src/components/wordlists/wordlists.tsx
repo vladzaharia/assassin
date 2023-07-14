@@ -54,7 +54,7 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 			elevation={3}
 			sx={{
 				border: '0.0625rem solid var(--border)',
-				borderColor: selected ? 'var(--green)' : disabled ? 'var(--disabled)' : 'var(--border)',
+				borderColor: selected ? 'var(--blue)' : disabled ? 'var(--disabled)' : 'var(--border)',
 				transition: 'all 0.3s ease',
 				width: '30%',
 				backgroundColor: 'var(--background)',
@@ -93,8 +93,8 @@ export default function WordLists({ onWordListClick }: { onWordListClick: (name:
 			const allWordLists = (await wordlistApi.listWordList()).data.wordLists
 
 			const wordLists: Wordlist[] = []
-			for (const listName of allWordLists || []) {
-				wordLists.push((await wordlistApi.getWordList(listName)).data)
+			for (const list of allWordLists || []) {
+				wordLists.push((await wordlistApi.getWordList(list.name)).data)
 			}
 
 			setWordLists(wordLists)

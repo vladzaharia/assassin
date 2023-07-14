@@ -25,6 +25,7 @@
 
 @media only screen and (max-width: 50rem) {
 	.menu {
+		height: initial;
 		width: 100%;
 		max-width: 100%;
 		max-height: 45vh;

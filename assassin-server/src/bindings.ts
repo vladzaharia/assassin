@@ -3,5 +3,6 @@ export type Bindings = {
 	R2BUCKET: R2Bucket
 	D1DATABASE: D1Database
 	OPENID: KVNamespace
+	ASSASSIN_SECRET: string
 	/* eslint-enable no-undef */
 }
