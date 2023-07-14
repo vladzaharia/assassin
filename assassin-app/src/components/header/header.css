@@ -26,27 +26,27 @@
 }
 
 .header.primary {
-	background-color: var(--primary-light);
+	background-color: var(--primary-trans);
 	color: var(--primary-dark);
 }
 
 .header.blue {
-	background-color: var(--blue-light);
+	background-color: var(--blue-trans);
 	color: var(--blue-dark);
 }
 
 .header.green {
-	background-color: var(--green-light);
+	background-color: var(--green-trans);
 	color: var(--green-dark);
 }
 
 .header.purple {
-	background-color: var(--purple-light);
+	background-color: var(--purple-trans);
 	color: var(--purple-dark);
 }
 
 .header.orange {
-	background-color: var(--orange-light);
+	background-color: var(--orange-trans);
 	color: var(--orange-dark);
 }
 

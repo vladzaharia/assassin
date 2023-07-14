@@ -1,60 +1,131 @@
-.content-box .table {
+.table {
 	width: 95%;
+	display: flex;
+	flex-direction: column;
 	border: 0.0625rem solid var(--border);
 	border-radius: 0.5rem;
-	border-spacing: 0;
-	border-collapse: separate;
+	overflow-y: overlay;
+	flex: 1 1 auto;
 }
 
-.table .MuiTableCell-root {
-	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
-	color: var(--foreground);
-	border-color: var(--border);
+.table.primary {
+	border-color: var(--primary-trans);
 }
 
-.table .MuiTableCell-head {
+.table.blue {
+	border-color: var(--blue-trans);
+}
+
+.table.green {
+	border-color: var(--green-trans);
+}
+
+.table.purple {
+	border-color: var(--purple-trans);
+}
+
+.table.orange {
+	border-color: var(--orange-trans);
+}
+
+.table .table-header {
+	position: sticky;
+	top: 0;
 	background-color: var(--grey-dark);
 	border-color: var(--border);
 	color: var(--grey-light);
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
 }
 
-.table .MuiTableRow-root.clickable:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	cursor: pointer;
+.table.primary .table-header {
+	background-color: var(--primary-darker);
+	color: var(--primary-light);
 }
 
-.table.primary .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	background-color: var(--primary-light);
-	color: var(--primary);
+.table.blue .table-header {
+	background-color: var(--blue-darker);
+	color: var(--blue-light);
 }
 
-.table.blue .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	background-color: var(--blue-light);
-	color: var(--blue);
+.table.green .table-header {
+	background-color: var(--green-darker);
+	color: var(--green-light);
 }
 
-.table.green .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	background-color: var(--green-light);
-	color: var(--green);
+.table.purple .table-header {
+	background-color: var(--purple-darker);
+	color: var(--purple-light);
 }
 
-.table.purple .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	background-color: var(--purple-light);
-	color: var(--purple);
+.table.orange .table-header {
+	background-color: var(--orange-darker);
+	color: var(--orange-light);
 }
 
-.table.orange .MuiTableRow-root:not(.MuiTableRow-head):hover .MuiTableCell-root {
-	background-color: var(--orange-light);
-	color: var(--orange);
+.table .table-row {
+	width: 100%;
+	border-bottom: 0.0625rem solid var(--border);
+	display: flex;
+	flex-direction: table-row;
+	justify-content: stretch;
+	align-items: stretch;
 }
 
-.table .MuiTableRow-head .MuiTableCell-root:has(.button) {
-	padding: 0.7rem;
+.table .table-row:last-child {
 	border-bottom: none;
 }
 
-.table .MuiTableCell-root:has(.button) {
+.table .table-row.clickable:not(.table-header):hover .table-cell {
+	cursor: pointer;
+}
+
+.table.primary .table-row:not(.table-header):hover .table-cell {
+	background-color: var(--primary-trans);
+	color: var(--primary);
+}
+
+.table.blue .table-row:not(.table-header):hover .table-cell {
+	background-color: var(--blue-trans);
+	color: var(--blue);
+}
+
+.table.green .table-row:not(.table-header):hover .table-cell {
+	background-color: var(--green-trans);
+	color: var(--green);
+}
+
+.table.purple .table-row:not(.table-header):hover .table-cell {
+	background-color: var(--purple-trans);
+	color: var(--purple);
+}
+
+.table.orange .table-row:not(.table-header):hover .table-cell {
+	background-color: var(--orange-trans);
+	color: var(--orange);
+}
+
+.table .table-cell {
+	width: 15%;
 	display: flex;
-	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.table .table-cell:first-child {
+	flex: 1 1 auto;
+	padding-left: 1rem;
+	justify-content: flex-start;
+}
+
+.table .table-cell:last-child {
+	align-self: flex-end;
+}
+
+.table .buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: table-row;
 	justify-content: flex-end;
 	padding: 0.5rem;
 }
@@ -65,14 +136,20 @@
 }
 
 @media only screen and (max-width: 87.5rem) {
-	.table .MuiTableCell-root:not(:first-child):not(:last-child) {
+	.table .table-cell:not(:first-child):not(:last-child) {
 		display: none;
 	}
 }
 
 @media only screen and (max-width: 50rem) {
-	.content-box .table {
+	.table {
 		width: 100%;
 		border-radius: 0;
 	}
+
+	.table .table-header {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
 }

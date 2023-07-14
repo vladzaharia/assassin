@@ -1,37 +1,27 @@
 import './table.css'
-import { Table as MUITable, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 
 export interface TableProps {
-	headers: (string|JSX.Element)[]
+	headers?: (string|JSX.Element)[]
 	className?: string
 	rows: {
 		name: string
-		cells: JSX.Element
+		cells: (string|JSX.Element)[]
 		onClick?: () => void
 	}[]
 }
 
 export default function Table({ className, headers, rows }: TableProps) {
 	return (
-		<TableContainer className={`table ${className || ''}`}>
-			<MUITable sx={{ borderRadius: "0.3rem" }}>
-				<TableHead sx={{ borderRadius: "0.3rem" }}>
-					<TableRow sx={{ borderRadius: "0.3rem" }}>
-						{headers.map((header, i) => <TableCell align={i > 0 ? 'center' : undefined} key={`table-${className}-header-${i}`}>{i === 0 ? <strong>{header}</strong> : header}</TableCell>)}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{rows.map((row) => (
-						<TableRow
-							key={row.name}
-							className={row.onClick ? "clickable" : ''}
-							onClick={row.onClick}
-						>
-							{row.cells}
-						</TableRow>
-					))}
-				</TableBody>
-			</MUITable>
-			</TableContainer>
+		<div className={`table ${className || ''}`}>
+			{headers && <div className="table-row table-header">{headers.map((header, i) => <div className="table-cell" key={`table-${className}-header-${i}`}>{i === 0 ? <strong>{header}</strong> : header}</div>)}</div>}
+			{rows.map((row, i) => (
+				<div
+					key={row.name}
+					className={`table-row ${row.onClick ? "clickable" : ''}`}
+					onClick={row.onClick}>
+					{row.cells.map((cell, j) => <div className='table-cell' key={`table-${className}-${i}-${j}-cell`}>{cell}</div>)}
+				</div>
+			))}
+		</div>
 	)
 }

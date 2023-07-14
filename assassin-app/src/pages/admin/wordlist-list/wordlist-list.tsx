@@ -6,7 +6,6 @@ import { faChartLineUp, faCircleHalfStroke, faComputerClassic, faDagger, faEarth
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicWordlist } from 'assassin-server-client'
 import Table from '../../../components/table/table'
-import { TableCell } from '@mui/material'
 import room from '../room/room'
 import { IconProp, library } from '@fortawesome/fontawesome-svg-core'
 
@@ -40,17 +39,17 @@ export default function WordlistsAdmin() {
 				headers={[
 					"Word list Name",
 					"# Words",
-					<Button className="green" iconProps={{ icon: faPlus }} />
+					<div className='buttons'><Button className="green" iconProps={{ icon: faPlus }} /></div>
 				]}
 				rows={wordlists.map((list) => { return {
 					name: room.name,
-					cells: <>
-						<TableCell component="th" scope="row">
+					cells: [
+						<>
 							<FontAwesomeIcon className='mr-05' icon={list.icon as IconProp || faTextSize} /> <strong>{list.name}</strong>
-						</TableCell>
-						<TableCell align="center">{list.numWords}</TableCell>
-						<TableCell className='buttons' align="right"><Button className='orange' iconProps={{icon: faEdit}} onClick={() => navigate(list.name)} /> <Button className='primary' iconProps={{icon: faTrash}} onClick={(e) => { e.stopPropagation(); e.preventDefault(); }} /></TableCell>
-					</>,
+						</>,
+						list.numWords.toString(),
+						<div className='buttons'><Button className='orange' iconProps={{icon: faEdit}} onClick={() => navigate(list.name)} /> <Button className='primary' iconProps={{icon: faTrash}} onClick={(e) => { e.stopPropagation(); e.preventDefault(); }} /></div>
+					],
 					onClick: () => navigate(list.name)
 				}})}
 			/>

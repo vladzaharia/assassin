@@ -25,7 +25,7 @@ h3 {
 
 a {
 	color: var(--primary);
-	background-color: var(--primary-light);
+	background-color: var(--primary-trans);
 	text-decoration: none;
 	padding: 0.5rem;
 	padding-top: 0.4rem;

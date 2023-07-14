@@ -35,27 +35,27 @@
 }
 
 .player-list .player.primary {
-	background-color: var(--primary-light);
+	background-color: var(--primary-trans);
 	color: var(--primary);
 }
 
 .player-list .player.blue {
-	background-color: var(--blue-light);
+	background-color: var(--blue-trans);
 	color: var(--blue-dark);
 }
 
 .player-list .player.green {
-	background-color: var(--green-light);
+	background-color: var(--green-trans);
 	color: var(--green-dark);
 }
 
 .player-list .player.purple {
-	background-color: var(--purple-light);
+	background-color: var(--purple-trans);
 	color: var(--purple-dark);
 }
 
 .player-list .player.orange {
-	background-color: var(--orange-light);
+	background-color: var(--orange-trans);
 	color: var(--orange-dark);
 }
 

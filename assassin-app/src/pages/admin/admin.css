@@ -18,15 +18,15 @@
 }
 
 .admin-content .table {
-	flex: 1 1 auto;
+	margin-bottom: 1rem;
 }
 
 .admin-content .list {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
-	padding-bottom: 1rem;
 	flex: 1 1 auto;
 }
 

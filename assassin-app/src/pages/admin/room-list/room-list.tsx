@@ -6,7 +6,6 @@ import { faCheck, faDoorOpen, faTrash, faXmark, faEdit, faPlus } from '@fortawes
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicRoom } from 'assassin-server-client'
 import Table from '../../../components/table/table'
-import { TableCell } from '@mui/material'
 
 export default function RoomsAdmin() {
 	const rooms = useLoaderData() as BasicRoom[]
@@ -27,19 +26,17 @@ export default function RoomsAdmin() {
 					"# Players",
 					"Uses Words?",
 					"# Word Lists",
-					<Button className="green" iconProps={{ icon: faPlus }} />
+					<div className='buttons'><Button className="green" iconProps={{ icon: faPlus }} /></div>
 				]}
 				rows={rooms.map((room) => { return {
 					name: room.name,
-					cells: <>
-						<TableCell component="th" scope="row">
-							<strong>{room.name}</strong>
-						</TableCell>
-						<TableCell align="center">{room.numPlayers}</TableCell>
-						<TableCell align="center"><FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} /></TableCell>
-						<TableCell align="center">{room.numWordLists}</TableCell>
-						<TableCell className='buttons' align="right"><Button className='orange' iconProps={{icon: faEdit}} onClick={() => navigate(room.name)} /> <Button className='primary' iconProps={{icon: faTrash}} /></TableCell>
-					</>,
+					cells: [
+						<strong>{room.name}</strong>,
+						room.numPlayers.toString(),
+						<FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} />,
+						room.numWordLists.toString(),
+						<div className='buttons'><Button className='orange' iconProps={{icon: faEdit}} onClick={() => navigate(room.name)} /> <Button className='primary' iconProps={{icon: faTrash}} /></div>,
+					],
 					onClick: () => navigate(room.name)
 				}})}
 			/>

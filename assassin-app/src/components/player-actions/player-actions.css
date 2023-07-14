@@ -6,7 +6,7 @@
 }
 
 .player-actions .eliminated {
-	background-color: var(--primary-light);
+	background-color: var(--primary-trans);
 	color: var(--primary);
 	display: flex;
 	flex-direction: column;

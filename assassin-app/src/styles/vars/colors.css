@@ -1,31 +1,43 @@
 .app {
 	--primary: #8a2131;
-	--primary-light: #f2667235;
+	--primary-trans: #f2667235;
+	--primary-light: #F3CED5;
 	--primary-dark: #631823;
+	--primary-darker: #421017;
 
 	--grey-light: #ede9e9;
 	--grey-dark: #5a4949;
 	--grey-darker: #382e2e;
 
 	--green: #52aa5e;
-	--green-light: #52aa5e35;
+	--green-trans: #52aa5e35;
+	--green-light: #BADEBE;
 	--green-dark: #356e3d;
+	--green-darker: #214526;
 
 	--blue: #17acdd;
-	--blue-light: #17acdd35;
+	--blue-trans: #17acdd35;
+	--blue-light: #B5E7F8;
 	--blue-dark: #107b9f;
+	--blue-darker: #0B566F;
 
 	--purple: #ba4bd6;
-	--purple-light: #ba4bd635;
+	--purple-trans: #ba4bd635;
+	--purple-light: #E6BCF0;
 	--purple-dark: #9b2ab7;
+	--purple-darker: #701E85;
 
 	--orange: #ff9f1c;
-	--orange-light: #ff9f1c35;
+	--orange-trans: #ff9f1c35;
+	--orange-light: #FFDDAD;
 	--orange-dark: #cc7700;
+	--orange-darker: #8F5300;
 
 	--yellow: #fdca40;
-	--yellow-light: #fdca4035;
+	--yellow-trans: #fdca4035;
+	--yellow-light: #FFE9AE;
 	--yellow-dark: #b78601;
+	--yellow-darker: #7A5901;
 
 	--white: #fff;
 	--black: #000;
@@ -48,32 +60,38 @@
 @media (prefers-color-scheme: dark) {
 	.app.dark {
 		--primary: #ff8597;
-		--primary-light: #8a213135;
+		--primary-trans: #8a213135;
 		--primary-dark: #ff4763;
+		--primary-darker: #731C29;
 
 		--grey-light: #dad2d2;
 		--grey-dark: #5a4949;
 		--grey-darker: #2e2626;
 
 		--green: #89d291;
-		--green-light: #52aa5e25;
+		--green-trans: #52aa5e25;
 		--green-dark: #5cc168;
+		--green-darker: #28532D;
 
 		--blue: #68d0f3;
-		--blue-light: #17acdd25;
+		--blue-trans: #17acdd25;
 		--blue-dark: #2fbeee;
+		--blue-darker: #0B566F;
 
 		--purple: #d99be8;
-		--purple-light: #ba4bd625;
+		--purple-trans: #ba4bd625;
 		--purple-dark: #c669dd;
+		--purple-darker: #701E85;
 
 		--orange: #ffc370;
-		--orange-light: #ff9f1c25;
+		--orange-trans: #ff9f1c25;
 		--orange-dark: #ffaa33;
+		--orange-darker: #8F5300;
 
 		--yellow: #fede86;
-		--yellow-light: #fdca4025;
+		--yellow-trans: #fdca4025;
 		--yellow-dark: #fdcd49;
+		--yellow-darker: #8E6801;
 
 		--background: var(--grey-darker);
 		--foreground: var(--grey-light);

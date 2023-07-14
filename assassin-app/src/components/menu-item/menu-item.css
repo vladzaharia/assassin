@@ -17,7 +17,7 @@
 }
 
 .menu-item.primary {
-	background-color: var(--primary-light);
+	background-color: var(--primary-trans);
 	color: var(--primary);
 	border-bottom: none;
 }
@@ -31,7 +31,7 @@
 }
 
 .menu-item.blue {
-	background-color: var(--blue-light);
+	background-color: var(--blue-trans);
 	color: var(--blue);
 	border-bottom: none;
 }
@@ -45,7 +45,7 @@
 }
 
 .menu-item.green {
-	background-color: var(--green-light);
+	background-color: var(--green-trans);
 	color: var(--green);
 	border-bottom: none;
 }
@@ -59,7 +59,7 @@
 }
 
 .menu-item.purple {
-	background-color: var(--purple-light);
+	background-color: var(--purple-trans);
 	color: var(--purple);
 	border-bottom: none;
 }
@@ -73,7 +73,7 @@
 }
 
 .menu-item.orange {
-	background-color: var(--orange-light);
+	background-color: var(--orange-trans);
 	color: var(--orange);
 	border-bottom: none;
 }
