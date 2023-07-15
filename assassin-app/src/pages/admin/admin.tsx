@@ -1,5 +1,5 @@
 import Menu from '../../components/menu/menu'
-import { useAuth } from 'react-oidc-context'
+import { hasAuthParams, useAuth } from 'react-oidc-context'
 import { faRightFromBracket, faRightToBracket, faTextSize, faUser, faDoorOpen, faCog } from '@fortawesome/pro-solid-svg-icons'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -7,10 +7,18 @@ import './admin.css'
 import Button from '../../components/button/button'
 import Status from '../../components/status/status'
 import { MenuItem } from '../../components/menu-item/menu-item'
+import { useEffect } from 'react'
 
 export default function Admin() {
 	const auth = useAuth()
 	const location = useLocation()
+
+	useEffect(() => {
+		if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading) {
+			auth.signinRedirect()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [auth.isAuthenticated, auth.activeNavigator, auth.isLoading, auth.signinRedirect])
 
 	return (
 		<>

@@ -1,5 +1,5 @@
 import { Player as PlayerResponse } from 'assassin-server-client'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
 import { NotificationContext } from '../../../context/notification'
 import { RoomContext } from '../../../context/room'
@@ -17,7 +17,6 @@ import Modal from '../../../components/modal/modal'
 
 export default function Mission() {
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const modalContainer = useRef<HTMLDivElement>(null)
 	const roomStatus = useContext(RoomContext)
 	const { setError, setNotification, notification, showNotification } = useContext(NotificationContext)
 	const player = useLoaderData() as PlayerResponse
@@ -81,7 +80,7 @@ export default function Mission() {
 	}, [roomStatus])
 
 	return (
-		<div className="mission" ref={modalContainer}>
+		<div className="mission">
 			{hasPlayer ? (
 				// eslint-disable-next-line react/jsx-no-useless-fragment
 				<>
@@ -121,7 +120,7 @@ export default function Mission() {
 					) : undefined}
 				</>
 			) : undefined}
-			<Modal className="mission-modal" container={modalContainer.current} open={showModal} onClose={() => setShowModal(false)}>
+			<Modal className="mission-modal" open={showModal} onClose={() => setShowModal(false)}>
 				<>
 					<Header
 						title="Confirm Elimination"

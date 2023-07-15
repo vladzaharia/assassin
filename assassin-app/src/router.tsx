@@ -32,6 +32,9 @@ const oidcConfig: AuthProviderProps = {
 	client_id: 'qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G',
 	redirect_uri: import.meta.env.DEV ? 'http://localhost:4200/admin' : 'https://assassin.vlad.gg/admin',
 	scope: 'openid profile',
+	onSigninCallback: () => {
+		window.history.replaceState({}, document.title, window.location.pathname)
+	},
 }
 
 const router = createBrowserRouter([

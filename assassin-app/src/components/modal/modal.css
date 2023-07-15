@@ -1,12 +1,58 @@
 .modal.MuiModal-root {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	width: 40vw;
+	height: 40vh;
 	max-height: 50vh;
 	background-color: var(--background);
 	border: 0.0625rem solid var(--border);
 	border-radius: 0.5rem;
 	overflow-y: overlay;
+	top: unset;
+	left: unset;
+	right: unset;
+	bottom: unset;
+}
+
+.modal.MuiModal-root .modal-content {
+	background-color: var(--border);
+	height: 100%;
+}
+
+.modal.MuiModal-root > :not(.MuiBackdrop-root.MuiModal-backdrop) {
+	z-index: 1000;
+}
+
+.modal.confirm-modal {
+	height: 22.5vh;
+	width: 30vw;
+}
+
+.modal.confirm-modal .modal-message-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal.confirm-modal .modal-message {
+	margin: 1rem 0;
+}
+
+.modal.confirm-modal .modal-buttons {
+	margin-top: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+}
+
+@media only screen and (max-width: 87.5rem) {
+	.modal.MuiModal-root {
+		width: 50vw;
+	}
+}
+
+@media only screen and (max-width: 50rem) {
+	.modal.MuiModal-root {
+		width: 90vw;
+		max-height: 75vh;
+	}
 }

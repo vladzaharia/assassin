@@ -17,9 +17,9 @@ export interface TableProps {
 
 export default function Table({ className, headers, rows }: TableProps) {
 	return (
-		<div className="table-wrapper">
-			<div className={`table ${className || ''}`}>
-				{headers && (
+		<div className={`table ${className || ''}`}>
+			{headers && (
+				<div className="table-header-wrapper">
 					<div className="table-row table-header">
 						{headers.map((header, i) => (
 							<div className={`table-cell ${header.className || ''}`} key={`table-${className}-${i}-header`}>
@@ -27,17 +27,17 @@ export default function Table({ className, headers, rows }: TableProps) {
 							</div>
 						))}
 					</div>
-				)}
-				{rows.map((row, i) => (
-					<div key={`table-${className}-${i}-row`} className={`table-row ${row.onClick ? 'clickable' : ''}`} onClick={row.onClick}>
-						{row.cells.map((cell, j) => (
-							<div className={`table-cell ${cell.className || ''}`} key={`table-${className}-${i}-${j}-cell`}>
-								{cell.element}
-							</div>
-						))}
-					</div>
-				))}
-			</div>
+				</div>
+			)}
+			{rows.map((row, i) => (
+				<div key={`table-${className}-${i}-row`} className={`table-row ${row.onClick ? 'clickable' : ''}`} onClick={row.onClick}>
+					{row.cells.map((cell, j) => (
+						<div className={`table-cell ${cell.className || ''}`} key={`table-${className}-${i}-${j}-cell`}>
+							{cell.element}
+						</div>
+					))}
+				</div>
+			))}
 		</div>
 	)
 }

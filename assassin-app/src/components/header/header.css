@@ -25,6 +25,16 @@
 	border-top-right-radius: 1rem;
 }
 
+.header.corner-left-05,
+.header-wrapper.corner-left-05 {
+	border-top-left-radius: 0.5rem;
+}
+
+.header.corner-right-05,
+.header-wrapper.corner-right-05 {
+	border-top-right-radius: 0.5rem;
+}
+
 .header.primary {
 	background-color: var(--primary-trans);
 	color: var(--primary-dark);
