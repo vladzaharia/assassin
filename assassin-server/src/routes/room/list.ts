@@ -30,7 +30,7 @@ export const ListRooms = async (c: Context<{ Bindings: Bindings }>) => {
 				status: getRoomStatus(room.status, players),
 				numPlayers: players.length,
 				usesWords: room.usesWords === 1,
-				numWordLists: room.wordlists.length,
+				numWordLists: JSON.parse(room.wordlists).length,
 			})
 		}
 

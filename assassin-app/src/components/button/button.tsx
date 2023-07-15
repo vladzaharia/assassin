@@ -1,8 +1,10 @@
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import './button.css'
 import Popover, { PopoverProps } from '../popover/popover'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import isMobile from 'is-mobile'
+import { NotificationSource } from '../../context/notification'
+import { NotificationContext } from '../../context/notification'
 
 export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	className?: string
@@ -45,5 +47,23 @@ export default function Button({ className, disabled, text, iconProps, onClick, 
 				<Popover {...popoverProps} open={popoverOpen} onClose={() => setPopoverOpen(false)} anchor={popoverAnchor.current} />
 			) : undefined}
 		</button>
+	)
+}
+
+export interface NotificationAwareButtonProps extends ButtonProps {
+	notificationSources: NotificationSource[]
+}
+
+export function NotificationAwareButton({ className, notificationSources, ...buttonProps }: NotificationAwareButtonProps) {
+	const { notification, showNotification } = useContext(NotificationContext)
+	return (
+		<Button
+			className={
+				showNotification && notificationSources.includes(notification?.source as NotificationSource)
+					? notification?.notificationType || 'primary'
+					: className
+			}
+			{...buttonProps}
+		/>
 	)
 }

@@ -43,7 +43,7 @@ export default function WordlistsAdmin() {
 			setDeleteModalWordListName(undefined)
 
 			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'room')
+				setError(e.response?.data?.message || e.message, 'room')
 			} else {
 				setError('Something went wrong!', 'room')
 			}

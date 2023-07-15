@@ -19,11 +19,6 @@
 	transition: all 0.2s ease;
 }
 
-.button.lg {
-	height: 1.5rem;
-	width: 1.5rem;
-}
-
 .button svg:has(+ span) {
 	margin-right: 0.5rem;
 }

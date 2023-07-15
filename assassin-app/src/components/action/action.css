@@ -15,7 +15,18 @@
 .action.column {
 	flex-direction: column;
 	align-items: stretch;
-	gap: 0.5rem;
+	gap: 1rem;
+}
+
+.action.column .input-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.action.column .input-wrapper input {
+	width: 75%;
 }
 
 .action .text {
@@ -33,13 +44,14 @@
 }
 
 .action .button {
-	height: 2rem;
-	width: 2rem;
+	min-height: 2rem;
+	min-width: 2rem;
 	text-align: center;
 }
 
-.action .button svg {
-	margin-right: 0;
+.action .button:not(:has(> span)) {
+	width: 2rem;
+	height: 2rem;
 }
 
 .toggle.primary.checked .MuiSwitch-thumb {

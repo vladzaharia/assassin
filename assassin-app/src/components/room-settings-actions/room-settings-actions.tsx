@@ -36,7 +36,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
+				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-reset')
 			} else {
 				setError('Something went wrong!', 'gm-reset')
 			}
@@ -51,7 +51,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 			revalidate()
 		} catch (e) {
 			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data || e.message, 'gm-start')
+				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-start')
 			} else {
 				setError('Something went wrong!', 'gm-start')
 			}

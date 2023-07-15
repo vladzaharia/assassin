@@ -29,7 +29,7 @@ import Table from '../table/table'
 import Button from '../button/button'
 import './room-settings-player-list.css'
 import Header from '../header/header'
-import Modal, { ConfirmModal } from '../modal/modal'
+import Modal, { ConfirmModal, CreateModal } from '../modal/modal'
 import Action from '../action/action'
 
 export const GetPlayerStatus = (isGM: boolean, status?: PlayerStatus) => {
@@ -96,6 +96,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 	const [player, setPlayer] = useState<Player | undefined>()
 	const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false)
 	const [removePlayerModalName, setRemovePlayerModalName] = useState<string | undefined>()
+	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 
 	const fetchPlayer = async (playerName: string) => {
 		if (roomStatus) {
@@ -105,7 +106,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 				setPlayer(player.data)
 			} catch (e) {
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'gm-reset')
+					setError(e.response?.data?.message || e.message, 'gm-reset')
 				} else {
 					setError('Something went wrong!', 'gm-reset')
 				}
@@ -113,22 +114,24 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 		}
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const addPlayer = async (playerName: string) => {
 		if (roomStatus && roomStatus.status !== 'started') {
 			try {
 				await (api as AdminApi).putPlayer(roomStatus.name, playerName)
 				setNotification({
-					message: `Added ${name} successfully!`,
+					message: `Added ${playerName} successfully!`,
 					notificationType: 'success',
 					source: 'player',
 					icon: faUserPlus,
 				})
 
+				setShowCreateModal(false)
 				revalidate()
 			} catch (e) {
+				setShowCreateModal(false)
+
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'player')
+					setError(e.response?.data?.message || e.message, 'player')
 				} else {
 					setError('Something went wrong!', 'player')
 				}
@@ -141,7 +144,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 			try {
 				await api.deletePlayer(roomStatus.name, playerName)
 				setNotification({
-					message: `Removed ${name} successfully!`,
+					message: `Removed ${playerName} successfully!`,
 					notificationType: 'success',
 					source: 'player',
 					icon: faUserMinus,
@@ -154,7 +157,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 				setRemovePlayerModalName(undefined)
 
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'player')
+					setError(e.response?.data?.message || e.message, 'player')
 				} else {
 					setError('Something went wrong!', 'player')
 				}
@@ -176,7 +179,12 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 						element:
 							apiType === 'admin' ? (
 								<div className="buttons">
-									<Button className="green" iconProps={{ icon: faPlus }} />
+									<Button
+										className="green"
+										iconProps={{ icon: faPlus }}
+										disabled={roomStatus?.status === 'started'}
+										onClick={() => setShowCreateModal(true)}
+									/>
 								</div>
 							) : (
 								''
@@ -221,7 +229,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				onConfirm={() => removePlayer(removePlayerModalName!)}
 				onClose={() => setRemovePlayerModalName(undefined)}
-				text={`Are you sure you want to kick ${removePlayerModalName} from the room?`}
+				text={`Are you sure you want to kick ${removePlayerModalName} from ${roomStatus?.name || 'the room'}?`}
 			/>
 			<Modal open={!!player} onClose={() => setPlayer(undefined)}>
 				<>
@@ -230,11 +238,13 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 						title={player?.name}
 						rightActions={
 							<div className="player-info-buttons">
-								<Button
-									className="blue"
-									iconProps={{ icon: showPlayerDetails ? faEyeSlash : faEye }}
-									onClick={() => setShowPlayerDetails(!showPlayerDetails)}
-								/>
+								{roomStatus?.status === 'started' ? (
+									<Button
+										className="blue"
+										iconProps={{ icon: showPlayerDetails ? faEyeSlash : faEye }}
+										onClick={() => setShowPlayerDetails(!showPlayerDetails)}
+									/>
+								) : undefined}
 								<Button className="primary" iconProps={{ icon: faXmark }} onClick={() => setPlayer(undefined)} />
 							</div>
 						}
@@ -243,10 +253,14 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 						<Action text="Status">
 							<span>{GetPlayerStatus(false, player?.status)}</span>
 						</Action>
-						<Action text="Is GM?">{player?.isGM ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faXmark} />}</Action>
+						<Action text="Is GM?">
+							<FontAwesomeIcon className="mr-05" icon={player?.isGM ? faCheck : faXmark} />
+						</Action>
 						{roomStatus?.status === 'started' ? (
 							<>
-								<Action text="Target">{showPlayerDetails ? player?.target : <FontAwesomeIcon icon={faEyeSlash} />}</Action>
+								<Action text="Target">
+									{showPlayerDetails ? player?.target : <FontAwesomeIcon className="mr-05" icon={faEyeSlash} />}
+								</Action>
 								<Action text="Words">
 									{showPlayerDetails ? (
 										<div className="player-info-words">
@@ -255,7 +269,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 											))}
 										</div>
 									) : (
-										<FontAwesomeIcon icon={faEyeSlash} />
+										<FontAwesomeIcon className="mr-05" icon={faEyeSlash} />
 									)}
 								</Action>
 							</>
@@ -263,6 +277,13 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 					</div>
 				</>
 			</Modal>
+			<CreateModal
+				open={showCreateModal}
+				text="Player name"
+				description={`The name of the player to add to ${roomStatus?.name || 'the room'}.`}
+				onCreate={(val) => addPlayer(val)}
+				onClose={() => setShowCreateModal(false)}
+			/>
 		</>
 	)
 }

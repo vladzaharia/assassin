@@ -78,7 +78,7 @@ export default function WordLists({ onWordListClick }: { onWordListClick: (name:
 			setWordLists(wordLists)
 		} catch (e) {
 			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data || e.message, 'gm-reset')
+				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-reset')
 			} else {
 				setError('Failed to fetch wordlists!', 'gm-reset')
 			}

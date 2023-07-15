@@ -1,7 +1,19 @@
 import { IconDefinition } from '@fortawesome/pro-regular-svg-icons'
 import { createContext } from 'react'
 
-export type NotificationSource = 'join' | 'leave' | 'gm-start' | 'gm-reset' | 'room' | 'player' | 'wordlist' | 'eliminate'
+export type NotificationSource =
+	| 'join'
+	| 'leave'
+	| 'gm-start'
+	| 'gm-reset'
+	| 'room'
+	| 'room-create'
+	| 'player'
+	| 'wordlist'
+	| 'eliminate'
+	| 'debug-reset'
+	| 'debug-init'
+	| 'debug-demo'
 export type NotificationType = 'success' | 'failed' | 'warning'
 
 export interface NotificationDetails {

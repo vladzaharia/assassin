@@ -7,9 +7,14 @@
 }
 
 .mission-modal .confirm {
-	padding: 0 1rem;
+	padding: 0 2rem;
 	text-align: center;
 }
+
+.mission-modal .words {
+	margin-bottom: 1rem;
+}
+
 .mission-modal .button-wrapper {
 	display: flex;
 	align-items: center;

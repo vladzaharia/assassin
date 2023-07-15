@@ -54,7 +54,7 @@ export default function Mission() {
 			setShowModal(false)
 		} catch (e) {
 			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'eliminate')
+				setError(e.response?.data?.message || e.message, 'eliminate')
 			} else {
 				setError('Something went wrong!', 'eliminate')
 			}

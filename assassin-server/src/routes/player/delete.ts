@@ -25,7 +25,7 @@ export const DeletePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 
 		// Check if game has already started
-		if (roomRecord.status !== 'not-ready') {
+		if (roomRecord.status === 'started') {
 			return c.json({ message: 'Game has already started!' }, 400)
 		}
 

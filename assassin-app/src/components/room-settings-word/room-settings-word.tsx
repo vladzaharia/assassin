@@ -58,7 +58,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 				revalidate()
 			} catch (e) {
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'wordlist')
+					setError(e.response?.data?.message || e.message, 'wordlist')
 				} else {
 					setError('Something went wrong!', 'wordlist')
 				}
@@ -77,7 +77,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 				revalidate()
 			} catch (e) {
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'wordlist')
+					setError(e.response?.data?.message || e.message, 'wordlist')
 				} else {
 					setError('Something went wrong!', 'wordlist')
 				}
@@ -95,7 +95,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 				revalidate()
 			} catch (e) {
 				if (isAxiosError(e)) {
-					setError(e.response?.data || e.message, 'wordlist')
+					setError(e.response?.data?.message || e.message, 'wordlist')
 				} else {
 					setError('Something went wrong!', 'wordlist')
 				}

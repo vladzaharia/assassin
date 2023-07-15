@@ -1,13 +1,13 @@
 import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
 import './room-list.css'
 import Header from '../../../components/header/header'
-import Button from '../../../components/button/button'
+import Button, { NotificationAwareButton } from '../../../components/button/button'
 import { faCheck, faDoorOpen, faTrash, faXmark, faPlus } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicRoom } from 'assassin-server-client'
 import Table from '../../../components/table/table'
 import { useContext, useState } from 'react'
-import { ConfirmModal } from '../../../components/modal/modal'
+import { ConfirmModal, CreateModal } from '../../../components/modal/modal'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
 import { NotificationContext } from '../../../context/notification'
@@ -21,8 +21,32 @@ export default function RoomsAdmin() {
 	const { setError, setNotification } = useContext(NotificationContext)
 
 	const [deleteModalRoomName, setDeleteModalRoomName] = useState<string | undefined>()
+	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 
 	const api = createAdminApi(auth.user?.access_token || '')
+
+	const createRoom = async (roomName: string) => {
+		try {
+			await api.putRoom(roomName, { usesWords: true })
+			setNotification({
+				message: `${roomName} created successfully!`,
+				notificationType: 'success',
+				source: 'room-create',
+				icon: faPlus,
+			})
+
+			setShowCreateModal(false)
+			revalidate()
+		} catch (e) {
+			setShowCreateModal(false)
+
+			if (isAxiosError(e)) {
+				setError(e.response?.data.message || e.message, 'room-create')
+			} else {
+				setError('Something went wrong!', 'room-create')
+			}
+		}
+	}
 
 	const deleteRoom = async (roomName: string) => {
 		try {
@@ -41,7 +65,7 @@ export default function RoomsAdmin() {
 			setDeleteModalRoomName(undefined)
 
 			if (isAxiosError(e)) {
-				setError(e.response?.data || e.message, 'room')
+				setError(e.response?.data?.message || e.message, 'room')
 			} else {
 				setError('Something went wrong!', 'room')
 			}
@@ -66,7 +90,12 @@ export default function RoomsAdmin() {
 					{
 						element: (
 							<div className="buttons">
-								<Button className="green" iconProps={{ icon: faPlus }} />
+								<NotificationAwareButton
+									notificationSources={['room-create']}
+									className="green"
+									onClick={() => setShowCreateModal(true)}
+									iconProps={{ icon: faPlus }}
+								/>
 							</div>
 						),
 					},
@@ -78,7 +107,7 @@ export default function RoomsAdmin() {
 							{ element: room.name },
 							{ element: room.numPlayers.toString() },
 							{ element: <FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} /> },
-							{ element: room.numWordLists.toString() },
+							{ element: room.usesWords ? room.numWordLists.toString() : 'N/A' },
 							{
 								element: (
 									<div className="buttons">
@@ -104,6 +133,13 @@ export default function RoomsAdmin() {
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				onConfirm={() => deleteRoom(deleteModalRoomName!)}
 				onClose={() => setDeleteModalRoomName(undefined)}
+			/>
+			<CreateModal
+				open={showCreateModal}
+				text="Room name"
+				description="The name of the room to create. Must be unique."
+				onCreate={(val) => createRoom(val)}
+				onClose={() => setShowCreateModal(false)}
 			/>
 		</div>
 	)
