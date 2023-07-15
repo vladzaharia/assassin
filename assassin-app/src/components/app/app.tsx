@@ -4,7 +4,7 @@ import isMobile from 'is-mobile'
 import Button from '../button/button'
 import { faMoon, faSun } from '@fortawesome/pro-solid-svg-icons'
 import usePrefersColorScheme from 'use-prefers-color-scheme'
-import { ContainerContext } from '../../context/container'
+import { ContainerContext } from '../../hooks/container'
 import { motion } from 'framer-motion'
 
 export interface AppProps {

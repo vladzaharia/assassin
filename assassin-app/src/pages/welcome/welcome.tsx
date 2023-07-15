@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
-import { NotificationContext } from '../../context/notification'
+import { NotificationContext } from '../../hooks/notification'
 import './welcome.css'
 import Button from '../../components/button/button'
 

@@ -4,8 +4,8 @@ import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import useLocalStorage from 'use-local-storage'
 import SectionTitle from '../section-title/section-title'
-import { NotificationContext } from '../../context/notification'
-import { RoomContext } from '../../context/room'
+import { NotificationContext } from '../../hooks/notification'
+import { RoomContext } from '../../hooks/room'
 import { useContext, useState } from 'react'
 import {
 	faCheck,

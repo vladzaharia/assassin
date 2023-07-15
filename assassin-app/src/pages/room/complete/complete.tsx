@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { RoomContext } from '../../../context/room'
+import { RoomContext } from '../../../hooks/room'
 import './complete.css'
 import { useNavigate } from 'react-router-dom'
 

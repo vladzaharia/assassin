@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from 'react'
-import { RoomContext } from '../../context/room'
+import { RoomContext } from '../../hooks/room'
 import './wordlists.css'
 import { createWordlistApi } from '../../api'
 import { isAxiosError } from 'axios'
-import { NotificationContext } from '../../context/notification'
+import { NotificationContext } from '../../hooks/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'

@@ -1,7 +1,7 @@
 import { faCheck, faPlay, faQuestion, faTimer, faTrophyStar } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
 import useLocalStorage from 'use-local-storage'
-import { RoomContext } from '../../context/room'
+import { RoomContext } from '../../hooks/room'
 import Status from '../status/status'
 
 export default function RoomStatus() {

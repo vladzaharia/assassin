@@ -1,7 +1,7 @@
 import { Modal as MUIModal, ModalProps } from '@mui/material'
 import './modal.css'
 import Button from '../button/button'
-import { ContainerContext } from '../../context/container'
+import { ContainerContext } from '../../hooks/container'
 import { useContext, useState } from 'react'
 import Header from '../header/header'
 import { faCheck, faPlus, faXmark } from '@fortawesome/pro-solid-svg-icons'

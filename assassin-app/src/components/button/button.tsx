@@ -3,8 +3,8 @@ import './button.css'
 import Popover, { PopoverProps } from '../popover/popover'
 import React, { useContext, useRef, useState } from 'react'
 import isMobile from 'is-mobile'
-import { NotificationSource } from '../../context/notification'
-import { NotificationContext } from '../../context/notification'
+import { NotificationSource } from '../../hooks/notification'
+import { NotificationContext } from '../../hooks/notification'
 
 export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	className?: string

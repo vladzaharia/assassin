@@ -6,7 +6,7 @@ import Button from '../../../components/button/button'
 import { faChevronLeft, faDoorOpen, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import RoomSettingsActions from '../../../components/room-settings-actions/room-settings-actions'
 import RoomSettingsWordlist from '../../../components/room-settings-word/room-settings-word'
-import { RoomContext } from '../../../context/room'
+import { RoomContext } from '../../../hooks/room'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RoomSettingsPlayerList from '../../../components/room-settings-player-list/room-settings-player-list'
 

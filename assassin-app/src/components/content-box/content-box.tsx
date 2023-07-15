@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { NotificationContext, NotificationDetails } from '../../context/notification'
+import { NotificationContext, NotificationDetails } from '../../hooks/notification'
 import Notification from '../notification/notification'
 import './content-box.css'
 

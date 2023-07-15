@@ -3,7 +3,7 @@ import './notification.css'
 import { faXmark } from '@fortawesome/pro-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareCheck, faSquareExclamation, faTriangleExclamation } from '@fortawesome/pro-solid-svg-icons'
-import { NotificationContext } from '../../context/notification'
+import { NotificationContext } from '../../hooks/notification'
 import { useContext } from 'react'
 
 export default function Notification() {

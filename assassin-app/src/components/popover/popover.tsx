@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover as MUIPopover } from '@mui/material'
 import './popover.css'
 import { useContext } from 'react'
-import { ContainerContext } from '../../context/container'
+import { ContainerContext } from '../../hooks/container'
 import { Color } from '../../types'
 
 export interface PopoverContentProps {

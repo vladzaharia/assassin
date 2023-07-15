@@ -10,7 +10,7 @@ import { useContext, useState } from 'react'
 import { ConfirmModal, CreateModal } from '../../../components/modal/modal'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
-import { NotificationContext } from '../../../context/notification'
+import { NotificationContext } from '../../../hooks/notification'
 import { isAxiosError } from 'axios'
 
 export default function RoomsAdmin() {

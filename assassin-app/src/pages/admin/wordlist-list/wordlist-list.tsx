@@ -12,7 +12,7 @@ import { AddToLibrary } from '../../../components/icons/icons'
 import { useContext, useState } from 'react'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
-import { NotificationContext } from '../../../context/notification'
+import { NotificationContext } from '../../../hooks/notification'
 import { isAxiosError } from 'axios'
 import { ConfirmModal } from '../../../components/modal/modal'
 

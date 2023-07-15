@@ -1,7 +1,7 @@
 import { faCrown, faUserSecret } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
 import useLocalStorage from 'use-local-storage'
-import { RoomContext } from '../../context/room'
+import { RoomContext } from '../../hooks/room'
 import './player-actions.css'
 import { MenuItem } from '../menu-item/menu-item'
 
