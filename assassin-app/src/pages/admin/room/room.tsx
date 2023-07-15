@@ -9,9 +9,11 @@ import RoomSettingsWordlist from '../../../components/room-settings-word/room-se
 import { RoomContext } from '../../../hooks/room'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RoomSettingsPlayerList from '../../../components/room-settings-player-list/room-settings-player-list'
+import useReload from '../../../hooks/reload'
 
 export default function RoomAdmin() {
 	const room = useLoaderData() as RoomResponse
+	useReload(room)
 	const navigate = useNavigate()
 
 	return (

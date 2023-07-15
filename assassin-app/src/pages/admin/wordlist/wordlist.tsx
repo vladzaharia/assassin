@@ -7,9 +7,11 @@ import { Wordlist as WordListResponse } from 'assassin-server-client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { AddToLibrary } from '../../../components/icons/icons'
+import useReload from '../../../hooks/reload'
 
 export default function WordlistAdmin() {
 	const wordlist = useLoaderData() as WordListResponse
+	useReload(wordlist)
 	const navigate = useNavigate()
 
 	AddToLibrary()

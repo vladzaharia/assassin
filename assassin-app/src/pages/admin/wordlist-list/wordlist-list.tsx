@@ -15,9 +15,11 @@ import { useAuth } from 'react-oidc-context'
 import { NotificationContext } from '../../../hooks/notification'
 import { isAxiosError } from 'axios'
 import { ConfirmModal } from '../../../components/modal/modal'
+import useReload from '../../../hooks/reload'
 
 export default function WordlistsAdmin() {
 	const wordlists = useLoaderData() as BasicWordlist[]
+	useReload(wordlists)
 	const navigate = useNavigate()
 	const auth = useAuth()
 	const { revalidate } = useRevalidator()

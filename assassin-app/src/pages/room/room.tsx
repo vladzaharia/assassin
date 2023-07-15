@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../components/button/button'
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
 import RoomStatus from '../../components/room-status/room-status'
+import useReload from '../../hooks/reload'
 
 export default function Room() {
 	const room = useLoaderData() as RoomResponse
@@ -34,11 +35,7 @@ export default function Room() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name])
 
-	useEffect(() => {
-		const interval = setInterval(() => navigate('.', { relative: 'path' }), 15 * 1000)
-		return () => clearInterval(interval)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [room])
+	useReload(room)
 
 	return (
 		<RoomContext.Provider

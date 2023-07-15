@@ -12,9 +12,11 @@ import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
 import { NotificationContext } from '../../../hooks/notification'
 import { isAxiosError } from 'axios'
+import useReload from '../../../hooks/reload'
 
 export default function RoomsAdmin() {
 	const rooms = useLoaderData() as BasicRoom[]
+	useReload(rooms)
 	const navigate = useNavigate()
 	const auth = useAuth()
 	const { revalidate } = useRevalidator()
