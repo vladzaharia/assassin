@@ -9,6 +9,7 @@ import Button from '../../../components/button/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import RoomSettingsWordlist from '../../../components/room-settings-word/room-settings-word'
 import RoomSettingsActions from '../../../components/room-settings-actions/room-settings-actions'
+import RoomSettingsPlayerList from '../../../components/room-settings-player-list/room-settings-player-list'
 
 export default function RoomSettings() {
 	const navigate = useNavigate()
@@ -36,6 +37,7 @@ export default function RoomSettings() {
 			/>
 			<div className="gm-actions">
 				<RoomSettingsActions apiType="gm" />
+				<RoomSettingsPlayerList apiType="gm" />
 				<RoomSettingsWordlist apiType="gm" />
 			</div>
 		</div>

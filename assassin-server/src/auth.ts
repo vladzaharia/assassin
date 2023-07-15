@@ -25,7 +25,12 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes
 	},
 	{
 		path: /room\/\w*\/player\/\w*$/,
-		methods: ['GET', 'PUT', 'DELETE'],
+		methods: ['DELETE'],
+		authTypes: ['player', 'gm', 'jwt'],
+	},
+	{
+		path: /room\/\w*\/player\/\w*$/,
+		methods: ['GET', 'PUT'],
 		authTypes: ['player', 'jwt'],
 	},
 	{

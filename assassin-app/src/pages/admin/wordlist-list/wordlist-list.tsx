@@ -27,31 +27,43 @@ export default function WordlistsAdmin() {
 			<Table
 				className="green"
 				headers={[
-					'Word list Name',
-					'# Words',
-					<div className="buttons">
-						<Button className="green" iconProps={{ icon: faPlus }} />
-					</div>,
+					{ element: 'Word list name' },
+					{ element: '# words' },
+					{
+						element: (
+							<div className="buttons">
+								<Button className="green" iconProps={{ icon: faPlus }} />
+							</div>
+						),
+					},
 				]}
 				rows={wordlists.map((list) => {
 					return {
 						name: room.name,
 						cells: [
-							<>
-								<FontAwesomeIcon className="mr-05" icon={(list.icon as IconProp) || faTextSize} /> <strong>{list.name}</strong>
-							</>,
-							list.numWords.toString(),
-							<div className="buttons">
-								<Button className="orange" iconProps={{ icon: faEdit }} onClick={() => navigate(list.name)} />{' '}
-								<Button
-									className="primary"
-									iconProps={{ icon: faTrash }}
-									onClick={(e) => {
-										e.stopPropagation()
-										e.preventDefault()
-									}}
-								/>
-							</div>,
+							{
+								element: (
+									<>
+										<FontAwesomeIcon className="mr-05" icon={(list.icon as IconProp) || faTextSize} /> {list.name}
+									</>
+								),
+							},
+							{ element: list.numWords.toString() },
+							{
+								element: (
+									<div className="buttons">
+										<Button className="orange" iconProps={{ icon: faEdit }} onClick={() => navigate(list.name)} />{' '}
+										<Button
+											className="primary"
+											iconProps={{ icon: faTrash }}
+											onClick={(e) => {
+												e.stopPropagation()
+												e.preventDefault()
+											}}
+										/>
+									</div>
+								),
+							},
 						],
 						onClick: () => navigate(list.name),
 					}

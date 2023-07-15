@@ -1,0 +1,16 @@
+.player-list-table {
+	max-height: 25rem;
+}
+
+.player-info-buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 0.25rem;
+}
+
+.player-info-words {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	align-items: flex-end;
+}

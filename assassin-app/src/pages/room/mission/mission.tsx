@@ -9,11 +9,11 @@ import Button from '../../../components/button/button'
 import { faCheck, faCrosshairs, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../../../components/action/action'
 import Words from '../../../components/words/words'
-import { Modal } from '@mui/material'
 import { createPlayerApi } from '../../../api'
 import { isAxiosError } from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SectionTitle from '../../../components/section-title/section-title'
+import Modal from '../../../components/modal/modal'
 
 export default function Mission() {
 	const [showModal, setShowModal] = useState<boolean>(false)
@@ -121,8 +121,8 @@ export default function Mission() {
 					) : undefined}
 				</>
 			) : undefined}
-			<Modal container={modalContainer.current} open={showModal} onClose={() => setShowModal(false)}>
-				<div className="mission-modal">
+			<Modal className="mission-modal" container={modalContainer.current} open={showModal} onClose={() => setShowModal(false)}>
+				<>
 					<Header
 						title="Confirm Elimination"
 						className="with-icon"
@@ -151,7 +151,7 @@ export default function Mission() {
 							/>
 						</div>
 					)}
-				</div>
+				</>
 			</Modal>
 		</div>
 	)

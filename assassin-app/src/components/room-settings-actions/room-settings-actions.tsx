@@ -1,5 +1,5 @@
 import { faRotateLeft, faPlay, faSparkles } from '@fortawesome/pro-solid-svg-icons'
-import { createAdminApi, createGMApi } from '../../api'
+import { createAdminOrGMApi } from '../../api'
 import { NotificationContext, NotificationSource } from '../../context/notification'
 import { RoomContext } from '../../context/room'
 import { useContext } from 'react'
@@ -10,7 +10,6 @@ import { isAxiosError } from 'axios'
 import Button from '../button/button'
 import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
-import { AdminApi, GMApi } from 'assassin-server-client'
 import SectionTitle from '../section-title/section-title'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -20,13 +19,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 	const auth = useAuth()
 	const [name] = useLocalStorage('name', '')
 
-	let api: GMApi | AdminApi
-
-	if (apiType === 'admin') {
-		api = createAdminApi(auth.user?.access_token || '')
-	} else {
-		api = createGMApi(name)
-	}
+	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
 
 	const { setError, setNotification, notification, showNotification } = useContext(NotificationContext)
 

@@ -6,27 +6,10 @@
 	padding-bottom: 0;
 }
 
-.mission-modal {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 40vw;
-	max-height: 50vh;
-	background-color: var(--background);
-	border: 0.0625rem solid var(--border);
-	overflow-y: overlay;
-}
-
 .mission-modal .confirm {
 	padding: 0 1rem;
 	text-align: center;
 }
-
-.mission-modal .words {
-	margin: 2rem 0;
-}
-
 .mission-modal .button-wrapper {
 	display: flex;
 	align-items: center;

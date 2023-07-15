@@ -22,26 +22,34 @@ export default function RoomsAdmin() {
 			<Table
 				className="blue"
 				headers={[
-					'Room Name',
-					'# Players',
-					'Uses Words?',
-					'# Word Lists',
-					<div className="buttons">
-						<Button className="green" iconProps={{ icon: faPlus }} />
-					</div>,
+					{ element: 'Room name' },
+					{ element: '# players' },
+					{ element: 'Uses words?' },
+					{ element: '# word lists' },
+					{
+						element: (
+							<div className="buttons">
+								<Button className="green" iconProps={{ icon: faPlus }} />
+							</div>
+						),
+					},
 				]}
 				rows={rooms.map((room) => {
 					return {
 						name: room.name,
 						cells: [
-							<strong>{room.name}</strong>,
-							room.numPlayers.toString(),
-							<FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} />,
-							room.numWordLists.toString(),
-							<div className="buttons">
-								<Button className="orange" iconProps={{ icon: faEdit }} onClick={() => navigate(room.name)} />{' '}
-								<Button className="primary" iconProps={{ icon: faTrash }} />
-							</div>,
+							{ element: room.name },
+							{ element: room.numPlayers.toString() },
+							{ element: <FontAwesomeIcon icon={room.usesWords ? faCheck : faXmark} /> },
+							{ element: room.numWordLists.toString() },
+							{
+								element: (
+									<div className="buttons">
+										<Button className="orange" iconProps={{ icon: faEdit }} onClick={() => navigate(room.name)} />{' '}
+										<Button className="primary" iconProps={{ icon: faTrash }} />
+									</div>
+								),
+							},
 						],
 						onClick: () => navigate(room.name),
 					}

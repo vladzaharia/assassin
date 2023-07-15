@@ -1,0 +1,12 @@
+.modal.MuiModal-root {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40vw;
+	max-height: 50vh;
+	background-color: var(--background);
+	border: 0.0625rem solid var(--border);
+	border-radius: 0.5rem;
+	overflow-y: overlay;
+}

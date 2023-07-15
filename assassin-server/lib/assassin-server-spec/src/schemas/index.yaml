@@ -233,8 +233,10 @@ paths:
       operationId: getPlayer
       tags:
         - Player
+        - Admin
       security:
         - UserAuth: []
+        - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
         - $ref: '#/components/parameters/PlayerName'
@@ -257,8 +259,10 @@ paths:
       operationId: putPlayer
       tags:
         - Player
+        - Admin
       security:
         - UserAuth: []
+        - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
         - $ref: '#/components/parameters/PlayerName'
@@ -277,8 +281,11 @@ paths:
       operationId: deletePlayer
       tags:
         - Player
+        - Admin
+        - GM
       security:
         - UserAuth: []
+        - JWTAuth: []
       parameters:
         - $ref: '#/components/parameters/RoomName'
         - $ref: '#/components/parameters/PlayerName'
