@@ -52,7 +52,7 @@
 			"dependsOn": ["^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "NO_D1_WARNING=true wrangler deploy"
+				"command": "NO_D1_WARNING=true wrangler deploy --env dev"
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},

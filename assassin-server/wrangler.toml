@@ -2,12 +2,30 @@ name = "assassin"
 main = "src/index.ts"
 compatibility_date = "2023-06-17"
 usage_model = "bundled"
-env = { }
 route = { pattern = "assassin.vlad.gg", custom_domain = true }
-
 kv_namespaces = [
     { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" }
 ]
+
+[env.dev]
+route = { pattern = "dev.assassin.vlad.gg", custom_domain = true }
+kv_namespaces = [
+    { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" }
+]
+[[d1_databases]]
+binding = "D1DATABASE"
+database_name = "assassin-dev"
+database_id = "dfc20066-c513-41b9-a72c-0d23eedf9624"
+
+[env.staging]
+route = { pattern = "staging.assassin.vlad.gg", custom_domain = true }
+kv_namespaces = [
+    { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" }
+]
+[[d1_databases]]
+binding = "D1DATABASE"
+database_name = "assassin-staging"
+database_id = "3294dcd9-1d30-453e-b2d0-fbe6e15683dd"
 
 [site]
 bucket = "./dist"

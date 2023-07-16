@@ -43,7 +43,6 @@ jobs:
   deploy:
     name: Deploy with Wrangler
     needs: ['build']
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -67,6 +66,14 @@ jobs:
         path: assassin-server/dist
     - name: Deploy to Cloudflare Workers
       uses: cloudflare/wrangler-action@2.0.0
+      if: github.event_name != 'pull_request'
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server
+    - name: Deploy PR to Cloudflare Workers
+      uses: cloudflare/wrangler-action@2.0.0
+      if: github.event_name == 'pull_request'
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        workingDirectory: assassin-server
+        command: deploy --env staging
