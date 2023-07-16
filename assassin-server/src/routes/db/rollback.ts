@@ -21,7 +21,7 @@ export const RollbackDb = async (c: Context<{ Bindings: Bindings }>) => {
 
 		return c.json({
 			message: 'Migrations rolled back successfully!',
-			oldVersion: currentMigration.version,
+			oldVersion: currentMigration?.version || -1,
 			newVersion: newMigration?.version || -1,
 		})
 	} catch (e) {

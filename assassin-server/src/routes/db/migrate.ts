@@ -11,9 +11,9 @@ export const MigrateDb = async (c: Context<{ Bindings: Bindings }>) => {
 			return c.json({ message: 'No migrations to apply!' }, 400)
 		}
 
-		const oldVersion = (await getCurrentMigration(db)).version
+		const oldVersion = (await getCurrentMigration(db))?.version || -1
 		await migrate(db)
-		const newVersion = (await getCurrentMigration(db)).version
+		const newVersion = (await getCurrentMigration(db))?.version || -1
 
 		return c.json({ message: 'Migrations applied successfully!', oldVersion, newVersion })
 	} catch (e) {
