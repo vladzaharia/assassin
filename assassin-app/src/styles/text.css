@@ -3,9 +3,6 @@ body {
 	margin: 0;
 	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
 	font-size: 1rem;
-	background-image: url('/background.svg');
-	background-repeat: no-repeat;
-	background-position: center center;
 }
 
 h1 {

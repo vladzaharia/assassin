@@ -1,0 +1,41 @@
+body {
+	background-image: url('/background/primary.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+body:not(:has(.app.dark)) {
+	background-image: url('/background/primary.svg');
+}
+
+body:has(.app.blue) {
+	background-image: url('/background/blue.svg');
+}
+
+body:has(.app.blue):not(:has(.app.dark)) {
+	background-image: url('/background/blue-light.svg');
+}
+
+body:has(.app.green) {
+	background-image: url('/background/green.svg');
+}
+
+body:has(.app.green):not(:has(.app.dark)) {
+	background-image: url('/background/green-light.svg');
+}
+
+body:has(.app.purple) {
+	background-image: url('/background/purple.svg');
+}
+
+body:has(.app.purple):not(:has(.app.dark)) {
+	background-image: url('/background/purple-light.svg');
+}
+
+body:has(.admin-content) {
+	background-image: url('/background/admin.svg') !important;
+}
+
+body:has(.admin-content):not(:has(.app.dark)) {
+	background-image: url('/background/admin-light.svg') !important;
+}

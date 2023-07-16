@@ -6,6 +6,7 @@ import { faMoon, faSun } from '@fortawesome/pro-solid-svg-icons'
 import usePrefersColorScheme from 'use-prefers-color-scheme'
 import { ContainerContext } from '../../hooks/container'
 import { motion } from 'framer-motion'
+import { CommonColor } from '../../types'
 
 export interface AppProps {
 	children?: ReactNode
@@ -14,7 +15,8 @@ export interface AppProps {
 export type Theme = 'light' | 'dark'
 
 export default function App({ children }: AppProps) {
-	const [theme, setTheme] = useState<Theme | undefined>()
+	const [theme, setTheme] = useState<Theme>()
+	const [color, setColor] = useState<CommonColor>()
 	const defaultTheme = usePrefersColorScheme()
 	const appRef = useRef<HTMLDivElement>(null)
 
@@ -22,12 +24,21 @@ export default function App({ children }: AppProps) {
 
 	useEffect(() => {
 		setTheme(defaultTheme === 'dark' ? 'dark' : 'light')
+
+		const host = window.location.host
+		if (host.includes("staging.")) {
+			setColor("blue")
+		} else if (host.includes("dev.")) {
+			setColor("green")
+		} else if (host.includes("localhost")) {
+			setColor("purple")
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
 		<ContainerContext.Provider value={appRef}>
-			<div className={`app ${theme}`} ref={appRef}>
+			<div className={`app ${theme} ${color || ''}`} ref={appRef}>
 				{!isMobile() ? (
 					<motion.div
 						className={`no-animate`}
@@ -37,7 +48,8 @@ export default function App({ children }: AppProps) {
 						}}
 					>
 						<Button
-							className={`theme ${isDark ? 'orange' : 'purple-dark'}`}
+							className='theme'
+							color={isDark ? 'orange' : 'purple-dark' as CommonColor}
 							iconProps={{ icon: isDark ? faSun : faMoon, size: 'xl' }}
 							onClick={() => setTheme(isDark ? 'light' : 'dark')}
 						/>
