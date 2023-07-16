@@ -21,7 +21,7 @@ export const DeleteWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		// Delete all words for word list
 		const words = await listWordsInWordList(db, list)
 		for (const word of words) {
-			await deleteWord(db, word.word, word.list)
+			await deleteWord(db, word.list, word.word)
 		}
 
 		// Delete word list

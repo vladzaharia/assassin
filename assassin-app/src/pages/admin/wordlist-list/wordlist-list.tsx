@@ -13,8 +13,9 @@ import { useState } from 'react'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
 import { useNotificationAwareRequest } from '../../../hooks/notification'
-import { ConfirmModal } from '../../../components/modal/modal'
+import Modal, { ConfirmModal } from '../../../components/modal/modal'
 import useReload from '../../../hooks/reload'
+import WordlistDetails from '../../../components/wordlist-details/wordlist-details'
 
 export default function WordlistsAdmin() {
 	const wordlists = useLoaderData() as BasicWordlist[]
@@ -23,6 +24,7 @@ export default function WordlistsAdmin() {
 	const auth = useAuth()
 	const request = useNotificationAwareRequest()
 	const [deleteModalWordListName, setDeleteModalWordListName] = useState<string | undefined>()
+	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 
 	const api = createAdminApi(auth.user?.access_token || '')
 
@@ -58,7 +60,7 @@ export default function WordlistsAdmin() {
 					{
 						element: (
 							<div className="buttons">
-								<Button color="green" iconProps={{ icon: faPlus }} />
+								<Button color="green" iconProps={{ icon: faPlus }} onClick={() => setShowCreateModal(true)} />
 							</div>
 						),
 					},
@@ -101,6 +103,20 @@ export default function WordlistsAdmin() {
 				onConfirm={() => deleteWordList(deleteModalWordListName!)}
 				onClose={() => setDeleteModalWordListName(undefined)}
 			/>
+			<Modal className="create-modal" open={showCreateModal} onClose={() => setShowCreateModal(false)}>
+				<>
+					<Header
+						className="corner-left-05 corner-right-05"
+						title="Create"
+						rightActions={
+							<div className="modal-buttons">
+								<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => setShowCreateModal(false)} />
+							</div>
+						}
+					/>
+					<WordlistDetails inModal onClose={() => setShowCreateModal(false)} />
+				</>
+			</Modal>
 		</div>
 	)
 }

@@ -12,17 +12,63 @@ input[type='number'] {
 }
 
 input[type='text']::placeholder,
-input[type='number']::placeholder {
+input[type='number']::placeholder,
+textarea::placeholder {
 	font-weight: 200;
 }
 
 input[type='text']:focus,
-input[type='number']:focus {
-	outline: 0.2rem var(--primary) solid;
+input[type='number']:focus,
+textarea:focus {
+	outline-color: var(--grey-light);
 	border: none;
+	outline-width: 0.2rem;
+}
+
+input[type='text'].primary:focus,
+input[type='number'].primary:focus,
+textarea.primary:focus {
+	outline-color: var(--primary);
+}
+
+input[type='text'].blue:focus,
+input[type='number'].blue:focus,
+textarea.blue:focus {
+	outline-color: var(--blue);
+}
+
+input[type='text'].green:focus,
+input[type='number'].green:focus,
+textarea.green:focus {
+	outline-color: var(--green);
+}
+
+input[type='text'].purple:focus,
+input[type='number'].purple:focus,
+textarea.purple:focus {
+	outline-color: var(--purple);
+}
+
+input[type='text'].orange:focus,
+input[type='number'].orange:focus,
+textarea.orange:focus {
+	outline-color: var(--orange);
+}
+
+textarea {
+	height: 3rem;
+	background-color: var(--background);
+	color: var(--foreground);
+	font-family: 'Barlow', Roboto, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	outline: 0.1rem solid var(--grey-dark);
+	border: none;
+	border-radius: 0.3rem;
+	padding: 0.5rem;
 }
 
 .app.dark input[type='text'],
-.app.dark input[type='number'] {
+.app.dark input[type='number'],
+.app.dark textarea {
 	color: var(--white);
 }

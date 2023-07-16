@@ -2,11 +2,10 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 import './wordlist.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
-import { IconName, faChevronLeft, faList, faPencil, faTextSize, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faChevronLeft, faTextSize, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import { Wordlist as WordListResponse } from 'assassin-server-client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { AddToLibrary } from '../../../components/icons/icons'
 import useReload from '../../../hooks/reload'
 import SectionTitle from '../../../components/section-title/section-title'
 import Action from '../../../components/action/action'
@@ -15,6 +14,7 @@ import { useState } from 'react'
 import { useNotificationAwareRequest } from '../../../hooks/notification'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
+import WordlistDetails from '../../../components/wordlist-details/wordlist-details'
 
 export default function WordlistAdmin() {
 	const wordlist = useLoaderData() as WordListResponse
@@ -27,13 +27,11 @@ export default function WordlistAdmin() {
 
 	const api = createAdminApi(auth.user?.access_token || '')
 
-	AddToLibrary()
-
 	const addWord = async () => {
 		await request(
-			async () => await api.putWord(wordlist.name, newWord),
+			async () => await api.putWord(wordlist.name, newWord.replace(',', '')),
 			{
-				message: `${newWord} added to ${wordlist.name}`,
+				message: `${newWord.replace(',', '')} added to ${wordlist.name} successfully!`,
 			},
 			() => setNewWord('')
 		)
@@ -41,7 +39,7 @@ export default function WordlistAdmin() {
 
 	const removeWord = async (word: string) => {
 		await request(async () => await api.deleteWord(wordlist.name, word), {
-			message: `${word} removed from ${wordlist.name}`,
+			message: `${word} removed from ${wordlist.name} successfully!`,
 		})
 	}
 
@@ -58,35 +56,21 @@ export default function WordlistAdmin() {
 				leftActions={<Button color="green" onClick={() => navigate(`/admin/wordlist`)} iconProps={{ icon: faChevronLeft }} />}
 				rightActions={<Button color="green" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 			/>
-			<SectionTitle color="green">
-				<div className="section-title-with-action">
-					<span>
-						<FontAwesomeIcon className="mr-05" icon={faList} /> Details
-					</span>
-					<Button color="orange" iconProps={{ icon: faPencil }} />
-				</div>
-			</SectionTitle>
-			<Action text="Description">
-				<span>{wordlist.description}</span>
-			</Action>
-			<Action text="Icon">
-				<span>
-					<FontAwesomeIcon className="mr-05" icon={(wordlist.icon as IconName) || faTextSize} /> {wordlist.icon}
-				</span>
-			</Action>
+			<WordlistDetails />
 
 			<SectionTitle color="green">
 				<>
 					<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
 				</>
 			</SectionTitle>
-			<Action text="Add word" description="Type a new word and press Enter, Space or comma (,)">
+			<Action text="Add word" description="Type a new word and press Enter or comma (,) to add it.">
 				<input
+					className="green"
 					type="text"
 					value={newWord}
 					onChange={(e) => setNewWord(e.currentTarget.value)}
 					onKeyUp={(e) => {
-						if ((e.key === 'Enter' || e.key === 'Space' || e.key === ',') && newWord !== '') {
+						if ((e.key === 'Enter' || e.key === ',') && newWord !== '') {
 							addWord()
 						}
 					}}

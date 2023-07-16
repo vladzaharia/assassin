@@ -1,5 +1,5 @@
 import Action from '../action/action'
-import WordLists from '../wordlists/wordlists'
+import WordListCards from '../wordlist-card/wordlist-card'
 import { faMessageMinus, faMessagePlus, faTextSize } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminOrGMApi } from '../../api'
 import { useNotificationAwareRequest } from '../../hooks/notification'
@@ -110,7 +110,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 						</div>
 					</Action>
 					<Action text="Word lists" className="column">
-						<WordLists onWordListClick={updateWordLists} />
+						<WordListCards onWordListClick={updateWordLists} />
 					</Action>
 				</>
 			) : undefined}

@@ -25,6 +25,10 @@
 	justify-content: center;
 }
 
+.action input {
+	flex: 0.5 1 auto;
+}
+
 .action.column .input-wrapper input {
 	width: 75%;
 }
@@ -33,10 +37,18 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
+	flex: 1 1 auto;
+}
+
+.action.column .text {
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .action .title {
 	font-weight: 500;
+	flex: 1 1 auto;
 }
 
 .action .text .description {
@@ -73,9 +85,5 @@
 @media only screen and (max-width: 50rem) {
 	.action {
 		padding-right: 1.3rem;
-	}
-
-	.action .text .description {
-		width: 90%;
 	}
 }

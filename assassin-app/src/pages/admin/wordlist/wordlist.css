@@ -15,3 +15,22 @@
 	gap: 1rem;
 	padding: 1.5rem;
 }
+
+.icon-pill {
+	white-space: nowrap;
+}
+
+.icons {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-evenly;
+	gap: 0.75rem;
+	padding: 1rem;
+}
+
+.icons .pill {
+	height: 2.25rem;
+	width: 2.25rem;
+}

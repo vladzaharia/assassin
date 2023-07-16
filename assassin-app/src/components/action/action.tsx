@@ -3,7 +3,7 @@ import './action.css'
 
 interface ActionProps {
 	text?: string
-	description?: string
+	description?: string | JSX.Element
 	className?: string
 	children: ReactNode
 }

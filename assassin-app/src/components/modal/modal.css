@@ -2,7 +2,7 @@
 	min-width: 30vw;
 	max-width: 50vw;
 	min-height: 20vh;
-	max-height: 50vh;
+	max-height: 75vh;
 	background-color: var(--background);
 	border: 0.0625rem solid var(--border);
 	border-radius: 0.5rem;
@@ -14,7 +14,7 @@
 }
 
 .modal.MuiModal-root .modal-content {
-	background-color: var(--border);
+	background-color: var(--grey-darkest);
 	height: 100%;
 }
 
@@ -43,6 +43,11 @@
 	display: flex;
 	flex-direction: row;
 	gap: 0.5rem;
+}
+
+.modal.create-modal .action.column .text {
+	align-items: stretch;
+	flex-direction: column;
 }
 
 @media only screen and (max-width: 87.5rem) {

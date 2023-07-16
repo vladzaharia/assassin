@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from 'react'
 import { RoomContext } from '../../hooks/room'
-import './wordlists.css'
+import './wordlist-card.css'
 import { createWordlistApi } from '../../api'
 import { useNotificationAwareRequest } from '../../hooks/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,7 +11,7 @@ import { faMessageText } from '@fortawesome/pro-solid-svg-icons'
 import { Card, CardContent } from '@mui/material'
 import { AddToLibrary } from '../icons/icons'
 
-interface WordListProps {
+interface WordListCardProps {
 	name: string
 	description: string
 	icon: IconProp
@@ -21,7 +21,7 @@ interface WordListProps {
 	onClick: () => void
 }
 
-function WordList({ name, description, icon, words, selected, disabled, onClick }: WordListProps) {
+function WordListCard({ name, description, icon, words, selected, disabled, onClick }: WordListCardProps) {
 	AddToLibrary()
 
 	return (
@@ -56,7 +56,7 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 	)
 }
 
-export default function WordLists({ onWordListClick }: { onWordListClick: (name: string) => void }) {
+export default function WordListCards({ onWordListClick }: { onWordListClick: (name: string) => void }) {
 	const request = useNotificationAwareRequest()
 	const wordlistApi = createWordlistApi()
 	const [wordLists, setWordLists] = useState<Wordlist[]>([])
@@ -88,8 +88,8 @@ export default function WordLists({ onWordListClick }: { onWordListClick: (name:
 	return (
 		<div className="wordlists">
 			{wordLists.map((wl) => (
-				<WordList
-					{...(wl as WordListProps)}
+				<WordListCard
+					{...(wl as WordListCardProps)}
 					key={wl.name}
 					disabled={isPlaying || !roomStatus?.usesWords}
 					selected={roomStatus?.wordLists?.includes(wl.name) || false}

@@ -8,7 +8,7 @@ import Header from '../../../components/header/header'
 import Button, { NotificationAwareButton } from '../../../components/button/button'
 import { faCheck, faCrosshairs, faTextSize, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../../../components/action/action'
-import Words from '../../../components/words/words'
+import WordCards from '../../../components/word-card/word-card'
 import { createPlayerApi } from '../../../api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SectionTitle from '../../../components/section-title/section-title'
@@ -112,7 +112,7 @@ export default function Mission() {
 								<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
 							</SectionTitle>
 							<Action className="column" description="Use these words to eliminate your target.">
-								<Words words={player.words} />
+								<WordCards words={player.words} />
 							</Action>
 						</>
 					) : undefined}
@@ -137,7 +137,7 @@ export default function Mission() {
 						</p>
 					</div>
 					{usesWords ? (
-						<Words words={player.words} onWordClick={eliminatePlayer} />
+						<WordCards words={player.words} onWordClick={eliminatePlayer} />
 					) : (
 						<div className="button-wrapper">
 							<Button

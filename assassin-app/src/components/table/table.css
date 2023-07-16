@@ -177,6 +177,7 @@
 		max-width: 100%;
 		border-radius: 0;
 		margin: 0;
+		border: 0;
 	}
 
 	.table .table-header {
@@ -186,7 +187,7 @@
 
 	.table .table-cell {
 		height: 1.3125rem;
-		padding: 1rem;
+		padding: 1.5rem;
 	}
 
 	.table .button:not(:first-child) {

@@ -7,31 +7,61 @@
 	background-color: var(--grey-dark);
 	color: var(--grey-light);
 	border-radius: 0.3rem;
+	border: 0.0625rem solid var(--border);
 }
 
 .pill.primary {
 	background-color: var(--primary-trans);
 	color: var(--primary);
+	border-color: var(--primary-trans);
 }
 
 .pill.blue {
 	background-color: var(--blue-trans);
 	color: var(--blue);
+	border-color: var(--blue-trans);
 }
 
 .pill.green {
 	background-color: var(--green-trans);
 	color: var(--green);
+	border-color: var(--green-trans);
 }
 
 .pill.purple {
 	background-color: var(--purple-trans);
 	color: var(--purple);
+	border-color: var(--purple-trans);
 }
 
 .pill.orange {
 	background-color: var(--orange-trans);
 	color: var(--orange);
+	border-color: var(--orange-trans);
+}
+
+.pill.active {
+	border-color: var(--grey-light);
+}
+
+.pill.active.primary {
+	border-color: var(--primary);
+}
+
+.pill.active.blue {
+	border-color: var(--blue);
+}
+
+.pill.active.green {
+	border-color: var(--green);
+}
+
+.pill.active.purple {
+	border-color: var(--purple);
+}
+
+.pill.active.orange {
+	border-color: var(--orange);
 }
 
 .pill > span {

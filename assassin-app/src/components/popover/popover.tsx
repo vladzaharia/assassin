@@ -18,11 +18,11 @@ const PopoverContent = ({ title, description, color, icon }: PopoverContentProps
 		<div className="popover">
 			{title && (
 				<h3 className={color}>
-					{icon && <FontAwesomeIcon icon={icon} size="lg" />}
+					{icon && <FontAwesomeIcon className="mr-1" icon={icon} size="lg" />}
 					{title}
 				</h3>
 			)}
-			{description && <span className="description">{description}</span>}
+			{description && <div className="description">{description}</div>}
 		</div>
 	)
 }

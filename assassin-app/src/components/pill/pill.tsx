@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CommonColor } from '../../types'
 import { faXmark } from '@fortawesome/pro-solid-svg-icons'
 import './pill.css'
+import React from 'react'
 
 export interface PillProps {
-	text: string
+	text: string | JSX.Element
 	color?: CommonColor
 	className?: string
 	onClick?: () => void

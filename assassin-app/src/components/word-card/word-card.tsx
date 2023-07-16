@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import './words.css'
+import './word-card.css'
 import { Card, CardContent } from '@mui/material'
 
 interface WordProps {
@@ -8,7 +8,7 @@ interface WordProps {
 	onClick?: () => void
 }
 
-function Word({ word, disabled, onClick }: WordProps) {
+function WordCard({ word, disabled, onClick }: WordProps) {
 	return (
 		<Card
 			onClick={onClick}
@@ -30,12 +30,12 @@ function Word({ word, disabled, onClick }: WordProps) {
 	)
 }
 
-export default function Words({ words, onWordClick }: { words?: string[]; onWordClick?: (word: string) => void }) {
+export default function WordCards({ words, onWordClick }: { words?: string[]; onWordClick?: (word: string) => void }) {
 	return (
 		<div className="words">
 			{words ? (
 				words.map((w) => (
-					<Word
+					<WordCard
 						key={w}
 						word={w}
 						disabled={!onWordClick}
