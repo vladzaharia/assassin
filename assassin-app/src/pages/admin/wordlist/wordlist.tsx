@@ -27,6 +27,8 @@ export default function WordlistAdmin() {
 
 	const api = createAdminApi(auth.user?.access_token || '')
 
+	const isManaged = wordlist.managed
+
 	const addWord = async () => {
 		await request(
 			async () => await api.putWord(wordlist.name, newWord.replace(',', '')),
@@ -57,34 +59,29 @@ export default function WordlistAdmin() {
 				rightActions={<Button color="green" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 			/>
 			<WordlistDetails />
-
-			{!wordlist.managed ? (
+			<SectionTitle color="green">
 				<>
-					<SectionTitle color="green">
-						<>
-							<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
-						</>
-					</SectionTitle>
-					<Action text="Add word" description="Type a new word and press Enter or comma (,) to add it.">
-						<input
-							className="green"
-							type="text"
-							value={newWord}
-							onChange={(e) => setNewWord(e.currentTarget.value)}
-							onKeyUp={(e) => {
-								if ((e.key === 'Enter' || e.key === ',') && newWord !== '') {
-									addWord()
-								}
-							}}
-						/>
-					</Action>
-					<div className="wordlist-words">
-						{wordlist.words.map((w) => (
-							<Pill color="green" text={w} onAction={() => removeWord(w)} />
-						))}
-					</div>
+					<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
 				</>
-			) : undefined}
+			</SectionTitle>
+			{!isManaged ? <Action text="Add word" description="Type a new word and press Enter or comma (,) to add it.">
+				<input
+					className="green"
+					type="text"
+					value={newWord}
+					onChange={(e) => setNewWord(e.currentTarget.value)}
+					onKeyUp={(e) => {
+						if ((e.key === 'Enter' || e.key === ',') && newWord !== '') {
+							addWord()
+						}
+					}}
+				/>
+			</Action> : undefined}
+			<div className="wordlist-words">
+				{wordlist.words.map((w) => (
+					<Pill color="green" text={w} onAction={!isManaged ? () => removeWord(w) : undefined} />
+				))}
+			</div>
 		</div>
 	)
 }

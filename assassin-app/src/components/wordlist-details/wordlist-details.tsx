@@ -107,30 +107,29 @@ export default function WordlistDetails({ inModal, onClose }: { inModal?: boolea
 					<FontAwesomeIcon className="mr-1" icon={isManaged ? faCheck : faXmark} />
 				</Action>
 			) : undefined}
-			{!isManaged ? (
-				<>
-					<Action className="column" text="Description">
-						<textarea className="green" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
-					</Action>
-					<Action
-						className="column"
-						text="Icon"
-						description={
-							!inModal ? (
-								<span className="mr-05">
-									<FontAwesomeIcon className="mr-05" icon={(icon as IconName) || faTextSize} /> {icon || '(default icon)'}
-								</span>
-							) : undefined
-						}
-					>
-						<IconSelector />
-					</Action>
-					{inModal ? (
-						<Action>
-							<Button color="green" iconProps={{ icon: faPlus }} text="Create" onClick={() => addWordList()} />
-						</Action>
-					) : undefined}
-				</>
+			<Action className={!isManaged ? "column" : undefined} text="Description">
+				{isManaged ? description :
+				<textarea className="green" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />}
+			</Action>
+			<Action
+				className={!isManaged ? "column" : undefined}
+				text="Icon"
+				description={
+					!inModal && !isManaged ? (
+						<span className="mr-05">
+							<FontAwesomeIcon className="mr-05" icon={(icon as IconName) || faTextSize} /> {icon || '(default icon)'}
+						</span>
+					) : undefined
+				}
+			>
+				{!isManaged ? <IconSelector /> : <span className="mr-05">
+							<FontAwesomeIcon className="mr-05" icon={(icon as IconName) || faTextSize} /> {icon || '(default icon)'}
+						</span>}
+			</Action>
+			{inModal ? (
+				<Action>
+					<Button color="green" iconProps={{ icon: faPlus }} text="Create" onClick={() => addWordList()} />
+				</Action>
 			) : undefined}
 		</>
 	)

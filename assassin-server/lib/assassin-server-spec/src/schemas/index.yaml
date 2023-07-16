@@ -812,7 +812,7 @@ components:
               message:
                 type: string
                 description: Message for this error.
-                example: Wordlist already exists!
+                example: Word list already exists!
             required:
               - message
     WordlistNotFound:
@@ -825,7 +825,20 @@ components:
               message:
                 type: string
                 description: Message for this error.
-                example: Wordlist not found!
+                example: Word list not found!
+            required:
+              - message
+    WordlistManaged:
+      description: Word list is managed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Word list is managed!
             required:
               - message
     WordExists:

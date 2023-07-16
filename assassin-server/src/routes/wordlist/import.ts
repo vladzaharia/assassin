@@ -2,8 +2,8 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { createWordTable, deleteWordsInWordList, insertWords, listWordsInWordList } from '../../tables/word'
 import { createWordListTable, deleteWordList, insertWordList, listWordLists } from '../../tables/wordlist'
-import { AVAILABLE_WORDLISTS } from './importable'
-import { ImportableWordList } from './importable/types'
+import { MANAGED_WORDLISTS } from './managed'
+import { ImportableWordList } from './managed/types'
 
 export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -14,12 +14,12 @@ export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings 
 		await createWordTable(db)
 
 		const wordLists = await listWordLists(db)
-		const wordListsToAdd: ImportableWordList[] = AVAILABLE_WORDLISTS.filter((wl) => !wordLists.some((record) => record.name === wl.name))
+		const wordListsToAdd: ImportableWordList[] = MANAGED_WORDLISTS.filter((wl) => !wordLists.some((record) => record.name === wl.name))
 		const wordListsToUpdate: ImportableWordList[] = []
 
 		for (const wordList of wordLists) {
 			const words = await listWordsInWordList(db, wordList.name)
-			const managedList = AVAILABLE_WORDLISTS.filter((wl) => wl.name === wordList.name)[0]
+			const managedList = MANAGED_WORDLISTS.filter((wl) => wl.name === wordList.name)[0]
 
 			if (
 				managedList &&
@@ -60,7 +60,7 @@ export const InitializeWordlists = async (c: Context<{ Bindings: Bindings }>) =>
 		await createWordListTable(db)
 		await createWordTable(db)
 
-		const initialWordList = AVAILABLE_WORDLISTS.filter((wl) => wl.name === list)[0]
+		const initialWordList = MANAGED_WORDLISTS.filter((wl) => wl.name === list)[0]
 
 		// Check if wordlist exists
 		if (!initialWordList) {

@@ -1,6 +1,6 @@
-import { InitialWordList } from './types'
+import { ManagedWordList } from './types'
 
-export const POKEMON: InitialWordList = {
+export const POKEMON: ManagedWordList = {
 	name: 'pokemon',
 	description: 'Names of Pokémon from across generations.',
 	icon: 'circle-half-stroke',
