@@ -91,8 +91,8 @@ app.delete('/api/wordlist/:list/word/:word', DeleteWord)
 app.put('/api/wordlist/:list/words', AddWords)
 app.delete('/api/wordlist/:list/words', DeleteWords)
 
-// Debug endpoints
-app.put('/api/debug/reset', ResetDb)
+// Database endpoints
+app.put('/api/db/reset', ResetDb)
 
 // OpenAPI
 app.get(
@@ -134,7 +134,7 @@ app.get(
 	})
 )
 app.get(
-	'/admin/debug',
+	'/admin/database',
 	serveStatic({
 		path: './app/index.html',
 	})

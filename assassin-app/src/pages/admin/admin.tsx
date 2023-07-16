@@ -1,6 +1,6 @@
 import Menu from '../../components/menu/menu'
 import { hasAuthParams, useAuth } from 'react-oidc-context'
-import { faRightFromBracket, faRightToBracket, faTextSize, faUser, faDoorOpen, faCog } from '@fortawesome/pro-solid-svg-icons'
+import { faRightFromBracket, faRightToBracket, faTextSize, faUser, faDoorOpen, faDatabase } from '@fortawesome/pro-solid-svg-icons'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Outlet, useLocation } from 'react-router-dom'
 import './admin.css'
@@ -36,7 +36,7 @@ export default function Admin() {
 								/>
 							) : undefined}
 							<Button
-								className={auth.isAuthenticated ? 'primary' : 'green'}
+								color={auth.isAuthenticated ? 'primary' : 'green'}
 								onClick={auth.isAuthenticated ? () => void auth.removeUser() : () => void auth.signinRedirect()}
 								iconProps={{
 									icon: auth.isAuthenticated ? faRightFromBracket : faRightToBracket,
@@ -48,9 +48,9 @@ export default function Admin() {
 			>
 				{auth.isAuthenticated ? (
 					<>
-						<MenuItem key="room" className="blue" text="Rooms" icon={faDoorOpen} destination="room" />
-						<MenuItem key="wordlist" className="green" text="Word lists" icon={faTextSize} destination="wordlist" />
-						<MenuItem key="debug" className="purple" text="Debug" icon={faCog} destination="debug" />
+						<MenuItem key="room" color="blue" text="Rooms" icon={faDoorOpen} destination="room" />
+						<MenuItem key="wordlist" color="green" text="Word lists" icon={faTextSize} destination="wordlist" />
+						<MenuItem key="debug" color="purple" text="Database" icon={faDatabase} destination="database" />
 					</>
 				) : undefined}
 			</Menu>

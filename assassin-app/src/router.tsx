@@ -25,7 +25,7 @@ import RoomsAdmin from './pages/admin/room-list/room-list'
 import RoomAdmin from './pages/admin/room/room'
 import WordlistsAdmin from './pages/admin/wordlist-list/wordlist-list'
 import WordlistAdmin from './pages/admin/wordlist/wordlist'
-import AdminDebug from './pages/admin/debug/debug'
+import AdminDatabase from './pages/admin/debug/database'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -120,9 +120,9 @@ const router = createBrowserRouter([
 						element: <WordlistAdmin />,
 					},
 					{
-						path: 'debug',
-						id: 'admin-debug',
-						element: <AdminDebug />,
+						path: 'database',
+						id: 'admin-database',
+						element: <AdminDatabase />,
 					},
 				],
 			},

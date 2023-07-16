@@ -563,12 +563,12 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
-  /debug/reset:
+  /db/reset:
     put:
       summary: Reset database
       description: |
         Drops and recreates all tables in the D1 database.
-      operationId: debugReset
+      operationId: resetDatabase
       tags:
         - Admin
       security:
