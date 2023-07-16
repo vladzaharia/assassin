@@ -13,14 +13,39 @@ servers:
 paths:
   /:
     get:
-      summary: Ping
-      description: Simple ping endpoint for querying if the server is alive.
-      operationId: ping
+      summary: Server infromation
+      description: Provide server information to client
+      operationId: serverInfo
       tags:
-        - Ping
+        - Info
       responses:
         200:
-          $ref: '#/components/responses/Success'
+          description: Server information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    description: Server version, in semver
+                    example: "0.1.0"
+                  db:
+                    type: object
+                    description: Database information
+                    properties:
+                      version:
+                        description: Database's current version
+                        type: number
+                        example: 0
+                      minVersion:
+                        description: Minimum supported database schema version
+                        type: number
+                        example: 1
+                      maxVersion:
+                        description: Maximum supported database schema version
+                        type: number
+                        example: 2
 
   /room:
     get:

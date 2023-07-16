@@ -6,7 +6,7 @@ import { AuthMiddleware } from './auth'
 import { Bindings } from './bindings'
 import { GetUninitializedWordLists, InitializeWordlists } from './routes/wordlist/import'
 import { ResetDb } from './routes/debug/reset'
-import { Ok } from './routes/ok'
+import { Info } from './routes/info'
 import { AddPlayer } from './routes/player/add'
 import { DeletePlayer } from './routes/player/delete'
 import { EliminatePlayer } from './routes/player/eliminate'
@@ -45,8 +45,8 @@ app.use('/api/*', AuthMiddleware)
 // #endregion
 
 // Simple Ok response
-app.get('/api', Ok)
-app.get('/api/', Ok)
+app.get('/api', Info)
+app.get('/api/', Info)
 
 // List rooms
 app.get('/api/room', ListRooms)
