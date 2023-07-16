@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import './debug.css'
 import Header from '../../../components/header/header'
 import Button, { NotificationAwareButton } from '../../../components/button/button'
-import { faCog, faDoorOpen, faFire, faTextSize, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faCog, faFire, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Action from '../../../components/action/action'
 import { createAdminApi } from '../../../api'
@@ -32,35 +32,6 @@ export default function AdminDebug() {
 		)
 	}
 
-	const debugInitWordlists = async () => {
-		await request(
-			async () =>
-				await api.debugInit({
-					wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
-				}),
-			{
-				message: `Wordlist initialized successfully!`,
-				source: 'debug-init',
-				icon: faTextSize,
-			}
-		)
-	}
-
-	const debugInitDemoRoom = async () => {
-		await request(
-			async () =>
-				await api.debugInit({
-					room: 'test',
-					players: ['Vlad', 'George', 'John'],
-				}),
-			{
-				message: `Demo room (test) initialized successfully!`,
-				source: 'debug-demo',
-				icon: faDoorOpen,
-			}
-		)
-	}
-
 	return (
 		<div className="room">
 			<Header
@@ -76,22 +47,6 @@ export default function AdminDebug() {
 					color="primary"
 					iconProps={{ icon: faFire }}
 					onClick={() => setShowDeleteModal(true)}
-				/>
-			</Action>
-			<Action text="Initialize wordlists" description="Adds initial wordlists to database.">
-				<NotificationAwareButton
-					notificationSources={['debug-init']}
-					color="blue"
-					iconProps={{ icon: faTextSize }}
-					onClick={() => debugInitWordlists()}
-				/>
-			</Action>
-			<Action text="Initialize demo room" description="Adds demo room to database.">
-				<NotificationAwareButton
-					notificationSources={['debug-demo']}
-					color="green"
-					iconProps={{ icon: faDoorOpen }}
-					onClick={() => debugInitDemoRoom()}
 				/>
 			</Action>
 			<ConfirmModal

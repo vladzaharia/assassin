@@ -1,7 +1,6 @@
-import { RoomStatus } from './tables/db'
-import { PlayerRecord } from './types'
+import { PlayerTable, RoomStatus } from './tables/db'
 
-export function getRoomStatus(status: RoomStatus, records: PlayerRecord[]) {
+export function getRoomStatus(status: RoomStatus, records: PlayerTable[]) {
 	if (status === 'not-ready' && records.length > 2) {
 		return 'ready'
 	}

@@ -1,0 +1,13 @@
+.wordlist-available {
+	width: 100%;
+}
+
+.wordlist-available-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	padding: 2rem;
+}

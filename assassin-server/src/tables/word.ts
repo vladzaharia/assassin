@@ -83,3 +83,7 @@ export async function deleteWords(db: D1Database, list: string, words: string[])
 		.where(({ and, cmpr }) => and([cmpr('word', 'in', words), cmpr('list', '=', list)]))
 		.execute()
 }
+
+export async function deleteWordsInWordList(db: D1Database, list: string) {
+	return await getKyselyDb(db).deleteFrom('word').where('list', '=', list).execute()
+}

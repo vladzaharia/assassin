@@ -78,7 +78,7 @@ export default function WordlistAdmin() {
 			</Action>
 			<div className="wordlist-words">
 				{wordlist.words.map((w) => (
-					<Pill color="green" text={w} onDelete={() => removeWord(w)} />
+					<Pill color="green" text={w} onAction={() => removeWord(w)} />
 				))}
 			</div>
 		</div>

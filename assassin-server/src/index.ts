@@ -4,7 +4,7 @@ import { cors } from 'hono/cors'
 
 import { AuthMiddleware } from './auth'
 import { Bindings } from './bindings'
-import { InitializeDb } from './routes/debug/init'
+import { GetUninitializedWordLists, InitializeWordlists } from './routes/wordlist/import'
 import { ResetDb } from './routes/debug/reset'
 import { Ok } from './routes/ok'
 import { AddPlayer } from './routes/player/add'
@@ -76,12 +76,14 @@ app.post('/api/room/:room/player/:name/eliminate', EliminatePlayer)
 // List word lists
 app.get('/api/wordlist', ListWordLists)
 app.get('/api/wordlist/', ListWordLists)
+app.get('/api/wordlist/importable', GetUninitializedWordLists)
 
 // Get/add/delete word lists
 app.get('/api/wordlist/:list', GetWordList)
 app.put('/api/wordlist/:list', AddWordList)
 app.patch('/api/wordlist/:list', UpdateWordList)
 app.delete('/api/wordlist/:list', DeleteWordList)
+app.post('/api/wordlist/:list/import', InitializeWordlists)
 
 // Add/delete words from word lists
 app.put('/api/wordlist/:list/word/:word', AddWord)
@@ -90,7 +92,6 @@ app.put('/api/wordlist/:list/words', AddWords)
 app.delete('/api/wordlist/:list/words', DeleteWords)
 
 // Debug endpoints
-app.put('/api/debug/init', InitializeDb)
 app.put('/api/debug/reset', ResetDb)
 
 // OpenAPI

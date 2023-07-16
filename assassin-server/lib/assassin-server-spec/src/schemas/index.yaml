@@ -350,6 +350,30 @@ paths:
                   - wordLists
         500:
           $ref: '#/components/responses/InternalServerError'
+  /wordlist/importable:
+    get:
+      summary: Check importable wordlists.
+      description: |
+        Check which wordlists are not imported or need to be updated
+      operationId: checkWordLists
+      tags:
+        - Admin
+        - Wordlist
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          description: Importable word lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImportableWordList'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}:
     get:
       summary: Get wordlist
@@ -428,7 +452,26 @@ paths:
           $ref: '#/components/responses/WordlistNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
-
+  /wordlist/{list}/import:
+    post:
+      summary: Import or update wordlist.
+      description: |
+        Initialize wordlist with default data, or update if needed.
+      operationId: importWordList
+      tags:
+        - Admin
+        - Wordlist
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
   /wordlist/{list}/word/{word}:
     put:
       summary: Add word to wordlist
@@ -520,42 +563,6 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
-  /debug/init:
-    put:
-      summary: Initialize data
-      description: |
-        Add data to database
-      operationId: debugInit
-      tags:
-        - Admin
-      security:
-        - JWTAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                room:
-                  description: Name of room.
-                  type: string
-                  example: test
-                players:
-                  description: Players to add to room.
-                  type: array
-                  example: ['Vlad', 'George', 'David']
-                  items:
-                    type: string
-                    example: Vlad
-                wordLists:
-                  $ref: '#/components/schemas/WordlistArray'
-      responses:
-        200:
-          $ref: '#/components/responses/Success'
-        400:
-          $ref: '#/components/responses/NoWordlist'
-        500:
-          $ref: '#/components/responses/InternalServerError'
   /debug/reset:
     put:
       summary: Reset database
@@ -727,7 +734,7 @@ components:
             required:
               - message
     NoWordlist:
-      description: No wordlist specified.
+      description: No wordlists specified.
       content:
         application/json:
           schema:
@@ -959,6 +966,22 @@ components:
       description: Number of words to provide players on game start, defaults to 3.
       example: 3
       default: 3
+    ImportableWordList:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/WordlistName'
+        icon:
+          $ref: '#/components/schemas/WordlistIcon'
+        reason:
+          type: string
+          enum:
+            - 'add'
+            - 'update'
+          example: 'add'
+      required:
+        - name
+        - reason
     BasicWordlist:
       type: object
       properties:

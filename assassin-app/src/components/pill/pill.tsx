@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CommonColor } from '../../types'
-import { faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { IconDefinition, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import './pill.css'
 import React from 'react'
 
@@ -9,22 +9,23 @@ export interface PillProps {
 	color?: CommonColor
 	className?: string
 	onClick?: () => void
-	onDelete?: () => void
+	onAction?: () => void
+	actionIcon?: IconDefinition
 }
 
-export default function Pill({ text, color, className, onClick, onDelete }: PillProps) {
+export default function Pill({ text, color, className, onClick, onAction, actionIcon }: PillProps) {
 	return (
 		<span className={`pill ${color || ''} ${className || ''} ${onClick ? 'clickable' : ''}`} onClick={onClick}>
 			<span>{text}</span>
-			{onDelete ? (
+			{onAction ? (
 				<span
 					className="delete clickable"
 					onClick={(e) => {
 						e.stopPropagation()
-						onDelete()
+						onAction()
 					}}
 				>
-					<FontAwesomeIcon icon={faXmark} />
+					<FontAwesomeIcon icon={actionIcon || faXmark} />
 				</span>
 			) : undefined}
 		</span>

@@ -2,9 +2,17 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 import './wordlist-list.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
-import { faPlus, faTextSize, faTrash, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import {
+	IconName,
+	faPlus,
+	faTextSize,
+	faTrash,
+	faUpFromBracket,
+	faUpFromDottedLine,
+	faUpFromLine,
+	faXmark,
+} from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { BasicWordlist } from 'assassin-server-client'
 import Table from '../../../components/table/table'
 import room from '../room/room'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -16,9 +24,12 @@ import { useNotificationAwareRequest } from '../../../hooks/notification'
 import Modal, { ConfirmModal } from '../../../components/modal/modal'
 import useReload from '../../../hooks/reload'
 import WordlistDetails from '../../../components/wordlist-details/wordlist-details'
+import SectionTitle from '../../../components/section-title/section-title'
+import { WordListLoaderData } from '../../../loaders/wordlists'
+import Pill from '../../../components/pill/pill'
 
 export default function WordlistsAdmin() {
-	const wordlists = useLoaderData() as BasicWordlist[]
+	const wordlists = useLoaderData() as WordListLoaderData
 	useReload(wordlists)
 	const navigate = useNavigate()
 	const auth = useAuth()
@@ -39,6 +50,14 @@ export default function WordlistsAdmin() {
 			() => setDeleteModalWordListName(undefined),
 			() => setDeleteModalWordListName(undefined)
 		)
+	}
+
+	const importWordList = async (wordListName: string) => {
+		await request(async () => await api.importWordList(wordListName), {
+			message: `${wordListName} imported successfully!`,
+			source: 'wordlist',
+			icon: faUpFromLine,
+		})
 	}
 
 	AddToLibrary()
@@ -65,7 +84,7 @@ export default function WordlistsAdmin() {
 						),
 					},
 				]}
-				rows={wordlists.map((list) => {
+				rows={wordlists.wordLists.map((list) => {
 					return {
 						name: room.name,
 						cells: [
@@ -96,6 +115,29 @@ export default function WordlistsAdmin() {
 					}
 				})}
 			/>
+			{wordlists.importableLists.length > 0 ? (
+				<div className="wordlist-available">
+					<SectionTitle color="green">
+						<FontAwesomeIcon className="mr-1" icon={faUpFromBracket} /> Import word lists
+					</SectionTitle>
+					<div className="wordlist-available-list">
+						{wordlists.importableLists.map((wl) => (
+							<Pill
+								color={wl.reason === 'update' ? 'orange' : 'green'}
+								text={
+									<>
+										<FontAwesomeIcon className="mr-05" icon={(wl.icon as IconName) || faTextSize} />
+										{wl.name}
+									</>
+								}
+								onAction={() => importWordList(wl.name)}
+								actionIcon={wl.reason === 'update' ? faUpFromDottedLine : faUpFromLine}
+							/>
+						))}
+					</div>
+				</div>
+			) : undefined}
+
 			<ConfirmModal
 				open={!!deleteModalWordListName}
 				text={`Are you sure you want to delete ${deleteModalWordListName}?`}
