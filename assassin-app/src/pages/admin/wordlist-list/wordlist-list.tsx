@@ -156,7 +156,7 @@ export default function WordlistsAdmin() {
 						className="corner-left-05 corner-right-05"
 						title="Create"
 						rightActions={
-							<div className="modal-buttons">
+							<div className="modal-header-buttons">
 								<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => setShowCreateModal(false)} />
 							</div>
 						}

@@ -10,7 +10,7 @@ type AuthType = 'gm' | 'player' | 'jwt'
 export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[] }[] = [
 	{
 		path: /db.*$/,
-		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		methods: ['POST', 'PUT', 'DELETE'],
 		authTypes: ['jwt'],
 	},
 	{
@@ -104,14 +104,14 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			if (!result && match.authTypes.includes('jwt')) {
 				console.log(`JWT Auth`)
 				if (!secret) {
-					console.warn("No JWT token defined!")
+					console.warn('No JWT token defined!')
 				}
 				return jwt({ secret })(c, next)
 			}
 		} else if (match.authTypes.includes('jwt')) {
 			console.log(`JWT Auth`)
 			if (!secret) {
-				console.warn("No JWT token defined!")
+				console.warn('No JWT token defined!')
 			}
 			return jwt({ secret })(c, next)
 		}

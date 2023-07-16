@@ -30,7 +30,7 @@ export function ConfirmModal({ className, text, onConfirm, ...props }: ConfirmMo
 					className="corner-left-05 corner-right-05"
 					title="Confirm"
 					rightActions={
-						<div className="modal-buttons">
+						<div className="modal-header-buttons">
 							<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => props.onClose && props.onClose({}, 'escapeKeyDown')} />
 						</div>
 					}
@@ -78,12 +78,12 @@ export function CreateModal({ className, text, description, onCreate: onCreatePr
 					className="corner-left-05 corner-right-05"
 					title="Create"
 					rightActions={
-						<div className="modal-buttons">
+						<div className="modal-header-buttons">
 							<Button color="primary" iconProps={{ icon: faXmark }} onClick={onClose} />
 						</div>
 					}
 				/>
-				<Action className="column" text={text} description={description}>
+				<Action className="create-input column" text={text} description={description}>
 					<div className="input-wrapper">
 						<input type="text" value={inputText} onChange={(e) => setInputText(e.currentTarget.value)} />
 					</div>

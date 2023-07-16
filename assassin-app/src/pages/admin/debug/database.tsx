@@ -1,7 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-import './database.css'
-import Header from '../../../components/header/header'
-import Button, { NotificationAwareButton } from '../../../components/button/button'
 import {
 	faArrowRotateLeft,
 	faCheck,
@@ -14,23 +10,29 @@ import {
 	faXmark,
 } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Action from '../../../components/action/action'
-import { createDatabaseApi } from '../../../api'
-import { useAuth } from 'react-oidc-context'
-import { useNotificationAwareRequest } from '../../../hooks/notification'
-import { useEffect, useState } from 'react'
-import { ConfirmModal } from '../../../components/modal/modal'
 import { GetDatabase200Response } from 'assassin-server-client'
+import moment from 'moment'
+import { useState } from 'react'
+import { useAuth } from 'react-oidc-context'
+import { useLoaderData, useNavigate } from 'react-router-dom'
+import { createDatabaseApi } from '../../../api'
+import Action from '../../../components/action/action'
+import Button, { NotificationAwareButton } from '../../../components/button/button'
+import Header from '../../../components/header/header'
+import { ConfirmModal } from '../../../components/modal/modal'
 import SectionTitle from '../../../components/section-title/section-title'
 import Table from '../../../components/table/table'
-import moment from 'moment'
+import { useNotificationAwareRequest } from '../../../hooks/notification'
+import useReload from '../../../hooks/reload'
+import './database.css'
 
 export default function AdminDatabase() {
+	const database = useLoaderData() as GetDatabase200Response
+	useReload(database)
 	const request = useNotificationAwareRequest()
 	const navigate = useNavigate()
 	const auth = useAuth()
 
-	const [database, setDatabase] = useState<GetDatabase200Response>()
 	const [showMigrateModal, setShowMigrateModal] = useState<boolean>(false)
 	const [showRollbackModal, setShowRollbackModal] = useState<boolean>(false)
 	const [showResetModal, setShowResetModal] = useState<boolean>(false)
@@ -39,14 +41,6 @@ export default function AdminDatabase() {
 
 	const cannotMigrate = database?.migrations?.current === undefined || (database?.migrations?.available || []).length === 0
 	const cannotRollback = database?.migrations?.current?.version === 0
-
-	const getDb = async () => {
-		await request(
-			async () => await api.getDatabase(),
-			undefined,
-			(db) => setDatabase(db.data)
-		)
-	}
 
 	const migrateDb = async () => {
 		if (!cannotMigrate) {
@@ -57,10 +51,7 @@ export default function AdminDatabase() {
 					source: 'db-migrate',
 					icon: faRightLeftLarge,
 				},
-				() => {
-					setShowMigrateModal(false)
-					getDb()
-				},
+				() => setShowMigrateModal(false),
 				() => setShowMigrateModal(false)
 			)
 		}
@@ -75,10 +66,7 @@ export default function AdminDatabase() {
 					source: 'db-migrate',
 					icon: faArrowRotateLeft,
 				},
-				() => {
-					setShowRollbackModal(false)
-					getDb()
-				},
+				() => setShowRollbackModal(false),
 				() => setShowRollbackModal(false)
 			)
 		}
@@ -92,23 +80,10 @@ export default function AdminDatabase() {
 				source: 'db-reset',
 				icon: faFire,
 			},
-			() => {
-				setShowResetModal(false)
-				getDb()
-			},
+			() => setShowResetModal(false),
 			() => setShowResetModal(false)
 		)
 	}
-
-	useEffect(() => {
-		getDb()
-
-		const intervalId = setInterval(() => {
-			getDb()
-		}, 15 * 1000)
-		return () => clearInterval(intervalId)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
 
 	return (
 		<div className="room">
