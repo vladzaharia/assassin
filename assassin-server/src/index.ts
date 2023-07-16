@@ -29,6 +29,8 @@ import { DeleteWord } from './routes/wordlist/word/delete'
 import { DeleteWords } from './routes/wordlist/word/deleteWords'
 import { UpdateWordList } from './routes/wordlist/update'
 import { DbInfo } from './routes/db/info'
+import { MigrateDb } from './routes/db/migrate'
+import { RollbackDb } from './routes/db/rollback'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -96,16 +98,23 @@ app.delete('/api/wordlist/:list/words', DeleteWords)
 
 // Database endpoints
 app.get('/api/db', DbInfo)
+app.put('/api/db/migrate', MigrateDb)
+app.put('/api/db/rollback', RollbackDb)
 app.put('/api/db/reset', ResetDb)
 
 // OpenAPI
+app.get(
+	'/api/openapi/openapi.swagger',
+	serveStatic({
+		path: './openapi/openapi.swagger',
+	})
+)
 app.get(
 	'/api/openapi/*',
 	serveStatic({
 		path: './openapi',
 	})
 )
-
 // App
 app.get(
 	'/admin',

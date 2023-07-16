@@ -1,25 +1,27 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { rollbackAllMigrations, runAllMigrations } from '../../migrate'
+import { rollback } from '../../migrate'
 import { getCurrentMigration } from '../../tables/migration'
 
-export const ResetDb = async (c: Context<{ Bindings: Bindings }>) => {
+export const RollbackDb = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 
 		const currentMigration = await getCurrentMigration(db)
 
-		// Drop all tables
-		await rollbackAllMigrations(db)
+		if (!currentMigration) {
+			return c.json({ message: 'No migrations to roll back!' }, 400)
+		} else if (currentMigration.version === 0) {
+			return c.json({ message: "Can't roll back migration 0!" }, 400)
+		}
 
-		// Run through all migrations
-		await runAllMigrations(db)
+		await rollback(db)
 
 		const newMigration = await getCurrentMigration(db)
 
 		return c.json({
-			message: 'Database reset successfully!',
-			oldVersion: currentMigration.version || -1,
+			message: 'Migrations rolled back successfully!',
+			oldVersion: currentMigration.version,
 			newVersion: newMigration?.version || -1,
 		})
 	} catch (e) {

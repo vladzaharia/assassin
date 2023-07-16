@@ -167,7 +167,8 @@
 }
 
 @media only screen and (max-width: 87.5rem) {
-	.table .table-cell:not(:first-child):not(:last-child):not(.show-mobile) {
+	.table .table-cell:not(:first-child):not(:last-child):not(.show-mobile),
+	.table .table-cell.no-mobile {
 		display: none;
 	}
 }

@@ -64,19 +64,21 @@ export default function WordlistAdmin() {
 					<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
 				</>
 			</SectionTitle>
-			{!isManaged ? <Action text="Add word" description="Type a new word and press Enter or comma (,) to add it.">
-				<input
-					className="green"
-					type="text"
-					value={newWord}
-					onChange={(e) => setNewWord(e.currentTarget.value)}
-					onKeyUp={(e) => {
-						if ((e.key === 'Enter' || e.key === ',') && newWord !== '') {
-							addWord()
-						}
-					}}
-				/>
-			</Action> : undefined}
+			{!isManaged ? (
+				<Action text="Add word" description="Type a new word and press Enter or comma (,) to add it.">
+					<input
+						className="green"
+						type="text"
+						value={newWord}
+						onChange={(e) => setNewWord(e.currentTarget.value)}
+						onKeyUp={(e) => {
+							if ((e.key === 'Enter' || e.key === ',') && newWord !== '') {
+								addWord()
+							}
+						}}
+					/>
+				</Action>
+			) : undefined}
 			<div className="wordlist-words">
 				{wordlist.words.map((w) => (
 					<Pill color="green" text={w} onAction={!isManaged ? () => removeWord(w) : undefined} />

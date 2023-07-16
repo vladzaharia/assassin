@@ -59,22 +59,14 @@ paths:
                         type: string
                         description: Backend URL
                         example: http://localhost:8787/api
-                  db:
-                    type: object
-                    description: Database information
-                    properties:
-                      version:
-                        description: Database's current version
-                        type: number
-                        example: 0
-                      minVersion:
-                        description: Minimum supported database schema version
-                        type: number
-                        example: 1
-                      maxVersion:
-                        description: Maximum supported database schema version
-                        type: number
-                        example: 2
+                      openapi:
+                        type: string
+                        description: OpenAPI Swagger YAML
+                        example: http://localhost:8787/api/openapi/openapi.swagger
+                      docs:
+                        type: string
+                        description: OpenAPI Documentation URL
+                        example: http://localhost:8787/api/openapi
 
   /room:
     get:
@@ -619,19 +611,108 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
-  /db/reset:
-    put:
-      summary: Reset database
+  /db:
+    get:
+      summary: Get database info
       description: |
-        Drops and recreates all tables in the D1 database.
-      operationId: resetDatabase
+        Get information about the database and available and applied migrations.
+      operationId: getDatabase
       tags:
         - Admin
+        - Database
       security:
         - JWTAuth: []
       responses:
         200:
-          $ref: '#/components/responses/Success'
+          description: Database information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  binding:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Type of database used
+                        example: D1
+                      database:
+                        type: string
+                        description: Name of database used
+                        example: assassin-local
+                  migrations:
+                    type: object
+                    properties:
+                      current:
+                        $ref: '#/components/schemas/Migration'
+                      applied:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Migration'
+                      available:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AvailableMigration'
+                    required:
+                      - current
+                      - applied
+                      - available
+        400:
+          $ref: '#/components/responses/NoMigrationsToApply'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /db/migrate:
+    put:
+      summary: Migrate database
+      description: |
+        Migrates database from current version to newest available one.
+      operationId: migrateDatabase
+      tags:
+        - Admin
+        - Database
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/MigrationResult'
+        400:
+          $ref: '#/components/responses/NoMigrationsToApply'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /db/rollback:
+    put:
+      summary: Rollback migration
+      description: |
+        Rolls back most recently applied migration.
+      operationId: rollbackDatabase
+      tags:
+        - Admin
+        - Database
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/MigrationResult'
+        400:
+          $ref: '#/components/responses/NoMigrationsToRollback'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /db/reset:
+    put:
+      summary: Reset database
+      description: |
+        Rolls back and applies all migrations to DB.
+      operationId: resetDatabase
+      tags:
+        - Admin
+        - Database
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/MigrationResult'
         500:
           $ref: '#/components/responses/InternalServerError'
 
@@ -724,6 +805,19 @@ components:
                 type: string
                 description: Success message
                 example: ok
+            required:
+              - message
+    InternalServerError:
+      description: Something went wrong processing your request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this error.
+                example: Somethng went wrong!
             required:
               - message
     RoomExists:
@@ -880,9 +974,8 @@ components:
                 example: Game has already started!
             required:
               - message
-
-    InternalServerError:
-      description: Something went wrong processing your request.
+    NoMigrationsToApply:
+      description: No migrations available to apply.
       content:
         application/json:
           schema:
@@ -891,9 +984,42 @@ components:
               message:
                 type: string
                 description: Message for this error.
-                example: Somethng went wrong!
+                example: No migrations to apply!
             required:
               - message
+    NoMigrationsToRollback:
+      description: No migrations available to roll back.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this roll back.
+                example: No migrations to apply!
+            required:
+              - message
+    MigrationResult:
+      description: Migration(s) applied or rolled back successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message for this operation.
+                example: Migrations applied successfully!
+              oldVersion:
+                $ref: '#/components/schemas/MigrationVersion'
+              newVersion:
+                $ref: '#/components/schemas/MigrationVersion'
+            required:
+              - message
+              - oldVersion
+              - newVersion
+
   schemas:
     BasicPlayer:
       type: object
@@ -1128,3 +1254,42 @@ components:
           $ref: '#/components/schemas/WordlistArray'
       required:
         - words
+    MigrationVersion:
+      type: number
+      description: Database schema version associated with a migration
+      example: 0
+    MigrationName:
+      type: string
+      description: Name of a migration
+      example: initial-migration
+    AvailableMigration:
+      type: object
+      description: An available database schema migration
+      properties:
+        version:
+          $ref: '#/components/schemas/MigrationVersion'
+        name:
+          $ref: '#/components/schemas/MigrationName'
+      required:
+        - version
+        - name
+    Migration:
+      type: object
+      description: A database schema migration
+      properties:
+        version:
+          $ref: '#/components/schemas/MigrationVersion'
+        name:
+          $ref: '#/components/schemas/MigrationName'
+        applied:
+          type: number
+          description: Timestamp when this migration was applied
+          example: 1689500974682
+        rolledBack:
+          type: number
+          description: Timestamp when this migration was rolled back
+          example: 1689500982905
+      required:
+        - version
+        - name
+        - applied

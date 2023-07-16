@@ -14,9 +14,9 @@ export type NotificationSource =
 	| 'player'
 	| 'wordlist'
 	| 'eliminate'
-	| 'debug-reset'
-	| 'debug-init'
-	| 'debug-demo'
+	| 'db-reset'
+	| 'db-migrate'
+	| 'db-rollback'
 export type NotificationType = 'success' | 'failed' | 'warning'
 
 export interface NotificationDetails {

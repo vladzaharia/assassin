@@ -10,12 +10,8 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 				ui: `${c.env.BASE_URL}`,
 				admin: `${c.env.BASE_URL}/admin`,
 				api: `${c.env.BASE_URL}/api`,
-			},
-			db: {
-				type: 'D1',
-				version: 0,
-				minVersion: 0,
-				maxVersion: 0,
+				openapi: `${c.env.BASE_URL}/api/openapi/openapi.swagger`,
+				docs: `${c.env.BASE_URL}/api/openapi`,
 			},
 		},
 		200

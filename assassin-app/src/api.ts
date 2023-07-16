@@ -1,10 +1,19 @@
-import { AdminApi, Configuration, ConfigurationParameters, GMApi, PlayerApi, RoomApi, WordlistApi } from 'assassin-server-client'
+import {
+	AdminApi,
+	Configuration,
+	ConfigurationParameters,
+	DatabaseApi,
+	GMApi,
+	PlayerApi,
+	RoomApi,
+	WordlistApi,
+} from 'assassin-server-client'
 import { ApiType } from './types'
 
 const getApiConfig = (parameters: Omit<ConfigurationParameters, 'basePath'> = {}) => {
 	return new Configuration({
 		...parameters,
-		basePath: `${window.location.protocol}//${window.location.host.replace(":4200", ":8787")}/api`,
+		basePath: `${window.location.protocol}//${window.location.host.replace(':4200', ':8787')}/api`,
 	})
 }
 
@@ -22,6 +31,10 @@ export const createAdminOrGMApi = (apiType: ApiType, apiKey: string, accessToken
 
 export const createAdminApi = (accessToken: string) => {
 	return new AdminApi(getApiConfig({ accessToken }))
+}
+
+export const createDatabaseApi = (accessToken: string) => {
+	return new DatabaseApi(getApiConfig({ accessToken }))
 }
 
 export const createRoomApi = () => {

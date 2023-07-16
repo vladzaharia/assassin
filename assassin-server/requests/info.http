@@ -1,0 +1,8 @@
+###
+# Get server information
+GET {{host}}
+
+###
+# Get database information
+GET {{host}}/db
+Authorization: Bearer {{$processEnv %token}}

@@ -9,12 +9,6 @@ PUT {{host}}/db/migrate
 Authorization: Bearer {{$processEnv %token}}
 
 ###
-# Migrate database to version
-# @prompt version Version to migrate to
-PUT {{host}}/db/migrate/{{version}}
-Authorization: Bearer {{$processEnv %token}}
-
-###
 # Rollback current database migration
 PUT {{host}}/db/rollback
 Authorization: Bearer {{$processEnv %token}}

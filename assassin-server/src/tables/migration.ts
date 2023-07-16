@@ -16,7 +16,7 @@ export async function dropMigrationTable(db: D1Database) {
 }
 
 export async function listMigrations(db: D1Database) {
-	return await getKyselyDb(db).selectFrom('migration').selectAll().execute()
+	return await getKyselyDb(db).selectFrom('migration').selectAll().orderBy('applied', 'desc').execute()
 }
 
 export async function listCurrentMigrations(db: D1Database) {
@@ -24,25 +24,27 @@ export async function listCurrentMigrations(db: D1Database) {
 }
 
 export async function getCurrentMigration(db: D1Database) {
-	return (await getKyselyDb(db).selectFrom('migration').selectAll().where('rolledBack', 'is', null).orderBy('applied', 'desc').limit(1).execute())[0]
+	return (
+		await getKyselyDb(db).selectFrom('migration').selectAll().where('rolledBack', 'is', null).orderBy('applied', 'desc').limit(1).execute()
+	)[0]
 }
 
-export async function applyMigration(db: D1Database, version: number, name: string) {
+export async function insertMigration(db: D1Database, version: number, name: string) {
 	return await getKyselyDb(db)
 		.insertInto('migration')
 		.values({
 			version,
 			name,
-			applied: Date.now()
+			applied: Date.now(),
 		})
 		.execute()
 }
 
-export async function revertMigration(db: D1Database, version: number) {
+export async function updateRollback(db: D1Database, version: number) {
 	return await getKyselyDb(db)
 		.updateTable('migration')
 		.set({
-			rolledBack: Date.now()
+			rolledBack: Date.now(),
 		})
 		.where(({ and, cmpr }) => and([cmpr('version', '=', version), cmpr('rolledBack', 'is', null)]))
 		.execute()
