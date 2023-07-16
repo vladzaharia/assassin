@@ -1,6 +1,6 @@
-import { InitialWordList } from "./types";
+import { ManagedWordList } from './types'
 
-export const CARD_POISON: InitialWordList = {
+export const CARD_POISON: ManagedWordList = {
 	name: 'card-poison',
 	description: '"Poison" wordlist from the Card Assassins game.',
 	icon: 'flask-round-poison',

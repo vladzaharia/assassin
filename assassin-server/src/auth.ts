@@ -54,6 +54,11 @@ export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes
 		authTypes: ['jwt'],
 	},
 	{
+		path: /wordlist\/import\/\w*$/,
+		methods: ['PUT'],
+		authTypes: ['jwt'],
+	},
+	{
 		path: /wordlist\/\w*\/words$/,
 		methods: ['PUT', 'DELETE'],
 		authTypes: ['jwt'],
@@ -100,6 +105,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 				return jwt({ secret })(c, next)
 			}
 		} else if (match.authTypes.includes('jwt')) {
+			console.log(`JWT Auth: secret ${secret}`)
 			return jwt({ secret })(c, next)
 		}
 	}

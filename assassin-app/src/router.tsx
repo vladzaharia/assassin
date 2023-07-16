@@ -30,7 +30,7 @@ import AdminDatabase from './pages/admin/debug/database'
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
 	client_id: 'qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G',
-	redirect_uri: import.meta.env.DEV ? 'http://localhost:4200/admin' : 'https://assassin.vlad.gg/admin',
+	redirect_uri: `${window.location.protocol}//${window.location.host}/admin`,
 	scope: 'openid profile',
 	onSigninCallback: () => {
 		window.history.replaceState({}, document.title, window.location.pathname)

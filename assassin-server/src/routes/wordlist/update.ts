@@ -2,6 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { createRoomsTable } from '../../tables/room'
 import { findWordList, setDescription, setIcon } from '../../tables/wordlist'
+import { isManagedList } from './managed'
 
 interface UpdateWordListBody {
 	description?: string
@@ -13,6 +14,11 @@ export const UpdateWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		const { list } = c.req.param()
 		const { description, icon } = await c.req.json<UpdateWordListBody>()
 		const db = c.env.D1DATABASE
+
+		// Check if word list is managed
+		if (isManagedList(list)) {
+			return c.json({ message: 'Word list is managed!' }, 400)
+		}
 
 		// Create D1 table if needed
 		await createRoomsTable(db)
@@ -30,7 +36,7 @@ export const UpdateWordList = async (c: Context<{ Bindings: Bindings }>) => {
 			await setIcon(db, list, icon)
 		}
 
-		return c.json({ message: 'Successfully updated wordlist!' })
+		return c.json({ message: 'Successfully updated word list!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

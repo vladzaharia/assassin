@@ -3,9 +3,31 @@
 GET {{host}}/wordlist
 
 ###
+# List available wordlists
+GET {{host}}/wordlist/import
+Authorization: Bearer {{$processEnv %token}}
+
+###
 # Get wordlist
 # @prompt wordlist Name of wordlist
 GET {{host}}/wordlist/{{wordlist}}
+
+###
+# Import wordlist
+# @prompt wordlist Name of wordlist
+PUT {{host}}/wordlist/import/{{wordlist}}
+Authorization: Bearer {{$processEnv %token}}
+
+###
+# Add wordlists
+# @prompt wordlists Name of wordlists, as comma-separated double-quoted strings.
+# Possible wordlists: "test-list", "card-poison", "card-dagger", "team-galactic", "team-green", "countries", "technology", "pokemon"
+PUT {{host}}/debug/init
+Authorization: Bearer {{$processEnv %token}}
+
+{
+	"wordLists": [{{wordlists}}]
+}
 
 ###
 # Add wordlist

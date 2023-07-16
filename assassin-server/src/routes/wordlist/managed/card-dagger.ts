@@ -1,6 +1,6 @@
-import { InitialWordList } from "./types";
+import { ManagedWordList } from './types'
 
-export const CARD_DAGGER: InitialWordList = {
+export const CARD_DAGGER: ManagedWordList = {
 	name: 'card-dagger',
 	description: '"Dagger" wordlist from the Card Assassins game.',
 	icon: 'dagger',

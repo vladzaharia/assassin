@@ -2,11 +2,13 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { createWordListTable, listWordLists } from '../../tables/wordlist'
 import { listWordsInWordList } from '../../tables/word'
+import { isManagedList } from './managed'
 
 interface ListWordListResponse {
 	name: string
 	icon?: string
 	numWords: number
+	managed: boolean
 }
 
 export const ListWordLists = async (c: Context<{ Bindings: Bindings }>) => {
@@ -25,6 +27,7 @@ export const ListWordLists = async (c: Context<{ Bindings: Bindings }>) => {
 				name: wordlist.name,
 				icon: wordlist.icon,
 				numWords: words.length,
+				managed: isManagedList(wordlist.name),
 			})
 		}
 

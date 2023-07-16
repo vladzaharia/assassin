@@ -5,9 +5,10 @@ import Button from '../../../components/button/button'
 import {
 	IconName,
 	faPlus,
+	faShieldCheck,
 	faTextSize,
 	faTrash,
-	faUpFromBracket,
+	faCheck,
 	faUpFromDottedLine,
 	faUpFromLine,
 	faXmark,
@@ -75,6 +76,7 @@ export default function WordlistsAdmin() {
 				color="green"
 				headers={[
 					{ element: 'Word list name' },
+					{ element: 'Managed?' },
 					{ element: '# words' },
 					{
 						element: (
@@ -94,6 +96,9 @@ export default function WordlistsAdmin() {
 										<FontAwesomeIcon className="mr-05" icon={(list.icon as IconProp) || faTextSize} /> {list.name}
 									</>
 								),
+							},
+							{
+								element: <FontAwesomeIcon icon={list.managed ? faCheck : faXmark} />,
 							},
 							{ element: list.numWords.toString() },
 							{
@@ -115,13 +120,13 @@ export default function WordlistsAdmin() {
 					}
 				})}
 			/>
-			{wordlists.importableLists.length > 0 ? (
+			{wordlists.managedLists.length > 0 ? (
 				<div className="wordlist-available">
 					<SectionTitle color="green">
-						<FontAwesomeIcon className="mr-1" icon={faUpFromBracket} /> Import word lists
+						<FontAwesomeIcon className="mr-1" icon={faShieldCheck} /> Managed word lists
 					</SectionTitle>
 					<div className="wordlist-available-list">
-						{wordlists.importableLists.map((wl) => (
+						{wordlists.managedLists.map((wl) => (
 							<Pill
 								color={wl.reason === 'update' ? 'orange' : 'green'}
 								text={
