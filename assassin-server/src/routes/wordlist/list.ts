@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createWordListTable, listWordLists } from '../../tables/wordlist'
+import { listWordLists } from '../../tables/wordlist'
 import { listWordsInWordList } from '../../tables/word'
 import { isManagedList } from './managed'
 
@@ -14,9 +14,6 @@ interface ListWordListResponse {
 export const ListWordLists = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createWordListTable(db)
 
 		const wordListResponses: ListWordListResponse[] = []
 		const wordlists = await listWordLists(db)

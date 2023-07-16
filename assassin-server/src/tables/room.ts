@@ -1,14 +1,6 @@
 import { RoomStatus, getKyselyDb } from './db'
 import { convertBoolToInt } from './util'
 
-export async function createRoomsTable(db: D1Database) {
-	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS room (name TEXT PRIMARY KEY, status TEXT, usesWords INTEGER, numWords INTEGER, wordlists TEXT);`)
-	console.info(`Create room table => createTableResult ${createTableResult.error || createTableResult.success}`)
-
-	return createTableResult
-}
-
 export async function dropRoomTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS room`)
 	console.info(`Drop room table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)

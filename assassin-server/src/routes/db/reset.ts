@@ -18,7 +18,7 @@ export const ResetDb = async (c: Context<{ Bindings: Bindings }>) => {
 		await dropMigrationTable(db)
 
 		return c.json({
-			message: 'Database reset successfully!'
+			message: 'Database reset successfully!',
 		})
 	} catch (e) {
 		console.error('err', e)

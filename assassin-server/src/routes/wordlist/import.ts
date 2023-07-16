@@ -1,17 +1,13 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createWordTable, deleteWordsInWordList, insertWords, listWordsInWordList } from '../../tables/word'
-import { createWordListTable, deleteWordList, insertWordList, listWordLists } from '../../tables/wordlist'
+import { deleteWordsInWordList, insertWords, listWordsInWordList } from '../../tables/word'
+import { deleteWordList, insertWordList, listWordLists } from '../../tables/wordlist'
 import { MANAGED_WORDLISTS } from './managed'
 import { ImportableWordList } from './managed/types'
 
 export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
-
-		// Create D1 tables if needed
-		await createWordListTable(db)
-		await createWordTable(db)
 
 		const wordLists = await listWordLists(db)
 		const wordListsToAdd: ImportableWordList[] = MANAGED_WORDLISTS.filter((wl) => !wordLists.some((record) => record.name === wl.name))
@@ -55,10 +51,6 @@ export const InitializeWordlists = async (c: Context<{ Bindings: Bindings }>) =>
 		const db = c.env.D1DATABASE
 
 		const { importList: list } = c.req.param()
-
-		// Create D1 tables if needed
-		await createWordListTable(db)
-		await createWordTable(db)
 
 		const initialWordList = MANAGED_WORDLISTS.filter((wl) => wl.name === list)[0]
 

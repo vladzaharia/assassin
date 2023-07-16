@@ -26,12 +26,12 @@ export default function App({ children }: AppProps) {
 		setTheme(defaultTheme === 'dark' ? 'dark' : 'light')
 
 		const host = window.location.host
-		if (host.includes("staging.")) {
-			setColor("blue")
-		} else if (host.includes("dev.")) {
-			setColor("green")
-		} else if (host.includes("localhost")) {
-			setColor("purple")
+		if (host.includes('staging.')) {
+			setColor('blue')
+		} else if (host.includes('dev.')) {
+			setColor('green')
+		} else if (host.includes('localhost')) {
+			setColor('purple')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -48,8 +48,8 @@ export default function App({ children }: AppProps) {
 						}}
 					>
 						<Button
-							className='theme'
-							color={isDark ? 'orange' : 'purple-dark' as CommonColor}
+							className="theme"
+							color={isDark ? 'orange' : ('purple-dark' as CommonColor)}
 							iconProps={{ icon: isDark ? faSun : faMoon, size: 'xl' }}
 							onClick={() => setTheme(isDark ? 'light' : 'dark')}
 						/>

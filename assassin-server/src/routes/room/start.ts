@@ -1,18 +1,14 @@
 import arrayShuffle from 'array-shuffle'
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, deletePlayer, insertPlayer, listPlayersInRoom, setTarget, setWords } from '../../tables/player'
-import { createRoomsTable, findRoom, setStatus as setRoomStatus } from '../../tables/room'
+import { deletePlayer, insertPlayer, listPlayersInRoom, setTarget, setWords } from '../../tables/player'
+import { findRoom, setStatus as setRoomStatus } from '../../tables/room'
 import { listWordsInWordLists } from '../../tables/word'
 
 export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { room } = c.req.param()
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createPlayerTable(db)
-		await createRoomsTable(db)
 
 		// Try to find room
 		const roomRecord = await findRoom(db, room)

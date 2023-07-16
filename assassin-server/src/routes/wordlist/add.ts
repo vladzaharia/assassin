@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createWordListTable, findWordList, insertWordList } from '../../tables/wordlist'
+import { findWordList, insertWordList } from '../../tables/wordlist'
 
 interface AddWordListBody {
 	description: string
@@ -17,9 +17,6 @@ export const AddWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		if (!description) {
 			return c.json({ message: 'Must set `description`!' }, 400)
 		}
-
-		// Create D1 table if needed
-		await createWordListTable(db)
 
 		// Try to find word list
 		const record = await findWordList(db, list)

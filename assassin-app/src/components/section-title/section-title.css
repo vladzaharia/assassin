@@ -57,6 +57,11 @@
 @media only screen and (max-width: 50rem) {
 	.section-title {
 		padding: 1.5rem;
+		margin: 1rem 0;
+	}
+
+	.section-title:nth-child(2) {
+		margin-top: 0;
 	}
 
 	.section-title:has(.section-title-with-action) {

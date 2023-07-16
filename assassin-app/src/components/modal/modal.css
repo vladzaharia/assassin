@@ -39,7 +39,7 @@
 }
 
 .modal.confirm-modal .modal-buttons {
-	margin-top: 0.5rem;
+	margin: 0.5rem 0;
 	display: flex;
 	flex-direction: row;
 	gap: 0.5rem;
@@ -66,5 +66,10 @@
 	.modal.MuiModal-root {
 		min-width: 90vw;
 		max-height: 75vh;
+	}
+
+	.modal.confirm-modal {
+		height: unset;
+		width: unset;
 	}
 }

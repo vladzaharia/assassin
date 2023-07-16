@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createRoomsTable, findRoom, setNumWords, setStatus, setUsesWords, setWordLists } from '../../tables/room'
+import { findRoom, setNumWords, setStatus, setUsesWords, setWordLists } from '../../tables/room'
 import { RoomStatus } from '../../tables/db'
 import { findWordList } from '../../tables/wordlist'
 
@@ -16,9 +16,6 @@ export const UpdateRoom = async (c: Context<{ Bindings: Bindings }>) => {
 		const { room } = c.req.param()
 		const { status, usesWords, numWords, wordLists } = await c.req.json<UpdateRoomBody>()
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createRoomsTable(db)
 
 		const record = await findRoom(db, room)
 		if (!record) {

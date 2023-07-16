@@ -1,16 +1,12 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createPlayerTable, insertPlayer, listPlayersInRoom } from '../../tables/player'
-import { createRoomsTable, findRoom } from '../../tables/room'
+import { insertPlayer, listPlayersInRoom } from '../../tables/player'
+import { findRoom } from '../../tables/room'
 
 export const AddPlayer = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { name, room } = c.req.param()
 		const db = c.env.D1DATABASE
-
-		// Create D1 tables if needed
-		await createPlayerTable(db)
-		await createRoomsTable(db)
 
 		// Check if room exists
 		const roomRecord = await findRoom(db, room)

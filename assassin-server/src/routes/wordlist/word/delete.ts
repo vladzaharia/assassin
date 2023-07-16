@@ -1,16 +1,12 @@
 import { Context } from 'hono'
 import { Bindings } from '../../../bindings'
-import { createWordTable, deleteWord, findWord } from '../../../tables/word'
-import { createWordListTable, findWordList } from '../../../tables/wordlist'
+import { deleteWord, findWord } from '../../../tables/word'
+import { findWordList } from '../../../tables/wordlist'
 
 export const DeleteWord = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const { list, word } = c.req.param()
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createWordListTable(db)
-		await createWordTable(db)
 
 		// Try to find word list
 		const wordListRecord = await findWordList(db, list)
