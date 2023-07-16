@@ -134,6 +134,7 @@ export default function AdminDatabase() {
 
 					<Table
 						color="purple"
+						className='no-hover'
 						headers={[
 							{ element: 'Migration name' },
 							{ element: 'Version', className: 'show-mobile' },
@@ -143,6 +144,7 @@ export default function AdminDatabase() {
 						rows={database.migrations.applied.map((migration) => {
 							return {
 								name: migration.name,
+								color: migration.rolledBack ? "primary" : "green",
 								cells: [
 									{
 										element: (

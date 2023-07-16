@@ -92,27 +92,27 @@
 	cursor: pointer;
 }
 
-.table.primary .table-row:not(.table-header):hover .table-cell {
+.table.primary:not(.no-hover) .table-row:not(.table-header):hover .table-cell {
 	background-color: var(--primary-trans);
 	color: var(--primary);
 }
 
-.table.blue .table-row:not(.table-header):hover .table-cell {
+.table.blue:not(.no-hover) .table-row:not(.table-header):hover .table-cell {
 	background-color: var(--blue-trans);
 	color: var(--blue);
 }
 
-.table.green .table-row:not(.table-header):hover .table-cell {
+.table.green:not(.no-hover) .table-row:not(.table-header):hover .table-cell {
 	background-color: var(--green-trans);
 	color: var(--green);
 }
 
-.table.purple .table-row:not(.table-header):hover .table-cell {
+.table.purple:not(.no-hover) .table-row:not(.table-header):hover .table-cell {
 	background-color: var(--purple-trans);
 	color: var(--purple);
 }
 
-.table.orange .table-row:not(.table-header):hover .table-cell {
+.table.orange:not(.no-hover) .table-row:not(.table-header):hover .table-cell {
 	background-color: var(--orange-trans);
 	color: var(--orange);
 }
@@ -124,6 +124,31 @@
 	align-items: center;
 	justify-content: center;
 	padding: 0.5rem;
+}
+
+.table .table-row.primary .table-cell {
+	background-color: var(--primary-trans);
+	color: var(--primary);
+}
+
+.table .table-row.blue .table-cell {
+	background-color: var(--blue-trans);
+	color: var(--blue);
+}
+
+.table .table-row.green .table-cell {
+	background-color: var(--green-trans);
+	color: var(--green);
+}
+
+.table .table-row.purple .table-cell {
+	background-color: var(--purple-trans);
+	color: var(--purple);
+}
+
+.table .table-row.orange .table-cell {
+	background-color: var(--orange-trans);
+	color: var(--orange);
 }
 
 .table .table-cell.table-cell-sm {
