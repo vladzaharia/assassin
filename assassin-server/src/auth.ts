@@ -9,7 +9,7 @@ type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 type AuthType = 'gm' | 'player' | 'jwt'
 export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[] }[] = [
 	{
-		path: /debug.*$/,
+		path: /db.*$/,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
 		authTypes: ['jwt'],
 	},

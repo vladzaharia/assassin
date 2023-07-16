@@ -1,4 +1,4 @@
-import { createMigrationTable, dropMigrationTable } from "../../tables/migration";
+import { createMigrationTable } from "../../tables/migration";
 import { createPlayerTable, dropPlayerTable } from "../../tables/player";
 import { createRoomsTable, dropRoomTable } from "../../tables/room";
 import { createWordTable, dropWordTable } from "../../tables/word";
@@ -20,6 +20,5 @@ export const MIGRATION_0_INITIAL: Migration = {
 		await dropRoomTable(db)
 		await dropWordTable(db)
 		await dropWordListTable(db)
-		await dropMigrationTable(db)
 	}
 }
