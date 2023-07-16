@@ -42,16 +42,16 @@ jobs:
       with:
         name: dist
         path: assassin-server/dist
-    - name: Deploy to Cloudflare Workers
+    - name: Deploy to Cloudflare Workers (live)
       uses: cloudflare/wrangler-action@2.0.0
       if: inputs.environment == 'live'
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server
-    - name: Deploy to Cloudflare Workers (staging)
+    - name: Deploy to Cloudflare Workers (${{ inputs.environment }})
       uses: cloudflare/wrangler-action@2.0.0
-      if: inputs.environment == 'staging'
+      if: inputs.environment != 'live'
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server
-        command: deploy --env staging
+        command: deploy --env ${{ inputs.environment }}
