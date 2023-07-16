@@ -102,6 +102,11 @@ export default function AdminDatabase() {
 
 	useEffect(() => {
 		getDb()
+
+		const intervalId = setInterval(() => {
+			getDb()
+		}, 15 * 1000)
+		return () => clearInterval(intervalId)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
