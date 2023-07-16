@@ -32,10 +32,10 @@ body:has(.app.purple):not(:has(.app.dark)) {
 	background-image: url('/background/purple-light.svg');
 }
 
-body:has(.admin-content) {
+body:has(.app.admin) {
 	background-image: url('/background/admin.svg') !important;
 }
 
-body:has(.admin-content):not(:has(.app.dark)) {
+body:has(.app.admin):not(:has(.app.dark)) {
 	background-image: url('/background/admin-light.svg') !important;
 }

@@ -33,6 +33,10 @@ export default function App({ children }: AppProps) {
 		} else if (host.includes('localhost')) {
 			setColor('purple')
 		}
+
+		if (window.location.pathname.includes('/admin')) {
+			setColor('admin' as CommonColor)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
