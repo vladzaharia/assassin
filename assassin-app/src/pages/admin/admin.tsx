@@ -29,11 +29,7 @@ export default function Admin() {
 					rightActions: (
 						<>
 							{auth.isAuthenticated ? (
-								<Status
-									color="green"
-									icon={faUser}
-									popover={{ title: 'Signed in', description: `Signed in as ${auth.user?.profile.name}` }}
-								/>
+								<Status color="green" icon={faUser} popover={{ description: `Signed in as ${auth.user?.profile.name}` }} />
 							) : undefined}
 							<Button
 								color={auth.isAuthenticated ? 'primary' : 'green'}

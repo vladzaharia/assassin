@@ -9,7 +9,7 @@ import { CommonColor } from '../../types'
 export interface StatusProps {
 	color: CommonColor
 	popover?: {
-		title: string
+		title?: string
 		description: string | JSX.Element
 	}
 	icon: IconDefinition
