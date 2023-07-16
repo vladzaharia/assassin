@@ -1,12 +1,15 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { getCurrentMigration, listMigrations } from '../../tables/migration'
+import { createMigrationTable, getCurrentMigration, listMigrations } from '../../tables/migration'
 import { getAvailableMigrations } from '../../migrate'
 
 export const DbInfo = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 		const env = c.env.ENVIRONMENT
+
+		// Create migration table if it doesn't exist
+		await createMigrationTable(db)
 
 		const migration = await getCurrentMigration(db)
 		const appliedMigrations = await listMigrations(db)
