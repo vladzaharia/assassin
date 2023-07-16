@@ -1,26 +1,24 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { rollbackAllMigrations, runAllMigrations } from '../../migrate'
-import { getCurrentMigration } from '../../tables/migration'
+import { dropMigrationTable } from '../../tables/migration'
+import { dropRoomTable } from '../../tables/room'
+import { dropPlayerTable } from '../../tables/player'
+import { dropWordTable } from '../../tables/word'
+import { dropWordListTable } from '../../tables/wordlist'
 
 export const ResetDb = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
 
-		const currentMigration = await getCurrentMigration(db)
-
 		// Drop all tables
-		await rollbackAllMigrations(db)
-
-		// Run through all migrations
-		await runAllMigrations(db)
-
-		const newMigration = await getCurrentMigration(db)
+		await dropRoomTable(db)
+		await dropPlayerTable(db)
+		await dropWordTable(db)
+		await dropWordListTable(db)
+		await dropMigrationTable(db)
 
 		return c.json({
-			message: 'Database reset successfully!',
-			oldVersion: currentMigration?.version || -1,
-			newVersion: newMigration?.version || -1,
+			message: 'Database reset successfully!'
 		})
 	} catch (e) {
 		console.error('err', e)

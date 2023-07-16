@@ -703,7 +703,7 @@ paths:
     put:
       summary: Reset database
       description: |
-        Rolls back and applies all migrations to DB.
+        Drops all tables in database
       operationId: resetDatabase
       tags:
         - Admin
@@ -712,7 +712,7 @@ paths:
         - JWTAuth: []
       responses:
         200:
-          $ref: '#/components/responses/MigrationResult'
+          $ref: '#/components/responses/Success'
         500:
           $ref: '#/components/responses/InternalServerError'
 

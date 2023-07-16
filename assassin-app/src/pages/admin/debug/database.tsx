@@ -126,7 +126,7 @@ export default function AdminDatabase() {
 			<Action text="Database version" description="Latest migration version applied.">
 				<span className="mr-1">{database?.migrations?.current?.version.toString() || ''}</span>
 			</Action>
-			<Action text="Reset database" description="Rolls back and applies all migrations to ensure the database is on the latest schema.">
+			<Action text="Reset database" description="Drops all tables in database.">
 				<NotificationAwareButton
 					notificationSources={['db-reset']}
 					color="primary"
