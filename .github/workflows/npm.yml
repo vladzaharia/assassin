@@ -37,6 +37,7 @@ jobs:
         retention-days: 7
 
   deploy-staging:
+    needs: ['build']
     uses: ./.github/workflows/deploy.yml
     with:
       environment: staging
@@ -44,6 +45,7 @@ jobs:
     secrets: inherit
 
   deploy-live:
+    needs: ['build']
     uses: ./.github/workflows/deploy.yml
     with:
       environment: live
