@@ -124,7 +124,7 @@ export default function AdminDatabase() {
 				</span>
 			</Action>
 			<Action text="Database version" description="Latest migration version applied.">
-				<span className="mr-1">{database?.migrations?.current.version}</span>
+				<span className="mr-1">{database?.migrations?.current?.version || ''}</span>
 			</Action>
 			<Action text="Reset database" description="Rolls back and applies all migrations to ensure the database is on the latest schema.">
 				<NotificationAwareButton
