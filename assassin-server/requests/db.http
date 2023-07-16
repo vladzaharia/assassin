@@ -1,0 +1,5 @@
+###
+# Reset database
+PUT {{host}}/db/reset
+Authorization: Bearer {{$processEnv %token}}
+

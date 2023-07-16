@@ -76,14 +76,16 @@ app.post('/api/room/:room/player/:name/eliminate', EliminatePlayer)
 // List word lists
 app.get('/api/wordlist', ListWordLists)
 app.get('/api/wordlist/', ListWordLists)
-app.get('/api/wordlist/importable', GetUninitializedWordLists)
+
+// Import word lists
+app.get('/api/wordlist/import', GetUninitializedWordLists)
+app.put('/api/wordlist/import/:importList', InitializeWordlists)
 
 // Get/add/delete word lists
 app.get('/api/wordlist/:list', GetWordList)
 app.put('/api/wordlist/:list', AddWordList)
 app.patch('/api/wordlist/:list', UpdateWordList)
 app.delete('/api/wordlist/:list', DeleteWordList)
-app.post('/api/wordlist/:list/import', InitializeWordlists)
 
 // Add/delete words from word lists
 app.put('/api/wordlist/:list/word/:word', AddWord)

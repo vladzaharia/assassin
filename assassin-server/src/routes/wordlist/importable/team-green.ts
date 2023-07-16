@@ -1,4 +1,4 @@
-import { InitialWordList } from "./types";
+import { InitialWordList } from './types'
 
 export const TEAM_GREEN: InitialWordList = {
 	name: 'team-green',

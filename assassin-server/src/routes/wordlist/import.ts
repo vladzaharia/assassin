@@ -19,11 +19,16 @@ export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings 
 
 		for (const wordList of wordLists) {
 			const words = await listWordsInWordList(db, wordList.name)
-			const initialWordList = AVAILABLE_WORDLISTS.filter((wl) => wl.name === wordList.name)[0]
+			const managedList = AVAILABLE_WORDLISTS.filter((wl) => wl.name === wordList.name)[0]
 
-			if (initialWordList.words.length !== words.length) {
+			if (
+				managedList &&
+				(managedList.words.length !== words.length ||
+					managedList.description !== wordList.description ||
+					managedList.icon !== wordList.icon)
+			) {
 				wordListsToUpdate.push({
-					...initialWordList,
+					...managedList,
 					reason: 'update',
 				})
 			}
@@ -49,7 +54,7 @@ export const InitializeWordlists = async (c: Context<{ Bindings: Bindings }>) =>
 	try {
 		const db = c.env.D1DATABASE
 
-		const { list } = c.req.param()
+		const { importList: list } = c.req.param()
 
 		// Create D1 tables if needed
 		await createWordListTable(db)

@@ -15,5 +15,5 @@
 		"prod": {
 			"host": "https://assassin.vlad.gg/api",
 		}
-	},
+	}
 }

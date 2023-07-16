@@ -1,4 +1,4 @@
-import { WordListTable } from "../../../tables/db"
+import { WordListTable } from '../../../tables/db'
 
 export interface InitialWordList extends WordListTable {
 	words: string[]

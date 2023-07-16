@@ -33,7 +33,7 @@ paths:
                   version:
                     type: string
                     description: Server version, in semver
-                    example: "0.1.0"
+                    example: '0.1.0'
                   env:
                     type: string
                     description: Environment for the server
@@ -404,7 +404,8 @@ paths:
                   - wordLists
         500:
           $ref: '#/components/responses/InternalServerError'
-  /wordlist/importable:
+
+  /wordlist/import:
     get:
       summary: Check importable wordlists.
       description: |
@@ -428,6 +429,27 @@ paths:
           $ref: '#/components/responses/WordlistNotFound'
         500:
           $ref: '#/components/responses/InternalServerError'
+  /wordlist/import/{list}:
+    put:
+      summary: Import or update wordlist.
+      description: |
+        Initialize wordlist with default data, or update if needed.
+      operationId: importWordList
+      tags:
+        - Admin
+        - Wordlist
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: '#/components/parameters/WordlistName'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        404:
+          $ref: '#/components/responses/WordlistNotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
   /wordlist/{list}:
     get:
       summary: Get wordlist
@@ -495,26 +517,6 @@ paths:
       tags:
         - Wordlist
         - Admin
-      security:
-        - JWTAuth: []
-      parameters:
-        - $ref: '#/components/parameters/WordlistName'
-      responses:
-        200:
-          $ref: '#/components/responses/Success'
-        404:
-          $ref: '#/components/responses/WordlistNotFound'
-        500:
-          $ref: '#/components/responses/InternalServerError'
-  /wordlist/{list}/import:
-    post:
-      summary: Import or update wordlist.
-      description: |
-        Initialize wordlist with default data, or update if needed.
-      operationId: importWordList
-      tags:
-        - Admin
-        - Wordlist
       security:
         - JWTAuth: []
       parameters:
@@ -1046,9 +1048,12 @@ components:
         numWords:
           type: number
           description: Number of words in room
+        managed:
+          $ref: '#/components/schemas/WordlistManaged'
       required:
         - name
         - numWords
+        - managed
     Wordlist:
       allOf:
         - type: object
@@ -1057,9 +1062,12 @@ components:
               $ref: '#/components/schemas/WordlistName'
             words:
               $ref: '#/components/schemas/WordlistArray'
+            managed:
+              $ref: '#/components/schemas/WordlistManaged'
           required:
             - name
             - words
+            - managed
         - $ref: '#/components/schemas/WordlistBody'
     WordlistArray:
       type: array
@@ -1075,6 +1083,11 @@ components:
       type: string
       description: FontAwesome icon class to use, if set. Do **not** include `fa-`
       example: plus
+    WordlistManaged:
+      type: boolean
+      description: Whether the wordlist is managed
+      default: false
+      example: true
     UpdateWordlistBody:
       type: object
       properties:

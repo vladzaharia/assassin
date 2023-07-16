@@ -1,4 +1,4 @@
-import { InitialWordList } from "./types";
+import { InitialWordList } from './types'
 
 export const CARD_DAGGER: InitialWordList = {
 	name: 'card-dagger',

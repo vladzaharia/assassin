@@ -1,4 +1,4 @@
-import { InitialWordList } from "./types";
+import { InitialWordList } from './types'
 
 export const TEAM_GALACTIC: InitialWordList = {
 	name: 'team-galactic',
