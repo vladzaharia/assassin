@@ -25,12 +25,12 @@ jobs:
         npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
     - name: Install NPM packages
       run: npm ci --ignore-scripts
-    - name: 'Build all projects'
-      run: npm run build
-      env:
-        NX_BRANCH: "${{ github.ref_name }}"
-    - name: 'Prepare artifacts'
-      run: npx nx run-many -t prepare-deploy
+    # - name: 'Build all projects'
+    #   run: npm run build
+    #   env:
+    #     NX_BRANCH: "${{ github.ref_name }}"
+    - name: 'Build and prepare artifacts'
+      run: npx nx run assassin-server:prepare-deploy
       env:
         NX_BRANCH: "${{ github.ref_name }}"
     - name: 'Upload server dist artifacts'
