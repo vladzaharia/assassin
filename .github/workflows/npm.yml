@@ -26,10 +26,14 @@ jobs:
     - name: Install NPM packages
       run: npm ci --ignore-scripts
     - name: 'Build all projects'
-      run: npx nx run-many -t build --skip-nx-cache
+      run: npm run build
+      env:
+        NX_BRANCH: ${GITHUB_REF##*/}
     - run: chmod -R 777 assassin-server/lib
     - name: 'Prepare artifacts'
       run: npx nx run-many -t prepare-deploy
+      env:
+        NX_BRANCH: ${GITHUB_REF##*/}
     - name: 'Upload server dist artifacts'
       uses: actions/upload-artifact@v3
       with:
