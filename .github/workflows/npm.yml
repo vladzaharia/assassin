@@ -41,6 +41,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: staging
+      baseUrl: https://staging.assassin.vlad.gg
     if: github.event_name == 'pull_request'
     secrets: inherit
 
@@ -49,5 +50,6 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: live
+      baseUrl: https://assassin.vlad.gg
     if: github.event_name != 'pull_request'
     secrets: inherit

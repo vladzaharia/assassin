@@ -6,6 +6,9 @@ on:
       environment:
         required: true
         type: string
+      baseUrl:
+        required: true
+        type: string
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -16,7 +19,9 @@ jobs:
   deploy:
     name: Deploy to ${{ inputs.environment }} with Wrangler
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.baseUrl }}
 
     steps:
     - name: Checkout files
