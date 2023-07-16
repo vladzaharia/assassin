@@ -3,7 +3,7 @@ import { createWordlistApi } from '../api'
 
 export interface WordListLoaderData {
 	wordLists: BasicWordlist[]
-	importableLists: ImportableWordList[]
+	managedLists: ImportableWordList[]
 }
 
 export default async function WordlistsLoader() {
@@ -11,6 +11,6 @@ export default async function WordlistsLoader() {
 
 	return {
 		wordLists: (await wordListApi.listWordList()).data.wordLists,
-		importableLists: (await wordListApi.checkWordLists()).data,
+		managedLists: (await wordListApi.checkWordLists()).data,
 	} as WordListLoaderData
 }

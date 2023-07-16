@@ -8,6 +8,26 @@
 	gap: 2rem;
 }
 
+.action.primary {
+	border-color: var(--primary-trans);
+}
+
+.action.blue {
+	border-color: var(--blue-trans);
+}
+
+.action.green {
+	border-color: var(--green-trans);
+}
+
+.action.purple {
+	border-color: var(--purple-trans);
+}
+
+.action.orange {
+	border-color: var(--orange-trans);
+}
+
 .action:last-child {
 	border-bottom: none;
 }

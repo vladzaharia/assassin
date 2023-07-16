@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      baseUrl:
+        required: true
+        type: string
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: true
+      FONTAWESOME_TOKEN:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }} with Wrangler
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.baseUrl }}
+
+    steps:
+    - name: Checkout files
+      uses: actions/checkout@v3
+    - name: Use Node.js v18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: v18.x
+        cache: 'npm'
+    - name: Set FontAwesome CI token
+      run: |
+        npm config set '@fortawesome:registry' https://npm.fontawesome.com/
+        npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
+    - name: Install NPM packages
+      run: npm ci --ignore-scripts
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: assassin-server/dist
+    - name: Deploy to Cloudflare Workers (live)
+      uses: cloudflare/wrangler-action@2.0.0
+      if: inputs.environment == 'live'
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        workingDirectory: assassin-server
+    - name: Deploy to Cloudflare Workers (${{ inputs.environment }})
+      uses: cloudflare/wrangler-action@2.0.0
+      if: inputs.environment != 'live'
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        workingDirectory: assassin-server
+        command: deploy --env ${{ inputs.environment }}

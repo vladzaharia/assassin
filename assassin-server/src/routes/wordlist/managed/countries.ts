@@ -1,6 +1,6 @@
-import { InitialWordList } from "./types";
+import { ManagedWordList } from './types'
 
-export const COUNTRIES: InitialWordList = {
+export const COUNTRIES: ManagedWordList = {
 	name: 'countries',
 	description: 'Names of countries around the world.',
 	icon: 'earth-americas',

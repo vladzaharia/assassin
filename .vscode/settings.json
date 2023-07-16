@@ -6,8 +6,21 @@
 		"local": {
 			"host": "http://localhost:8787/api",
 		},
+		"dev": {
+			"host": "https://dev.vlad.gg/api",
+		},
+		"staging": {
+			"host": "https://staging.vlad.gg/api",
+		},
 		"prod": {
 			"host": "https://assassin.vlad.gg/api",
 		}
 	},
+	"yaml.schemas": {
+		"https://json.schemastore.org/github-workflow.json": [
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/deploy.yml",
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/templates/deploy.yml",
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/shared/deploy.yml"
+		]
+	}
 }
