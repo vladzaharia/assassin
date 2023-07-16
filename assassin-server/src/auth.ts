@@ -75,8 +75,9 @@ export const checkPath = (path: string, method: string) => {
 }
 
 export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
-	const secret = (await c.env.OPENID.get('secret')) || c.env.ASSASSIN_SECRET || 'test-secret'
+	const secret = (await c.env.OPENID.get('secret')) || c.env.ASSASSIN_SECRET
 	const match = checkPath(c.req.path, c.req.method)
+
 	if (match) {
 		if (match.authTypes.includes('gm') || match.authTypes.includes('player')) {
 			const { room, name: nameParam } = c.req.param()
@@ -101,11 +102,17 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			}
 
 			if (!result && match.authTypes.includes('jwt')) {
-				console.log(`JWT Auth: secret ${secret}`)
+				console.log(`JWT Auth`)
+				if (!secret) {
+					console.warn("No JWT token defined!")
+				}
 				return jwt({ secret })(c, next)
 			}
 		} else if (match.authTypes.includes('jwt')) {
-			console.log(`JWT Auth: secret ${secret}`)
+			console.log(`JWT Auth`)
+			if (!secret) {
+				console.warn("No JWT token defined!")
+			}
 			return jwt({ secret })(c, next)
 		}
 	}
