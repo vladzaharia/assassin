@@ -47,12 +47,13 @@ export default function RoomsAdmin() {
 		<div className="list room-list">
 			<Header
 				title="Rooms"
-				className="blue corner-right"
+				color="blue"
+				className="corner-right"
 				leftActions={<FontAwesomeIcon icon={faDoorOpen} size="lg" />}
-				rightActions={<Button className="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
+				rightActions={<Button color="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 			/>
 			<Table
-				className="blue"
+				color="blue"
 				headers={[
 					{ element: 'Room name' },
 					{ element: '# players' },
@@ -63,7 +64,7 @@ export default function RoomsAdmin() {
 							<div className="buttons">
 								<NotificationAwareButton
 									notificationSources={['room-create']}
-									className="green"
+									color="green"
 									onClick={() => setShowCreateModal(true)}
 									iconProps={{ icon: faPlus }}
 								/>
@@ -83,7 +84,7 @@ export default function RoomsAdmin() {
 								element: (
 									<div className="buttons">
 										<Button
-											className="primary"
+											color="primary"
 											iconProps={{ icon: faTrash }}
 											onClick={(e) => {
 												e.stopPropagation()

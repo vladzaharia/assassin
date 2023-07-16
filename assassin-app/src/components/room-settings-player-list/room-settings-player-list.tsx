@@ -131,11 +131,12 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 
 	return (
 		<>
-			<SectionTitle className="blue">
+			<SectionTitle color="blue">
 				<FontAwesomeIcon className="mr-05" icon={faUsers} /> Player List
 			</SectionTitle>
 			<Table
-				className="blue player-list-table"
+				color="blue"
+				className="player-list-table"
 				headers={[
 					{ element: 'Player name' },
 					{ element: 'Status', className: 'table-cell-md' },
@@ -144,7 +145,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 							apiType === 'admin' ? (
 								<div className="buttons">
 									<Button
-										className="green"
+										color="green"
 										iconProps={{ icon: faPlus }}
 										disabled={roomStatus?.status === 'started'}
 										onClick={() => setShowCreateModal(true)}
@@ -166,7 +167,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 									element: (
 										<div className="buttons">
 											<Button
-												className="primary"
+												color="primary"
 												iconProps={{ icon: faTrash }}
 												onClick={(e) => {
 													e.stopPropagation()
@@ -204,12 +205,12 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 							<div className="player-info-buttons">
 								{roomStatus?.status === 'started' ? (
 									<Button
-										className="blue"
+										color="blue"
 										iconProps={{ icon: showPlayerDetails ? faEyeSlash : faEye }}
 										onClick={() => setShowPlayerDetails(!showPlayerDetails)}
 									/>
 								) : undefined}
-								<Button className="primary" iconProps={{ icon: faXmark }} onClick={() => setPlayer(undefined)} />
+								<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => setPlayer(undefined)} />
 							</div>
 						}
 					/>

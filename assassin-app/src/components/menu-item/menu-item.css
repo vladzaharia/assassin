@@ -18,8 +18,7 @@
 	border-bottom: none;
 }
 
-.menu-item.primary:hover
-.menu-item.primary.active {
+.menu-item.primary:hover .menu-item.primary.active {
 	background-color: var(--primary-trans-50);
 }
 
@@ -35,7 +34,7 @@
 }
 
 .menu-item.blue:hover,
-.menu-item.blue.active	{
+.menu-item.blue.active {
 	background-color: var(--blue-trans-50);
 }
 

@@ -27,11 +27,16 @@ export default function WordlistsAdmin() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const deleteWordList = async (wordListName: string) => {
-		request(async () => await api.deleteWordList(wordListName), {
-			message: `${wordListName} deleted successfully!`,
-			source: 'wordlist',
-			icon: faTrash,
-		}, () => setDeleteModalWordListName(undefined), () => setDeleteModalWordListName(undefined))
+		request(
+			async () => await api.deleteWordList(wordListName),
+			{
+				message: `${wordListName} deleted successfully!`,
+				source: 'wordlist',
+				icon: faTrash,
+			},
+			() => setDeleteModalWordListName(undefined),
+			() => setDeleteModalWordListName(undefined)
+		)
 	}
 
 	AddToLibrary()
@@ -40,19 +45,20 @@ export default function WordlistsAdmin() {
 		<div className="list wordlist-list">
 			<Header
 				title="Word lists"
-				className="green corner-right"
+				color="green"
+				className="corner-right"
 				leftActions={<FontAwesomeIcon icon={faTextSize} size="lg" />}
-				rightActions={<Button className="green" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
+				rightActions={<Button color="green" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 			/>
 			<Table
-				className="green"
+				color="green"
 				headers={[
 					{ element: 'Word list name' },
 					{ element: '# words' },
 					{
 						element: (
 							<div className="buttons">
-								<Button className="green" iconProps={{ icon: faPlus }} />
+								<Button color="green" iconProps={{ icon: faPlus }} />
 							</div>
 						),
 					},
@@ -73,7 +79,7 @@ export default function WordlistsAdmin() {
 								element: (
 									<div className="buttons">
 										<Button
-											className="primary"
+											color="primary"
 											iconProps={{ icon: faTrash }}
 											onClick={(e) => {
 												e.stopPropagation()

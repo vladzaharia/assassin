@@ -22,6 +22,7 @@ import Button from '../button/button'
 import { AnimatePresence, motion } from 'framer-motion'
 import Popover from '../popover/popover'
 import isMobile from 'is-mobile'
+import { CommonColor } from '../../types'
 
 function PlayerEntry({ player }: { player: BasicPlayer }) {
 	const popoverAnchor = useRef<HTMLDivElement>(null)
@@ -162,9 +163,9 @@ export default function PlayerList() {
 
 		return (
 			<Button
-				className={
+				color={
 					showNotification && ['join', 'leave'].includes(notification?.source || '')
-						? notification?.notificationType || 'primary'
+						? (notification?.notificationType as CommonColor) || 'primary'
 						: !playerInRoom
 						? 'green'
 						: 'primary'

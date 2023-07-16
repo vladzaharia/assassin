@@ -28,22 +28,30 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 	const updateWordLists = async (name: string) => {
 		if (roomStatus?.status !== 'started') {
 			if (roomStatus?.wordLists?.includes(name)) {
-				request(async () => await api.patchRoom(roomStatus.name, {
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-					wordLists: roomStatus.wordLists!.filter((wl) => wl !== name),
-				}), {
-					message: `Removed ${name} successfully!`,
-					source: 'wordlist',
-					icon: faMessageMinus,
-				})
+				request(
+					async () =>
+						await api.patchRoom(roomStatus.name, {
+							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+							wordLists: roomStatus.wordLists!.filter((wl) => wl !== name),
+						}),
+					{
+						message: `Removed ${name} successfully!`,
+						source: 'wordlist',
+						icon: faMessageMinus,
+					}
+				)
 			} else {
-				request(async () => await api.patchRoom(roomStatus?.name || '', {
-					wordLists: [...(roomStatus?.wordLists || []), name],
-				}), {
-					message: `Added ${name} successfully!`,
-					source: 'wordlist',
-					icon: faMessagePlus,
-				})
+				request(
+					async () =>
+						await api.patchRoom(roomStatus?.name || '', {
+							wordLists: [...(roomStatus?.wordLists || []), name],
+						}),
+					{
+						message: `Added ${name} successfully!`,
+						source: 'wordlist',
+						icon: faMessagePlus,
+					}
+				)
 			}
 		}
 	}
@@ -52,17 +60,27 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 		if (roomStatus?.status !== 'started') {
 			const newValue = !roomContext?.room?.usesWords
 
-			request(async () => await api.patchRoom(roomContext?.room?.name || '', {
-				usesWords: newValue,
-			}), undefined, () => setUsesWords(newValue))
+			request(
+				async () =>
+					await api.patchRoom(roomContext?.room?.name || '', {
+						usesWords: newValue,
+					}),
+				undefined,
+				() => setUsesWords(newValue)
+			)
 		}
 	}
 
 	const updateNumWords = async (newValue: number) => {
 		if (roomStatus?.status !== 'started') {
-			request(async () => await api.patchRoom(roomContext?.room?.name || '', {
-				numWords: newValue,
-			}), undefined, () => setNumWords(newValue))
+			request(
+				async () =>
+					await api.patchRoom(roomContext?.room?.name || '', {
+						numWords: newValue,
+					}),
+				undefined,
+				() => setNumWords(newValue)
+			)
 		}
 	}
 
@@ -70,17 +88,12 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 
 	return (
 		<div className="wordlists-wrapper">
-			<SectionTitle className="blue">
+			<SectionTitle color="blue">
 				<FontAwesomeIcon className="mr-05" icon={faTextSize} />
 				Word settings
 			</SectionTitle>
 			<Action text="Use words?" description="Whether to use words for this room, or play standard assassin.">
-				<Toggle
-					disabled={isPlaying}
-					checked={usesWords}
-					onChange={() => updateUsesWords()}
-					className={`toggle blue ${usesWords ? 'checked' : ''} ${isPlaying ? 'disabled' : ''}`}
-				/>
+				<Toggle disabled={isPlaying} checked={usesWords} onChange={() => updateUsesWords()} color="blue" />
 			</Action>
 			{roomStatus?.usesWords ? (
 				<>

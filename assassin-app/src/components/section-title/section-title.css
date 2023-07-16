@@ -33,3 +33,34 @@
 	color: var(--orange-dark);
 	border-bottom-color: var(--orange-trans);
 }
+
+.section-title:has(.section-title-with-action) {
+	padding-top: 0.5625rem;
+	padding-bottom: 0.5625rem;
+}
+
+.section-title-with-action {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.section-title-with-action span {
+	flex: 1 1 auto;
+}
+
+.section-title-with-action .button {
+	width: 2rem;
+	height: 2rem;
+}
+
+@media only screen and (max-width: 50rem) {
+	.section-title {
+		padding: 1.5rem;
+	}
+
+	.section-title:has(.section-title-with-action) {
+		padding-top: 1.0625rem;
+		padding-bottom: 1.0625rem;
+	}
+}

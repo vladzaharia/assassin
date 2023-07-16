@@ -20,46 +20,60 @@ export default function AdminDebug() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const debugReset = async () => {
-		request(async () => await api.debugReset(), {
-			message: `Database reset successfully!`,
-			source: 'debug-reset',
-			icon: faFire,
-		}, () => setShowDeleteModal(false), () => setShowDeleteModal(false))
+		request(
+			async () => await api.debugReset(),
+			{
+				message: `Database reset successfully!`,
+				source: 'debug-reset',
+				icon: faFire,
+			},
+			() => setShowDeleteModal(false),
+			() => setShowDeleteModal(false)
+		)
 	}
 
 	const debugInitWordlists = async () => {
-		request(async () => await api.debugInit({
-			wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
-		}), {
-			message: `Wordlist initialized successfully!`,
-			source: 'debug-init',
-			icon: faTextSize,
-		})
+		request(
+			async () =>
+				await api.debugInit({
+					wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
+				}),
+			{
+				message: `Wordlist initialized successfully!`,
+				source: 'debug-init',
+				icon: faTextSize,
+			}
+		)
 	}
 
 	const debugInitDemoRoom = async () => {
-		request(async () => await api.debugInit({
-			room: 'test',
-			players: ['Vlad', 'George', 'John'],
-		}), {
-			message: `Demo room (test) initialized successfully!`,
-			source: 'debug-demo',
-			icon: faDoorOpen,
-		})
+		request(
+			async () =>
+				await api.debugInit({
+					room: 'test',
+					players: ['Vlad', 'George', 'John'],
+				}),
+			{
+				message: `Demo room (test) initialized successfully!`,
+				source: 'debug-demo',
+				icon: faDoorOpen,
+			}
+		)
 	}
 
 	return (
 		<div className="room">
 			<Header
 				title={'Debug'}
-				className="purple corner-right"
+				color="purple"
+				className="corner-right"
 				leftActions={<FontAwesomeIcon icon={faCog} size="lg" />}
-				rightActions={<Button className="purple" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
+				rightActions={<Button color="purple" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 			/>
 			<Action text="Reset database" description="Drops and recreates all tables to ensure they're the latest schemas.">
 				<NotificationAwareButton
 					notificationSources={['debug-reset']}
-					className="primary"
+					color="primary"
 					iconProps={{ icon: faFire }}
 					onClick={() => setShowDeleteModal(true)}
 				/>
@@ -67,7 +81,7 @@ export default function AdminDebug() {
 			<Action text="Initialize wordlists" description="Adds initial wordlists to database.">
 				<NotificationAwareButton
 					notificationSources={['debug-init']}
-					className="blue"
+					color="blue"
 					iconProps={{ icon: faTextSize }}
 					onClick={() => debugInitWordlists()}
 				/>
@@ -75,7 +89,7 @@ export default function AdminDebug() {
 			<Action text="Initialize demo room" description="Adds demo room to database.">
 				<NotificationAwareButton
 					notificationSources={['debug-demo']}
-					className="green"
+					color="green"
 					iconProps={{ icon: faDoorOpen }}
 					onClick={() => debugInitDemoRoom()}
 				/>

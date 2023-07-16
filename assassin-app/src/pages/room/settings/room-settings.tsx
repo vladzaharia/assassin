@@ -30,10 +30,13 @@ export default function RoomSettings() {
 	return (
 		<div className="room-settings">
 			<Header
-				className="blue corner-right"
+				color="blue"
+				className="corner-right"
 				title="GM Settings"
 				leftActions={<FontAwesomeIcon icon={faCrown} size="lg" />}
-				rightActions={<Button iconProps={{ icon: faXmark }} className="blue" onClick={() => navigate(`/room/${roomStatus?.name}`)} />}
+				rightActions={
+					<Button color="blue" iconProps={{ icon: faXmark }} className="blue" onClick={() => navigate(`/room/${roomStatus?.name}`)} />
+				}
 			/>
 			<div className="gm-actions">
 				<RoomSettingsActions apiType="gm" />

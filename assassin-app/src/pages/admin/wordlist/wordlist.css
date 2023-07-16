@@ -1,0 +1,8 @@
+.wordlist-description {
+	display: flex;
+	flex-direction: row;
+}
+
+.wordlist-description span {
+	flex: 1 1 auto;
+}

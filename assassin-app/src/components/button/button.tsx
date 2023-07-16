@@ -5,16 +5,18 @@ import React, { useContext, useRef, useState } from 'react'
 import isMobile from 'is-mobile'
 import { NotificationSource } from '../../hooks/notification'
 import { NotificationContext } from '../../hooks/notification'
+import { CommonColor } from '../../types'
 
 export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	className?: string
 	text?: string
+	color: CommonColor
 	iconProps?: FontAwesomeIconProps
 	onClick?: React.MouseEventHandler<HTMLButtonElement>
 	popoverProps?: Omit<PopoverProps, 'anchor' | 'open' | 'onClose'>
 }
 
-export default function Button({ className, disabled, text, iconProps, onClick, popoverProps, ...buttonProps }: ButtonProps) {
+export default function Button({ color, className, disabled, text, iconProps, onClick, popoverProps, ...buttonProps }: ButtonProps) {
 	const popoverAnchor = useRef<HTMLButtonElement>(null)
 	const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
 
@@ -22,7 +24,7 @@ export default function Button({ className, disabled, text, iconProps, onClick, 
 		<button
 			{...buttonProps}
 			ref={popoverAnchor}
-			className={`button ${className || ''}`}
+			className={`button ${color} ${className || ''}`}
 			disabled={disabled}
 			onClick={
 				onClick ||
@@ -54,14 +56,14 @@ export interface NotificationAwareButtonProps extends ButtonProps {
 	notificationSources: NotificationSource[]
 }
 
-export function NotificationAwareButton({ className, notificationSources, ...buttonProps }: NotificationAwareButtonProps) {
+export function NotificationAwareButton({ color, notificationSources, ...buttonProps }: NotificationAwareButtonProps) {
 	const { notification, showNotification } = useContext(NotificationContext)
 	return (
 		<Button
-			className={
+			color={
 				showNotification && notificationSources.includes(notification?.source as NotificationSource)
-					? notification?.notificationType || 'primary'
-					: className
+					? (notification?.notificationType as CommonColor) || 'primary'
+					: color
 			}
 			{...buttonProps}
 		/>

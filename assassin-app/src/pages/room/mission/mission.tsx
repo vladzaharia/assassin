@@ -5,7 +5,7 @@ import { NotificationContext, useNotificationAwareRequest } from '../../../hooks
 import { RoomContext } from '../../../hooks/room'
 import './mission.css'
 import Header from '../../../components/header/header'
-import Button from '../../../components/button/button'
+import Button, { NotificationAwareButton } from '../../../components/button/button'
 import { faCheck, faCrosshairs, faTextSize, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../../../components/action/action'
 import Words from '../../../components/words/words'
@@ -19,7 +19,7 @@ export default function Mission() {
 	const request = useNotificationAwareRequest()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const roomStatus = useContext(RoomContext)
-	const { setError, setNotification, notification, showNotification } = useContext(NotificationContext)
+	const { setError, setNotification } = useContext(NotificationContext)
 	const player = useLoaderData() as PlayerResponse
 	const playerApi = createPlayerApi(player.name)
 
@@ -27,26 +27,30 @@ export default function Mission() {
 	const usesWords = roomStatus?.room?.usesWords
 
 	const eliminatePlayer = async (word?: string) => {
-		request(async () => await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word }), undefined, (eliminateResult) => {
-			if (eliminateResult.status === 299) {
-				setNotification({
-					message: eliminateResult.data.message,
-					icon: faTrophyStar,
-					source: 'eliminate',
-					notificationType: 'success',
-				})
-				navigate(`/room/${roomStatus?.room?.name}`)
-			} else {
-				setNotification({
-					message: `${player.target} eliminated successfully!`,
-					icon: faCrosshairs,
-					source: 'eliminate',
-					notificationType: 'success',
-				})
-			}
+		request(
+			async () => await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word }),
+			undefined,
+			(eliminateResult) => {
+				if (eliminateResult.status === 299) {
+					setNotification({
+						message: eliminateResult.data.message,
+						icon: faTrophyStar,
+						source: 'eliminate',
+						notificationType: 'success',
+					})
+					navigate(`/room/${roomStatus?.room?.name}`)
+				} else {
+					setNotification({
+						message: `${player.target} eliminated successfully!`,
+						icon: faCrosshairs,
+						source: 'eliminate',
+						notificationType: 'success',
+					})
+				}
 
-			setShowModal(false)
-		})
+				setShowModal(false)
+			}
+		)
 	}
 
 	useEffect(() => {
@@ -74,13 +78,16 @@ export default function Mission() {
 				<>
 					<Header
 						title="Mission"
-						className="primary corner-right"
+						color="primary"
+						className="corner-right"
 						leftActions={<FontAwesomeIcon icon={faUserSecret} size="lg" />}
 						rightActions={
-							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
+							<Button color="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
 						}
 					/>
-					<SectionTitle className="primary"><FontAwesomeIcon className='mr-05' icon={faCrosshairs} /> Target</SectionTitle>
+					<SectionTitle color="primary">
+						<FontAwesomeIcon className="mr-05" icon={faCrosshairs} /> Target
+					</SectionTitle>
 					<Action
 						text="Target name"
 						description={
@@ -92,15 +99,18 @@ export default function Mission() {
 						<span className="target">{player.target}</span>
 					</Action>
 					<Action text="Record elimination" description="Click this button once you have eliminated your target.">
-						<Button
-							className={showNotification && notification?.source === 'eliminate' ? notification?.notificationType : 'green'}
+						<NotificationAwareButton
+							notificationSources={['eliminate']}
+							color="green"
 							iconProps={{ icon: faCrosshairs }}
 							onClick={() => setShowModal(true)}
 						/>
 					</Action>
 					{usesWords ? (
 						<>
-							<SectionTitle className="primary"><FontAwesomeIcon className='mr-05' icon={faTextSize} /> Words</SectionTitle>
+							<SectionTitle color="primary">
+								<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
+							</SectionTitle>
 							<Action className="column" description="Use these words to eliminate your target.">
 								<Words words={player.words} />
 							</Action>
@@ -114,7 +124,7 @@ export default function Mission() {
 						title="Confirm Elimination"
 						className="with-icon"
 						leftActions={<FontAwesomeIcon icon={faCrosshairs} size="lg" />}
-						rightActions={<Button className="primary" onClick={() => setShowModal(false)} iconProps={{ icon: faXmark }} />}
+						rightActions={<Button color="primary" onClick={() => setShowModal(false)} iconProps={{ icon: faXmark }} />}
 					/>
 					<div className="confirm">
 						<p>
@@ -132,7 +142,7 @@ export default function Mission() {
 						<div className="button-wrapper">
 							<Button
 								text="Confirm Elimination"
-								className="green"
+								color="green"
 								iconProps={{ icon: faCheck, size: 'xl' }}
 								onClick={() => eliminatePlayer()}
 							/>

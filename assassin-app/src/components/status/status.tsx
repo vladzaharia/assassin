@@ -4,10 +4,10 @@ import isMobile from 'is-mobile'
 import { useRef, useState } from 'react'
 import Popover from '../popover/popover'
 import './status.css'
-import { Color } from '../../types'
+import { CommonColor } from '../../types'
 
 export interface StatusProps {
-	color: Color
+	color: CommonColor
 	popover?: {
 		title: string
 		description: string | JSX.Element

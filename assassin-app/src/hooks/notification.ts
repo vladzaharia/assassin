@@ -61,11 +61,12 @@ export function useNotificationAwareRequest() {
 		try {
 			const response = await request()
 
-			notificationDetails && setNotification({
-				icon: faCheck,
-				...notificationDetails,
-				notificationType: 'success'
-			})
+			notificationDetails &&
+				setNotification({
+					icon: faCheck,
+					...notificationDetails,
+					notificationType: 'success',
+				})
 
 			onSuccess && onSuccess(response)
 			revalidate()

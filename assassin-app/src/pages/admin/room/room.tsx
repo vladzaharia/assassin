@@ -31,9 +31,10 @@ export default function RoomAdmin() {
 							{room.name}
 						</>
 					}
-					className="blue corner-right"
-					leftActions={<Button className="blue" onClick={() => navigate(`/admin/room`)} iconProps={{ icon: faChevronLeft }} />}
-					rightActions={<Button className="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
+					color="blue"
+					className="corner-right"
+					leftActions={<Button color="blue" onClick={() => navigate(`/admin/room`)} iconProps={{ icon: faChevronLeft }} />}
+					rightActions={<Button color="blue" onClick={() => navigate(`/admin`)} iconProps={{ icon: faXmark }} />}
 				/>
 				<RoomSettingsPlayerList apiType="admin" />
 				<RoomSettingsActions apiType="admin" />

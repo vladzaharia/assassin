@@ -25,10 +25,10 @@ export default function PlayerActions() {
 						<span className="description">Wait until the game ends to play again.</span>
 					</div>
 				) : (
-					<MenuItem key="mission" className="primary" text="Mission" icon={faUserSecret} destination="mission" />
+					<MenuItem key="mission" color="primary" text="Mission" icon={faUserSecret} destination="mission" />
 				)
 			) : undefined}
-			{isGM ? <MenuItem key="gm" className="blue" text="GM Settings" icon={faCrown} destination="settings" /> : undefined}
+			{isGM ? <MenuItem key="gm" color="blue" text="GM Settings" icon={faCrown} destination="settings" /> : undefined}
 		</div>
 	) : null
 }

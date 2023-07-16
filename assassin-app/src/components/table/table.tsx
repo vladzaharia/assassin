@@ -1,3 +1,4 @@
+import { CommonColor } from '../../types'
 import './table.css'
 
 export interface TableCellProps {
@@ -8,6 +9,7 @@ export interface TableCellProps {
 export interface TableProps {
 	headers?: TableCellProps[]
 	className?: string
+	color: CommonColor
 	rows: {
 		name: string
 		cells: TableCellProps[]
@@ -15,9 +17,9 @@ export interface TableProps {
 	}[]
 }
 
-export default function Table({ className, headers, rows }: TableProps) {
+export default function Table({ color, className, headers, rows }: TableProps) {
 	return (
-		<div className={`table ${className || ''}`}>
+		<div className={`table ${color} ${className || ''}`}>
 			{headers && (
 				<div className="table-header-wrapper">
 					<div className="table-row table-header">

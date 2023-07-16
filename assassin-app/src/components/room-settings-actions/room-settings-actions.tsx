@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import Action from '../action/action'
 import Button from '../button/button'
-import { RoomSettingsComponentProps } from '../../types'
+import { CommonColor, RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import SectionTitle from '../section-title/section-title'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -43,9 +43,9 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 		)
 	}
 
-	const getColor = (baseColor: string, source: NotificationSource) => {
+	const getColor = (baseColor: CommonColor, source: NotificationSource) => {
 		if (showNotification && notification?.source === source) {
-			return notification?.notificationType
+			return notification?.notificationType as CommonColor
 		}
 
 		return baseColor
@@ -53,7 +53,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 
 	return (
 		<>
-			<SectionTitle className="blue">
+			<SectionTitle color="blue">
 				<FontAwesomeIcon className="mr-05" icon={faSparkles} /> Actions
 			</SectionTitle>
 			<Action
@@ -65,7 +65,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 				}
 			>
 				<Button
-					className={getColor('blue', 'gm-reset')}
+					color={getColor('blue', 'gm-reset')}
 					iconProps={{
 						icon: faRotateLeft,
 					}}
@@ -83,7 +83,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 				}
 			>
 				<Button
-					className={getColor('green', 'gm-start')}
+					color={getColor('green', 'gm-start')}
 					iconProps={{
 						icon: faPlay,
 					}}

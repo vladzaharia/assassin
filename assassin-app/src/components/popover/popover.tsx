@@ -4,12 +4,12 @@ import { Popover as MUIPopover } from '@mui/material'
 import './popover.css'
 import { useContext } from 'react'
 import { ContainerContext } from '../../hooks/container'
-import { Color } from '../../types'
+import { CommonColor } from '../../types'
 
 export interface PopoverContentProps {
 	title?: string
 	description?: string | JSX.Element
-	color: Color
+	color: CommonColor
 	icon?: IconDefinition
 }
 

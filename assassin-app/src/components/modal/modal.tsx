@@ -31,11 +31,7 @@ export function ConfirmModal({ className, text, onConfirm, ...props }: ConfirmMo
 					title="Confirm"
 					rightActions={
 						<div className="modal-buttons">
-							<Button
-								className="primary"
-								iconProps={{ icon: faXmark }}
-								onClick={() => props.onClose && props.onClose({}, 'escapeKeyDown')}
-							/>
+							<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => props.onClose && props.onClose({}, 'escapeKeyDown')} />
 						</div>
 					}
 				/>
@@ -43,12 +39,12 @@ export function ConfirmModal({ className, text, onConfirm, ...props }: ConfirmMo
 					<span className="modal-message">{text}</span>
 					<div className="modal-buttons">
 						<Button
-							className="primary"
+							color="primary"
 							iconProps={{ icon: faXmark }}
 							text="No"
 							onClick={() => props.onClose && props.onClose({}, 'escapeKeyDown')}
 						/>
-						<Button className="green" iconProps={{ icon: faCheck }} text="Yes" onClick={onConfirm} />
+						<Button color="green" iconProps={{ icon: faCheck }} text="Yes" onClick={onConfirm} />
 					</div>
 				</div>
 			</>
@@ -83,7 +79,7 @@ export function CreateModal({ className, text, description, onCreate: onCreatePr
 					title="Create"
 					rightActions={
 						<div className="modal-buttons">
-							<Button className="primary" iconProps={{ icon: faXmark }} onClick={onClose} />
+							<Button color="primary" iconProps={{ icon: faXmark }} onClick={onClose} />
 						</div>
 					}
 				/>
@@ -93,7 +89,7 @@ export function CreateModal({ className, text, description, onCreate: onCreatePr
 					</div>
 				</Action>
 				<Action>
-					<Button className="green" iconProps={{ icon: faPlus }} text="Create" onClick={onCreate} />
+					<Button color="green" iconProps={{ icon: faPlus }} text="Create" onClick={onCreate} />
 				</Action>
 			</>
 		</Modal>
