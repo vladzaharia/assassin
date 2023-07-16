@@ -1,6 +1,6 @@
 name = "assassin"
 main = "src/index.ts"
-compatibility_date = "2023-06-17"
+compatibility_date = "2023-07-05"
 usage_model = "bundled"
 route = { pattern = "assassin.vlad.gg", custom_domain = true }
 vars = { ENVIRONMENT = "live", BASE_URL="https://assassin.vlad.gg" }
