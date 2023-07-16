@@ -6,6 +6,7 @@ export interface Database {
 	player: PlayerTable
 	word: WordTable
 	wordlist: WordListTable
+	migration: MigrationTable
 }
 
 export type RoomStatus = 'not-ready' | 'started' | 'completed'
@@ -38,6 +39,13 @@ export interface WordListTable {
 export interface WordTable {
 	word: string
 	list: string
+}
+
+export interface MigrationTable {
+	version: number
+	name: string
+	applied: number
+	rolledBack?: number
 }
 
 export const getKyselyDb = (database: D1Database) => {
