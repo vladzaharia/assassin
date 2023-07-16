@@ -33,7 +33,11 @@ export default function Table({ color, className, headers, rows }: TableProps) {
 				</div>
 			)}
 			{rows.map((row, i) => (
-				<div key={`table-${className}-${i}-row`} className={`table-row ${row.color || ''} ${row.onClick ? 'clickable' : ''}`} onClick={row.onClick}>
+				<div
+					key={`table-${className}-${i}-row`}
+					className={`table-row ${row.color || ''} ${row.onClick ? 'clickable' : ''}`}
+					onClick={row.onClick}
+				>
 					{row.cells.map((cell, j) => (
 						<div className={`table-cell ${cell.className || ''}`} key={`table-${className}-${i}-${j}-cell`}>
 							{cell.element}
