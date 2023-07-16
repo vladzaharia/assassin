@@ -36,40 +36,16 @@ jobs:
         path: assassin-server/dist/
         retention-days: 7
 
-  deploy:
-    name: Deploy with Wrangler
-    needs: ['build']
-    runs-on: ubuntu-latest
+  deploy-staging:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+    if: github.event_name == 'pull_request'
+    secrets: inherit
 
-    steps:
-    - name: Checkout files
-      uses: actions/checkout@v3
-    - name: Use Node.js v18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: v18.x
-        cache: 'npm'
-    - name: Set FontAwesome CI token
-      run: |
-        npm config set '@fortawesome:registry' https://npm.fontawesome.com/
-        npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
-    - name: Install NPM packages
-      run: npm ci --ignore-scripts
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: dist
-        path: assassin-server/dist
-    - name: Deploy to Cloudflare Workers
-      uses: cloudflare/wrangler-action@2.0.0
-      if: github.event_name != 'pull_request'
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        workingDirectory: assassin-server
-    - name: Deploy PR to Cloudflare Workers
-      uses: cloudflare/wrangler-action@2.0.0
-      if: github.event_name == 'pull_request'
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        workingDirectory: assassin-server
-        command: deploy --env staging
+  deploy-live:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: live
+    if: github.event_name != 'pull_request'
+    secrets: inherit

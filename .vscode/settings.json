@@ -15,5 +15,8 @@
 		"prod": {
 			"host": "https://assassin.vlad.gg/api",
 		}
+	},
+	"yaml.schemas": {
+		"https://json.schemastore.org/github-workflow.json": "file:///Users/vlad/Documents/Repos/assassin/.github/workflows/deploy.yml"
 	}
 }
