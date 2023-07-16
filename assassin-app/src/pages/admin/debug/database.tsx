@@ -38,7 +38,7 @@ export default function AdminDatabase() {
 	const api = createDatabaseApi(auth.user?.access_token || '')
 
 	const cannotMigrate = (database?.migrations?.available || []).length === 0
-	const cannotRollback = database?.migrations?.current.version === 0
+	const cannotRollback = database?.migrations?.current?.version === 0
 
 	const getDb = async () => {
 		await request(
