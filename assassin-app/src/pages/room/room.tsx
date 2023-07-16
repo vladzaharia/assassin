@@ -49,7 +49,7 @@ export default function Room() {
 					title: room.name,
 					leftActions: (
 						<Button
-							className="primary"
+							color="primary"
 							onClick={() => navigate('/')}
 							iconProps={{
 								icon: faChevronLeft,
@@ -62,20 +62,18 @@ export default function Room() {
 				<PlayerActions key="actions" />
 				<PlayerList key="list" />
 			</Menu>
-			<div className="room-content">
-				<AnimatePresence mode="popLayout">
-					<motion.div
-						className="room-content no-animate"
-						key={location.pathname}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.5 }}
-					>
-						<Outlet />
-					</motion.div>
-				</AnimatePresence>
-			</div>
+			<AnimatePresence mode="popLayout">
+				<motion.div
+					className="room-content no-animate"
+					key={location.pathname}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.5 }}
+				>
+					<Outlet />
+				</motion.div>
+			</AnimatePresence>
 		</RoomContext.Provider>
 	)
 }

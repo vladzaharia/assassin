@@ -26,7 +26,7 @@ export default function RoomsAdmin() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const createRoom = async (roomName: string) => {
-		request(
+		await request(
 			async () => await api.putRoom(roomName, { usesWords: true }),
 			{ message: `${roomName} created successfully!`, source: 'room-create', icon: faPlus },
 			() => setShowCreateModal(false),
@@ -35,7 +35,7 @@ export default function RoomsAdmin() {
 	}
 
 	const deleteRoom = async (roomName: string) => {
-		request(
+		await request(
 			async () => await api.deleteRoom(roomName),
 			{ message: `${roomName} deleted successfully!`, source: 'room', icon: faTrash },
 			() => setDeleteModalRoomName(undefined),

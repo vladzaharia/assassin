@@ -20,7 +20,7 @@ export default function AdminDebug() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const debugReset = async () => {
-		request(
+		await request(
 			async () => await api.debugReset(),
 			{
 				message: `Database reset successfully!`,
@@ -33,7 +33,7 @@ export default function AdminDebug() {
 	}
 
 	const debugInitWordlists = async () => {
-		request(
+		await request(
 			async () =>
 				await api.debugInit({
 					wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
@@ -47,7 +47,7 @@ export default function AdminDebug() {
 	}
 
 	const debugInitDemoRoom = async () => {
-		request(
+		await request(
 			async () =>
 				await api.debugInit({
 					room: 'test',

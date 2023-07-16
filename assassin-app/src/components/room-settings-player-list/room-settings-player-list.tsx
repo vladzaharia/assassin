@@ -96,7 +96,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 
 	const fetchPlayer = async (playerName: string) => {
 		if (roomStatus) {
-			request(
+			await request(
 				async () => (await (api as AdminApi).getPlayer(roomStatus.name, playerName)).data,
 				undefined,
 				(player) => {
@@ -109,7 +109,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 
 	const addPlayer = async (playerName: string) => {
 		if (roomStatus && roomStatus.status !== 'started') {
-			request(
+			await request(
 				async () => await (api as AdminApi).putPlayer(roomStatus.name, playerName),
 				{ message: `Added ${playerName} successfully!`, source: 'player', icon: faUserPlus },
 				() => setShowCreateModal(false),
@@ -120,7 +120,7 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 
 	const removePlayer = async (playerName: string) => {
 		if (roomStatus && roomStatus.status !== 'started') {
-			request(
+			await request(
 				async () => await api.deletePlayer(roomStatus.name, playerName),
 				{ message: `Removed ${playerName} successfully!`, source: 'player', icon: faUserMinus },
 				() => setRemovePlayerModalName(undefined),

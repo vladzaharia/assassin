@@ -27,7 +27,7 @@ export default function WordlistsAdmin() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const deleteWordList = async (wordListName: string) => {
-		request(
+		await request(
 			async () => await api.deleteWordList(wordListName),
 			{
 				message: `${wordListName} deleted successfully!`,

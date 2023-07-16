@@ -59,7 +59,7 @@ export function useNotificationAwareRequest() {
 		onCatch?: () => void
 	) => {
 		try {
-			const response = await request()
+			const response = await await request()
 
 			notificationDetails &&
 				setNotification({

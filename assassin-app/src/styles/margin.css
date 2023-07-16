@@ -1,3 +1,35 @@
+.m-025 {
+	margin: 0.25rem;
+}
+
+.m-05 {
+	margin: 0.5rem;
+}
+
+.m-1 {
+	margin: 1rem;
+}
+
+.m-2 {
+	margin: 2rem;
+}
+
+.ml-025 {
+	margin-left: 0.25rem;
+}
+
+.ml-05 {
+	margin-left: 0.5rem;
+}
+
+.ml-1 {
+	margin-left: 1rem;
+}
+
+.ml-2 {
+	margin-left: 2rem;
+}
+
 .mr-025 {
 	margin-right: 0.25rem;
 }
@@ -8,4 +40,40 @@
 
 .mr-1 {
 	margin-right: 1rem;
+}
+
+.mr-2 {
+	margin-right: 2rem;
+}
+
+.mt-025 {
+	margin-top: 0.25rem;
+}
+
+.mt-05 {
+	margin-top: 0.5rem;
+}
+
+.mt-1 {
+	margin-top: 1rem;
+}
+
+.mt-2 {
+	margin-top: 2rem;
+}
+
+.mb-025 {
+	margin-bottom: 0.25rem;
+}
+
+.mb-05 {
+	margin-bottom: 0.5rem;
+}
+
+.mb-1 {
+	margin-bottom: 1rem;
+}
+
+.mb-2 {
+	margin-bottom: 2rem;
 }

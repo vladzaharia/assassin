@@ -39,8 +39,8 @@ export default function RoomSettings() {
 				}
 			/>
 			<div className="gm-actions">
-				<RoomSettingsActions apiType="gm" />
 				<RoomSettingsPlayerList apiType="gm" />
+				<RoomSettingsActions apiType="gm" />
 				<RoomSettingsWordlist apiType="gm" />
 			</div>
 		</div>

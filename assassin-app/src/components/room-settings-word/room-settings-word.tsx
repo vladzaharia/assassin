@@ -28,7 +28,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 	const updateWordLists = async (name: string) => {
 		if (roomStatus?.status !== 'started') {
 			if (roomStatus?.wordLists?.includes(name)) {
-				request(
+				await request(
 					async () =>
 						await api.patchRoom(roomStatus.name, {
 							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -41,7 +41,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 					}
 				)
 			} else {
-				request(
+				await request(
 					async () =>
 						await api.patchRoom(roomStatus?.name || '', {
 							wordLists: [...(roomStatus?.wordLists || []), name],
@@ -60,7 +60,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 		if (roomStatus?.status !== 'started') {
 			const newValue = !roomContext?.room?.usesWords
 
-			request(
+			await request(
 				async () =>
 					await api.patchRoom(roomContext?.room?.name || '', {
 						usesWords: newValue,
@@ -73,7 +73,7 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 
 	const updateNumWords = async (newValue: number) => {
 		if (roomStatus?.status !== 'started') {
-			request(
+			await request(
 				async () =>
 					await api.patchRoom(roomContext?.room?.name || '', {
 						numWords: newValue,

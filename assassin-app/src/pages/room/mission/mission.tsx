@@ -27,7 +27,7 @@ export default function Mission() {
 	const usesWords = roomStatus?.room?.usesWords
 
 	const eliminatePlayer = async (word?: string) => {
-		request(
+		await request(
 			async () => await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word }),
 			undefined,
 			(eliminateResult) => {

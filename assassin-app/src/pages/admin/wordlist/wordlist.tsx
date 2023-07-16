@@ -10,14 +10,40 @@ import { AddToLibrary } from '../../../components/icons/icons'
 import useReload from '../../../hooks/reload'
 import SectionTitle from '../../../components/section-title/section-title'
 import Action from '../../../components/action/action'
-import { Chip } from '@mui/material'
+import Pill from '../../../components/pill/pill'
+import { useState } from 'react'
+import { useNotificationAwareRequest } from '../../../hooks/notification'
+import { createAdminApi } from '../../../api'
+import { useAuth } from 'react-oidc-context'
 
 export default function WordlistAdmin() {
 	const wordlist = useLoaderData() as WordListResponse
 	useReload(wordlist)
 	const navigate = useNavigate()
+	const request = useNotificationAwareRequest()
+	const auth = useAuth()
+
+	const [newWord, setNewWord] = useState<string>('')
+
+	const api = createAdminApi(auth.user?.access_token || '')
 
 	AddToLibrary()
+
+	const addWord = async () => {
+		await request(
+			async () => await api.putWord(wordlist.name, newWord),
+			{
+				message: `${newWord} added to ${wordlist.name}`,
+			},
+			() => setNewWord('')
+		)
+	}
+
+	const removeWord = async (word: string) => {
+		await request(async () => await api.deleteWord(wordlist.name, word), {
+			message: `${word} removed from ${wordlist.name}`,
+		})
+	}
 
 	return (
 		<div className="wordlist">
@@ -54,14 +80,21 @@ export default function WordlistAdmin() {
 					<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Words
 				</>
 			</SectionTitle>
-			<div className="words">
+			<Action text="Add word" description="Type a new word and press Enter, Space or comma (,)">
+				<input
+					type="text"
+					value={newWord}
+					onChange={(e) => setNewWord(e.currentTarget.value)}
+					onKeyUp={(e) => {
+						if ((e.key === 'Enter' || e.key === 'Space' || e.key === ',') && newWord !== '') {
+							addWord()
+						}
+					}}
+				/>
+			</Action>
+			<div className="wordlist-words">
 				{wordlist.words.map((w) => (
-					<Chip
-						label={w}
-						onDelete={() => {
-							return
-						}}
-					/>
+					<Pill color="green" text={w} onDelete={() => removeWord(w)} />
 				))}
 			</div>
 		</div>

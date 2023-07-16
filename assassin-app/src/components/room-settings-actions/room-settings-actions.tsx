@@ -28,7 +28,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 	const isPlaying = roomStatus?.status === 'started'
 
 	const resetGame = async () => {
-		request(
+		await request(
 			async () => await api.resetRoom(roomContext?.room?.name || ''),
 			{ message: `${roomContext?.room?.name || 'Room'} reset successfully!`, source: 'gm-reset' },
 			() => navigate('..', { relative: 'path', replace: true })
@@ -36,7 +36,7 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 	}
 
 	const startGame = async () => {
-		request(
+		await request(
 			async () => api.startRoom(roomContext?.room?.name || ''),
 			{ message: `Game started successfully!`, source: 'gm-start' },
 			() => navigate('..', { relative: 'path', replace: true })

@@ -66,7 +66,7 @@ export default function WordLists({ onWordListClick }: { onWordListClick: (name:
 	const isPlaying = roomStatus?.status === 'started'
 
 	const getWordLists = async () => {
-		request(
+		await request(
 			async () => (await wordlistApi.listWordList()).data.wordLists,
 			undefined,
 			async (allWordLists) => {
