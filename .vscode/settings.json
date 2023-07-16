@@ -17,6 +17,10 @@
 		}
 	},
 	"yaml.schemas": {
-		"https://json.schemastore.org/github-workflow.json": "file:///Users/vlad/Documents/Repos/assassin/.github/workflows/deploy.yml"
+		"https://json.schemastore.org/github-workflow.json": [
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/deploy.yml",
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/templates/deploy.yml",
+			"file:///Users/vlad/Documents/Repos/assassin/.github/workflows/shared/deploy.yml"
+		]
 	}
 }

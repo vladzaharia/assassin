@@ -1,10 +1,10 @@
-name: Build and Deploy
+name: Build
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
+    secrets:
+      FONTAWESOME_TOKEN:
+        required: true
 
 jobs:
   build:
@@ -35,21 +35,3 @@ jobs:
         name: dist
         path: assassin-server/dist/
         retention-days: 7
-
-  deploy-staging:
-    needs: ['build']
-    uses: ./.github/workflows/deploy.yml
-    with:
-      environment: staging
-      baseUrl: https://staging.assassin.vlad.gg
-    if: github.event_name == 'pull_request'
-    secrets: inherit
-
-  deploy-live:
-    needs: ['build']
-    uses: ./.github/workflows/deploy.yml
-    with:
-      environment: live
-      baseUrl: https://assassin.vlad.gg
-    if: github.event_name != 'pull_request'
-    secrets: inherit
