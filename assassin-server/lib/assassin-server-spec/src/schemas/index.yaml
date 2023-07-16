@@ -5,8 +5,12 @@ info:
   version: 1.0.0
 
 servers:
-  - description: Production
+  - description: Live
     url: https://assassin.vlad.gg/api
+  - description: Staging (PR)
+    url: https://staging.assassin.vlad.gg/api
+  - description: Dev
+    url: https://dev.assassin.vlad.gg/api
   - description: Local
     url: http://localhost:8787/api
 
@@ -30,6 +34,31 @@ paths:
                     type: string
                     description: Server version, in semver
                     example: "0.1.0"
+                  env:
+                    type: string
+                    description: Environment for the server
+                    enum:
+                      - local
+                      - dev
+                      - staging
+                      - live
+                    example: local
+                  urls:
+                    type: object
+                    description: URLs for the application
+                    properties:
+                      ui:
+                        type: string
+                        description: Main frontend UI URL
+                        example: http://localhost:8787
+                      admin:
+                        type: string
+                        description: Admin frontend UI URL
+                        example: http://localhost:8787/admin
+                      api:
+                        type: string
+                        description: Backend URL
+                        example: http://localhost:8787/api
                   db:
                     type: object
                     description: Database information
