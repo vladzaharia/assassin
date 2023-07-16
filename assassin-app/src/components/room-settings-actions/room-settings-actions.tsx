@@ -1,12 +1,11 @@
 import { faRotateLeft, faPlay, faSparkles } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminOrGMApi } from '../../api'
-import { NotificationContext, NotificationSource } from '../../hooks/notification'
+import { NotificationContext, NotificationSource, useNotificationAwareRequest } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
 import { useContext } from 'react'
-import { useNavigate, useRevalidator } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
 import Action from '../action/action'
-import { isAxiosError } from 'axios'
 import Button from '../button/button'
 import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
@@ -15,13 +14,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomSettingsActions({ apiType }: RoomSettingsComponentProps) {
 	const navigate = useNavigate()
-	const { revalidate } = useRevalidator()
 	const auth = useAuth()
 	const [name] = useLocalStorage('name', '')
+	const request = useNotificationAwareRequest()
 
 	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
 
-	const { setError, setNotification, notification, showNotification } = useContext(NotificationContext)
+	const { notification, showNotification } = useContext(NotificationContext)
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
@@ -29,33 +28,19 @@ export default function RoomSettingsActions({ apiType }: RoomSettingsComponentPr
 	const isPlaying = roomStatus?.status === 'started'
 
 	const resetGame = async () => {
-		try {
-			await api.resetRoom(roomContext?.room?.name || '')
-			setNotification({ message: 'Room reset successfully!', notificationType: 'success', source: 'gm-reset' })
-			navigate('..', { relative: 'path', replace: true })
-			revalidate()
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-reset')
-			} else {
-				setError('Something went wrong!', 'gm-reset')
-			}
-		}
+		request(
+			async () => await api.resetRoom(roomContext?.room?.name || ''),
+			{ message: `${roomContext?.room?.name || 'Room'} reset successfully!`, source: 'gm-reset' },
+			() => navigate('..', { relative: 'path', replace: true })
+		)
 	}
 
 	const startGame = async () => {
-		try {
-			await api.startRoom(roomContext?.room?.name || '')
-			setNotification({ message: 'Game started successfully!', notificationType: 'success', source: 'gm-start' })
-			navigate('..', { relative: 'path', replace: true })
-			revalidate()
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-start')
-			} else {
-				setError('Something went wrong!', 'gm-start')
-			}
-		}
+		request(
+			async () => api.startRoom(roomContext?.room?.name || ''),
+			{ message: `Game started successfully!`, source: 'gm-start' },
+			() => navigate('..', { relative: 'path', replace: true })
+		)
 	}
 
 	const getColor = (baseColor: string, source: NotificationSource) => {

@@ -1,34 +1,35 @@
 .section-title {
 	padding: 1rem;
 	margin: 0;
+	border-bottom: 0.0625rem solid var(--border);
 }
 
 .section-title.primary {
 	background-color: var(--primary-trans-50);
 	color: var(--primary-dark);
-	border-bottom-color: var(--primary-light);
+	border-bottom-color: var(--primary-trans);
 }
 
 .section-title.blue {
 	background-color: var(--blue-trans-50);
 	color: var(--blue-dark);
-	border-bottom-color: var(--blue-light);
+	border-bottom-color: var(--blue-trans);
 }
 
 .section-title.green {
 	background-color: var(--green-trans-50);
 	color: var(--green-dark);
-	border-bottom-color: var(--green-light);
+	border-bottom-color: var(--green-trans);
 }
 
 .section-title.purple {
 	background-color: var(--purple-trans-50);
 	color: var(--purple-dark);
-	border-bottom-color: var(--purple-light);
+	border-bottom-color: var(--purple-trans);
 }
 
 .section-title.orange {
 	background-color: var(--orange-trans-50);
 	color: var(--orange-dark);
-	border-bottom-color: var(--orange-light);
+	border-bottom-color: var(--orange-trans);
 }

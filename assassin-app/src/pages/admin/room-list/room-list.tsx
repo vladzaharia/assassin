@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import './room-list.css'
 import Header from '../../../components/header/header'
 import Button, { NotificationAwareButton } from '../../../components/button/button'
@@ -6,12 +6,11 @@ import { faCheck, faDoorOpen, faTrash, faXmark, faPlus } from '@fortawesome/pro-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicRoom } from 'assassin-server-client'
 import Table from '../../../components/table/table'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { ConfirmModal, CreateModal } from '../../../components/modal/modal'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
-import { NotificationContext } from '../../../hooks/notification'
-import { isAxiosError } from 'axios'
+import { useNotificationAwareRequest } from '../../../hooks/notification'
 import useReload from '../../../hooks/reload'
 
 export default function RoomsAdmin() {
@@ -19,8 +18,7 @@ export default function RoomsAdmin() {
 	useReload(rooms)
 	const navigate = useNavigate()
 	const auth = useAuth()
-	const { revalidate } = useRevalidator()
-	const { setError, setNotification } = useContext(NotificationContext)
+	const request = useNotificationAwareRequest()
 
 	const [deleteModalRoomName, setDeleteModalRoomName] = useState<string | undefined>()
 	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
@@ -28,50 +26,21 @@ export default function RoomsAdmin() {
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const createRoom = async (roomName: string) => {
-		try {
-			await api.putRoom(roomName, { usesWords: true })
-			setNotification({
-				message: `${roomName} created successfully!`,
-				notificationType: 'success',
-				source: 'room-create',
-				icon: faPlus,
-			})
-
-			setShowCreateModal(false)
-			revalidate()
-		} catch (e) {
-			setShowCreateModal(false)
-
-			if (isAxiosError(e)) {
-				setError(e.response?.data.message || e.message, 'room-create')
-			} else {
-				setError('Something went wrong!', 'room-create')
-			}
-		}
+		request(
+			async () => await api.putRoom(roomName, { usesWords: true }),
+			{ message: `${roomName} created successfully!`, source: 'room-create', icon: faPlus },
+			() => setShowCreateModal(false),
+			() => setShowCreateModal(false)
+		)
 	}
 
 	const deleteRoom = async (roomName: string) => {
-		try {
-			await api.deleteRoom(roomName)
-			setNotification({
-				message: `${roomName} deleted successfully!`,
-				notificationType: 'success',
-				source: 'room',
-				icon: faTrash,
-			})
-
-			setDeleteModalRoomName(undefined)
-
-			revalidate()
-		} catch (e) {
-			setDeleteModalRoomName(undefined)
-
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'room')
-			} else {
-				setError('Something went wrong!', 'room')
-			}
-		}
+		request(
+			async () => await api.deleteRoom(roomName),
+			{ message: `${roomName} deleted successfully!`, source: 'room', icon: faTrash },
+			() => setDeleteModalRoomName(undefined),
+			() => setDeleteModalRoomName(undefined)
+		)
 	}
 
 	return (

@@ -1,37 +1,33 @@
 import { Player as PlayerResponse } from 'assassin-server-client'
 import { useContext, useEffect, useState } from 'react'
-import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
-import { NotificationContext } from '../../../hooks/notification'
+import { useLoaderData, useNavigate } from 'react-router-dom'
+import { NotificationContext, useNotificationAwareRequest } from '../../../hooks/notification'
 import { RoomContext } from '../../../hooks/room'
 import './mission.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
-import { faCheck, faCrosshairs, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { faCheck, faCrosshairs, faTextSize, faTrophyStar, faUserSecret, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../../../components/action/action'
 import Words from '../../../components/words/words'
 import { createPlayerApi } from '../../../api'
-import { isAxiosError } from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SectionTitle from '../../../components/section-title/section-title'
 import Modal from '../../../components/modal/modal'
 
 export default function Mission() {
+	const navigate = useNavigate()
+	const request = useNotificationAwareRequest()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const roomStatus = useContext(RoomContext)
 	const { setError, setNotification, notification, showNotification } = useContext(NotificationContext)
 	const player = useLoaderData() as PlayerResponse
 	const playerApi = createPlayerApi(player.name)
 
-	const navigate = useNavigate()
-	const { revalidate } = useRevalidator()
-
 	const hasPlayer = Object.keys(player).length > 0
 	const usesWords = roomStatus?.room?.usesWords
 
 	const eliminatePlayer = async (word?: string) => {
-		try {
-			const eliminateResult = await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word })
-
+		request(async () => await playerApi.eliminatePlayer(roomStatus?.room?.name || '', player.name, { word }), undefined, (eliminateResult) => {
 			if (eliminateResult.status === 299) {
 				setNotification({
 					message: eliminateResult.data.message,
@@ -40,7 +36,6 @@ export default function Mission() {
 					notificationType: 'success',
 				})
 				navigate(`/room/${roomStatus?.room?.name}`)
-				revalidate()
 			} else {
 				setNotification({
 					message: `${player.target} eliminated successfully!`,
@@ -48,17 +43,10 @@ export default function Mission() {
 					source: 'eliminate',
 					notificationType: 'success',
 				})
-				revalidate()
 			}
 
 			setShowModal(false)
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'eliminate')
-			} else {
-				setError('Something went wrong!', 'eliminate')
-			}
-		}
+		})
 	}
 
 	useEffect(() => {
@@ -92,7 +80,7 @@ export default function Mission() {
 							<Button className="primary" onClick={() => navigate(`/room/${roomStatus?.room?.name}`)} iconProps={{ icon: faXmark }} />
 						}
 					/>
-					<SectionTitle className="primary">Target</SectionTitle>
+					<SectionTitle className="primary"><FontAwesomeIcon className='mr-05' icon={faCrosshairs} /> Target</SectionTitle>
 					<Action
 						text="Target name"
 						description={
@@ -112,7 +100,7 @@ export default function Mission() {
 					</Action>
 					{usesWords ? (
 						<>
-							<SectionTitle className="primary">Words</SectionTitle>
+							<SectionTitle className="primary"><FontAwesomeIcon className='mr-05' icon={faTextSize} /> Words</SectionTitle>
 							<Action className="column" description="Use these words to eliminate your target.">
 								<Words words={player.words} />
 							</Action>

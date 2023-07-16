@@ -2,12 +2,10 @@ import Action from '../action/action'
 import WordLists from '../wordlists/wordlists'
 import { faMessageMinus, faMessagePlus, faTextSize } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminOrGMApi } from '../../api'
-import { NotificationContext } from '../../hooks/notification'
+import { useNotificationAwareRequest } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
 import { useContext, useState } from 'react'
-import { useRevalidator } from 'react-router-dom'
 import useLocalStorage from 'use-local-storage'
-import { isAxiosError } from 'axios'
 import './room-settings-word.css'
 import { useAuth } from 'react-oidc-context'
 import { RoomSettingsComponentProps } from '../../types'
@@ -16,14 +14,11 @@ import SectionTitle from '../section-title/section-title'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentProps) {
-	const { revalidate } = useRevalidator()
-
+	const request = useNotificationAwareRequest()
 	const auth = useAuth()
 	const [name] = useLocalStorage('name', '')
 
 	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
-
-	const { setError, setNotification } = useContext(NotificationContext)
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
@@ -32,74 +27,42 @@ export default function RoomSettingsWordlist({ apiType }: RoomSettingsComponentP
 
 	const updateWordLists = async (name: string) => {
 		if (roomStatus?.status !== 'started') {
-			try {
-				if (roomStatus?.wordLists?.includes(name)) {
-					await api.patchRoom(roomStatus.name, {
-						wordLists: roomStatus?.wordLists.filter((wl) => wl !== name),
-					})
-					setNotification({
-						message: `Removed ${name} successfully!`,
-						notificationType: 'success',
-						source: 'wordlist',
-						icon: faMessageMinus,
-					})
-				} else {
-					await api.patchRoom(roomStatus?.name || '', {
-						wordLists: [...(roomStatus?.wordLists || []), name],
-					})
-					setNotification({
-						message: `Added ${name} successfully!`,
-						notificationType: 'success',
-						source: 'wordlist',
-						icon: faMessagePlus,
-					})
-				}
-
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'wordlist')
-				} else {
-					setError('Something went wrong!', 'wordlist')
-				}
+			if (roomStatus?.wordLists?.includes(name)) {
+				request(async () => await api.patchRoom(roomStatus.name, {
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					wordLists: roomStatus.wordLists!.filter((wl) => wl !== name),
+				}), {
+					message: `Removed ${name} successfully!`,
+					source: 'wordlist',
+					icon: faMessageMinus,
+				})
+			} else {
+				request(async () => await api.patchRoom(roomStatus?.name || '', {
+					wordLists: [...(roomStatus?.wordLists || []), name],
+				}), {
+					message: `Added ${name} successfully!`,
+					source: 'wordlist',
+					icon: faMessagePlus,
+				})
 			}
 		}
 	}
 
 	const updateUsesWords = async () => {
 		if (roomStatus?.status !== 'started') {
-			try {
-				const newValue = !roomContext?.room?.usesWords
-				await api.patchRoom(roomContext?.room?.name || '', {
-					usesWords: newValue,
-				})
-				setUsesWords(newValue)
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'wordlist')
-				} else {
-					setError('Something went wrong!', 'wordlist')
-				}
-			}
+			const newValue = !roomContext?.room?.usesWords
+
+			request(async () => await api.patchRoom(roomContext?.room?.name || '', {
+				usesWords: newValue,
+			}), undefined, () => setUsesWords(newValue))
 		}
 	}
 
 	const updateNumWords = async (newValue: number) => {
 		if (roomStatus?.status !== 'started') {
-			try {
-				await api.patchRoom(roomContext?.room?.name || '', {
-					numWords: newValue,
-				})
-				setNumWords(newValue)
-				revalidate()
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'wordlist')
-				} else {
-					setError('Something went wrong!', 'wordlist')
-				}
-			}
+			request(async () => await api.patchRoom(roomContext?.room?.name || '', {
+				numWords: newValue,
+			}), undefined, () => setNumWords(newValue))
 		}
 	}
 

@@ -3,8 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { RoomContext } from '../../hooks/room'
 import './wordlists.css'
 import { createWordlistApi } from '../../api'
-import { isAxiosError } from 'axios'
-import { NotificationContext } from '../../hooks/notification'
+import { useNotificationAwareRequest } from '../../hooks/notification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Wordlist } from 'assassin-server-client'
@@ -58,7 +57,7 @@ function WordList({ name, description, icon, words, selected, disabled, onClick 
 }
 
 export default function WordLists({ onWordListClick }: { onWordListClick: (name: string) => void }) {
-	const { setError } = useContext(NotificationContext)
+	const request = useNotificationAwareRequest()
 	const wordlistApi = createWordlistApi()
 	const [wordLists, setWordLists] = useState<Wordlist[]>([])
 
@@ -67,22 +66,15 @@ export default function WordLists({ onWordListClick }: { onWordListClick: (name:
 	const isPlaying = roomStatus?.status === 'started'
 
 	const getWordLists = async () => {
-		try {
-			const allWordLists = (await wordlistApi.listWordList()).data.wordLists
-
+		request(async () => (await wordlistApi.listWordList()).data.wordLists, undefined,
+		async (allWordLists) => {
 			const wordLists: Wordlist[] = []
 			for (const list of allWordLists || []) {
 				wordLists.push((await wordlistApi.getWordList(list.name)).data)
 			}
 
 			setWordLists(wordLists)
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.response?.data?.message || e.message, 'gm-reset')
-			} else {
-				setError('Failed to fetch wordlists!', 'gm-reset')
-			}
-		}
+		})
 	}
 
 	useEffect(() => {

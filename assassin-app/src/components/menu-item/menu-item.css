@@ -12,21 +12,19 @@
 	background-color: var(--background);
 }
 
-.menu-item:hover {
-	color: var(--background) !important;
-}
-
 .menu-item.primary {
 	background-color: var(--primary-trans);
 	color: var(--primary);
 	border-bottom: none;
 }
 
-.menu-item.primary:hover {
-	background-color: var(--primary-dark);
+.menu-item.primary:hover
+.menu-item.primary.active {
+	background-color: var(--primary-trans-50);
 }
 
-.menu-item.primary:hover button {
+.menu-item.primary:hover button,
+.menu-item.primary.active button {
 	color: var(--primary-dark);
 }
 
@@ -36,11 +34,13 @@
 	border-bottom: none;
 }
 
-.menu-item.blue:hover {
-	background-color: var(--blue-dark);
+.menu-item.blue:hover,
+.menu-item.blue.active	{
+	background-color: var(--blue-trans-50);
 }
 
-.menu-item.blue:hover button {
+.menu-item.blue:hover button,
+.menu-item.blue.active button {
 	color: var(--blue-dark);
 }
 
@@ -50,11 +50,13 @@
 	border-bottom: none;
 }
 
-.menu-item.green:hover {
-	background-color: var(--green-dark);
+.menu-item.green:hover,
+.menu-item.green.active {
+	background-color: var(--green-trans-50);
 }
 
-.menu-item.green:hover button {
+.menu-item.green:hover button,
+.menu-item.green.active button {
 	color: var(--green-dark);
 }
 
@@ -64,11 +66,13 @@
 	border-bottom: none;
 }
 
-.menu-item.purple:hover {
-	background-color: var(--purple-dark);
+.menu-item.purple:hover,
+.menu-item.purple.active {
+	background-color: var(--purple-trans-50);
 }
 
-.menu-item.purple:hover button {
+.menu-item.purple:hover button,
+.menu-item.purple.active button {
 	color: var(--purple-dark);
 }
 
@@ -78,11 +82,13 @@
 	border-bottom: none;
 }
 
-.menu-item.orange:hover {
-	background-color: var(--orange-dark);
+.menu-item.orange:hover,
+.menu-item.orange.active {
+	background-color: var(--orange-trans-50);
 }
 
-.menu-item.orange:hover button {
+.menu-item.orange:hover button,
+.menu-item.orange.active button {
 	color: var(--orange-dark);
 }
 

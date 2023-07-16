@@ -48,26 +48,31 @@
 .table.primary .table-header {
 	background-color: var(--primary-trans-50);
 	color: var(--primary-dark);
+	border-color: var(--primary-trans);
 }
 
 .table.blue .table-header {
 	background-color: var(--blue-trans-50);
 	color: var(--blue-dark);
+	border-color: var(--blue-trans);
 }
 
 .table.green .table-header {
 	background-color: var(--green-trans-50);
 	color: var(--green-dark);
+	border-color: var(--green-trans);
 }
 
 .table.purple .table-header {
 	background-color: var(--purple-trans-50);
 	color: var(--purple-dark);
+	border-color: var(--purple-trans);
 }
 
 .table.orange .table-header {
 	background-color: var(--orange-trans-50);
 	color: var(--orange-dark);
+	border-color: var(--orange-trans);
 }
 
 .table .table-row {

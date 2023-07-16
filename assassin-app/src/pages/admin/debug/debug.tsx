@@ -7,80 +7,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Action from '../../../components/action/action'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
-import { NotificationContext } from '../../../hooks/notification'
-import { isAxiosError } from 'axios'
-import { useContext, useState } from 'react'
+import { useNotificationAwareRequest } from '../../../hooks/notification'
+import { useState } from 'react'
 import { ConfirmModal } from '../../../components/modal/modal'
 
 export default function AdminDebug() {
+	const request = useNotificationAwareRequest()
 	const navigate = useNavigate()
 	const auth = useAuth()
-	const { setError, setNotification } = useContext(NotificationContext)
 	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
 
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const debugReset = async () => {
-		try {
-			await api.debugReset()
-			setNotification({
-				message: `Database reset successfully!`,
-				notificationType: 'success',
-				source: 'debug-reset',
-				icon: faFire,
-			})
-
-			setShowDeleteModal(false)
-		} catch (e) {
-			setShowDeleteModal(false)
-
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'debug-reset')
-			} else {
-				setError('Something went wrong!', 'debug-reset')
-			}
-		}
+		request(async () => await api.debugReset(), {
+			message: `Database reset successfully!`,
+			source: 'debug-reset',
+			icon: faFire,
+		}, () => setShowDeleteModal(false), () => setShowDeleteModal(false))
 	}
 
 	const debugInitWordlists = async () => {
-		try {
-			await api.debugInit({
-				wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
-			})
-			setNotification({
-				message: `Wordlist initialized successfully!`,
-				notificationType: 'success',
-				source: 'debug-init',
-				icon: faTextSize,
-			})
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'debug-init')
-			} else {
-				setError('Something went wrong!', 'debug-init')
-			}
-		}
+		request(async () => await api.debugInit({
+			wordLists: ['test-list', 'card-poison', 'card-dagger', 'team-galactic', 'team-green', 'countries', 'technology', 'pokemon'],
+		}), {
+			message: `Wordlist initialized successfully!`,
+			source: 'debug-init',
+			icon: faTextSize,
+		})
 	}
 
 	const debugInitDemoRoom = async () => {
-		try {
-			await api.debugInit({
-				room: 'test',
-				players: ['Vlad', 'George', 'John'],
-			})
-			setNotification({
-				message: `Demo room (test) initialized successfully!`,
-				notificationType: 'success',
-				source: 'debug-demo',
-				icon: faDoorOpen,
-			})
-		} catch (e) {
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'debug-demo')
-			} else {
-				setError('Something went wrong!', 'debug-demo')
-			}
-		}
+		request(async () => await api.debugInit({
+			room: 'test',
+			players: ['Vlad', 'George', 'John'],
+		}), {
+			message: `Demo room (test) initialized successfully!`,
+			source: 'debug-demo',
+			icon: faDoorOpen,
+		})
 	}
 
 	return (

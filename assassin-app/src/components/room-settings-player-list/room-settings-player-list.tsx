@@ -4,7 +4,7 @@ import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import useLocalStorage from 'use-local-storage'
 import SectionTitle from '../section-title/section-title'
-import { NotificationContext } from '../../hooks/notification'
+import { useNotificationAwareRequest } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
 import { useContext, useState } from 'react'
 import {
@@ -22,8 +22,6 @@ import {
 	faUsers,
 	faXmark,
 } from '@fortawesome/pro-solid-svg-icons'
-import { useRevalidator } from 'react-router-dom'
-import { isAxiosError } from 'axios'
 import { AdminApi, Player, PlayerStatus } from 'assassin-server-client'
 import Table from '../table/table'
 import Button from '../button/button'
@@ -82,13 +80,11 @@ export const GetPlayerStatus = (isGM: boolean, status?: PlayerStatus) => {
 }
 
 export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponentProps) {
-	const { revalidate } = useRevalidator()
 	const auth = useAuth()
 	const [name] = useLocalStorage('name', '')
+	const request = useNotificationAwareRequest()
 
 	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
-
-	const { setError, setNotification } = useContext(NotificationContext)
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
@@ -100,68 +96,36 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 
 	const fetchPlayer = async (playerName: string) => {
 		if (roomStatus) {
-			try {
-				const player = await (api as AdminApi).getPlayer(roomStatus.name, playerName)
-				setShowPlayerDetails(false)
-				setPlayer(player.data)
-			} catch (e) {
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'gm-reset')
-				} else {
-					setError('Something went wrong!', 'gm-reset')
+			request(
+				async () => (await (api as AdminApi).getPlayer(roomStatus.name, playerName)).data,
+				undefined,
+				(player) => {
+					setShowPlayerDetails(false)
+					setPlayer(player)
 				}
-			}
+			)
 		}
 	}
 
 	const addPlayer = async (playerName: string) => {
 		if (roomStatus && roomStatus.status !== 'started') {
-			try {
-				await (api as AdminApi).putPlayer(roomStatus.name, playerName)
-				setNotification({
-					message: `Added ${playerName} successfully!`,
-					notificationType: 'success',
-					source: 'player',
-					icon: faUserPlus,
-				})
-
-				setShowCreateModal(false)
-				revalidate()
-			} catch (e) {
-				setShowCreateModal(false)
-
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'player')
-				} else {
-					setError('Something went wrong!', 'player')
-				}
-			}
+			request(
+				async () => await (api as AdminApi).putPlayer(roomStatus.name, playerName),
+				{ message: `Added ${playerName} successfully!`, source: 'player', icon: faUserPlus },
+				() => setShowCreateModal(false),
+				() => setShowCreateModal(false)
+			)
 		}
 	}
 
 	const removePlayer = async (playerName: string) => {
 		if (roomStatus && roomStatus.status !== 'started') {
-			try {
-				await api.deletePlayer(roomStatus.name, playerName)
-				setNotification({
-					message: `Removed ${playerName} successfully!`,
-					notificationType: 'success',
-					source: 'player',
-					icon: faUserMinus,
-				})
-
-				setRemovePlayerModalName(undefined)
-
-				revalidate()
-			} catch (e) {
-				setRemovePlayerModalName(undefined)
-
-				if (isAxiosError(e)) {
-					setError(e.response?.data?.message || e.message, 'player')
-				} else {
-					setError('Something went wrong!', 'player')
-				}
-			}
+			request(
+				async () => await api.deletePlayer(roomStatus.name, playerName),
+				{ message: `Removed ${playerName} successfully!`, source: 'player', icon: faUserMinus },
+				() => setRemovePlayerModalName(undefined),
+				() => setRemovePlayerModalName(undefined)
+			)
 		}
 	}
 

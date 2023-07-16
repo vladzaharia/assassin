@@ -1,5 +1,8 @@
 import { IconDefinition } from '@fortawesome/pro-regular-svg-icons'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
+import { isAxiosError } from 'axios'
+import { faCheck } from '@fortawesome/pro-solid-svg-icons'
+import { useRevalidator } from 'react-router-dom'
 
 export type NotificationSource =
 	| 'join'
@@ -44,3 +47,38 @@ export const NotificationContext = createContext<NotificationContextProps>({
 		return
 	},
 })
+
+export function useNotificationAwareRequest() {
+	const { setError, setNotification } = useContext(NotificationContext)
+	const { revalidate } = useRevalidator()
+
+	const execute = async <T>(
+		request: () => Promise<T>,
+		notificationDetails?: Omit<NotificationDetails, 'notificationType'>,
+		onSuccess?: (response: T) => void,
+		onCatch?: () => void
+	) => {
+		try {
+			const response = await request()
+
+			notificationDetails && setNotification({
+				icon: faCheck,
+				...notificationDetails,
+				notificationType: 'success'
+			})
+
+			onSuccess && onSuccess(response)
+			revalidate()
+		} catch (e) {
+			onCatch && onCatch()
+
+			if (isAxiosError(e)) {
+				setError(e.response?.data.message || e.message, notificationDetails?.source)
+			} else {
+				setError('Something went wrong!', notificationDetails?.source)
+			}
+		}
+	}
+
+	return execute
+}

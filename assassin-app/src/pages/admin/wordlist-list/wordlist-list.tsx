@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import './wordlist-list.css'
 import Header from '../../../components/header/header'
 import Button from '../../../components/button/button'
@@ -9,11 +9,10 @@ import Table from '../../../components/table/table'
 import room from '../room/room'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { AddToLibrary } from '../../../components/icons/icons'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { createAdminApi } from '../../../api'
 import { useAuth } from 'react-oidc-context'
-import { NotificationContext } from '../../../hooks/notification'
-import { isAxiosError } from 'axios'
+import { useNotificationAwareRequest } from '../../../hooks/notification'
 import { ConfirmModal } from '../../../components/modal/modal'
 import useReload from '../../../hooks/reload'
 
@@ -22,34 +21,17 @@ export default function WordlistsAdmin() {
 	useReload(wordlists)
 	const navigate = useNavigate()
 	const auth = useAuth()
-	const { revalidate } = useRevalidator()
-	const { setError, setNotification } = useContext(NotificationContext)
+	const request = useNotificationAwareRequest()
 	const [deleteModalWordListName, setDeleteModalWordListName] = useState<string | undefined>()
 
 	const api = createAdminApi(auth.user?.access_token || '')
 
 	const deleteWordList = async (wordListName: string) => {
-		try {
-			await api.deleteWordList(wordListName)
-			setNotification({
-				message: `${wordListName} deleted successfully!`,
-				notificationType: 'success',
-				source: 'wordlist',
-				icon: faTrash,
-			})
-
-			setDeleteModalWordListName(undefined)
-
-			revalidate()
-		} catch (e) {
-			setDeleteModalWordListName(undefined)
-
-			if (isAxiosError(e)) {
-				setError(e.response?.data?.message || e.message, 'room')
-			} else {
-				setError('Something went wrong!', 'room')
-			}
-		}
+		request(async () => await api.deleteWordList(wordListName), {
+			message: `${wordListName} deleted successfully!`,
+			source: 'wordlist',
+			icon: faTrash,
+		}, () => setDeleteModalWordListName(undefined), () => setDeleteModalWordListName(undefined))
 	}
 
 	AddToLibrary()
