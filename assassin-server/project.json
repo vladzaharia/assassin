@@ -13,6 +13,15 @@
 			},
 			"inputs": ["{projectRoot}/src/**/*", "{projectRoot}/tsconfig.json", "{workspaceRoot}/tsconfig.base.json"]
 		},
+		"build-ci": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["^prepare-deploy", "build"],
+			"options": {
+				"cwd": "assassin-server",
+				"command": "echo Complete!"
+			},
+			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
+		},
 		"lint": {
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
@@ -46,15 +55,6 @@
 				"cwd": "assassin-server",
 				"command": "NO_D1_WARNING=true wrangler dev --remote"
 			}
-		},
-		"prepare-deploy": {
-			"executor": "nx:run-commands",
-			"dependsOn": ["^prepare-deploy", "build"],
-			"options": {
-				"cwd": "assassin-server",
-				"command": "echo Complete!"
-			},
-			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
 		"deploy": {
 			"executor": "nx:run-commands",
