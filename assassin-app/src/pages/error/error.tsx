@@ -4,6 +4,8 @@ import './error.css'
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
 
+	const linkTo = window.location.pathname.includes("/admin") ? "/admin" : "/"
+
 	// Uncaught ReferenceError: path is not defined
 	return (
 		<div className="error-boundary">
@@ -12,7 +14,7 @@ export const RouterErrorBoundary = () => {
 				<Link to="." relative="path">
 					Try again
 				</Link>{' '}
-				or go back to the <Link to="/">start page</Link> to continue.
+				or go back to the <Link to={linkTo}>start page</Link> to continue.
 			</span>
 			{error && error.message && (
 				<div className="details align-bottom">
