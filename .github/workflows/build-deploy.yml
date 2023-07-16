@@ -26,5 +26,5 @@ jobs:
     with:
       environment: live
       baseUrl: https://assassin.vlad.gg
-    # if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request'
     secrets: inherit
