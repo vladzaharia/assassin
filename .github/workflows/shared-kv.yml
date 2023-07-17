@@ -79,7 +79,7 @@ jobs:
         value: ${{ steps.version-server.outputs.current-version }}
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      run: echo "::set-output name=date::$(date +%s)"
     - name: Update config KV => deployment-time
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
