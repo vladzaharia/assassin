@@ -64,7 +64,9 @@
 				"commands": [
 					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-repository local",
 					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-ref $(git rev-parse --abbrev-ref HEAD)",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-sha $(git rev-parse HEAD)"
+					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-sha $(git rev-parse HEAD)",
+					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false version-app $(node -e \"process.stdout.write(require('../assassin-server/package').version)\")",
+					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false version-server $(node -e \"process.stdout.write(require('./package').version)\")"
 				]
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]

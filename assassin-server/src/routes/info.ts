@@ -10,7 +10,7 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 
 	if (gitRepository && gitRef && gitSha) {
 		git = {
-			repository: gitRepository,
+			source: gitRepository,
 			ref: gitRef,
 			sha: gitSha,
 		}
@@ -25,13 +25,14 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 		version = {
 			app: versionApp,
 			server: versionServer,
+			git,
 		}
 	}
 
 	return c.json(
 		{
-			version,
 			env: c.env.ENVIRONMENT || 'local',
+			version,
 			urls: {
 				ui: `${c.env.BASE_URL}`,
 				admin: `${c.env.BASE_URL}/admin`,
@@ -39,7 +40,6 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 				openapi: `${c.env.BASE_URL}/api/openapi/openapi.swagger`,
 				docs: `${c.env.BASE_URL}/api/openapi`,
 			},
-			git,
 		},
 		200
 	)
