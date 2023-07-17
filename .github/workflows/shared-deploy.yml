@@ -80,6 +80,14 @@ jobs:
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server
+    - name: Test variables
+      run: |
+        echo "namespace input : $NAMESPACE_INPUT"
+        echo "namespace var : $NAMESPACE_VAR"
+      env:
+        NAMESPACE_INPUT: ${{ inputs.namespace }}
+        NAMESPACE_VAR: ${{ vars.KV_CONFIG_NAMESPACE }}
+
     - name: Deploy to Cloudflare Workers (${{ inputs.environment }})
       uses: cloudflare/wrangler-action@2.0.0
       if: inputs.environment != 'live'
