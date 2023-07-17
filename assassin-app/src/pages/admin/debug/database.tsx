@@ -212,20 +212,31 @@ export default function AdminDatabase() {
 			) : undefined}
 
 			<ConfirmModal
+				icon={faCheckDouble}
+				title="Apply migrations?"
 				open={showMigrateModal}
-				text="Are you sure you want to migrate the database?"
+				text="Are you sure you want to apply pending migrations?"
 				onConfirm={() => migrateDb()}
 				onClose={() => setShowMigrateModal(false)}
 			/>
 			<ConfirmModal
+				icon={faArrowRotateLeft}
+				title="Rollback migration?"
 				open={showRollbackModal}
 				text="Are you sure you want to rollback the latest migration?"
 				onConfirm={() => rollbackDb()}
 				onClose={() => setShowRollbackModal(false)}
 			/>
 			<ConfirmModal
+				icon={faFire}
+				title="Reset database?"
 				open={showResetModal}
-				text="Are you sure you want to reset the database?"
+				text={
+					<>
+						<span>Are you sure you want to reset the database?</span>
+						<span className="fw-600">This action is irreversible!</span>
+					</>
+				}
 				onConfirm={() => resetDb()}
 				onClose={() => setShowResetModal(false)}
 			/>

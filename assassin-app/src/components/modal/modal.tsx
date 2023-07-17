@@ -4,8 +4,9 @@ import Button from '../button/button'
 import { ContainerContext } from '../../hooks/container'
 import { useContext, useState } from 'react'
 import Header from '../header/header'
-import { faCheck, faPlus, faXmark } from '@fortawesome/pro-solid-svg-icons'
+import { IconDefinition, faCheck, faPlus, faXmark } from '@fortawesome/pro-solid-svg-icons'
 import Action from '../action/action'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Modal({ className, children, ...props }: Omit<ModalProps, 'container'>) {
 	const container = useContext(ContainerContext)
@@ -18,17 +19,22 @@ export default function Modal({ className, children, ...props }: Omit<ModalProps
 }
 
 export interface ConfirmModalProps extends Omit<ModalProps, 'children'> {
-	text: string
+	icon?: IconDefinition
+	text: string | JSX.Element
 	onConfirm: () => void
 }
 
-export function ConfirmModal({ className, text, onConfirm, ...props }: ConfirmModalProps) {
+export function ConfirmModal({ className, icon, text, title, onConfirm, ...props }: ConfirmModalProps) {
 	return (
 		<Modal {...props} className={`confirm-modal ${className || ''}`}>
 			<>
 				<Header
 					className="corner-left-05 corner-right-05"
-					title="Confirm"
+					title={
+						<>
+							<FontAwesomeIcon className="mr-05" icon={icon || faCheck} /> {title || 'Confirm'}
+						</>
+					}
 					rightActions={
 						<div className="modal-header-buttons">
 							<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => props.onClose && props.onClose({}, 'escapeKeyDown')} />
@@ -53,12 +59,22 @@ export function ConfirmModal({ className, text, onConfirm, ...props }: ConfirmMo
 }
 
 export interface CreateModalProps extends Omit<ModalProps, 'children'> {
+	icon?: IconDefinition
 	text: string
 	description: string
 	onCreate: (inputValue: string) => void
 }
 
-export function CreateModal({ className, text, description, onCreate: onCreateProp, onClose: onCloseProp, ...props }: CreateModalProps) {
+export function CreateModal({
+	className,
+	text,
+	icon,
+	title,
+	description,
+	onCreate: onCreateProp,
+	onClose: onCloseProp,
+	...props
+}: CreateModalProps) {
 	const [inputText, setInputText] = useState<string>('')
 
 	const onCreate = () => {
@@ -76,7 +92,11 @@ export function CreateModal({ className, text, description, onCreate: onCreatePr
 			<>
 				<Header
 					className="corner-left-05 corner-right-05"
-					title="Create"
+					title={
+						<>
+							<FontAwesomeIcon className="mr-05" icon={icon || faPlus} /> {title || 'Create'}
+						</>
+					}
 					rightActions={
 						<div className="modal-header-buttons">
 							<Button color="primary" iconProps={{ icon: faXmark }} onClick={onClose} />

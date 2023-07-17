@@ -100,6 +100,8 @@ export default function RoomsAdmin() {
 				})}
 			/>
 			<ConfirmModal
+				title={`Delete ${deleteModalRoomName}?`}
+				icon={faTrash}
 				open={!!deleteModalRoomName}
 				text={`Are you sure you want to delete ${deleteModalRoomName}?`}
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -108,6 +110,8 @@ export default function RoomsAdmin() {
 			/>
 			<CreateModal
 				open={showCreateModal}
+				title="Add room"
+				icon={faDoorOpen}
 				text="Room name"
 				description="The name of the room to create. Must be unique."
 				onCreate={(val) => createRoom(val)}

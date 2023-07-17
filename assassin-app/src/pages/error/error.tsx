@@ -4,7 +4,7 @@ import './error.css'
 export const RouterErrorBoundary = () => {
 	const error = useRouteError() as Error
 
-	const linkTo = window.location.pathname.includes("/admin") ? "/admin" : "/"
+	const linkTo = window.location.pathname.includes('/admin') ? '/admin' : '/'
 
 	// Uncaught ReferenceError: path is not defined
 	return (

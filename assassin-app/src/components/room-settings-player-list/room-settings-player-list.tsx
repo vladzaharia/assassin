@@ -190,6 +190,8 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 				}
 			/>
 			<ConfirmModal
+				title={`Kick ${removePlayerModalName}?`}
+				icon={faTrash}
 				open={!!removePlayerModalName}
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				onConfirm={() => removePlayer(removePlayerModalName!)}
@@ -243,6 +245,8 @@ export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponen
 				</>
 			</Modal>
 			<CreateModal
+				title={`Add player to ${roomStatus?.name || 'room'}`}
+				icon={faUserPlus}
 				open={showCreateModal}
 				text="Player name"
 				description={`The name of the player to add to ${roomStatus?.name || 'the room'}.`}

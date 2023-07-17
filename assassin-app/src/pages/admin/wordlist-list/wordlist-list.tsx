@@ -144,6 +144,8 @@ export default function WordlistsAdmin() {
 			) : undefined}
 
 			<ConfirmModal
+				title={`Delete ${deleteModalWordListName}?`}
+				icon={faTrash}
 				open={!!deleteModalWordListName}
 				text={`Are you sure you want to delete ${deleteModalWordListName}?`}
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -154,7 +156,11 @@ export default function WordlistsAdmin() {
 				<>
 					<Header
 						className="corner-left-05 corner-right-05"
-						title="Create"
+						title={
+							<>
+								<FontAwesomeIcon className="mr-05" icon={faTextSize} /> Add word list
+							</>
+						}
 						rightActions={
 							<div className="modal-header-buttons">
 								<Button color="primary" iconProps={{ icon: faXmark }} onClick={() => setShowCreateModal(false)} />
