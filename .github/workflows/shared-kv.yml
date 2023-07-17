@@ -1,4 +1,4 @@
-name: Deploy
+name: Push KV records
 
 on:
   workflow_call:
@@ -47,3 +47,31 @@ jobs:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'git-sha'
         value: ${{ github.sha }}
+    - name: Get assassin-app version
+      id: version-app
+      uses: martinbeentjes/npm-get-version-action@v1.3.1
+      with:
+        path: assassin-app/package.json
+    - name: Update config KV => version-app
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
+        key_name: 'version-app'
+        value: ${{ steps.version-app.outputs.current-version}}
+    - name: Get assassin-server version
+      id: version-server
+      uses: martinbeentjes/npm-get-version-action@v1.3.1
+      with:
+        path: assassin-server/package.json
+    - name: Update config KV => version-server
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
+        key_name: 'version-server'
+        value: ${{ steps.version-server.outputs.current-version}}
