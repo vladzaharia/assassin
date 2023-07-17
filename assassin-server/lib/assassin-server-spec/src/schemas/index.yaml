@@ -30,10 +30,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  version:
-                    type: string
-                    description: Server version, in semver
-                    example: '0.1.0'
                   env:
                     type: string
                     description: Environment for the server
@@ -43,6 +39,36 @@ paths:
                       - staging
                       - live
                     example: local
+                  version:
+                    type: object
+                    description: Version information
+                    properties:
+                      app:
+                        $ref: "#/components/schemas/Version"
+                      server:
+                        $ref: "#/components/schemas/Version"
+                      git:
+                        type: object
+                        properties:
+                          source:
+                            type: string
+                            description: Source of this deployment, either 'local' or a repository name.
+                            example: local
+                          ref:
+                            type: string
+                            description: Branch name of the source for this deployment.
+                            example: main
+                          sha:
+                            type: string
+                            description: SHA hash of the source for this deployment.
+                            example: 974f66c4142f26909c20a1888bab1fc1e307b678
+                        required:
+                          - source
+                          - ref
+                          - sha
+                    required:
+                      - app
+                      - server
                   urls:
                     type: object
                     description: URLs for the application
@@ -67,6 +93,9 @@ paths:
                         type: string
                         description: OpenAPI Documentation URL
                         example: http://localhost:8787/api/openapi
+                required:
+                  - env
+                  - urls
 
   /room:
     get:
@@ -1293,3 +1322,7 @@ components:
         - version
         - name
         - applied
+    Version:
+      type: string
+      description: Version, represented as semver
+      example: '0.1.0'

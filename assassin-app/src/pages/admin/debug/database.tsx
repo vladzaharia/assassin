@@ -4,9 +4,9 @@ import {
 	faCheckDouble,
 	faDatabase,
 	faFire,
+	faHourglass,
 	faList,
 	faRightLeftLarge,
-	faSparkles,
 	faXmark,
 } from '@fortawesome/pro-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -175,7 +175,7 @@ export default function AdminDatabase() {
 					<SectionTitle color="purple">
 						<div className="section-title-with-action">
 							<span>
-								<FontAwesomeIcon className="mr-05" icon={faSparkles} /> Available Migrations
+								<FontAwesomeIcon className="mr-05" icon={faHourglass} /> Pending Migrations
 							</span>
 							<NotificationAwareButton
 								notificationSources={['db-migrate']}

@@ -3,28 +3,23 @@ name: Build and Deploy
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
     uses: ./.github/workflows/shared-build.yml
     secrets: inherit
 
-  deploy-staging:
+  push-kv:
     needs: ['build']
-    uses: ./.github/workflows/shared-deploy.yml
+    uses: ./.github/workflows/shared-kv.yml
     with:
-      environment: staging
-      baseUrl: https://staging.assassin.vlad.gg
-    if: github.event_name == 'pull_request'
+      environment: live
     secrets: inherit
 
-  deploy-live:
+  deploy:
     needs: ['build']
     uses: ./.github/workflows/shared-deploy.yml
     with:
       environment: live
       baseUrl: https://assassin.vlad.gg
-    if: github.event_name != 'pull_request'
     secrets: inherit
