@@ -16,7 +16,7 @@ jobs:
       environment: staging
     secrets: inherit
 
-  deploy-staging:
+  deploy:
     needs: ['build']
     uses: ./.github/workflows/shared-deploy.yml
     with:
