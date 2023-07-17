@@ -2,6 +2,20 @@ import { Context } from 'hono'
 import { Bindings } from '../bindings'
 
 export const Info = async (c: Context<{ Bindings: Bindings }>) => {
+	const gitRepository = await c.env.CONFIG.get('git-repository')
+	const gitRef = await c.env.CONFIG.get('git-ref')
+	const gitSha = await c.env.CONFIG.get('git-sha')
+
+	let git = undefined
+
+	if (gitRepository && gitRef && gitSha) {
+		git = {
+			repository: gitRepository,
+			ref: gitRef,
+			sha: gitSha,
+		}
+	}
+
 	return c.json(
 		{
 			version: '0.1.0',
@@ -13,6 +27,7 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 				openapi: `${c.env.BASE_URL}/api/openapi/openapi.swagger`,
 				docs: `${c.env.BASE_URL}/api/openapi`,
 			},
+			git,
 		},
 		200
 	)

@@ -1,0 +1,25 @@
+name: Build and Deploy
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    uses: ./.github/workflows/shared-build.yml
+    secrets: inherit
+
+  push-kv:
+    needs: ['build']
+    uses: ./.github/workflows/shared-kv.yml
+    with:
+      environment: staging
+    secrets: inherit
+
+  deploy-staging:
+    needs: ['build']
+    uses: ./.github/workflows/shared-deploy.yml
+    with:
+      environment: staging
+      baseUrl: https://staging.assassin.vlad.gg
+    secrets: inherit

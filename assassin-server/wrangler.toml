@@ -36,3 +36,14 @@ kv_namespaces = [
 d1_databases = [
     { binding = "D1DATABASE", database_name = "assassin-staging", database_id = "3294dcd9-1d30-453e-b2d0-fbe6e15683dd" },
 ]
+
+[env.live]
+route = { pattern = "assassin.vlad.gg", custom_domain = true }
+vars = { ENVIRONMENT = "live", BASE_URL="https://assassin.vlad.gg" }
+kv_namespaces = [
+    { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" },
+    { binding = "CONFIG", id = "b3e6b454e3854672a07c1c4522468cb2", preview_id = "b3e6b454e3854672a07c1c4522468cb2" }
+]
+d1_databases = [
+    { binding = "D1DATABASE", database_name = "assassin", database_id = "a24a1078-cacd-42dd-82d2-c8865fd4c306" },
+]
