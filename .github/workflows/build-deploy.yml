@@ -18,6 +18,9 @@ jobs:
       environment: staging
       baseUrl: https://staging.assassin.vlad.gg
       namespace: ${{ vars.KV_CONFIG_NAMESPACE }}
+      git-repository: ${{ vars.GITHUB_REPOSITORY }}
+      git-ref: ${{ vars.GITHUB_REF }}
+      git-sha: ${{ vars.GITHUB_SHA }}
     if: github.event_name == 'pull_request'
     secrets: inherit
 
