@@ -5,8 +5,6 @@ usage_model = "bundled"
 site = { bucket = "./dist" }
 triggers = { crons = [] }
 
-route = { pattern = "assassin.vlad.gg", custom_domain = true }
-vars = { ENVIRONMENT = "live", BASE_URL="https://assassin.vlad.gg" }
 kv_namespaces = [
     { binding = "OPENID", id = "ced561d5ee6b4cd9a10ce389886fc84e", preview_id = "ced561d5ee6b4cd9a10ce389886fc84e" },
     { binding = "CONFIG", id = "b3e6b454e3854672a07c1c4522468cb2", preview_id = "b3e6b454e3854672a07c1c4522468cb2" }
