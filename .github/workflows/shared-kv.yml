@@ -20,6 +20,8 @@ jobs:
       name: ${{ inputs.environment }}
 
     steps:
+    - name: Checkout files
+      uses: actions/checkout@v3
     - name: Update config KV => git-repository
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:

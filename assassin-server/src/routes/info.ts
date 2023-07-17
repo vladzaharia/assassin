@@ -16,9 +16,21 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 		}
 	}
 
+	const versionApp = await c.env.CONFIG.get('version-app')
+	const versionServer = await c.env.CONFIG.get('version-server')
+
+	let version = undefined
+
+	if (versionApp && versionServer) {
+		version = {
+			app: versionApp,
+			server: versionServer,
+		}
+	}
+
 	return c.json(
 		{
-			version: '0.1.0',
+			version,
 			env: c.env.ENVIRONMENT || 'local',
 			urls: {
 				ui: `${c.env.BASE_URL}`,
