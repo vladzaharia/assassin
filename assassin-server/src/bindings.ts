@@ -3,6 +3,7 @@ export type Bindings = {
 	R2BUCKET: R2Bucket
 	D1DATABASE: D1Database
 	OPENID: KVNamespace
+	CONFIG: KVNamespace
 	ASSASSIN_SECRET: string
 	ENVIRONMENT: string
 	BASE_URL: string

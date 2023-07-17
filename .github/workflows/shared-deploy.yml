@@ -9,8 +9,13 @@ on:
       baseUrl:
         required: true
         type: string
+      namespace:
+        required: true
+        type: string
     secrets:
       CLOUDFLARE_API_TOKEN:
+        required: true
+      CLOUDFLARE_ACCOUNT_ID:
         required: true
       FONTAWESOME_TOKEN:
         required: true
@@ -42,6 +47,33 @@ jobs:
       with:
         name: dist
         path: assassin-server/dist
+    - name: Update repository kv
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ inputs.namespace }}
+        key_name: 'git-repository'
+        value: ${{ vars.GITHUB_REPOSITORY }}
+    - name: Update ref kv
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ inputs.namespace }}
+        key_name: 'git-ref'
+        value: ${{ vars.GITHUB_REF }}
+    - name: Update sha kv
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ inputs.namespace }}
+        key_name: 'git-sha'
+        value: ${{ vars.GITHUB_SHA }}
     - name: Deploy to Cloudflare Workers (live)
       uses: cloudflare/wrangler-action@2.0.0
       if: inputs.environment == 'live'
