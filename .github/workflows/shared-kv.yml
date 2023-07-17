@@ -51,7 +51,7 @@ jobs:
       id: version-app
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
-        path: assassin-app/package.json
+        path: assassin-app
     - name: Update config KV => version-app
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
@@ -65,7 +65,7 @@ jobs:
       id: version-server
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
-        path: assassin-server/package.json
+        path: assassin-server
     - name: Update config KV => version-server
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
