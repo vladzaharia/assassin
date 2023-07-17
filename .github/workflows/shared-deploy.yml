@@ -9,9 +9,6 @@ on:
       baseUrl:
         required: true
         type: string
-      namespace:
-        required: true
-        type: string
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -53,7 +50,7 @@ jobs:
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       with:
-        namespace_identifier: ${{ inputs.namespace }}
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'git-repository'
         value: ${{ github.repository }}
     - name: Update config KV => git-ref
@@ -62,7 +59,7 @@ jobs:
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       with:
-        namespace_identifier: ${{ inputs.namespace }}
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'git-ref'
         value: ${{ github.ref }}
     - name: Update config KV => git-sha
@@ -71,7 +68,7 @@ jobs:
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       with:
-        namespace_identifier: ${{ inputs.namespace }}
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'git-sha'
         value: ${{ github.sha }}
     - name: Deploy to Cloudflare Workers (live)
@@ -80,14 +77,6 @@ jobs:
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server
-    - name: Test variables
-      run: |
-        echo "namespace input : $NAMESPACE_INPUT"
-        echo "namespace var : $NAMESPACE_VAR"
-      env:
-        NAMESPACE_INPUT: ${{ inputs.namespace }}
-        NAMESPACE_VAR: ${{ vars.KV_CONFIG_NAMESPACE }}
-
     - name: Deploy to Cloudflare Workers (${{ inputs.environment }})
       uses: cloudflare/wrangler-action@2.0.0
       if: inputs.environment != 'live'
