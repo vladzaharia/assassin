@@ -12,15 +12,6 @@ on:
       namespace:
         required: true
         type: string
-      git-repository:
-        required: true
-        type: string
-      git-ref:
-        required: true
-        type: string
-      git-sha:
-        required: true
-        type: string
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -64,7 +55,7 @@ jobs:
       with:
         namespace_identifier: ${{ inputs.namespace }}
         key_name: 'git-repository'
-        value: ${{ inputs.git-repository }}
+        value: ${{ github.repository }}
     - name: Update config KV => git-ref
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
@@ -73,7 +64,7 @@ jobs:
       with:
         namespace_identifier: ${{ inputs.namespace }}
         key_name: 'git-ref'
-        value: ${{ inputs.git-ref }}
+        value: ${{ github.ref }}
     - name: Update config KV => git-sha
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
@@ -82,7 +73,7 @@ jobs:
       with:
         namespace_identifier: ${{ inputs.namespace }}
         key_name: 'git-sha'
-        value: ${{ inputs.git-sha }}
+        value: ${{ github.sha }}
     - name: Deploy to Cloudflare Workers (live)
       uses: cloudflare/wrangler-action@2.0.0
       if: inputs.environment == 'live'
