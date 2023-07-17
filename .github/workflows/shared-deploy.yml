@@ -44,42 +44,8 @@ jobs:
       with:
         name: dist
         path: assassin-server/dist
-    - name: Update config KV => git-repository
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-repository'
-        value: ${{ github.repository }}
-    - name: Update config KV => git-ref
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-ref'
-        value: ${{ github.ref }}
-    - name: Update config KV => git-sha
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-sha'
-        value: ${{ github.sha }}
-    - name: Deploy to Cloudflare Workers (live)
-      uses: cloudflare/wrangler-action@2.0.0
-      if: inputs.environment == 'live'
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        workingDirectory: assassin-server
     - name: Deploy to Cloudflare Workers (${{ inputs.environment }})
       uses: cloudflare/wrangler-action@2.0.0
-      if: inputs.environment != 'live'
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: assassin-server

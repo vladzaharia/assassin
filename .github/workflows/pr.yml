@@ -23,3 +23,11 @@ jobs:
       environment: staging
       baseUrl: https://staging.assassin.vlad.gg
     secrets: inherit
+
+  deploy-live:
+    needs: ['build']
+    uses: ./.github/workflows/shared-deploy.yml
+    with:
+      environment: live
+      baseUrl: https://assassin.vlad.gg
+    secrets: inherit
