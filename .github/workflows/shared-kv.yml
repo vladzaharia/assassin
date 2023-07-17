@@ -62,7 +62,7 @@ jobs:
       with:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'version-app'
-        value: ${{ steps.version-app.outputs.current-version}}
+        value: ${{ steps.version-app.outputs.current-version }}
     - name: Get assassin-server version
       id: version-server
       uses: martinbeentjes/npm-get-version-action@v1.3.1
@@ -76,4 +76,16 @@ jobs:
       with:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'version-server'
-        value: ${{ steps.version-server.outputs.current-version}}
+        value: ${{ steps.version-server.outputs.current-version }}
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: Update config KV => deployment-time
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
+        key_name: 'deployment-time'
+        value: ${{ steps.date.outputs.date }}

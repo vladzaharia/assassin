@@ -18,13 +18,15 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 
 	const versionApp = await c.env.CONFIG.get('version-app')
 	const versionServer = await c.env.CONFIG.get('version-server')
+	const deploymentTime = await c.env.CONFIG.get('deployment-time')
 
-	let version = undefined
+	let deployment = undefined
 
-	if (versionApp && versionServer) {
-		version = {
+	if (versionApp && versionServer && deploymentTime) {
+		deployment = {
 			app: versionApp,
 			server: versionServer,
+			time: parseInt(deploymentTime, 10),
 			git,
 		}
 	}
@@ -32,7 +34,7 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 	return c.json(
 		{
 			env: c.env.ENVIRONMENT || 'local',
-			version,
+			deployment,
 			urls: {
 				ui: `${c.env.BASE_URL}`,
 				admin: `${c.env.BASE_URL}/admin`,

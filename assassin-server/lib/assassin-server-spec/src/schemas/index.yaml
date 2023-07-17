@@ -39,7 +39,7 @@ paths:
                       - staging
                       - live
                     example: local
-                  version:
+                  deployment:
                     type: object
                     description: Version information
                     properties:
@@ -47,6 +47,10 @@ paths:
                         $ref: "#/components/schemas/Version"
                       server:
                         $ref: "#/components/schemas/Version"
+                      time:
+                        type: number
+                        description: Timestamp when this deployment was initiated.
+                        example: 1689500982905
                       git:
                         type: object
                         properties:
@@ -69,6 +73,7 @@ paths:
                     required:
                       - app
                       - server
+                      - time
                   urls:
                     type: object
                     description: URLs for the application
