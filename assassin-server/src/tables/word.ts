@@ -1,16 +1,4 @@
 import { getKyselyDb } from './db'
-import { createWordListTable } from './wordlist'
-
-export async function createWordTable(db: D1Database) {
-	// Create wordlist table first
-	await createWordListTable(db)
-
-	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS word (word TEXT NOT NULL, list TEXT NOT NULL, UNIQUE(word, list), FOREIGN KEY(list) REFERENCES wordlist(name));`)
-	console.info(`Create word table => createTableResult ${createTableResult.error || createTableResult.success}`)
-
-	return createTableResult
-}
 
 export async function dropWordTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS word`)

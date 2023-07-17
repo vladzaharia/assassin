@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createRoomsTable, findRoom, insertRoom } from '../../tables/room'
+import { findRoom, insertRoom } from '../../tables/room'
 
 interface AddRoomBody {
 	usesWords?: boolean
@@ -18,9 +18,6 @@ export const AddRoom = async (c: Context<{ Bindings: Bindings }>) => {
 			}
 		}
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createRoomsTable(db)
 
 		const record = await findRoom(db, room)
 		if (record) {

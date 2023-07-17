@@ -23,8 +23,7 @@
 }
 
 .modal.confirm-modal {
-	height: 22.5vh;
-	width: 30vw;
+	min-height: 22.5vh;
 }
 
 .modal.confirm-modal .modal-message-wrapper {
@@ -36,18 +35,27 @@
 
 .modal.confirm-modal .modal-message {
 	margin: 1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .modal.confirm-modal .modal-buttons {
-	margin-top: 0.5rem;
+	margin-top: 0.25rem;
+	margin-bottom: 1rem;
 	display: flex;
 	flex-direction: row;
-	gap: 0.5rem;
+	gap: 1rem;
 }
 
 .modal.create-modal .action.column .text {
 	align-items: stretch;
 	flex-direction: column;
+}
+
+.modal.modal.create-modal .create-input {
+	padding-bottom: 1.5rem;
 }
 
 @media only screen and (max-width: 87.5rem) {

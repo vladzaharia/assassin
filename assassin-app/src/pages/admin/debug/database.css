@@ -1,0 +1,13 @@
+.database-binding {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.database-binding .database-name {
+	font-weight: 500;
+}
+
+.migration-icon {
+	width: 1rem;
+}

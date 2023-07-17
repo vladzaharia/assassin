@@ -1,6 +1,5 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createRoomsTable } from '../../tables/room'
 import { findWordList, setDescription, setIcon } from '../../tables/wordlist'
 import { isManagedList } from './managed'
 
@@ -19,9 +18,6 @@ export const UpdateWordList = async (c: Context<{ Bindings: Bindings }>) => {
 		if (isManagedList(list)) {
 			return c.json({ message: 'Word list is managed!' }, 400)
 		}
-
-		// Create D1 table if needed
-		await createRoomsTable(db)
 
 		const wordList = await findWordList(db, list)
 		if (!wordList) {

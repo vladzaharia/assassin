@@ -1,6 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
-import { createRoomsTable, listRooms } from '../../tables/room'
+import { listRooms } from '../../tables/room'
 import { RoomStatus } from '../../tables/db'
 import { listPlayersInRoom } from '../../tables/player'
 import { getRoomStatus } from '../../util'
@@ -16,9 +16,6 @@ interface ListRoomsResponse {
 export const ListRooms = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
 		const db = c.env.D1DATABASE
-
-		// Create D1 table if needed
-		await createRoomsTable(db)
 
 		const rooms = await listRooms(db)
 		const listRoomsResponses: ListRoomsResponse[] = []

@@ -4,28 +4,27 @@ import { AuthProvider, AuthProviderProps } from 'react-oidc-context'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './components/app/app'
 import ContentBox from './components/content-box/content-box'
-import Admin from './pages/admin/admin'
-import Complete from './pages/room/complete/complete'
-import { RouterErrorBoundary } from './pages/error/error'
-import Instructions from './pages/room/instructions/instructions'
-import Mission from './pages/room/mission/mission'
-import RoomSettings from './pages/room/settings/room-settings'
-import Room from './pages/room/room'
-import Welcome from './pages/welcome/welcome'
-
-/* Global styles */
-import './styles'
-import RoomLoader from './loaders/room'
+import DatabaseLoader from './loaders/database'
 import PlayerLoader from './loaders/player'
+import RoomLoader from './loaders/room'
 import RoomsLoader from './loaders/rooms'
 import WordlistLoader from './loaders/wordlist'
 import WordlistsLoader from './loaders/wordlists'
+import Admin from './pages/admin/admin'
+import AdminDatabase from './pages/admin/debug/database'
 import AdminHome from './pages/admin/home/home'
 import RoomsAdmin from './pages/admin/room-list/room-list'
 import RoomAdmin from './pages/admin/room/room'
 import WordlistsAdmin from './pages/admin/wordlist-list/wordlist-list'
 import WordlistAdmin from './pages/admin/wordlist/wordlist'
-import AdminDatabase from './pages/admin/debug/database'
+import { RouterErrorBoundary } from './pages/error/error'
+import Complete from './pages/room/complete/complete'
+import Instructions from './pages/room/instructions/instructions'
+import Mission from './pages/room/mission/mission'
+import Room from './pages/room/room'
+import RoomSettings from './pages/room/settings/room-settings'
+import Welcome from './pages/welcome/welcome'
+import './styles'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -122,6 +121,7 @@ const router = createBrowserRouter([
 					{
 						path: 'database',
 						id: 'admin-database',
+						loader: DatabaseLoader,
 						element: <AdminDatabase />,
 					},
 				],

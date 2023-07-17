@@ -103,16 +103,19 @@ export default function WordlistDetails({ inModal, onClose }: { inModal?: boolea
 				</Action>
 			) : undefined}
 			{!inModal && isManaged ? (
-				<Action text="Managed?" description="This word list is managed; its settings cannot be updated.">
+				<Action text="Managed?" description="This word list is managed; its settings cannot be changed.">
 					<FontAwesomeIcon className="mr-1" icon={isManaged ? faCheck : faXmark} />
 				</Action>
 			) : undefined}
-			<Action className={!isManaged ? "column" : undefined} text="Description">
-				{isManaged ? description :
-				<textarea className="green" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />}
+			<Action className={!isManaged ? 'column' : undefined} text="Description">
+				{isManaged ? (
+					description
+				) : (
+					<textarea className="green" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
+				)}
 			</Action>
 			<Action
-				className={!isManaged ? "column" : undefined}
+				className={!isManaged ? 'column' : undefined}
 				text="Icon"
 				description={
 					!inModal && !isManaged ? (
@@ -122,9 +125,13 @@ export default function WordlistDetails({ inModal, onClose }: { inModal?: boolea
 					) : undefined
 				}
 			>
-				{!isManaged ? <IconSelector /> : <span className="mr-05">
-							<FontAwesomeIcon className="mr-05" icon={(icon as IconName) || faTextSize} /> {icon || '(default icon)'}
-						</span>}
+				{!isManaged ? (
+					<IconSelector />
+				) : (
+					<span className="mr-05">
+						<FontAwesomeIcon className="mr-05" icon={(icon as IconName) || faTextSize} /> {icon || '(default icon)'}
+					</span>
+				)}
 			</Action>
 			{inModal ? (
 				<Action>

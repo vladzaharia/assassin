@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../../bindings'
-import { createWordTable, insertWords } from '../../../tables/word'
-import { createWordListTable, findWordList } from '../../../tables/wordlist'
+import { insertWords } from '../../../tables/word'
+import { findWordList } from '../../../tables/wordlist'
 
 interface AddWordsToListBody {
 	words: string[]
@@ -17,10 +17,6 @@ export const AddWords = async (c: Context<{ Bindings: Bindings }>) => {
 		if (!words || words.length === 0) {
 			return c.json({ message: 'Must provide `words` array!' }, 400)
 		}
-
-		// Create D1 table if needed
-		await createWordListTable(db)
-		await createWordTable(db)
 
 		// Try to find word list
 		const wordListRecord = await findWordList(db, list)

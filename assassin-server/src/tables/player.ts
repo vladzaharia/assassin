@@ -1,13 +1,5 @@
 import { PlayerStatus, getKyselyDb } from './db'
 
-export async function createPlayerTable(db: D1Database) {
-	const createTableResult = await db.exec(`
-		CREATE TABLE IF NOT EXISTS player (name TEXT, room TEXT, target TEXT, words BLOB, status TEXT, isGM INTEGER, UNIQUE(name, room));`)
-	console.info(`Create player table => createTableResult ${createTableResult.error || createTableResult.success}`)
-
-	return createTableResult
-}
-
 export async function dropPlayerTable(db: D1Database) {
 	const dropTableResult = await db.exec(`DROP TABLE IF EXISTS player`)
 	console.info(`Drop player table => dropTableResult ${dropTableResult.error || dropTableResult.success}`)
