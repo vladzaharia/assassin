@@ -1,6 +1,14 @@
 import Menu from '../../components/menu/menu'
 import { hasAuthParams, useAuth } from 'react-oidc-context'
-import { faRightFromBracket, faRightToBracket, faTextSize, faUser, faDoorOpen, faDatabase } from '@fortawesome/pro-solid-svg-icons'
+import {
+	faRightFromBracket,
+	faRightToBracket,
+	faTextSize,
+	faUser,
+	faDoorOpen,
+	faDatabase,
+	faCircleInfo,
+} from '@fortawesome/pro-solid-svg-icons'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Outlet, useLocation } from 'react-router-dom'
 import './admin.css'
@@ -47,6 +55,7 @@ export default function Admin() {
 						<MenuItem key="room" color="blue" text="Rooms" icon={faDoorOpen} destination="room" />
 						<MenuItem key="wordlist" color="green" text="Word lists" icon={faTextSize} destination="wordlist" />
 						<MenuItem key="debug" color="purple" text="Database" icon={faDatabase} destination="database" />
+						<MenuItem key="about" color="primary" text="About" icon={faCircleInfo} destination="about" />
 					</>
 				) : undefined}
 			</Menu>

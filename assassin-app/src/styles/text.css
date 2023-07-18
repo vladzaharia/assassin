@@ -51,9 +51,10 @@ a {
 	padding: 0.5rem;
 	padding-top: 0.4rem;
 	border-radius: 0.3rem;
+	transition: all 0.15s ease;
 }
 
 a:hover {
-	background-color: var(--primary);
-	color: var(--foreground-alt);
+	background-color: var(--primary-trans-50);
+	color: var(--foreground);
 }

@@ -4,10 +4,6 @@
 	align-items: center;
 }
 
-.database-binding .database-name {
-	font-weight: 500;
-}
-
 .migration-icon {
 	width: 1rem;
 }

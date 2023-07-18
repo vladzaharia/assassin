@@ -33,7 +33,7 @@ export function MenuItem({ color, text, icon, className, destination, ...buttonP
 				}}
 				{...buttonProps}
 			/>
-			<span className="text">{text}</span>
+			<span className="fw-500">{text}</span>
 		</div>
 	)
 }

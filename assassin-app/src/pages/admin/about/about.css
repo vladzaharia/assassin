@@ -1,0 +1,34 @@
+.url-list {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	border-radius: 0.5rem;
+}
+
+a.url-entry:first-child {
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+a.url-entry {
+	display: grid;
+	grid-template-columns: 2.5% 3fr auto;
+	gap: 1rem;
+	padding: 1.25rem;
+	border-radius: 0;
+}
+
+.url-entry .icon {
+	text-align: center;
+}
+
+.url-entry .url {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.deployment-time {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}

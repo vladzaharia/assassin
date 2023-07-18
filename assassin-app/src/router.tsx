@@ -11,7 +11,7 @@ import RoomsLoader from './loaders/rooms'
 import WordlistLoader from './loaders/wordlist'
 import WordlistsLoader from './loaders/wordlists'
 import Admin from './pages/admin/admin'
-import AdminDatabase from './pages/admin/debug/database'
+import AdminDatabase from './pages/admin/database/database'
 import AdminHome from './pages/admin/home/home'
 import RoomsAdmin from './pages/admin/room-list/room-list'
 import RoomAdmin from './pages/admin/room/room'
@@ -25,6 +25,8 @@ import Room from './pages/room/room'
 import RoomSettings from './pages/room/settings/room-settings'
 import Welcome from './pages/welcome/welcome'
 import './styles'
+import AboutLoader from './loaders/about'
+import AdminAbout from './pages/admin/about/about'
 
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
@@ -123,6 +125,12 @@ const router = createBrowserRouter([
 						id: 'admin-database',
 						loader: DatabaseLoader,
 						element: <AdminDatabase />,
+					},
+					{
+						path: 'about',
+						id: 'admin-about',
+						loader: AboutLoader,
+						element: <AdminAbout />,
 					},
 				],
 			},

@@ -4,6 +4,7 @@ import {
 	ConfigurationParameters,
 	DatabaseApi,
 	GMApi,
+	InfoApi,
 	PlayerApi,
 	RoomApi,
 	WordlistApi,
@@ -35,6 +36,10 @@ export const createAdminApi = (accessToken: string) => {
 
 export const createDatabaseApi = (accessToken: string) => {
 	return new DatabaseApi(getApiConfig({ accessToken }))
+}
+
+export const createInfoApi = () => {
+	return new InfoApi(getApiConfig())
 }
 
 export const createRoomApi = () => {

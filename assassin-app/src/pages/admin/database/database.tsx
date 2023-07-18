@@ -99,7 +99,7 @@ export default function AdminDatabase() {
 			</SectionTitle>
 			<Action text="Database binding" description="Name of the database the server is connected to.">
 				<span className="database-binding">
-					<span className="database-name">{database?.binding?.database}</span>
+					<span className="fw-500">{database?.binding?.database}</span>
 					<span className="description">({database?.binding?.type})</span>
 				</span>
 			</Action>

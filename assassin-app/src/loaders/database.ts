@@ -1,6 +1,6 @@
-import { createDatabaseApi } from '../api'
+import { createInfoApi } from '../api'
 
 export default async function DatabaseLoader() {
-	const databaseApi = createDatabaseApi('')
+	const databaseApi = createInfoApi()
 	return (await databaseApi.getDatabase()).data
 }
