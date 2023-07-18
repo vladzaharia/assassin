@@ -89,3 +89,21 @@ jobs:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'deployment-time'
         value: ${{ steps.date.outputs.date }}
+    # - name: Create deployment JSON
+    #   id: deployment
+    #   run: echo "::set-output name=date::$(echo { \"version\" })"
+    #   env:
+    #     VERSION_APP: ${{ steps.version-app.outputs.current-version }}
+    #     VERSION_SERVER: ${{ steps.version-server.outputs.current-version }}
+    #     GIT_REPOSITORY: ${{ github.repository }}
+    #     GIT_REF: ${{ github.ref }}
+    #     GIT_SHA: ${{ github.sha }}
+    - name: Update config KV => deployment
+      uses: zentered/cloudflare-kv-action@v1.0.0
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      with:
+        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
+        key_name: 'deployment'
+        value: "{ \"version\": ${{ steps.version-app.outputs.current-version }} }"
