@@ -14,7 +14,7 @@ export default function Action({ text, description, className, color, children }
 	return (
 		<div className={`action ${className || ''} ${color || ''}`}>
 			<div className="text">
-				{text && <span className="title">{text}</span>}
+				{text && <span className="fw-500">{text}</span>}
 				{description && <span className="description">{description}</span>}
 			</div>
 			{children}

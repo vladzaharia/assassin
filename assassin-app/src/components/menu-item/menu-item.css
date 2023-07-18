@@ -91,10 +91,6 @@
 	color: var(--orange-dark);
 }
 
-.menu-item span {
-	font-weight: 500;
-}
-
 .menu-item .button {
 	height: 2rem;
 	width: 2rem;

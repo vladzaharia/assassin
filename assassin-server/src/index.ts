@@ -153,6 +153,12 @@ app.get(
 	})
 )
 app.get(
+	'/admin/about',
+	serveStatic({
+		path: './app/index.html',
+	})
+)
+app.get(
 	'/room/',
 	serveStatic({
 		path: './app/index.html',
