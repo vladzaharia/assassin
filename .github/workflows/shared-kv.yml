@@ -22,82 +22,22 @@ jobs:
     steps:
     - name: Checkout files
       uses: actions/checkout@v3
-    - name: Update config KV => git-repository
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-repository'
-        value: ${{ github.repository }}
-    - name: Update config KV => git-ref
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-ref'
-        value: ${{ github.ref }}
-    - name: Update config KV => git-sha
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-sha'
-        value: ${{ github.sha }}
     - name: Get assassin-app version
       id: version-app
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
         path: assassin-app
-    - name: Update config KV => version-app
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'version-app'
-        value: ${{ steps.version-app.outputs.current-version }}
     - name: Get assassin-server version
       id: version-server
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
         path: assassin-server
-    - name: Update config KV => version-server
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'version-server'
-        value: ${{ steps.version-server.outputs.current-version }}
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +%s)"
-    - name: Update config KV => deployment-time
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      uses: nanzm/get-time-action@master
       with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'deployment-time'
-        value: ${{ steps.date.outputs.date }}
-    # - name: Create deployment JSON
-    #   id: deployment
-    #   run: echo "::set-output name=date::$(echo { \"version\" })"
-    #   env:
-    #     VERSION_APP: ${{ steps.version-app.outputs.current-version }}
-    #     VERSION_SERVER: ${{ steps.version-server.outputs.current-version }}
-    #     GIT_REPOSITORY: ${{ github.repository }}
-    #     GIT_REF: ${{ github.ref }}
-    #     GIT_SHA: ${{ github.sha }}
+        timeZone: America/Los_Angeles
+        format: '%s'
     - name: Update config KV => deployment
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
@@ -106,4 +46,4 @@ jobs:
       with:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'deployment'
-        value: "{ \"version\": ${{ steps.version-app.outputs.current-version }} }"
+        value: "{ \"version-app\": \"${{ steps.version-app.outputs.current-version }}\", \"version-server\": \"${{ steps.version-server.outputs.current-version }}\", \"deployment-time\": \"${{ steps.date.outputs.time }}\", \"git-repository\": \"${{ github.repository }}\", \"git-ref\": \"${{ github.ref }}\", \"git-sha\": \"${{ github.sha }}\" }"
