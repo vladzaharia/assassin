@@ -46,4 +46,4 @@ jobs:
       with:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
         key_name: 'deployment'
-        value: "{ \"version\": { \"app\": \"${{ steps.version-app.outputs.current-version }}\", \"server\": \"${{ steps.version-server.outputs.current-version }}\" }, \"time\": ${{ steps.date.outputs.time }}, \"git\": { \"source\": \"${{ github.repository }}\", \"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\" }"
+        value: "{ \"version\": { \"app\": \"${{ steps.version-app.outputs.current-version }}\", \"server\": \"${{ steps.version-server.outputs.current-version }}\" }, \"time\": ${{ steps.date.outputs.time }}, \"git\": { \"source\": \"${{ github.repository }}\", \"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\" } }"
