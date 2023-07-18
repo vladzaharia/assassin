@@ -55,10 +55,10 @@ export default function AdminAbout() {
 			{info.deployment ? (
 				<>
 					<Action text="App version" description="Version of the deployed frontend app.">
-						v{info.deployment.app}
+						v{info.deployment.version.app}
 					</Action>
 					<Action text="Server version" description="Version of the deployed backend API.">
-						v{info.deployment.server}
+						v{info.deployment.version.server}
 					</Action>
 				</>
 			) : undefined}
