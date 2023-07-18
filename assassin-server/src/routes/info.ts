@@ -1,12 +1,25 @@
 import { Context } from 'hono'
 import { Bindings } from '../bindings'
 
+interface GitInfo {
+	source: string
+	ref: string
+	sha: string
+}
+
+interface DeploymentInfo {
+	app: string
+	server: string
+	time: number
+	git?: GitInfo
+}
+
 export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 	const gitRepository = await c.env.CONFIG.get('git-repository')
 	const gitRef = await c.env.CONFIG.get('git-ref')
 	const gitSha = await c.env.CONFIG.get('git-sha')
 
-	let git = undefined
+	let git: GitInfo | undefined = undefined
 
 	if (gitRepository && gitRef && gitSha) {
 		git = {
@@ -19,7 +32,7 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 	const versionApp = await c.env.CONFIG.get('version-app')
 	const versionServer = await c.env.CONFIG.get('version-server')
 	const deploymentTime = await c.env.CONFIG.get('deployment-time')
-	let deployment = undefined
+	let deployment: DeploymentInfo | undefined = undefined
 
 	if (versionApp && versionServer && deploymentTime) {
 		deployment = {

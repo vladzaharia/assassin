@@ -28,6 +28,21 @@ export default function AdminAbout() {
 		}
 	}
 
+	const getURLName = (urlType: URLType) => {
+		switch (urlType) {
+			case 'ui':
+				return 'Frontend'
+			case 'admin':
+				return 'Admin'
+			case 'api':
+				return 'API'
+			case 'openapi':
+				return 'OpenAPI Schema'
+			case 'docs':
+				return 'OpenAPI Docs'
+		}
+	}
+
 	return (
 		<div className="room">
 			<Header title={'About'} color="primary" className="corner-right" leftActions={<FontAwesomeIcon icon={faCircleInfo} size="lg" />} />
@@ -56,7 +71,7 @@ export default function AdminAbout() {
 						<span className="icon">
 							<FontAwesomeIcon icon={getURLIcon(record[0] as URLType)} />
 						</span>
-						<span className="name fw-600">{record[0]}</span>
+						<span className="name fw-600">{getURLName(record[0] as URLType)}</span>
 						<span className="url">{record[1]}</span>
 					</a>
 				))}
