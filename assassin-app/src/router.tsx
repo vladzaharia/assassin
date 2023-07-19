@@ -40,7 +40,11 @@ const oidcConfig: AuthProviderProps = {
 
 const router = createBrowserRouter([
 	{
-		element: <ContentBox />,
+		element: (
+			<App>
+				<ContentBox />
+			</App>
+		),
 		id: 'root',
 		errorElement: (
 			<ContentBox>
@@ -142,9 +146,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<StrictMode>
 		<AuthProvider {...oidcConfig}>
-			<App>
-				<RouterProvider router={router} />
-			</App>
+			<RouterProvider router={router} />
 		</AuthProvider>
 	</StrictMode>
 )

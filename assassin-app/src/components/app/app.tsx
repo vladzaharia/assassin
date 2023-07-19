@@ -2,14 +2,15 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import './app.css'
 import isMobile from 'is-mobile'
 import Button from '../button/button'
-import { faMoon, faRightFromBracket, faRightToBracket, faSun } from '@fortawesome/pro-solid-svg-icons'
+import { faCog, faMoon, faRightFromBracket, faRightToBracket, faSun } from '@fortawesome/pro-solid-svg-icons'
 import usePrefersColorScheme from 'use-prefers-color-scheme'
 import { ContainerContext } from '../../hooks/container'
 import { motion } from 'framer-motion'
-import { CommonColor } from '../../types'
+import { CommonColor, OpenIDScopeProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import { NameContext } from '../../hooks/name'
 import useLocalStorage from 'use-local-storage'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface AppProps {
 	children?: ReactNode
@@ -24,6 +25,8 @@ export default function App({ children }: AppProps) {
 	const [name, setName] = useState<string | undefined>(nameStorage)
 	const defaultTheme = usePrefersColorScheme()
 	const auth = useAuth()
+	const location = useLocation()
+	const navigate = useNavigate()
 	const appRef = useRef<HTMLDivElement>(null)
 
 	const isDark = theme === 'dark'
@@ -43,7 +46,7 @@ export default function App({ children }: AppProps) {
 		if (window.location.pathname.includes('/admin')) {
 			setColor('admin' as CommonColor)
 		}
-	}, [])
+	}, [window.location.pathname])
 
 	return (
 		<NameContext.Provider value={{ name, setName }}>
@@ -81,31 +84,20 @@ export default function App({ children }: AppProps) {
 									size: 'xl',
 								}}
 								onClick={auth.isAuthenticated ? () => void auth.removeUser() : () => void auth.signinRedirect()}
-								popoverProps={{
-									description: auth.isAuthenticated ? (
-										<span>
-											Signed in as <span className="fw-500">{auth.user?.profile.name}</span>
-										</span>
-									) : (
-										'Click here to sign in'
-									),
-									color: 'green',
-									anchorOrigin: { horizontal: 'right', vertical: 'center' },
-									transformOrigin: { horizontal: 'left', vertical: 'center' },
-									slotProps: {
-										paper: {
-											elevation: 0,
-											sx: {
-												marginLeft: '0.5rem',
-												border: `solid 1px var(--green)`,
-												borderRadius: '0.5rem',
-												backgroundColor: 'var(--background)',
-												color: 'var(--foreground)',
-											},
-										},
-									},
-								}}
 							/>
+							{(auth.user?.profile.assassin as OpenIDScopeProps)?.admin ? (
+								<Button
+									className="admin"
+									color={'blue'}
+									iconProps={{
+										icon: faCog,
+										size: 'lg',
+									}}
+									onClick={() => {
+										location.pathname.includes('/admin') ? navigate('/') : navigate('/admin')
+									}}
+								/>
+							) : undefined}
 						</motion.div>
 					) : undefined}
 					{children}
