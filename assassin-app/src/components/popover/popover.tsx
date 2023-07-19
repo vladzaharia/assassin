@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Popover as MUIPopover } from '@mui/material'
+import { Popover as MUIPopover, PopoverProps as MUIPopoverProps } from '@mui/material'
 import './popover.css'
 import { useContext } from 'react'
 import { ContainerContext } from '../../hooks/container'
@@ -27,7 +27,7 @@ const PopoverContent = ({ title, description, color, icon }: PopoverContentProps
 	)
 }
 
-export interface PopoverProps extends PopoverContentProps {
+export interface PopoverProps extends PopoverContentProps, Omit<MUIPopoverProps, 'color'> {
 	open: boolean
 	anchor: HTMLElement | null
 	onClose: () => void
@@ -39,30 +39,37 @@ export default function Popover(props: PopoverProps) {
 
 	return (
 		<MUIPopover
+			{...props}
 			open={open}
 			anchorEl={anchor}
 			onClose={onClose}
 			container={containerContext?.current}
-			slotProps={{
-				paper: {
-					elevation: 0,
-					sx: {
-						marginTop: '0.5rem',
-						border: `solid 1px var(--${color})`,
-						borderRadius: '0.5rem',
-						backgroundColor: 'var(--background)',
-						color: 'var(--foreground)',
+			slotProps={
+				props.slotProps || {
+					paper: {
+						elevation: 0,
+						sx: {
+							marginTop: '0.5rem',
+							border: `solid 1px var(--${color})`,
+							borderRadius: '0.5rem',
+							backgroundColor: 'var(--background)',
+							color: 'var(--foreground)',
+						},
 					},
-				},
-			}}
-			anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'center',
-			}}
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'center',
-			}}
+				}
+			}
+			anchorOrigin={
+				props.anchorOrigin || {
+					vertical: 'bottom',
+					horizontal: 'center',
+				}
+			}
+			transformOrigin={
+				props.transformOrigin || {
+					vertical: 'top',
+					horizontal: 'center',
+				}
+			}
 			sx={{
 				pointerEvents: 'none',
 			}}

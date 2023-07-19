@@ -32,7 +32,7 @@ const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
 	client_id: 'qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G',
 	redirect_uri: `${window.location.protocol}//${window.location.host}${window.location.pathname}`,
-	scope: 'openid profile',
+	scope: 'openid profile assassin',
 	onSigninCallback: () => {
 		window.history.replaceState({}, document.title, window.location.pathname)
 	},

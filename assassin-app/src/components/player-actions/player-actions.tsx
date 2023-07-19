@@ -1,12 +1,13 @@
 import { faCrown, faUserSecret } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
-import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../hooks/room'
 import './player-actions.css'
 import { MenuItem } from '../menu-item/menu-item'
+import { NameContext } from '../..//hooks/name'
 
 export default function PlayerActions() {
-	const [name] = useLocalStorage('name', '')
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { name } = useContext(NameContext)!
 	const roomContext = useContext(RoomContext)
 
 	const roomStatus = roomContext?.room

@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { createAdminOrGMApi } from '../../api'
 import { RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
-import useLocalStorage from 'use-local-storage'
 import SectionTitle from '../section-title/section-title'
 import { useNotificationAwareRequest } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
@@ -29,6 +29,7 @@ import './room-settings-player-list.css'
 import Header from '../header/header'
 import Modal, { ConfirmModal, CreateModal } from '../modal/modal'
 import Action from '../action/action'
+import { NameContext } from '../../hooks/name'
 
 export const GetPlayerStatus = (isGM: boolean, status?: PlayerStatus) => {
 	let gmElement: JSX.Element | undefined
@@ -81,10 +82,10 @@ export const GetPlayerStatus = (isGM: boolean, status?: PlayerStatus) => {
 
 export default function RoomSettingsPlayerList({ apiType }: RoomSettingsComponentProps) {
 	const auth = useAuth()
-	const [name] = useLocalStorage('name', '')
+	const { name } = useContext(NameContext)!
 	const request = useNotificationAwareRequest()
 
-	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
+	const api = createAdminOrGMApi(apiType, name!, auth.user?.access_token || '')
 
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room

@@ -1,24 +1,25 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { faRotateLeft, faPlay, faSparkles } from '@fortawesome/pro-solid-svg-icons'
 import { createAdminOrGMApi } from '../../api'
 import { NotificationContext, NotificationSource, useNotificationAwareRequest } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useLocalStorage from 'use-local-storage'
 import Action from '../action/action'
 import Button from '../button/button'
 import { CommonColor, RoomSettingsComponentProps } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import SectionTitle from '../section-title/section-title'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { NameContext } from '../../hooks/name'
 
 export default function RoomSettingsActions({ apiType }: RoomSettingsComponentProps) {
 	const navigate = useNavigate()
 	const auth = useAuth()
-	const [name] = useLocalStorage('name', '')
+	const { name } = useContext(NameContext)!
 	const request = useNotificationAwareRequest()
 
-	const api = createAdminOrGMApi(apiType, name, auth.user?.access_token || '')
+	const api = createAdminOrGMApi(apiType, name!, auth.user?.access_token || '')
 
 	const { notification, showNotification } = useContext(NotificationContext)
 

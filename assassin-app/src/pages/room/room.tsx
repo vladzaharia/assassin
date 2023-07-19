@@ -1,7 +1,6 @@
 import { Room as RoomResponse } from 'assassin-server-client'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
-import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import Menu from '../../components/menu/menu'
 import PlayerActions from '../../components/player-actions/player-actions'
@@ -13,10 +12,12 @@ import Button from '../../components/button/button'
 import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons'
 import RoomStatus from '../../components/room-status/room-status'
 import useReload from '../../hooks/reload'
+import { NameContext } from '../../hooks/name'
 
 export default function Room() {
 	const room = useLoaderData() as RoomResponse
-	const [name] = useLocalStorage<string>('name', '')
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { name } = useContext(NameContext)!
 	const roomSession = useSessionStorage<string>('room', { defaultValue: '' })
 	const navigate = useNavigate()
 	const location = useLocation()

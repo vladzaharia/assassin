@@ -1,17 +1,22 @@
 import { faCheck, faChevronRight } from '@fortawesome/pro-solid-svg-icons'
 import { isAxiosError } from 'axios'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useLocalStorage from 'use-local-storage'
 import useSessionStorage from 'use-session-storage-state'
 import { createRoomApi } from '../../api'
 import { NotificationContext } from '../../hooks/notification'
 import './welcome.css'
 import Button from '../../components/button/button'
+import { NameContext } from '../../hooks/name'
+import { CommonColor } from '../../types'
+import useLocalStorage from 'use-local-storage'
+import { useAuth } from 'react-oidc-context'
 
 export default function Welcome() {
-	const [name, setName] = useLocalStorage<string>('name', '')
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { name, setName } = useContext(NameContext)!
+	const [nameStorage, setNameStorage] = useLocalStorage('name', '')
 	const [nameSubmitted, setNameSubmitted] = useState<boolean>(false)
 	const [room, setRoom] = useSessionStorage<string>('room', { defaultValue: '' })
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -19,6 +24,25 @@ export default function Welcome() {
 	const navigate = useNavigate()
 
 	const roomApi = createRoomApi()
+	const auth = useAuth()
+
+	useEffect(() => {
+		if (nameStorage) {
+			setName(nameStorage)
+		}
+	})
+
+	useEffect(() => {
+		// Automatically pull in profile information
+		if (auth.isAuthenticated) {
+			setNameStorage(auth.user?.profile.given_name)
+			setName(auth.user?.profile.given_name)
+			setNameSubmitted(true)
+		} else {
+			setNameSubmitted(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [auth.isAuthenticated])
 
 	const fetchRoom = async () => {
 		if (!room || room === '') {
@@ -45,7 +69,7 @@ export default function Welcome() {
 
 	const getButtonClass = () => {
 		if (notification && showNotification) {
-			return notification.notificationType || 'primary'
+			return (notification.notificationType as CommonColor) || 'primary'
 		}
 
 		return 'primary'
@@ -72,6 +96,7 @@ export default function Welcome() {
 								onSubmit={(e) => {
 									if (name !== '') {
 										e.preventDefault()
+										setNameStorage(name)
 										setNameSubmitted(true)
 									}
 								}}
@@ -86,7 +111,7 @@ export default function Welcome() {
 										setName(e.target.value)
 									}}
 								/>
-								<Button type="submit" className={getButtonClass()} iconProps={{ icon: faChevronRight, size: 'xl' }} />
+								<Button type="submit" color={getButtonClass()} iconProps={{ icon: faChevronRight, size: 'xl' }} />
 							</form>
 						</motion.div>
 					) : undefined}
@@ -118,7 +143,7 @@ export default function Welcome() {
 										setRoom(e.target.value)
 									}}
 								/>
-								<Button type="submit" className={getButtonClass()} iconProps={{ icon: faCheck, size: 'xl' }} />
+								<Button type="submit" color={getButtonClass()} iconProps={{ icon: faCheck, size: 'xl' }} />
 							</form>
 						</motion.div>
 					) : undefined}
