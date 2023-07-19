@@ -5,3 +5,8 @@ export type ApiType = 'gm' | 'admin'
 export interface RoomSettingsComponentProps {
 	apiType: ApiType
 }
+
+export interface OpenIDScopeProps {
+	user: boolean
+	admin: boolean
+}

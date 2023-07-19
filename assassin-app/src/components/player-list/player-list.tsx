@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/jsx-no-useless-fragment */
 import {
 	faCrown,
@@ -12,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BasicPlayer } from 'assassin-server-client'
 import { useContext, useRef, useState } from 'react'
 import { useRevalidator } from 'react-router-dom'
-import useLocalStorage from 'use-local-storage'
 import { createPlayerApi } from '../../api'
 import { NotificationContext } from '../../hooks/notification'
 import { RoomContext } from '../../hooks/room'
@@ -23,6 +23,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Popover from '../popover/popover'
 import isMobile from 'is-mobile'
 import { CommonColor } from '../../types'
+import { NameContext } from '../../hooks/name'
 
 function PlayerEntry({ player }: { player: BasicPlayer }) {
 	const popoverAnchor = useRef<HTMLDivElement>(null)
@@ -117,7 +118,7 @@ function PlayerEntry({ player }: { player: BasicPlayer }) {
 }
 
 export default function PlayerList() {
-	const [name] = useLocalStorage('name', '')
+	const { name } = useContext(NameContext)!
 	const roomContext = useContext(RoomContext)
 	const { notification, setError, setNotification, showNotification } = useContext(NotificationContext)
 	const { revalidate } = useRevalidator()
@@ -125,11 +126,11 @@ export default function PlayerList() {
 
 	const JoinLeaveButton = () => {
 		const playerInRoom = roomStatus?.players.some((p) => p.name === name)
-		const playerApi = createPlayerApi(name)
+		const playerApi = createPlayerApi(name!)
 
 		const addPlayer = async () => {
 			try {
-				const addPlayerResponse = await playerApi.putPlayer(roomContext?.room?.name || '', name)
+				const addPlayerResponse = await playerApi.putPlayer(roomContext?.room?.name || '', name!)
 				setNotification({
 					message: addPlayerResponse.data.message,
 					icon: faDoorOpen,
@@ -146,7 +147,7 @@ export default function PlayerList() {
 
 		const deletePlayer = async () => {
 			try {
-				const deletePlayerResponse = await playerApi.deletePlayer(roomContext?.room?.name || '', name)
+				const deletePlayerResponse = await playerApi.deletePlayer(roomContext?.room?.name || '', name!)
 				setNotification({
 					message: deletePlayerResponse.data.message,
 					icon: faFaceSadTear,

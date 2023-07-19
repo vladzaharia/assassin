@@ -24,7 +24,6 @@ export default function RoomSettings() {
 			setError('You are not the GM of this room!')
 			navigate(`/room/${roomStatus?.name}`)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [roomStatus])
 
 	return (

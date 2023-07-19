@@ -1,11 +1,12 @@
 import { faCheck, faPlay, faQuestion, faTimer, faTrophyStar } from '@fortawesome/pro-solid-svg-icons'
 import { useContext } from 'react'
-import useLocalStorage from 'use-local-storage'
 import { RoomContext } from '../../hooks/room'
 import Status from '../status/status'
+import { NameContext } from '../../hooks/name'
 
 export default function RoomStatus() {
-	const [name] = useLocalStorage('name', '')
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { name } = useContext(NameContext)!
 	const roomContext = useContext(RoomContext)
 	const roomStatus = roomContext?.room
 

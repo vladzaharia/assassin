@@ -40,7 +40,6 @@ export default function Instructions() {
 		if (room?.status === 'completed') {
 			navigate(`/room/${room?.name}/complete`)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [roomContext?.room])
 
 	return (

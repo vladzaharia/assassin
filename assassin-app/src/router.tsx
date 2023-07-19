@@ -31,8 +31,8 @@ import AdminAbout from './pages/admin/about/about'
 const oidcConfig: AuthProviderProps = {
 	authority: 'https://auth.zhr.one/application/o/word-assassin/',
 	client_id: 'qufnWT5HiAmouqtKejlILrTPQvFYj62nGpoyEp1G',
-	redirect_uri: `${window.location.protocol}//${window.location.host}/admin`,
-	scope: 'openid profile',
+	redirect_uri: `${window.location.protocol}//${window.location.host}${window.location.pathname}`,
+	scope: 'openid profile assassin',
 	onSigninCallback: () => {
 		window.history.replaceState({}, document.title, window.location.pathname)
 	},
@@ -40,7 +40,11 @@ const oidcConfig: AuthProviderProps = {
 
 const router = createBrowserRouter([
 	{
-		element: <ContentBox />,
+		element: (
+			<App>
+				<ContentBox />
+			</App>
+		),
 		id: 'root',
 		errorElement: (
 			<ContentBox>
@@ -142,9 +146,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<StrictMode>
 		<AuthProvider {...oidcConfig}>
-			<App>
-				<RouterProvider router={router} />
-			</App>
+			<RouterProvider router={router} />
 		</AuthProvider>
 	</StrictMode>
 )

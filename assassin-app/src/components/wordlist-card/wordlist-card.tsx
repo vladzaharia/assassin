@@ -82,7 +82,6 @@ export default function WordListCards({ onWordListClick }: { onWordListClick: (n
 
 	useEffect(() => {
 		getWordLists()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (

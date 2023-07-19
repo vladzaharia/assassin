@@ -41,12 +41,19 @@ paths:
                     example: local
                   deployment:
                     type: object
-                    description: Version information
+                    description: Deployment information
                     properties:
-                      app:
-                        $ref: '#/components/schemas/Version'
-                      server:
-                        $ref: '#/components/schemas/Version'
+                      version:
+                        type: object
+                        description: Version information for this deployment.
+                        properties:
+                          app:
+                            $ref: '#/components/schemas/Version'
+                          server:
+                            $ref: '#/components/schemas/Version'
+                        required:
+                          - app
+                          - server
                       time:
                         type: number
                         description: Timestamp when this deployment was initiated.
@@ -71,8 +78,7 @@ paths:
                           - ref
                           - sha
                     required:
-                      - app
-                      - server
+                      - version
                       - time
                   urls:
                     type: object

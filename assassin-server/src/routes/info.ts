@@ -1,33 +1,27 @@
 import { Context } from 'hono'
 import { Bindings } from '../bindings'
 
-export const Info = async (c: Context<{ Bindings: Bindings }>) => {
-	const gitRepository = await c.env.CONFIG.get('git-repository')
-	const gitRef = await c.env.CONFIG.get('git-ref')
-	const gitSha = await c.env.CONFIG.get('git-sha')
+interface GitInfo {
+	source: string
+	ref: string
+	sha: string
+}
 
-	let git = undefined
-
-	if (gitRepository && gitRef && gitSha) {
-		git = {
-			source: gitRepository,
-			ref: gitRef,
-			sha: gitSha,
-		}
+interface DeploymentInfo {
+	version: {
+		app: string
+		server: string
 	}
+	time: number
+	git?: GitInfo
+}
 
-	const versionApp = await c.env.CONFIG.get('version-app')
-	const versionServer = await c.env.CONFIG.get('version-server')
-	const deploymentTime = await c.env.CONFIG.get('deployment-time')
-	let deployment = undefined
+export const Info = async (c: Context<{ Bindings: Bindings }>) => {
+	let deployment: DeploymentInfo | undefined = undefined
 
-	if (versionApp && versionServer && deploymentTime) {
-		deployment = {
-			app: versionApp,
-			server: versionServer,
-			time: parseInt(deploymentTime, 10),
-			git,
-		}
+	const deploymentJSON = await c.env.CONFIG.get('deployment')
+	if (deploymentJSON) {
+		deployment = JSON.parse(deploymentJSON) as DeploymentInfo
 	}
 
 	return c.json(

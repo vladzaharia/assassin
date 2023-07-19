@@ -68,7 +68,6 @@ export default function Mission() {
 			setError('You have been eliminated from the game!', 'room')
 			navigate(`/room/${roomStatus?.room?.name}`)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [roomStatus])
 
 	return (

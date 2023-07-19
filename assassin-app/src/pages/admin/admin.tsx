@@ -10,23 +10,31 @@ import {
 	faCircleInfo,
 } from '@fortawesome/pro-solid-svg-icons'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import './admin.css'
 import Button from '../../components/button/button'
 import Status from '../../components/status/status'
 import { MenuItem } from '../../components/menu-item/menu-item'
 import { useEffect } from 'react'
+import { OpenIDScopeProps } from '../../types'
 
 export default function Admin() {
 	const auth = useAuth()
 	const location = useLocation()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading) {
 			auth.signinRedirect()
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth.isAuthenticated, auth.activeNavigator, auth.isLoading, auth.signinRedirect])
+
+	useEffect(() => {
+		if (auth.user && !(auth.user?.profile.assassin as OpenIDScopeProps)?.admin) {
+			console.log(auth.user?.profile.assassin)
+			navigate('/')
+		}
+	}, [auth.user])
 
 	return (
 		<>
@@ -37,7 +45,17 @@ export default function Admin() {
 					rightActions: (
 						<>
 							{auth.isAuthenticated ? (
-								<Status color="green" icon={faUser} popover={{ description: `Signed in as ${auth.user?.profile.name}` }} />
+								<Status
+									color="green"
+									icon={faUser}
+									popover={{
+										description: (
+											<span>
+												Signed in as <span className="fw-500">{auth.user?.profile.name}</span>
+											</span>
+										),
+									}}
+								/>
 							) : undefined}
 							<Button
 								color={auth.isAuthenticated ? 'primary' : 'green'}

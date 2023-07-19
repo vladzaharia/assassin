@@ -22,70 +22,28 @@ jobs:
     steps:
     - name: Checkout files
       uses: actions/checkout@v3
-    - name: Update config KV => git-repository
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-repository'
-        value: ${{ github.repository }}
-    - name: Update config KV => git-ref
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-ref'
-        value: ${{ github.ref }}
-    - name: Update config KV => git-sha
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'git-sha'
-        value: ${{ github.sha }}
     - name: Get assassin-app version
       id: version-app
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
         path: assassin-app
-    - name: Update config KV => version-app
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'version-app'
-        value: ${{ steps.version-app.outputs.current-version }}
     - name: Get assassin-server version
       id: version-server
       uses: martinbeentjes/npm-get-version-action@v1.3.1
       with:
         path: assassin-server
-    - name: Update config KV => version-server
-      uses: zentered/cloudflare-kv-action@v1.0.0
-      env:
-        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      with:
-        namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'version-server'
-        value: ${{ steps.version-server.outputs.current-version }}
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +%s)"
-    - name: Update config KV => deployment-time
+      uses: nanzm/get-time-action@master
+      with:
+        timeZone: America/Los_Angeles
+        format: '%s'
+    - name: Update config KV => deployment
       uses: zentered/cloudflare-kv-action@v1.0.0
       env:
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       with:
         namespace_identifier: ${{ vars.KV_CONFIG_NAMESPACE }}
-        key_name: 'deployment-time'
-        value: ${{ steps.date.outputs.date }}
+        key_name: 'deployment'
+        value: "{ \"version\": { \"app\": \"${{ steps.version-app.outputs.current-version }}\", \"server\": \"${{ steps.version-server.outputs.current-version }}\" }, \"time\": ${{ steps.date.outputs.time }}, \"git\": { \"source\": \"${{ github.repository }}\", \"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\" } }"

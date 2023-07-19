@@ -42,7 +42,7 @@
 
 @media only screen and (max-width: 50rem) {
 	.welcome form input[type='text'] {
-		height: 2.5rem;
+		height: 3.2rem;
 	}
 
 	.title:has(+ .welcome) {

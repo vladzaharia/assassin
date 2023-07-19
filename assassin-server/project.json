@@ -62,12 +62,7 @@
 			"options": {
 				"cwd": "assassin-server",
 				"commands": [
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-repository local",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-ref refs/heads/$(git rev-parse --abbrev-ref HEAD)",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false git-sha $(git rev-parse HEAD)",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false version-app $(node -e \"process.stdout.write(require('../assassin-server/package').version)\")",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false version-server $(node -e \"process.stdout.write(require('./package').version)\")",
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false deployment-time $(date +%s)"
+					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false deployment \"{ \\\"version\\\": { \\\"app\\\": \\\"$(node -e \"process.stdout.write(require('../assassin-server/package').version)\")\\\", \\\"server\\\": \\\"$(node -e \"process.stdout.write(require('./package').version)\")\\\" }, \\\"time\\\": $(date +%s), \\\"git\\\": { \\\"source\\\": \\\"local\\\", \\\"ref\\\": \\\"refs/heads/$(git rev-parse --abbrev-ref HEAD)\\\", \\\"sha\\\": \\\"$(git rev-parse HEAD)\\\" } }\""
 				]
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
