@@ -106,12 +106,12 @@
 
 @media only screen and (max-width: 50rem) {
 	.header > * {
-		margin: 1.5rem;
+		margin: 1rem;
 	}
 
 	.header .left-actions,
 	.header .right-actions {
-		margin: 1.5rem;
+		margin: 1rem;
 	}
 
 	.header.corner-left,

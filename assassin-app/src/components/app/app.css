@@ -7,36 +7,16 @@
 	color: var(--foreground);
 }
 
-.app button.theme {
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	height: 2.5rem;
-	width: 2.5rem;
-}
-
-.app button.login {
-	position: absolute;
-	top: 1rem;
-	left: 1rem;
-	height: 2.5rem;
-	width: 2.5rem;
-}
-
-.app button.admin {
-	position: absolute;
-	top: 1rem;
-	left: 4.5rem;
-	height: 2.5rem;
-	width: 2.5rem;
-}
-
 @media only screen and (max-width: 50rem) {
 	html,
 	body,
 	.root,
 	.app {
 		overflow-y: hidden;
+	}
+
+	.app {
+		justify-content: unset;
 	}
 
 	.app > h1 {

@@ -79,7 +79,7 @@ export default function Welcome() {
 			<h1 className="title">Word Assassin.</h1>
 			<div className="welcome">
 				<AnimatePresence mode="popLayout">
-					{!nameSubmitted ? (
+					{!nameSubmitted && !auth.isAuthenticated ? (
 						<motion.div
 							className="no-animate"
 							key="user"
