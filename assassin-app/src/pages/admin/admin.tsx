@@ -42,30 +42,6 @@ export default function Admin() {
 				headerProps={{
 					title: 'Admin',
 					className: 'corner-left',
-					rightActions: (
-						<>
-							{auth.isAuthenticated ? (
-								<Status
-									color="green"
-									icon={faUser}
-									popover={{
-										description: (
-											<span>
-												Signed in as <span className="fw-500">{auth.user?.profile.name}</span>
-											</span>
-										),
-									}}
-								/>
-							) : undefined}
-							<Button
-								color={auth.isAuthenticated ? 'primary' : 'green'}
-								onClick={auth.isAuthenticated ? () => void auth.removeUser() : () => void auth.signinRedirect()}
-								iconProps={{
-									icon: auth.isAuthenticated ? faRightFromBracket : faRightToBracket,
-								}}
-							/>
-						</>
-					),
 				}}
 			>
 				{auth.isAuthenticated ? (
