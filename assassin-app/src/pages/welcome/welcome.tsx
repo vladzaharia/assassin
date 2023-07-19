@@ -41,7 +41,6 @@ export default function Welcome() {
 		} else {
 			setNameSubmitted(false)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth.isAuthenticated])
 
 	const fetchRoom = async () => {

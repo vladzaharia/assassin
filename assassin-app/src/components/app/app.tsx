@@ -9,6 +9,7 @@ import { motion } from 'framer-motion'
 import { CommonColor } from '../../types'
 import { useAuth } from 'react-oidc-context'
 import { NameContext } from '../../hooks/name'
+import useLocalStorage from 'use-local-storage'
 
 export interface AppProps {
 	children?: ReactNode
@@ -19,7 +20,8 @@ export type Theme = 'light' | 'dark'
 export default function App({ children }: AppProps) {
 	const [theme, setTheme] = useState<Theme>()
 	const [color, setColor] = useState<CommonColor>()
-	const [name, setName] = useState<string>()
+	const [nameStorage] = useLocalStorage('name', '')
+	const [name, setName] = useState<string | undefined>(nameStorage)
 	const defaultTheme = usePrefersColorScheme()
 	const auth = useAuth()
 	const appRef = useRef<HTMLDivElement>(null)
@@ -41,7 +43,6 @@ export default function App({ children }: AppProps) {
 		if (window.location.pathname.includes('/admin')) {
 			setColor('admin' as CommonColor)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (

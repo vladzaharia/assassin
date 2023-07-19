@@ -39,7 +39,6 @@ export default function WordlistsAdmin() {
 	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 
 	const api = createAdminApi(auth.user?.access_token || '')
-
 	const deleteWordList = async (wordListName: string) => {
 		await request(
 			async () => await api.deleteWordList(wordListName),

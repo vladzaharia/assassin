@@ -9,6 +9,5 @@ export default function useReload(changedObj: unknown, interval = 15) {
 			revalidate()
 		}, interval * 1000)
 		return () => clearInterval(intervalId)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [interval, changedObj])
 }

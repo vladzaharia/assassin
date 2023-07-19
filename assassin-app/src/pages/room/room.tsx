@@ -32,8 +32,6 @@ export default function Room() {
 		if (!name) {
 			navigate('/')
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name])
 
 	useReload(room)
