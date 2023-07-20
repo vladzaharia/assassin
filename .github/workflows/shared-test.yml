@@ -1,0 +1,45 @@
+name: Test
+
+on:
+  workflow_call:
+    secrets:
+      FONTAWESOME_TOKEN:
+        required: true
+
+jobs:
+  build:
+    name: Test with Jest/Vitest
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout files
+      uses: actions/checkout@v3
+    - name: Use Node.js v18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: v18.x
+        cache: 'npm'
+    - name: Set FontAwesome CI token
+      run: |
+        npm config set '@fortawesome:registry' https://npm.fontawesome.com/
+        npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
+    - name: Install NPM packages
+      run: npm ci --ignore-scripts
+    - name: Run Jest/Vitest tests
+      run: npx nx run-many -t test --configuration ci
+      env:
+        NX_BRANCH: "${{ github.ref_name }}"
+    - name: Report assassin-app test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: assassin-app Tests
+        path: coverage/assassin-app/junit.xml
+        reporter: jest-junit
+    - name: Report assassin-server test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: assassin-server Tests
+        path: coverage/assassin-server/junit.xml
+        reporter: jest-junit

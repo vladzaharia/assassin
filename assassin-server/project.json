@@ -24,15 +24,17 @@
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"outputs": ["{workspaceRoot}/coverage/assassin-server"],
 			"options": {
 				"jestConfig": "assassin-server/jest.config.ts",
-				"passWithNoTests": true
+				"passWithNoTests": true,
+				"reporters": ["default"]
 			},
 			"configurations": {
 				"ci": {
 					"ci": true,
-					"codeCoverage": true
+					"codeCoverage": true,
+					"reporters": ["default", "jest-junit"]
 				}
 			}
 		},

@@ -41,7 +41,7 @@ You can build all components using `npm run build` in the main directory. This i
 
 ### Testing
 
-No tests currently, but `npm run test` will run them once they exist. This is equivalent to `nx run-many -t test` which runs the `test` job in all available projects:
+You can run all tests with `npm run test` in the main directory. This is equivalent to `nx run-many -t test` which runs the `test` job in all available projects:
 
 - `assassin-server`
 - `assassin-app`

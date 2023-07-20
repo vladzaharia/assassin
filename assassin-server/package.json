@@ -5,6 +5,9 @@
 	"scripts": {},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230419.0",
+		"@jest/globals": "^29.6.1",
+		"@types/jest": "^29.5.3",
+		"jest-junit": "^16.0.0",
 		"typescript": "^5.0.4",
 		"wrangler": "^3.2.0"
 	},
@@ -13,5 +16,8 @@
 		"hono": "^3.2.5",
 		"kysely": "^0.25.0",
 		"kysely-d1": "^0.3.0"
+	},
+	"jest-junit": {
+		"outputDirectory": "../coverage/assassin-server/"
 	}
 }

@@ -24,10 +24,16 @@
 		},
 		"test": {
 			"executor": "@nx/vite:test",
-			"outputs": ["coverage/assassin-app"],
+			"outputs": ["{workspaceRoot}/coverage/assassin-app"],
 			"options": {
 				"passWithNoTests": true,
 				"reportsDirectory": "../coverage/assassin-app"
+			},
+			"configurations": {
+				"ci": {
+					"coverage": true,
+					"reporters": ["default", "junit"]
+				}
 			}
 		},
 		"lint": {
