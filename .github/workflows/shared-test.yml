@@ -7,9 +7,10 @@ on:
         required: true
 
 jobs:
-  build:
+  test:
     name: Test with Jest/Vitest
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
     - name: Checkout files
@@ -35,6 +36,7 @@ jobs:
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
+        artifact: test-assassin-app
         name: assassin-app Tests
         path: coverage/assassin-app/junit.xml
         reporter: jest-junit
@@ -42,6 +44,13 @@ jobs:
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
+        artifact: test-assassin-server
         name: assassin-server Tests
         path: coverage/assassin-server/junit.xml
         reporter: jest-junit
+    - name: 'Upload test artifacts'
+      uses: actions/upload-artifact@v3
+      with:
+        name: test
+        path: coverage/
+        retention-days: 7
