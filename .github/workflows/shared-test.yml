@@ -29,7 +29,7 @@ jobs:
     - name: Build
       run: npm run build
     - name: Run Jest/Vitest tests
-      run: npx nx run-many -t test --configuration ci
+      run: npx nx run-many -t test --configuration ci --skip-nx-cache
       env:
         NX_BRANCH: "${{ github.ref_name }}"
     - name: Report assassin-app test results
@@ -48,7 +48,7 @@ jobs:
         name: assassin-server Tests
         path: coverage/assassin-server/junit.xml
         reporter: jest-junit
-    - name: 'Upload test artifacts'
+    - name: Upload test artifacts
       uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
