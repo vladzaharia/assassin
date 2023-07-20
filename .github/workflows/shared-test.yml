@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Test with Jest/Vitest
+    name: Test with Vitest
     runs-on: ubuntu-latest
     permissions: write-all
 
