@@ -23,19 +23,17 @@
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
 		"test": {
-			"dependsOn": ["assassin-server:build"],
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/assassin-server"],
+			"dependsOn": ["build"],
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/assassin-app"],
 			"options": {
-				"jestConfig": "assassin-server/jest.config.ts",
 				"passWithNoTests": true,
-				"reporters": ["default"]
+				"reportsDirectory": "../coverage/assassin-app"
 			},
 			"configurations": {
 				"ci": {
-					"ci": true,
-					"codeCoverage": true,
-					"reporters": ["default", "jest-junit"]
+					"coverage": true,
+					"reporters": ["default", "junit"]
 				}
 			}
 		},

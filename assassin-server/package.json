@@ -16,8 +16,5 @@
 		"hono": "^3.2.5",
 		"kysely": "^0.25.0",
 		"kysely-d1": "^0.3.0"
-	},
-	"jest-junit": {
-		"outputDirectory": "../coverage/assassin-server/"
 	}
 }
