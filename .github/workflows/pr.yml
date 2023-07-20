@@ -22,7 +22,7 @@ jobs:
     secrets: inherit
 
   push-kv:
-    needs: ['build', 'test']
+    needs: ['deploy']
     uses: ./.github/workflows/shared-kv.yml
     with:
       environment: staging
