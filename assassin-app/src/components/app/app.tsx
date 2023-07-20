@@ -7,6 +7,7 @@ import { NameContext } from '../../hooks/name'
 import useLocalStorage from 'use-local-storage'
 import GlobalNav from '../global-nav/global-nav'
 import { ThemeContext } from '../../hooks/theme'
+import { useLocation } from 'react-router-dom'
 
 export interface AppProps {
 	children?: ReactNode
@@ -19,6 +20,7 @@ export default function App({ children }: AppProps) {
 	const [name, setName] = useState<string | undefined>(nameStorage)
 	const defaultTheme = usePrefersColorScheme()
 	const appRef = useRef<HTMLDivElement>(null)
+	const location = useLocation()
 
 	useEffect(() => {
 		setTheme(defaultTheme === 'light' ? 'light' : 'dark')
@@ -32,10 +34,10 @@ export default function App({ children }: AppProps) {
 			setColor('purple')
 		}
 
-		if (window.location.pathname.includes('/admin')) {
+		if (location.pathname.includes('/admin')) {
 			setColor('admin' as CommonColor)
 		}
-	}, [window.location.pathname])
+	}, [location.pathname])
 
 	return (
 		<NameContext.Provider value={{ name, setName }}>
