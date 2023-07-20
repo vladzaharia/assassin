@@ -23,6 +23,7 @@
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
 		"test": {
+			"dependsOn": ["assassin-server:build"],
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/assassin-server"],
 			"options": {

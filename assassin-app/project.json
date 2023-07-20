@@ -23,6 +23,7 @@
 			}
 		},
 		"test": {
+			"dependsOn": ["assassin-app:build"],
 			"executor": "@nx/vite:test",
 			"outputs": ["{workspaceRoot}/coverage/assassin-app"],
 			"options": {
