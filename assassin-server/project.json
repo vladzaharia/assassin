@@ -25,10 +25,10 @@
 		"test": {
 			"dependsOn": ["build"],
 			"executor": "@nx/vite:test",
-			"outputs": ["{workspaceRoot}/coverage/assassin-app"],
+			"outputs": ["{workspaceRoot}/coverage/assassin-server"],
 			"options": {
 				"passWithNoTests": true,
-				"reportsDirectory": "../coverage/assassin-app"
+				"reportsDirectory": "../coverage/assassin-server"
 			},
 			"configurations": {
 				"ci": {

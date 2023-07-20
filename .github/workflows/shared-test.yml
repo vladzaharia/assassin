@@ -32,22 +32,36 @@ jobs:
         NX_BRANCH: "${{ github.ref_name }}"
     - name: Upload test artifacts
       uses: actions/upload-artifact@v3
-      if: success() || failure()
+      if: always()
       with:
         name: test
         path: coverage/
         retention-days: 7
     - name: Report assassin-app test results
       uses: dorny/test-reporter@v1
-      if: success() || failure()
+      if: always()
       with:
         name: assassin-app Tests
         path: coverage/assassin-app/junit.xml
         reporter: jest-junit
     - name: Report assassin-server test results
       uses: dorny/test-reporter@v1
-      if: success() || failure()
+      if: always()
       with:
         name: assassin-server Tests
         path: coverage/assassin-server/junit.xml
         reporter: jest-junit
+    - name: Report assassin-app Coverage
+      if: always()
+      uses: davelosert/vitest-coverage-report-action@v2
+      with:
+        name: assassin-app Coverage
+        json-summary-path: coverage/assassin-app/coverage-summary.json
+        json-final-path: coverage/assassin-app/coverage-final.json
+    - name: Report assassin-server Coverage
+      if: always()
+      uses: davelosert/vitest-coverage-report-action@v2
+      with:
+        name: assassin-server Coverage
+        json-summary-path: coverage/assassin-server/coverage-summary.json
+        json-final-path: coverage/assassin-server/coverage-final.json

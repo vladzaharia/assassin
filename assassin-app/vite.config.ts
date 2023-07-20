@@ -43,7 +43,12 @@ export default defineConfig({
 		},
 		environment: 'jsdom',
 		include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		coverage: {
+			reporter: ['json-summary', 'json']
+		},
 		reporters: ['default', 'junit'],
-		outputFile: '../coverage/assassin-app/junit.xml'
+		outputFile: {
+			junit: '../coverage/assassin-app/junit.xml',
+		}
 	},
 })
