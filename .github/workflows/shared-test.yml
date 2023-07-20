@@ -51,19 +51,3 @@ jobs:
         name: assassin-server Tests
         path: coverage/assassin-server/junit.xml
         reporter: jest-junit
-    - name: Report assassin-app code coverage
-      if: always()
-      uses: davelosert/vitest-coverage-report-action@v2
-      with:
-        name: assassin-app
-        json-summary-path: coverage/assassin-app/coverage-summary.json
-        json-final-path: coverage/assassin-app/coverage-final.json
-        vite-config-path: assassin-app/vite.config.ts
-    - name: Report assassin-server code coverage
-      if: always()
-      uses: davelosert/vitest-coverage-report-action@v2
-      with:
-        name: assassin-server
-        json-summary-path: coverage/assassin-server/coverage-summary.json
-        json-final-path: coverage/assassin-server/coverage-final.json
-        vite-config-path: assassin-server/vite.config.ts
