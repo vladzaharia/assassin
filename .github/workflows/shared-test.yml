@@ -50,6 +50,7 @@ jobs:
         reporter: jest-junit
     - name: 'Upload test artifacts'
       uses: actions/upload-artifact@v3
+      if: success() || failure()
       with:
         name: test
         path: coverage/
