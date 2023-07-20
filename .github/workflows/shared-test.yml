@@ -30,22 +30,6 @@ jobs:
       run: npx nx run-many -t test --configuration ci --skip-nx-cache
       env:
         NX_BRANCH: "${{ github.ref_name }}"
-    - name: Report assassin-app test results
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        artifact: test-assassin-app
-        name: assassin-app Tests
-        path: coverage/assassin-app/junit.xml
-        reporter: jest-junit
-    - name: Report assassin-server test results
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        artifact: test-assassin-server
-        name: assassin-server Tests
-        path: coverage/assassin-server/junit.xml
-        reporter: jest-junit
     - name: Upload test artifacts
       uses: actions/upload-artifact@v3
       if: success() || failure()
@@ -53,3 +37,17 @@ jobs:
         name: test
         path: coverage/
         retention-days: 7
+    - name: Report assassin-app test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: assassin-app Tests
+        path: coverage/assassin-app/junit.xml
+        reporter: jest-junit
+    - name: Report assassin-server test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: assassin-server Tests
+        path: coverage/assassin-server/junit.xml
+        reporter: jest-junit
