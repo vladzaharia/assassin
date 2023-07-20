@@ -1,10 +1,7 @@
 import Menu from '../../components/menu/menu'
 import { hasAuthParams, useAuth } from 'react-oidc-context'
 import {
-	faRightFromBracket,
-	faRightToBracket,
 	faTextSize,
-	faUser,
 	faDoorOpen,
 	faDatabase,
 	faCircleInfo,
@@ -12,8 +9,6 @@ import {
 import { AnimatePresence, motion } from 'framer-motion'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import './admin.css'
-import Button from '../../components/button/button'
-import Status from '../../components/status/status'
 import { MenuItem } from '../../components/menu-item/menu-item'
 import { useEffect } from 'react'
 import { OpenIDScopeProps } from '../../types'
