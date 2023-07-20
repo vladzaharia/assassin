@@ -58,6 +58,7 @@ jobs:
         name: assassin-app Coverage
         json-summary-path: coverage/assassin-app/coverage-summary.json
         json-final-path: coverage/assassin-app/coverage-final.json
+        vite-config-path: coverage/assassin-app/vite.config.ts
     - name: Report assassin-server Coverage
       if: always()
       uses: davelosert/vitest-coverage-report-action@v2
@@ -65,3 +66,4 @@ jobs:
         name: assassin-server Coverage
         json-summary-path: coverage/assassin-server/coverage-summary.json
         json-final-path: coverage/assassin-server/coverage-final.json
+        vite-config-path: coverage/assassin-server/vite.config.ts
