@@ -25,6 +25,8 @@ jobs:
         npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
     - name: Install NPM packages
       run: npm ci --ignore-scripts
+    - name: Build
+      run: npm run build
     - name: Run Jest/Vitest tests
       run: npx nx run-many -t test --configuration ci
       env:
