@@ -22,7 +22,7 @@ export default defineConfig({
 		coverage: {
 			enabled: true,
 			include: ['**/src/**'],
-			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', '**/migrate/migrations/**'],
 			reporter: ['json-summary', 'json', 'html'],
 		},
 		reporters: ['default', 'junit'],

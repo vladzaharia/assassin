@@ -2,9 +2,10 @@ import { Context, Next } from 'hono'
 import { jwt } from 'hono/jwt'
 
 import { Bindings } from '../bindings'
-import { findRoomGM } from '../tables/player'
-import { findRoom } from '../tables/room'
 import { getSecureEndpoints, HTTPMethods } from './secure-endpoints'
+import { PlayerAuth } from './player'
+import { GMAuth } from './gm'
+import { AuthException } from './common'
 
 export const checkPath = (path: string, method: string, endpoints = getSecureEndpoints()) => {
 	for (const secureEndpoint of endpoints) {
@@ -15,63 +16,35 @@ export const checkPath = (path: string, method: string, endpoints = getSecureEnd
 	}
 }
 
-export class AuthException extends Error {
-	readonly res: Response
-	constructor(message: string, status: number) {
-		super(message)
-		this.res = new Response(message, { status })
-	}
-	getResponse(): Response {
-		return this.res
-	}
-}
-
 export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
 	const secret = (await c.env.OPENID.get('secret')) || c.env.ASSASSIN_SECRET
 	const match = checkPath(c.req.path, c.req.method)
 
 	if (match) {
-		if (match.authTypes.includes('gm') || match.authTypes.includes('player')) {
-			const { room, name: nameParam } = c.req.param()
-			const name = c.req.header('X-Assassin-User')
+		let result = false
 
-			const roomRecord = await findRoom(c.env.D1DATABASE, room)
-			if (!roomRecord) {
-				console.log('Room not found')
-				throw new AuthException('Room not found!', 404)
-			}
-			console.log(`Room found; ${roomRecord}`)
-			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
+		if (match.authTypes.includes('gm')) {
+			result = await GMAuth(c)
+		}
 
-			let result = false
+		if (match.authTypes.includes('player') && !result) {
+			result = await PlayerAuth(c)
+		}
 
-			if (match.authTypes.includes('gm')) {
-				console.log(`GM Auth: ${name}, gm = ${roomGM?.name}`)
-				result = roomGM?.name === name
-			}
-
-			if (match.authTypes.includes('player') && !result) {
-				console.log(`Player Auth: ${name}, param = ${nameParam}`)
-				result = nameParam === name
-			}
-
-			if (!result && match.authTypes.includes('jwt')) {
-				console.log(`JWT Auth`)
-				if (!secret) {
-					console.warn('No JWT token defined!')
-				}
-				return jwt({ secret })(c, next)
-			} else if (!result) {
-				throw new AuthException('Unauthorized', 401)
-			}
-		} else if (match.authTypes.includes('jwt')) {
+		if (match.authTypes.includes('jwt') && !result) {
 			console.log(`JWT Auth`)
 			if (!secret) {
 				console.warn('No JWT token defined!')
 			}
 			return jwt({ secret })(c, next)
 		}
+
+		if (!result) {
+			console.error("No auth was successful!")
+			throw new AuthException("Unauthorized", 401)
+		}
 	}
 
+	console.log("Auth successful!")
 	await next()
 }

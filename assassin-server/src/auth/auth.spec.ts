@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { AuthException, AuthMiddleware, checkPath } from './auth'
+import { AuthMiddleware, checkPath } from './auth'
 import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
 import { jwt } from 'hono/jwt'
@@ -42,9 +42,9 @@ const secureEndpoints: SecureEndpoint[] = [
 		path: /\/gm-jwt(\/.*)?$/,
 	},
 	{
-		authTypes: ['player', 'gm'],
+		authTypes: ['gm', 'player'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-		path: /\/player-gm(\/.*)?$/,
+		path: /\/gm-player(\/.*)?$/,
 	},
 	{
 		authTypes: ['gm', 'player', 'jwt'],
@@ -53,15 +53,9 @@ const secureEndpoints: SecureEndpoint[] = [
 	},
 ]
 
-// Mock secure endpoints
-vi.mock('./secure-endpoints', () => {
-	return {
-		getSecureEndpoints: () => secureEndpoints,
-	}
-})
-
 const mocks = vi.hoisted(() => {
 	return {
+		getSecureEndpoints: () => secureEndpoints,
 		jwt: vi.fn().mockImplementation(() => () => {
 			return
 		}),
@@ -85,25 +79,37 @@ const mocks = vi.hoisted(() => {
 	}
 })
 
+// Mock secure endpoints
+vi.mock('./secure-endpoints', () => {
+	return {
+		getSecureEndpoints: mocks.getSecureEndpoints
+	}
+})
+
+// Mock jwt() calls
 vi.mock('hono/jwt', () => {
 	return {
 		jwt: mocks.jwt,
 	}
 })
 
-vi.mock('../tables/player', () => {
-	return {
-		findRoomGM: mocks.findRoomGM,
-	}
-})
-
+// Mock finding room
 vi.mock('../tables/room', () => {
 	return {
 		findRoom: mocks.findRoomMock,
 	}
 })
 
+// Mock finding room GM
+vi.mock('../tables/player', () => {
+	return {
+		findRoomGM: mocks.findRoomGM,
+	}
+})
+
+
 afterEach(() => {
+	// Clear mock data
 	vi.clearAllMocks()
 })
 
@@ -126,24 +132,6 @@ describe('checkPath', () => {
 	test('returns undefined if method does not match', () => {
 		const result = checkPath('/gm-no-get', 'GET')
 		expect(result).toBeUndefined()
-	})
-})
-
-describe('AuthException', () => {
-	test("returns resposnse", () => {
-		const exception = new AuthException("Test message", 599)
-		expect(exception.getResponse().status).toEqual(599)
-		expect(exception.getResponse().text()).resolves.toEqual("Test message")
-	})
-
-	test("message is passed through", () => {
-		const exception = new AuthException("Another message goes here", 599)
-		expect(exception.getResponse().text()).resolves.toEqual("Another message goes here")
-	})
-
-	test("status code is passed through", () => {
-		const exception = new AuthException("Test message", 499)
-		expect(exception.getResponse().status).toEqual(499)
 	})
 })
 
@@ -192,134 +180,21 @@ describe('AuthMiddleware', () => {
 	})
 
 	describe('jwt', () => {
-		test('jwt-only auth gets secret from env', async () => {
-			context.req.path = '/jwt'
-
-			await AuthMiddleware(context, async () => {
-				return
-			})
-			expect(jwt).toHaveBeenCalled()
-			expect(jwt).toHaveBeenCalledWith({ secret: 'some-test-secret' })
-		})
-
-		test('jwt-only auth gets secret from KV', async () => {
-			context.req.path = '/jwt'
-			context.env.ASSASSIN_SECRET = undefined
-			context.env.OPENID.get = async () => 'another-test-secret'
-
-			await AuthMiddleware(context, async () => {
-				return
-			})
-			expect(jwt).toHaveBeenCalled()
-			expect(jwt).toHaveBeenCalledWith({ secret: 'another-test-secret' })
-		})
-
-		test('jwt-only auth with no secrets', async () => {
-			context.req.path = '/jwt'
-			context.env.ASSASSIN_SECRET = undefined
-			context.env.OPENID.get = async () => undefined
-
-			await AuthMiddleware(context, async () => {
-				return
-			})
-			expect(jwt).toHaveBeenCalled()
-			expect(jwt).toHaveBeenCalledWith({ secret: undefined })
-		})
-	})
-
-	describe('player', () => {
-		test('player-only auth is successful', async () => {
+		test('auth uses jwt if successful', async () => {
 			let nextCalled = false
-			context.req.path = '/player'
+			context.req.path = '/jwt'
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
-		})
-
-		test('player-only auth is unsuccessful if on a different player', async () => {
-			let nextCalled = false
-			context.req.path = '/player'
-			context.req.header = () => 'Vlad'
-
-			const response = async () =>
-				await AuthMiddleware(context, async () => {
-					nextCalled = true
-				})
-
-			expect(response).rejects.toThrowError('Unauthorized')
-
 			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(jwt).toHaveBeenCalled()
 		})
 
-		test('player-only auth is unsuccessful if room not found', async () => {
+		test('auth falls back to jwt if gm fails', async () => {
 			let nextCalled = false
-			context.req.path = '/player'
-
-			mocks.findRoomMock.mockImplementationOnce(() => undefined)
-
-			const response = async () =>
-				await AuthMiddleware(context, async () => {
-					nextCalled = true
-				})
-
-			expect(response).rejects.toThrowError('Room not found!')
-
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalledTimes(0)
-		})
-	})
-
-	describe('gm', () => {
-		test('gm-only auth is successful', async () => {
-			let nextCalled = false
-			context.req.path = '/gm'
-
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-
-			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
-		})
-
-		test('gm-only auth is unsuccessful if on a different player', async () => {
-			let nextCalled = false
-			context.req.path = '/gm'
-			context.req.header = () => 'Vlad'
-
-			const response = async () =>
-				await AuthMiddleware(context, async () => {
-					nextCalled = true
-				})
-
-			expect(response).rejects.toThrowError('Unauthorized')
-
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalledTimes(0)
-		})
-	})
-
-	describe('gm-jwt]', () => {
-		test('gm-jwt auth uses gm if successful', async () => {
-			let nextCalled = false
-			context.req.path = '/gm-jwt'
-
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-
-			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
-		})
-
-		test('gm-jwt auth falls back to jwt if gm fails', async () => {
-			let nextCalled = false
-			context.req.path = '/gm-jwt'
+			context.req.path = '/jwt'
 			context.req.header = () => 'Vlad'
 
 			await AuthMiddleware(context, async () => {
@@ -330,7 +205,7 @@ describe('AuthMiddleware', () => {
 			expect(jwt).toHaveBeenCalled()
 		})
 
-		test('gm-jwt auth with no secrets', async () => {
+		test('auth with no secrets', async () => {
 			context.req.path = '/jwt'
 			context.env.ASSASSIN_SECRET = undefined
 			context.env.OPENID.get = async () => undefined
@@ -347,8 +222,100 @@ describe('AuthMiddleware', () => {
 		})
 	})
 
-	describe('player-jwt]', () => {
-		test('player-jwt auth uses player if successful', async () => {
+	describe('gm-player', () => {
+		test('auth uses gm if successful', async () => {
+			let nextCalled = false
+			context.req.path = '/gm-player'
+			context.req.param = () => {
+				return { room: 'test-room', name: 'test-player2' }
+			}
+
+			await AuthMiddleware(context, async () => {
+				nextCalled = true
+			})
+
+			expect(nextCalled).toBeTruthy()
+			expect(jwt).toHaveBeenCalledTimes(0)
+		})
+
+		test('auth falls back to player if gm fails', async () => {
+			let nextCalled = false
+			context.req.path = '/gm-player'
+			context.req.header = () => 'test-player2'
+			context.req.param = () => {
+				return { room: 'test-room', name: 'test-player2' }
+			}
+
+			await AuthMiddleware(context, async () => {
+				nextCalled = true
+			})
+
+			expect(nextCalled).toBeTruthy()
+			expect(jwt).toHaveBeenCalledTimes(0)
+		})
+
+		test('auth fails if player and gm fails', async () => {
+			let nextCalled = false
+			context.req.path = '/gm-player'
+			context.req.header = () => 'test-player3'
+			context.req.param = () => {
+				return { room: 'test-room', name: 'test-player2' }
+			}
+
+			expect(AuthMiddleware(context, async () => {
+				nextCalled = true
+			})).rejects.toBeDefined()
+
+			expect(nextCalled).toBeFalsy()
+			expect(jwt).toHaveBeenCalledTimes(0)
+		})
+	})
+
+	describe('gm-jwt', () => {
+		test('auth uses gm if successful', async () => {
+			let nextCalled = false
+			context.req.path = '/gm-jwt'
+
+			await AuthMiddleware(context, async () => {
+				nextCalled = true
+			})
+
+			expect(nextCalled).toBeTruthy()
+			expect(jwt).toHaveBeenCalledTimes(0)
+		})
+
+		test('auth falls back to jwt if gm fails', async () => {
+			let nextCalled = false
+			context.req.path = '/gm-jwt'
+			context.req.header = () => 'Vlad'
+
+			await AuthMiddleware(context, async () => {
+				nextCalled = true
+			})
+
+			expect(nextCalled).toBeFalsy()
+			expect(jwt).toHaveBeenCalled()
+		})
+
+		test('auth with no secrets', async () => {
+			context.req.path = '/jwt'
+			context.env.ASSASSIN_SECRET = undefined
+			context.env.OPENID.get = async () => undefined
+			let nextCalled = false
+			context.req.path = '/gm-jwt'
+			context.req.header = () => 'Vlad'
+
+			await AuthMiddleware(context, async () => {
+				nextCalled = true
+			})
+			expect(nextCalled).toBeFalsy()
+			expect(jwt).toHaveBeenCalled()
+			expect(jwt).toHaveBeenCalledWith({ secret: undefined })
+		})
+	})
+
+	describe('player-jwt', () => {
+		test('auth uses player if successful', async () => {
 			let nextCalled = false
 			context.req.path = '/player-jwt'
 
@@ -360,7 +327,7 @@ describe('AuthMiddleware', () => {
 			expect(jwt).toHaveBeenCalledTimes(0)
 		})
 
-		test('player-jwt auth falls back to jwt if player fails', async () => {
+		test('auth falls back to jwt if player fails', async () => {
 			let nextCalled = false
 			context.req.path = '/player-jwt'
 			context.req.header = () => 'Vlad'
@@ -374,8 +341,8 @@ describe('AuthMiddleware', () => {
 		})
 	})
 
-	describe('gm-player-jwt]', () => {
-		test('gm-player-jwt auth uses gm if successful', async () => {
+	describe('gm-player-jwt', () => {
+		test('auth uses gm if successful', async () => {
 			let nextCalled = false
 			context.req.path = '/gm-player-jwt'
 			context.req.param = () => {
@@ -390,9 +357,9 @@ describe('AuthMiddleware', () => {
 			expect(jwt).toHaveBeenCalledTimes(0)
 		})
 
-		test('player-jwt auth falls back to player if gm fails', async () => {
+		test('auth falls back to player if gm fails', async () => {
 			let nextCalled = false
-			context.req.path = '/player-jwt'
+			context.req.path = '/gm-player-jwt'
 			context.req.header = () => 'test-player2'
 			context.req.param = () => {
 				return { room: 'test-room', name: 'test-player2' }
@@ -406,9 +373,9 @@ describe('AuthMiddleware', () => {
 			expect(jwt).toHaveBeenCalledTimes(0)
 		})
 
-		test('player-jwt auth falls back to jwt if gm and player fail', async () => {
+		test('auth falls back to jwt if gm and player fail', async () => {
 			let nextCalled = false
-			context.req.path = '/player-jwt'
+			context.req.path = '/gm-player-jwt'
 			context.req.header = () => 'Vlad'
 			context.req.param = () => {
 				return { room: 'test-room', name: 'test-player2' }

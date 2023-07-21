@@ -1,8 +1,6 @@
 import { insertMigration, getCurrentMigration, updateRollback } from '../tables/migration'
-import { MIGRATION_0_INITIAL } from './migrations/0-initial'
+import { getAllMigrations } from './migrations'
 import { Migration } from './types'
-
-export const MIGRATIONS: Migration[] = [MIGRATION_0_INITIAL]
 
 export const getAvailableMigrations = async (db: D1Database) => {
 	const currentMigration = await getCurrentMigration(db)
@@ -15,16 +13,16 @@ export const getAvailableMigrations = async (db: D1Database) => {
 	}
 
 	if (!currentMigration) {
-		return MIGRATIONS.map(getMigrationDetails)
+		return getAllMigrations().map(getMigrationDetails)
 	} else {
-		return MIGRATIONS.filter((m) => m.version > currentMigration.version).map(getMigrationDetails)
+		return getAllMigrations().filter((m) => m.version > currentMigration.version).map(getMigrationDetails)
 	}
 }
 
 export const runAllMigrations = async (db: D1Database) => {
 	console.log(`Applying all migrations...`)
 
-	for (const migration of MIGRATIONS) {
+	for (const migration of getAllMigrations()) {
 		await runMigration(db, migration.version)
 	}
 }
@@ -32,7 +30,7 @@ export const runAllMigrations = async (db: D1Database) => {
 export const rollbackAllMigrations = async (db: D1Database) => {
 	console.log(`Rolling back all migrations...`)
 
-	for (const migration of MIGRATIONS.reverse()) {
+	for (const migration of getAllMigrations().reverse()) {
 		await rollbackMigration(db, migration.version)
 	}
 }
@@ -59,7 +57,7 @@ export const rollback = async (db: D1Database) => {
 }
 
 const runMigration = async (db: D1Database, version: number) => {
-	const migration = MIGRATIONS.filter((m) => m.version === version)[0]
+	const migration = getAllMigrations().filter((m) => m.version === version)[0]
 	if (!migration) {
 		throw new Error("Migration doesn't exist!")
 	}
@@ -72,7 +70,7 @@ const runMigration = async (db: D1Database, version: number) => {
 }
 
 const rollbackMigration = async (db: D1Database, version: number) => {
-	const migration = MIGRATIONS.filter((m) => m.version === version)[0]
+	const migration = getAllMigrations().filter((m) => m.version === version)[0]
 	if (!migration) {
 		throw new Error("Migration doesn't exist!")
 	}
