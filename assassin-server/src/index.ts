@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { cors } from 'hono/cors'
 
-import { AuthMiddleware } from './auth'
+import { AuthMiddleware } from './auth/auth'
 import { Bindings } from './bindings'
 import { GetUninitializedWordLists, InitializeWordlists } from './routes/wordlist/import'
 import { ResetDb } from './routes/db/reset'

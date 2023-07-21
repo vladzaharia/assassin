@@ -1,76 +1,33 @@
 import { Context, Next } from 'hono'
 import { jwt } from 'hono/jwt'
 
-import { Bindings } from './bindings'
-import { findRoomGM } from './tables/player'
-import { findRoom } from './tables/room'
+import { Bindings } from '../bindings'
+import { findRoomGM } from '../tables/player'
+import { findRoom } from '../tables/room'
+import { getSecureEndpoints, HTTPMethods } from './secure-endpoints'
 
-type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-type AuthType = 'gm' | 'player' | 'jwt'
-export const SECURE_ENDPOINTS: { path: RegExp; methods: HTTPMethods[]; authTypes: AuthType[] }[] = [
-	{
-		path: /db.*$/,
-		methods: ['POST', 'PUT', 'DELETE'],
-		authTypes: ['jwt'],
-	},
-	{
-		path: /room\/\w*$/,
-		methods: ['PUT', 'DELETE'],
-		authTypes: ['jwt'],
-	},
-	{
-		path: /room\/\w*$/,
-		methods: ['PATCH'],
-		authTypes: ['gm', 'jwt'],
-	},
-	{
-		path: /room\/\w*\/player\/\w*$/,
-		methods: ['DELETE'],
-		authTypes: ['player', 'gm', 'jwt'],
-	},
-	{
-		path: /room\/\w*\/player\/\w*$/,
-		methods: ['GET', 'PUT'],
-		authTypes: ['player', 'jwt'],
-	},
-	{
-		path: /room\/\w*\/player\/\w*\/eliminate$/,
-		methods: ['POST'],
-		authTypes: ['player', 'jwt'],
-	},
-	{
-		path: /room\/\w*\/(start|reset)$/,
-		methods: ['POST'],
-		authTypes: ['gm', 'jwt'],
-	},
-	{
-		path: /room\/\w*\/gm\/?(\w+)?$/,
-		methods: ['POST'],
-		authTypes: ['gm', 'jwt'],
-	},
-	{
-		path: /wordlist\/\w*$/,
-		methods: ['PUT', 'DELETE', 'PATCH'],
-		authTypes: ['jwt'],
-	},
-	{
-		path: /wordlist\/import\/\w*$/,
-		methods: ['PUT'],
-		authTypes: ['jwt'],
-	},
-	{
-		path: /wordlist\/\w*\/words$/,
-		methods: ['PUT', 'DELETE'],
-		authTypes: ['jwt'],
-	},
-]
-
-export const checkPath = (path: string, method: string) => {
-	for (const secureEndpoint of SECURE_ENDPOINTS) {
+export const checkPath = (path: string, method: string, endpoints = getSecureEndpoints()) => {
+	for (const secureEndpoint of endpoints) {
 		if (path.match(secureEndpoint.path) && secureEndpoint.methods.includes(method as HTTPMethods)) {
 			console.info(`${method} ${path} matched against ${secureEndpoint.path} / ${secureEndpoint.methods}`)
 			return secureEndpoint
 		}
+	}
+}
+
+export class HTTPException extends Error {
+	readonly res?: Response
+	constructor(message: string, res: Response) {
+		super(message)
+		this.res = res
+	}
+	getResponse(): Response {
+		if (this.res) {
+			return this.res
+		}
+		return new Response(this.message, {
+			status: 500,
+		})
 	}
 }
 
@@ -85,8 +42,13 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
 			if (!roomRecord) {
-				return c.json({ message: 'Room not found!' }, 404)
+				console.log('Room not found')
+				const res = new Response('Room not found!', {
+					status: 404,
+				})
+				throw new HTTPException('Room not found!', res)
 			}
+			console.log(`Room found; ${roomRecord}`)
 			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
 
 			let result = false
@@ -107,6 +69,11 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 					console.warn('No JWT token defined!')
 				}
 				return jwt({ secret })(c, next)
+			} else if (!result) {
+				const res = new Response('Unauthorized', {
+					status: 401,
+				})
+				throw new HTTPException('Unauthorized', res)
 			}
 		} else if (match.authTypes.includes('jwt')) {
 			console.log(`JWT Auth`)

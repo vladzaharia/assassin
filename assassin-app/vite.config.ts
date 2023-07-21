@@ -46,11 +46,11 @@ export default defineConfig({
 		coverage: {
 			include: ['**/src/**'],
 			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-			reporter: ['json-summary', 'json', 'html']
+			reporter: ['json-summary', 'json', 'html'],
 		},
 		reporters: ['default', 'junit'],
 		outputFile: {
 			junit: '../coverage/assassin-app/junit.xml',
-		}
+		},
 	},
 })

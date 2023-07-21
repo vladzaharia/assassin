@@ -23,10 +23,11 @@ export default defineConfig({
 			enabled: true,
 			include: ['**/src/**'],
 			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-			reporter: ['json-summary', 'json', 'html']
+			reporter: ['json-summary', 'json', 'html'],
 		},
 		reporters: ['default', 'junit'],
 		outputFile: {
-			junit: '../coverage/assassin-server/junit.xml'
-		}	},
+			junit: '../coverage/assassin-server/junit.xml',
+		},
+	},
 })

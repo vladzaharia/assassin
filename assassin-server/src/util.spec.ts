@@ -2,10 +2,10 @@ import { getRoomStatus } from './util'
 import { PlayerTable } from './tables/db'
 
 const playerRecord: PlayerTable = {
-	name: "player",
+	name: 'player',
 	isGM: 0,
-	room: "test",
-	status: "alive"
+	room: 'test',
+	status: 'alive',
 }
 
 describe('getRoomStatus', () => {
