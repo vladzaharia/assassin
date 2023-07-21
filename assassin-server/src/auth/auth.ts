@@ -15,19 +15,14 @@ export const checkPath = (path: string, method: string, endpoints = getSecureEnd
 	}
 }
 
-export class HTTPException extends Error {
-	readonly res?: Response
-	constructor(message: string, res: Response) {
+export class AuthException extends Error {
+	readonly res: Response
+	constructor(message: string, status: number) {
 		super(message)
-		this.res = res
+		this.res = new Response(message, { status })
 	}
 	getResponse(): Response {
-		if (this.res) {
-			return this.res
-		}
-		return new Response(this.message, {
-			status: 500,
-		})
+		return this.res
 	}
 }
 
@@ -43,10 +38,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			const roomRecord = await findRoom(c.env.D1DATABASE, room)
 			if (!roomRecord) {
 				console.log('Room not found')
-				const res = new Response('Room not found!', {
-					status: 404,
-				})
-				throw new HTTPException('Room not found!', res)
+				throw new AuthException('Room not found!', 404)
 			}
 			console.log(`Room found; ${roomRecord}`)
 			const roomGM = await findRoomGM(c.env.D1DATABASE, room)
@@ -70,10 +62,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 				}
 				return jwt({ secret })(c, next)
 			} else if (!result) {
-				const res = new Response('Unauthorized', {
-					status: 401,
-				})
-				throw new HTTPException('Unauthorized', res)
+				throw new AuthException('Unauthorized', 401)
 			}
 		} else if (match.authTypes.includes('jwt')) {
 			console.log(`JWT Auth`)
