@@ -44,7 +44,9 @@ export default defineConfig({
 		environment: 'jsdom',
 		include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
 		coverage: {
-			reporter: ['json-summary', 'json']
+			include: ['**/src/**'],
+			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+			reporter: ['json-summary', 'json', 'html']
 		},
 		reporters: ['default', 'junit'],
 		outputFile: {
