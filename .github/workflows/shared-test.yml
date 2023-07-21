@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on:
   workflow_call:
@@ -7,9 +7,10 @@ on:
         required: true
 
 jobs:
-  build:
-    name: Build with TSC/Vite
+  test:
+    name: Test with Vitest
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
     - name: Checkout files
@@ -25,13 +26,28 @@ jobs:
         npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_TOKEN }}"
     - name: Install NPM packages
       run: npm ci --ignore-scripts
-    - name: 'Build and prepare artifacts'
-      run: npx nx run assassin-server:build-ci
+    - name: Run Jest/Vitest tests
+      run: npx nx run-many -t test --configuration ci --skip-nx-cache
       env:
         NX_BRANCH: "${{ github.ref_name }}"
-    - name: 'Upload server dist artifacts'
+    - name: Upload test artifacts
       uses: actions/upload-artifact@v3
+      if: always()
       with:
-        name: dist
-        path: assassin-server/dist/
+        name: test
+        path: coverage/
         retention-days: 7
+    - name: Report assassin-app test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: assassin-app Tests
+        path: coverage/assassin-app/junit.xml
+        reporter: jest-junit
+    - name: Report assassin-server test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: assassin-server Tests
+        path: coverage/assassin-server/junit.xml
+        reporter: jest-junit

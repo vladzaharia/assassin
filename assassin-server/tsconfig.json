@@ -10,6 +10,17 @@
 		"types": ["@cloudflare/workers-types", "node"],
 		"jsx": "react-jsx",
 		"jsxImportSource": "hono/jsx",
-		"noEmit": true
-	}
+		"noEmit": true,
+	},
+	"exclude": [
+		"lib/**",
+		"src/**/*.spec.ts",
+		"src/**/*.test.ts",
+		"src/**/*.spec.tsx",
+		"src/**/*.test.tsx",
+		"src/**/*.spec.js",
+		"src/**/*.test.js",
+		"src/**/*.spec.jsx",
+		"src/**/*.test.jsx"
+	]
 }

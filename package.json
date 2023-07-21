@@ -17,11 +17,13 @@
 	"devDependencies": {
 		"@nx/cypress": "16.3.2",
 		"@nx/eslint-plugin": "16.3.2",
-		"@nx/js": "16.3.2",
+		"@nx/jest": "^16.5.3",
+		"@nx/js": "16.5.3",
 		"@nx/linter": "16.3.2",
 		"@nx/react": "^16.3.2",
 		"@openapitools/openapi-generator-cli": "2.3.7",
 		"@trumbitta/nx-plugin-openapi": "^1.12.1",
+		"@types/jest": "^29.4.0",
 		"@types/node": "18.7.1",
 		"eslint": "~8.15.0",
 		"eslint-config-prettier": "8.1.0",
@@ -29,9 +31,13 @@
 		"eslint-plugin-jsx-a11y": "6.7.1",
 		"eslint-plugin-react": "7.32.2",
 		"eslint-plugin-react-hooks": "4.6.0",
+		"jest": "^29.6.1",
+		"jest-environment-jsdom": "^29.4.1",
 		"nx": "16.3.2",
 		"nx-cloud": "^16.0.5",
 		"prettier": "^2.6.2",
+		"ts-jest": "^29.1.0",
+		"ts-node": "10.9.1",
 		"typescript": "~5.0.2",
 		"vite": "^4.3.4",
 		"vite-plugin-eslint": "^1.8.1",
@@ -46,5 +52,7 @@
 	"volta": {
 		"node": "18.16.1"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"tslib": "^2.3.0"
+	}
 }

@@ -11,7 +11,7 @@ import {
 } from 'assassin-server-client'
 import { ApiType } from './types'
 
-const getApiConfig = (parameters: Omit<ConfigurationParameters, 'basePath'> = {}) => {
+export const getApiConfig = (parameters: Omit<ConfigurationParameters, 'basePath'> = {}) => {
 	return new Configuration({
 		...parameters,
 		basePath: `${window.location.protocol}//${window.location.host.replace(':4200', ':8787')}/api`,

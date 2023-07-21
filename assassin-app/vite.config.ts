@@ -42,6 +42,13 @@ export default defineConfig({
 			dir: '../node_modules/.vitest',
 		},
 		environment: 'jsdom',
-		include: ['./app/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		coverage: {
+			reporter: ['json-summary', 'json']
+		},
+		reporters: ['default', 'junit'],
+		outputFile: {
+			junit: '../coverage/assassin-app/junit.xml',
+		}
 	},
 })

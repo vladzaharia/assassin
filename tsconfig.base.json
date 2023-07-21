@@ -15,7 +15,9 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"assassin-server-client": ["assassin-server/lib/assassin-server-client/dist/index.ts"]
+			"assassin-server-client": [
+				"assassin-server/lib/assassin-server-client/dist/index.ts"
+			]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

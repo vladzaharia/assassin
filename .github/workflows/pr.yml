@@ -9,17 +9,21 @@ jobs:
     uses: ./.github/workflows/shared-build.yml
     secrets: inherit
 
-  push-kv:
-    needs: ['build']
-    uses: ./.github/workflows/shared-kv.yml
-    with:
-      environment: staging
+  test:
+    uses: ./.github/workflows/shared-test.yml
     secrets: inherit
 
   deploy:
-    needs: ['build']
+    needs: ['build', 'test']
     uses: ./.github/workflows/shared-deploy.yml
     with:
       environment: staging
       baseUrl: https://staging.assassin.vlad.gg
+    secrets: inherit
+
+  push-kv:
+    needs: ['deploy']
+    uses: ./.github/workflows/shared-kv.yml
+    with:
+      environment: staging
     secrets: inherit

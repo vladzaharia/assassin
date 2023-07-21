@@ -22,6 +22,21 @@
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
+		"test": {
+			"dependsOn": ["build"],
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/assassin-server"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../coverage/assassin-server"
+			},
+			"configurations": {
+				"ci": {
+					"coverage": true,
+					"reporters": ["default", "junit"]
+				}
+			}
+		},
 		"lint": {
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
@@ -56,23 +71,47 @@
 				"command": "NO_D1_WARNING=true wrangler dev --remote"
 			}
 		},
-		"push-kv:dev": {
+		"push-kv": {
 			"executor": "nx:run-commands",
 			"dependsOn": ["^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
 				"commands": [
-					"NO_D1_WARNING=true wrangler kv:key put --env dev --binding CONFIG --preview false deployment \"{ \\\"version\\\": { \\\"app\\\": \\\"$(node -e \"process.stdout.write(require('../assassin-server/package').version)\")\\\", \\\"server\\\": \\\"$(node -e \"process.stdout.write(require('./package').version)\")\\\" }, \\\"time\\\": $(date +%s), \\\"git\\\": { \\\"source\\\": \\\"local\\\", \\\"ref\\\": \\\"refs/heads/$(git rev-parse --abbrev-ref HEAD)\\\", \\\"sha\\\": \\\"$(git rev-parse HEAD)\\\" } }\""
-				]
+					"NO_D1_WARNING=true wrangler kv:key put --env {args.env} --binding CONFIG --preview false deployment \"{ \\\"version\\\": { \\\"app\\\": \\\"$(node -e \"process.stdout.write(require('../assassin-server/package').version)\")\\\", \\\"server\\\": \\\"$(node -e \"process.stdout.write(require('./package').version)\")\\\" }, \\\"time\\\": $(date +%s), \\\"git\\\": { \\\"source\\\": \\\"local\\\", \\\"ref\\\": \\\"refs/heads/$(git rev-parse --abbrev-ref HEAD)\\\", \\\"sha\\\": \\\"$(git rev-parse HEAD)\\\" } }\""
+				],
+				"args": "--env local"
+			},
+			"configurations": {
+				"dev": {
+					"args": "--env dev"
+				},
+				"staging": {
+					"args": "--env staging"
+				},
+				"live": {
+					"args": "--env live"
+				}
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
-		"deploy:dev": {
+		"deploy": {
 			"executor": "nx:run-commands",
-			"dependsOn": ["assassin-server:push-kv:dev", "^prepare-deploy", "build"],
+			"dependsOn": ["push-kv", "^prepare-deploy", "build"],
 			"options": {
 				"cwd": "assassin-server",
-				"command": "NO_D1_WARNING=true wrangler deploy --env dev"
+				"command": "NO_D1_WARNING=true wrangler deploy --env {args.env}",
+				"args": "--env local"
+			},
+			"configurations": {
+				"dev": {
+					"args": "--env dev"
+				},
+				"staging": {
+					"args": "--env staging"
+				},
+				"live": {
+					"args": "--env live"
+				}
 			},
 			"inputs": ["{projectRoot}/dist/**/*", "{projectRoot}/src/**/*.ts", "{projectRoot}/wrangler.toml"]
 		},
