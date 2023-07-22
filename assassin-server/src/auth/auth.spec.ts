@@ -181,7 +181,9 @@ describe('AuthMiddleware', () => {
 		test('auth falls back to player if gm fails', async () => {
 			let nextCalled = false
 
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
@@ -196,11 +198,15 @@ describe('AuthMiddleware', () => {
 		test('auth fails if gm and player fails', async () => {
 			let nextCalled = false
 
-			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.PlayerAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
-			expect(
-				() => AuthMiddleware(context, async () => {
+			expect(() =>
+				AuthMiddleware(context, async () => {
 					nextCalled = true
 				})
 			).rejects.toEqual(new AuthException('Unauthorized', 401))
@@ -230,7 +236,9 @@ describe('AuthMiddleware', () => {
 		test('auth falls back to admin if gm fails', async () => {
 			let nextCalled = false
 
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
@@ -245,11 +253,15 @@ describe('AuthMiddleware', () => {
 		test('auth fails if gm and admin fails', async () => {
 			let nextCalled = false
 
-			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.AdminAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
-			expect(
-				() => AuthMiddleware(context, async () => {
+			expect(() =>
+				AuthMiddleware(context, async () => {
 					nextCalled = true
 				})
 			).rejects.toEqual(new AuthException('Unauthorized', 401))
@@ -279,7 +291,9 @@ describe('AuthMiddleware', () => {
 		test('auth falls back to admin if player fails', async () => {
 			let nextCalled = false
 
-			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+			mocks.PlayerAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
@@ -294,11 +308,15 @@ describe('AuthMiddleware', () => {
 		test('auth fails if player and admin fails', async () => {
 			let nextCalled = false
 
-			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
-			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+			mocks.AdminAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.PlayerAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
-			expect(
-				() => AuthMiddleware(context, async () => {
+			expect(() =>
+				AuthMiddleware(context, async () => {
 					nextCalled = true
 				})
 			).rejects.toEqual(new AuthException('Unauthorized', 401))
@@ -328,7 +346,9 @@ describe('AuthMiddleware', () => {
 		test('auth falls back to player if gm fails', async () => {
 			let nextCalled = false
 
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
@@ -343,8 +363,12 @@ describe('AuthMiddleware', () => {
 		test('auth falls back to admin if gm and player fails', async () => {
 			let nextCalled = false
 
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
-			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.PlayerAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
@@ -359,12 +383,18 @@ describe('AuthMiddleware', () => {
 		test('auth fails if gm, player and admin fails', async () => {
 			let nextCalled = false
 
-			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
-			mocks.GMAuth.mockImplementationOnce(async () => { return false })
-			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+			mocks.AdminAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.GMAuth.mockImplementationOnce(async () => {
+				return false
+			})
+			mocks.PlayerAuth.mockImplementationOnce(async () => {
+				return false
+			})
 
-			expect(
-				() => AuthMiddleware(context, async () => {
+			expect(() =>
+				AuthMiddleware(context, async () => {
 					nextCalled = true
 				})
 			).rejects.toEqual(new AuthException('Unauthorized', 401))

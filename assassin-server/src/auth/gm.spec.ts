@@ -62,8 +62,7 @@ describe('GMAuth', () => {
 	})
 
 	test('auth is unsuccessful if on a different player', async () => {
-		modifyContext(context, "$.req.header", () => "Vlad")
-
+		modifyContext(context, '$.req.header', () => 'Vlad')
 
 		const result = await GMAuth(context)
 		expect(result).toBeFalsy()
@@ -76,22 +75,22 @@ describe('GMAuth', () => {
 	})
 
 	test('auth uses JWT if normal user header is not defined', async () => {
-		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: "test-player" })
+		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: 'test-player' })
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(new TextEncoder().encode('kv-test-secret'))
 
-		modifyContext(context, "$.req.header", (key) => key === "Authorization" ? `Bearer ${token}` : undefined)
+		modifyContext(context, '$.req.header', (key) => (key === 'Authorization' ? `Bearer ${token}` : undefined))
 
 		const result = await GMAuth(context)
 		expect(result).toBeTruthy()
 	})
 
 	test('auth is unsuccessful if on a different player, using JWT', async () => {
-		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: "Vlad" })
+		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: 'Vlad' })
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(new TextEncoder().encode('kv-test-secret'))
 
-		modifyContext(context, "$.req.header", (key) => key === "Authorization" ? `Bearer ${token}` : undefined)
+		modifyContext(context, '$.req.header', (key) => (key === 'Authorization' ? `Bearer ${token}` : undefined))
 
 		const result = await GMAuth(context)
 		expect(result).toBeFalsy()

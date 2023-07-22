@@ -1,13 +1,22 @@
 import { vi } from 'vitest'
 import { Migration } from './types'
-import { getAvailableMigrations, migrate, rollback, rollbackAllMigrations, rollbackMigration, runAllMigrations, runMigration } from './index'
+import {
+	getAvailableMigrations,
+	migrate,
+	rollback,
+	rollbackAllMigrations,
+	rollbackMigration,
+	runAllMigrations,
+	runMigration,
+} from './index'
 
 const mocks = vi.hoisted(() => {
 	const migrateUp = vi.fn()
 	const migrateDown = vi.fn()
 
 	return {
-		migrateUp, migrateDown,
+		migrateUp,
+		migrateDown,
 		getAllMigrations: vi.fn().mockImplementation(() => {
 			return [
 				{
@@ -39,7 +48,7 @@ const mocks = vi.hoisted(() => {
 			} as Migration
 		}),
 		insertMigration: vi.fn(),
-		updateRollback: vi.fn()
+		updateRollback: vi.fn(),
 	}
 })
 
@@ -53,7 +62,7 @@ vi.mock('../tables/migration', () => {
 	return {
 		getCurrentMigration: mocks.getCurrentMigration,
 		insertMigration: mocks.insertMigration,
-		updateRollback: mocks.updateRollback
+		updateRollback: mocks.updateRollback,
 	}
 })
 
@@ -131,7 +140,7 @@ describe('getAvailableMigrations', () => {
 	})
 })
 
-describe("runAllMigrations", () => {
+describe('runAllMigrations', () => {
 	test('Runs all migrations', async () => {
 		await runAllMigrations({})
 		expect(mocks.insertMigration).toBeCalledTimes(TestMigrations.length)
@@ -159,7 +168,7 @@ describe("runAllMigrations", () => {
 	})
 })
 
-describe("rollbackAllMigrations", () => {
+describe('rollbackAllMigrations', () => {
 	test('Rolls back all migrations', async () => {
 		await rollbackAllMigrations({})
 		expect(mocks.updateRollback).toBeCalledTimes(TestMigrations.length)
@@ -187,7 +196,7 @@ describe("rollbackAllMigrations", () => {
 	})
 })
 
-describe("migrate", () => {
+describe('migrate', () => {
 	test('Runs migrations above current version', async () => {
 		await migrate({})
 		expect(mocks.insertMigration).toBeCalledTimes(TestMigrations.length - 1)
@@ -215,7 +224,7 @@ describe("migrate", () => {
 	})
 })
 
-describe("rollback", () => {
+describe('rollback', () => {
 	test('Rolls back latest migration', async () => {
 		await rollback({})
 		expect(mocks.updateRollback).toBeCalledTimes(1)
@@ -233,8 +242,8 @@ describe("rollback", () => {
 	})
 })
 
-describe("runMigration", () => {
-	test("runs migration", async () => {
+describe('runMigration', () => {
+	test('runs migration', async () => {
 		await runMigration({}, 1)
 		expect(mocks.insertMigration).toBeCalledTimes(1)
 		expect(mocks.migrateUp).toBeCalledTimes(1)
@@ -248,8 +257,8 @@ describe("runMigration", () => {
 	})
 })
 
-describe("rollbackMigration", () => {
-	test("rolls back migration", async () => {
+describe('rollbackMigration', () => {
+	test('rolls back migration', async () => {
 		await rollbackMigration({}, 1)
 		expect(mocks.updateRollback).toBeCalledTimes(1)
 		expect(mocks.migrateDown).toBeCalledTimes(1)

@@ -22,12 +22,12 @@ describe('getToken', () => {
 	})
 
 	test("header with malformed 'Bearer' fails", () => {
-		modifyContext(context, "$.req.header", () => "Bear some-jwt-goes-here")
+		modifyContext(context, '$.req.header', () => 'Bear some-jwt-goes-here')
 		expect(() => getToken(context)).toThrowError(new AuthException('Malformed Authorization header', 400))
 	})
 
 	test("header with missing 'Bearer' fails", () => {
-		modifyContext(context, "$.req.header", () => "some-jwt-goes-here")
+		modifyContext(context, '$.req.header', () => 'some-jwt-goes-here')
 		expect(() => getToken(context)).toThrowError(new AuthException('Malformed Authorization header', 400))
 	})
 })
