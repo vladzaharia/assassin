@@ -7,19 +7,19 @@ const TestMigrations = [
 		name: 'test-base-migration',
 		version: 0,
 		up: vi.fn(),
-		down: vi.fn()
+		down: vi.fn(),
 	},
 	{
 		name: 'test-first-migration',
 		version: 1,
 		up: vi.fn(),
-		down: vi.fn()
+		down: vi.fn(),
 	},
 	{
 		name: 'test-second-migration',
 		version: 2,
 		up: vi.fn(),
-		down: vi.fn()
+		down: vi.fn(),
 	},
 ]
 
@@ -31,20 +31,20 @@ const mocks = vi.hoisted(() => {
 					name: 'test-base-migration',
 					version: 0,
 					up: vi.fn(),
-					down: vi.fn()
+					down: vi.fn(),
 				},
 				{
 					name: 'test-first-migration',
 					version: 1,
 					up: vi.fn(),
-					down: vi.fn()
+					down: vi.fn(),
 				},
 				{
 					name: 'test-second-migration',
 					version: 2,
 					up: vi.fn(),
-					down: vi.fn()
-				}
+					down: vi.fn(),
+				},
 			] as Migration[]
 		}),
 		getCurrentMigration: vi.fn().mockImplementation(() => {
@@ -52,7 +52,7 @@ const mocks = vi.hoisted(() => {
 				name: 'test-base-migration',
 				version: 0,
 				up: vi.fn(),
-				down: vi.fn()
+				down: vi.fn(),
 			} as Migration
 		}),
 	}
@@ -60,13 +60,13 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('./migrations', () => {
 	return {
-		getAllMigrations: mocks.getAllMigrations
+		getAllMigrations: mocks.getAllMigrations,
 	}
 })
 
 vi.mock('../tables/migration', () => {
 	return {
-		getCurrentMigration: mocks.getCurrentMigration
+		getCurrentMigration: mocks.getCurrentMigration,
 	}
 })
 
@@ -75,8 +75,8 @@ afterEach(() => {
 	vi.clearAllMocks()
 })
 
-describe("getAvailableMigrations", () => {
-	test("Get migrations bigger than current version", async () => {
+describe('getAvailableMigrations', () => {
+	test('Get migrations bigger than current version', async () => {
 		const result = await getAvailableMigrations({})
 		expect(result.length).toEqual(2)
 		expect(result[0].name).toEqual(TestMigrations[1].name)
@@ -85,9 +85,9 @@ describe("getAvailableMigrations", () => {
 		expect(result[1].version).toEqual(TestMigrations[2].version)
 	})
 
-	test("Migrations reflect available ones", async () => {
+	test('Migrations reflect available ones', async () => {
 		mocks.getAllMigrations.mockImplementationOnce(() => {
-			return [ TestMigrations[2] ]
+			return [TestMigrations[2]]
 		})
 
 		const result = await getAvailableMigrations({})
@@ -96,7 +96,7 @@ describe("getAvailableMigrations", () => {
 		expect(result[0].version).toEqual(TestMigrations[2].version)
 	})
 
-	test("Migrations reflect current one", async () => {
+	test('Migrations reflect current one', async () => {
 		mocks.getCurrentMigration.mockImplementationOnce(() => {
 			return TestMigrations[1]
 		})
@@ -107,7 +107,7 @@ describe("getAvailableMigrations", () => {
 		expect(result[0].version).toEqual(TestMigrations[2].version)
 	})
 
-	test("Migrations when no current migration", async () => {
+	test('Migrations when no current migration', async () => {
 		mocks.getCurrentMigration.mockImplementationOnce(() => {
 			return undefined
 		})

@@ -5,3 +5,11 @@ export type Bindings = {
 	OPENID: KVNamespace
 	/* eslint-enable no-undef */
 }
+
+export interface JWTClaims {
+	assassin: {
+		admin: boolean
+		user: boolean
+	}
+	first_name: string
+}

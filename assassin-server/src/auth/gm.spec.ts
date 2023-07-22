@@ -1,7 +1,8 @@
-import { RoomTable, PlayerTable } from "../tables/db"
-import { GMAuth } from "./gm"
-import { vi } from "vitest"
-import { Context } from "hono"
+import { RoomTable, PlayerTable } from '../tables/db'
+import { GMAuth } from './gm'
+import { vi } from 'vitest'
+import { Context } from 'hono'
+import { AuthException } from './common'
 
 const mocks = vi.hoisted(() => {
 	return {
@@ -51,8 +52,6 @@ beforeEach(() => {
 		},
 		req: {
 			header: () => 'test-player',
-			path: '/gm',
-			method: 'GET',
 			param: () => {
 				return { room: 'test-room', name: 'test-player' }
 			},
@@ -71,5 +70,11 @@ describe('GMAuth', () => {
 
 		const result = await GMAuth(context)
 		expect(result).toBeFalsy()
+	})
+
+	test('auth is unsuccessful if room is not found', async () => {
+		mocks.findRoomMock.mockImplementationOnce(() => undefined)
+
+		expect(() => GMAuth(context)).rejects.toEqual(new AuthException('Room not found!', 404))
 	})
 })

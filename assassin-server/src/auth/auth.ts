@@ -1,11 +1,10 @@
 import { Context, Next } from 'hono'
-import { jwt } from 'hono/jwt'
-
 import { Bindings } from '../bindings'
 import { getSecureEndpoints, HTTPMethods } from './secure-endpoints'
 import { PlayerAuth } from './player'
 import { GMAuth } from './gm'
 import { AuthException } from './common'
+import { AdminAuth } from './admin'
 
 export const checkPath = (path: string, method: string, endpoints = getSecureEndpoints()) => {
 	for (const secureEndpoint of endpoints) {
@@ -17,7 +16,6 @@ export const checkPath = (path: string, method: string, endpoints = getSecureEnd
 }
 
 export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
-	const secret = (await c.env.OPENID.get('secret')) || c.env.ASSASSIN_SECRET
 	const match = checkPath(c.req.path, c.req.method)
 
 	if (match) {
@@ -32,19 +30,15 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 		}
 
 		if (match.authTypes.includes('jwt') && !result) {
-			console.log(`JWT Auth`)
-			if (!secret) {
-				console.warn('No JWT token defined!')
-			}
-			return jwt({ secret })(c, next)
+			result = await AdminAuth(c)
 		}
 
 		if (!result) {
-			console.error("No auth was successful!")
-			throw new AuthException("Unauthorized", 401)
+			console.error('No auth was successful!')
+			throw new AuthException('Unauthorized', 401)
 		}
 	}
 
-	console.log("Auth successful!")
+	console.log('Auth successful!')
 	await next()
 }

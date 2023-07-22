@@ -1,5 +1,5 @@
-import { Context } from "hono"
-import { PlayerAuth } from "./player"
+import { Context } from 'hono'
+import { PlayerAuth } from './player'
 
 let context: Context<{ Bindings }>
 
@@ -13,10 +13,8 @@ beforeEach(() => {
 		},
 		req: {
 			header: () => 'test-player',
-			path: '/player',
-			method: 'GET',
 			param: () => {
-				return { room: 'test-room', name: 'test-player' }
+				return { name: 'test-player' }
 			},
 		},
 	} as unknown as Context<{ Bindings }>

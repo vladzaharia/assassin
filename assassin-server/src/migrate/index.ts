@@ -15,7 +15,9 @@ export const getAvailableMigrations = async (db: D1Database) => {
 	if (!currentMigration) {
 		return getAllMigrations().map(getMigrationDetails)
 	} else {
-		return getAllMigrations().filter((m) => m.version > currentMigration.version).map(getMigrationDetails)
+		return getAllMigrations()
+			.filter((m) => m.version > currentMigration.version)
+			.map(getMigrationDetails)
 	}
 }
 

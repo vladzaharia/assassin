@@ -2,7 +2,6 @@ import { Context } from 'hono'
 import { AuthMiddleware, checkPath } from './auth'
 import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
-import { jwt } from 'hono/jwt'
 import { PlayerTable, RoomTable } from '../tables/db'
 
 const secureEndpoints: SecureEndpoint[] = [
@@ -82,14 +81,14 @@ const mocks = vi.hoisted(() => {
 // Mock secure endpoints
 vi.mock('./secure-endpoints', () => {
 	return {
-		getSecureEndpoints: mocks.getSecureEndpoints
+		getSecureEndpoints: mocks.getSecureEndpoints,
 	}
 })
 
 // Mock jwt() calls
-vi.mock('hono/jwt', () => {
+vi.mock('./admin', () => {
 	return {
-		jwt: mocks.jwt,
+		AdminAuth: mocks.jwt,
 	}
 })
 
@@ -106,7 +105,6 @@ vi.mock('../tables/player', () => {
 		findRoomGM: mocks.findRoomGM,
 	}
 })
-
 
 afterEach(() => {
 	// Clear mock data
@@ -176,7 +174,7 @@ describe('AuthMiddleware', () => {
 			}
 		)
 		expect(nextCalled).toBeTruthy()
-		expect(jwt).toHaveBeenCalledTimes(0)
+		expect(mocks.jwt).toHaveBeenCalledTimes(0)
 	})
 
 	describe('jwt', () => {
@@ -188,8 +186,8 @@ describe('AuthMiddleware', () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 
 		test('auth falls back to jwt if gm fails', async () => {
@@ -201,8 +199,8 @@ describe('AuthMiddleware', () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 
 		test('auth with no secrets', async () => {
@@ -216,9 +214,8 @@ describe('AuthMiddleware', () => {
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
-			expect(jwt).toHaveBeenCalledWith({ secret: undefined })
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 	})
 
@@ -235,7 +232,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to player if gm fails', async () => {
@@ -251,7 +248,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth fails if player and gm fails', async () => {
@@ -262,12 +259,14 @@ describe('AuthMiddleware', () => {
 				return { room: 'test-room', name: 'test-player2' }
 			}
 
-			expect(AuthMiddleware(context, async () => {
-				nextCalled = true
-			})).rejects.toBeDefined()
+			expect(
+				AuthMiddleware(context, async () => {
+					nextCalled = true
+				})
+			).rejects.toBeDefined()
 
 			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 	})
 
@@ -281,7 +280,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to jwt if gm fails', async () => {
@@ -293,8 +292,8 @@ describe('AuthMiddleware', () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 
 		test('auth with no secrets', async () => {
@@ -308,9 +307,8 @@ describe('AuthMiddleware', () => {
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
-			expect(jwt).toHaveBeenCalledWith({ secret: undefined })
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 	})
 
@@ -324,7 +322,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to jwt if player fails', async () => {
@@ -336,8 +334,8 @@ describe('AuthMiddleware', () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 	})
 
@@ -354,7 +352,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to player if gm fails', async () => {
@@ -370,7 +368,7 @@ describe('AuthMiddleware', () => {
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to jwt if gm and player fail', async () => {
@@ -385,8 +383,8 @@ describe('AuthMiddleware', () => {
 				nextCalled = true
 			})
 
-			expect(nextCalled).toBeFalsy()
-			expect(jwt).toHaveBeenCalled()
+			expect(nextCalled).toBeTruthy()
+			expect(mocks.jwt).toHaveBeenCalled()
 		})
 	})
 })

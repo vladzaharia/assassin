@@ -1,10 +1,8 @@
-export class AuthException extends Error {
-	readonly res: Response
+import { HTTPException } from 'hono/http-exception'
+
+export class AuthException extends HTTPException {
 	constructor(message: string, status: number) {
-		super(message)
-		this.res = new Response(message, { status })
-	}
-	getResponse(): Response {
-		return this.res
+		const res = new Response(message, { status })
+		super(status, { res })
 	}
 }
