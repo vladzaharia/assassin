@@ -2,7 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { deleteWordsInWordList, insertWords, listWordsInWordList } from '../../tables/word'
 import { deleteWordList, insertWordList, listWordLists } from '../../tables/wordlist'
-import { MANAGED_WORDLISTS } from './managed'
+import { GetManagedWordlists } from './managed'
 import { ImportableWordList } from './managed/types'
 
 export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings }>) => {
@@ -10,12 +10,12 @@ export const GetUninitializedWordLists = async (c: Context<{ Bindings: Bindings 
 		const db = c.env.D1DATABASE
 
 		const wordLists = await listWordLists(db)
-		const wordListsToAdd: ImportableWordList[] = MANAGED_WORDLISTS.filter((wl) => !wordLists.some((record) => record.name === wl.name))
+		const wordListsToAdd: ImportableWordList[] = GetManagedWordlists().filter((wl) => !wordLists.some((record) => record.name === wl.name))
 		const wordListsToUpdate: ImportableWordList[] = []
 
 		for (const wordList of wordLists) {
 			const words = await listWordsInWordList(db, wordList.name)
-			const managedList = MANAGED_WORDLISTS.filter((wl) => wl.name === wordList.name)[0]
+			const managedList = GetManagedWordlists().filter((wl) => wl.name === wordList.name)[0]
 
 			if (
 				managedList &&
@@ -52,7 +52,7 @@ export const InitializeWordlists = async (c: Context<{ Bindings: Bindings }>) =>
 
 		const { importList: list } = c.req.param()
 
-		const initialWordList = MANAGED_WORDLISTS.filter((wl) => wl.name === list)[0]
+		const initialWordList = GetManagedWordlists().filter((wl) => wl.name === list)[0]
 
 		// Check if wordlist exists
 		if (!initialWordList) {

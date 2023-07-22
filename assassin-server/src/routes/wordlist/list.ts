@@ -2,7 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { listWordLists } from '../../tables/wordlist'
 import { listWordsInWordList } from '../../tables/word'
-import { isManagedList } from './managed'
+import { isManagedList } from './managed/util'
 
 interface ListWordListResponse {
 	name: string

@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { findWordList, setDescription, setIcon } from '../../tables/wordlist'
-import { isManagedList } from './managed'
+import { isManagedList } from './managed/util'
 
 interface UpdateWordListBody {
 	description?: string
