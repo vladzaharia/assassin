@@ -44,7 +44,7 @@ const mocks = vi.hoisted(() => {
 			return {
 				name: 'test-base-migration',
 				version: 0,
-				applied: 1672560000
+				applied: 1672560000,
 			} as MigrationTable
 		}),
 		insertMigration: vi.fn(),
@@ -64,6 +64,11 @@ vi.mock('../tables/migration', () => {
 		insertMigration: mocks.insertMigration,
 		updateRollback: mocks.updateRollback,
 	}
+})
+
+afterEach(() => {
+	// Clear mock data
+	vi.clearAllMocks()
 })
 
 const TestMigrations = [
@@ -86,11 +91,6 @@ const TestMigrations = [
 		down: mocks.migrateDown,
 	},
 ]
-
-afterEach(() => {
-	// Clear mock data
-	vi.clearAllMocks()
-})
 
 describe('getAvailableMigrations', () => {
 	test('Get migrations bigger than current version', async () => {

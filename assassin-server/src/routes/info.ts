@@ -14,13 +14,15 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 		{
 			env: c.env.ENVIRONMENT || 'local',
 			deployment,
-			urls: c.env.BASE_URL ? {
-				ui: `${c.env.BASE_URL}`,
-				admin: `${c.env.BASE_URL}/admin`,
-				api: `${c.env.BASE_URL}/api`,
-				openapi: `${c.env.BASE_URL}/api/openapi/openapi.swagger`,
-				docs: `${c.env.BASE_URL}/api/openapi`,
-			} : undefined,
+			urls: c.env.BASE_URL
+				? {
+						ui: `${c.env.BASE_URL}`,
+						admin: `${c.env.BASE_URL}/admin`,
+						api: `${c.env.BASE_URL}/api`,
+						openapi: `${c.env.BASE_URL}/api/openapi/openapi.swagger`,
+						docs: `${c.env.BASE_URL}/api/openapi`,
+				  }
+				: undefined,
 		},
 		200
 	)

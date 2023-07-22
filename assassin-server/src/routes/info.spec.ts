@@ -9,7 +9,7 @@ describe('Info', () => {
 		context = createContext()
 	})
 
-	describe("env", () => {
+	describe('env', () => {
 		test('check env', async () => {
 			const result = await Info(context)
 			const resultJson = await result.json()
@@ -39,7 +39,7 @@ describe('Info', () => {
 		})
 	})
 
-	describe("urls", () => {
+	describe('urls', () => {
 		test('check urls', async () => {
 			const result = await Info(context)
 			const resultJson = await result.json()
@@ -64,7 +64,7 @@ describe('Info', () => {
 		})
 	})
 
-	describe("urls", () => {
+	describe('urls', () => {
 		test('check deployment', async () => {
 			const result = await Info(context)
 			const resultJson = await result.json()

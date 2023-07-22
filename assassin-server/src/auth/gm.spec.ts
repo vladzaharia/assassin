@@ -42,6 +42,11 @@ vi.mock('../tables/player', () => {
 	}
 })
 
+afterEach(() => {
+	// Clear mock data
+	vi.clearAllMocks()
+})
+
 let context: Context<{ Bindings }>
 
 beforeEach(() => {

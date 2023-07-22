@@ -13,7 +13,7 @@ const mocks = vi.hoisted(() => {
 			return {
 				name: 'test-base-migration',
 				version: 0,
-				applied: 1672560000
+				applied: 1672560000,
 			} as MigrationTable
 		}),
 		listMigrations: vi.fn().mockImplementation(async () => {
@@ -21,14 +21,14 @@ const mocks = vi.hoisted(() => {
 				{
 					name: 'test-base-migration',
 					version: 0,
-					applied: 1672560000
+					applied: 1672560000,
 				},
 				{
 					name: 'test-base-migration',
 					version: 0,
 					applied: 1672560000,
-					rolledBack: 1672550000
-				}
+					rolledBack: 1672550000,
+				},
 			] as MigrationTable[]
 		}),
 		getAvailableMigrations: vi.fn().mockImplementation(async () => {
@@ -44,9 +44,9 @@ const mocks = vi.hoisted(() => {
 					version: 2,
 					up: vi.fn(),
 					down: vi.fn(),
-				}
+				},
 			] as Migration[]
-		})
+		}),
 	}
 })
 
@@ -60,18 +60,25 @@ vi.mock('../../tables/migration', () => {
 
 vi.mock('../../migrate', () => {
 	return {
-		getAvailableMigrations: mocks.getAvailableMigrations
+		getAvailableMigrations: mocks.getAvailableMigrations,
 	}
 })
 
-describe('Info', () => {
+afterEach(() => {
+	// Clear mock data
+	vi.clearAllMocks()
+})
+
+describe('DbInfo', () => {
 	let context: Context<{ Bindings: Bindings }>
 	beforeEach(() => {
 		context = createContext()
 	})
 
 	test('error', async () => {
-		mocks.createMigrationTable.mockImplementationOnce(() => { throw new Error("The apocalypse is upon us") })
+		mocks.createMigrationTable.mockImplementationOnce(() => {
+			throw new Error('The apocalypse is upon us')
+		})
 
 		const result = await DbInfo(context)
 		const resultJson = await result.json()
@@ -80,7 +87,7 @@ describe('Info', () => {
 		expect(resultJson.message).toEqual('Something went wrong!')
 	})
 
-	describe("binding", () => {
+	describe('binding', () => {
 		test('check database binding', async () => {
 			const result = await DbInfo(context)
 			const resultJson = await result.json()
@@ -113,7 +120,7 @@ describe('Info', () => {
 		})
 	})
 
-	describe("migrations.current", () => {
+	describe('migrations.current', () => {
 		test('shows current migration', async () => {
 			const result = await DbInfo(context)
 			const resultJson = await result.json()
@@ -122,7 +129,7 @@ describe('Info', () => {
 			expect(resultJson.migrations.current).toEqual({
 				name: 'test-base-migration',
 				version: 0,
-				applied: 1672560000
+				applied: 1672560000,
 			})
 		})
 
@@ -137,7 +144,7 @@ describe('Info', () => {
 		})
 	})
 
-	describe("migrations.applied", () => {
+	describe('migrations.applied', () => {
 		test('shows applied migrations', async () => {
 			const result = await DbInfo(context)
 			const resultJson = await result.json()
@@ -147,13 +154,13 @@ describe('Info', () => {
 			expect(resultJson.migrations.applied[0]).toEqual({
 				name: 'test-base-migration',
 				version: 0,
-				applied: 1672560000
+				applied: 1672560000,
 			})
 			expect(resultJson.migrations.applied[1]).toEqual({
 				name: 'test-base-migration',
 				version: 0,
 				applied: 1672560000,
-				rolledBack: 1672550000
+				rolledBack: 1672550000,
 			})
 		})
 
@@ -168,7 +175,7 @@ describe('Info', () => {
 		})
 	})
 
-	describe("migrations.available", () => {
+	describe('migrations.available', () => {
 		test('shows available migrations', async () => {
 			const result = await DbInfo(context)
 			const resultJson = await result.json()
@@ -177,11 +184,11 @@ describe('Info', () => {
 			expect(resultJson.migrations.available.length).toEqual(2)
 			expect(resultJson.migrations.available[0]).toEqual({
 				name: 'test-first-migration',
-				version: 1
+				version: 1,
 			})
 			expect(resultJson.migrations.available[1]).toEqual({
 				name: 'test-second-migration',
-					version: 2
+				version: 2,
 			})
 		})
 
