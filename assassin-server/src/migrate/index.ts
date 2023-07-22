@@ -58,7 +58,7 @@ export const rollback = async (db: D1Database) => {
 	}
 }
 
-const runMigration = async (db: D1Database, version: number) => {
+export const runMigration = async (db: D1Database, version: number) => {
 	const migration = getAllMigrations().filter((m) => m.version === version)[0]
 	if (!migration) {
 		throw new Error("Migration doesn't exist!")
@@ -71,7 +71,7 @@ const runMigration = async (db: D1Database, version: number) => {
 	await insertMigration(db, version, migration.name)
 }
 
-const rollbackMigration = async (db: D1Database, version: number) => {
+export const rollbackMigration = async (db: D1Database, version: number) => {
 	const migration = getAllMigrations().filter((m) => m.version === version)[0]
 	if (!migration) {
 		throw new Error("Migration doesn't exist!")
