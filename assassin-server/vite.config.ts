@@ -22,7 +22,13 @@ export default defineConfig({
 		coverage: {
 			enabled: true,
 			include: ['**/src/**'],
-			exclude: ['**/lib/**', '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', '**/migrate/migrations/**', '**/tables/*.ts'],
+			exclude: [
+				'**/lib/**',
+				'**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+				'**/migrate/migrations/**',
+				'**/tables/*.ts',
+				'**/wordlist/managed/**',
+			],
 			reporter: ['json-summary', 'json', 'html'],
 		},
 		reporters: ['default', 'junit'],
