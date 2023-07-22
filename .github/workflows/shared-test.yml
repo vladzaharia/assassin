@@ -37,17 +37,10 @@ jobs:
         name: test
         path: coverage/
         retention-days: 7
-    - name: Report assassin-app test results
+    - name: Report test results
       uses: dorny/test-reporter@v1
       if: always()
       with:
-        name: assassin-app Tests
-        path: coverage/assassin-app/junit.xml
-        reporter: jest-junit
-    - name: Report assassin-server test results
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: assassin-server Tests
-        path: coverage/assassin-server/junit.xml
+        name: Test results
+        path: "coverage/assassin-app/junit.xml,coverage/assassin-server/junit.xml"
         reporter: jest-junit
