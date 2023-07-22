@@ -9,6 +9,7 @@ import {
 	runAllMigrations,
 	runMigration,
 } from './index'
+import { MigrationTable } from '../tables/db'
 
 const mocks = vi.hoisted(() => {
 	const migrateUp = vi.fn()
@@ -43,9 +44,8 @@ const mocks = vi.hoisted(() => {
 			return {
 				name: 'test-base-migration',
 				version: 0,
-				up: vi.fn(),
-				down: vi.fn(),
-			} as Migration
+				applied: 1672560000
+			} as MigrationTable
 		}),
 		insertMigration: vi.fn(),
 		updateRollback: vi.fn(),

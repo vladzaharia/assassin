@@ -45,7 +45,8 @@ describe('verifyToken', () => {
 	})
 
 	test('token verified with env secret', async () => {
-		context.env.OPENID.get = () => undefined
+		modifyContext(context, '$.env.OPENID.get', () => undefined)
+
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(new TextEncoder().encode('env-test-secret'))
@@ -57,8 +58,8 @@ describe('verifyToken', () => {
 	})
 
 	test('token verification fails if no secret is available', async () => {
-		context.env.OPENID.get = () => undefined
-		context.env.ASSASSIN_SECRET = undefined
+		modifyContext(context, '$.env.OPENID.get', () => undefined)
+		modifyContext(context, '$.env.ASSASSIN_SECRET', null)
 
 		expect(() => verifyToken(context, '')).rejects.toEqual(new AuthException('Could not find secret', 401))
 	})

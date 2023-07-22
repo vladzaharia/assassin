@@ -3,7 +3,7 @@ import { AuthMiddleware, checkPath } from './auth'
 import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
 import { AuthException } from './common'
-import { createContext } from '../testutil'
+import { createContext, modifyContext } from '../testutil'
 
 const secureEndpoints: SecureEndpoint[] = [
 	{
@@ -162,7 +162,7 @@ describe('AuthMiddleware', () => {
 
 	describe('gm-player', () => {
 		beforeEach(() => {
-			context.req.path = '/gm-player'
+			modifyContext(context, '$.req.path', '/gm-player')
 		})
 
 		test('auth uses gm if successful', async () => {
@@ -217,7 +217,7 @@ describe('AuthMiddleware', () => {
 
 	describe('gm-admin', () => {
 		beforeEach(() => {
-			context.req.path = '/gm-admin'
+			modifyContext(context, '$.req.path', '/gm-admin')
 		})
 
 		test('auth uses gm if successful', async () => {
@@ -272,7 +272,7 @@ describe('AuthMiddleware', () => {
 
 	describe('player-admin', () => {
 		beforeEach(() => {
-			context.req.path = '/player-admin'
+			modifyContext(context, '$.req.path', '/player-admin')
 		})
 
 		test('auth uses player if successful', async () => {
@@ -327,7 +327,7 @@ describe('AuthMiddleware', () => {
 
 	describe('gm-player-admin', () => {
 		beforeEach(() => {
-			context.req.path = '/gm-player-admin'
+			modifyContext(context, '$.req.path', '/gm-player-admin')
 		})
 
 		test('auth uses gm if successful', async () => {

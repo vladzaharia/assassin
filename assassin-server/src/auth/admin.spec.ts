@@ -2,6 +2,7 @@ import { Context } from 'hono'
 import { AuthException } from './common'
 import { SignJWT } from 'jose'
 import { AdminAuth } from './admin'
+import { modifyContext } from '../testutil'
 
 let context: Context<{ Bindings }>
 
@@ -27,7 +28,8 @@ describe('AdminAuth', () => {
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(new TextEncoder().encode('kv-test-secret'))
-		context.req.header = () => `Bearer ${token}`
+
+		modifyContext(context, '$.req.header', () => `Bearer ${token}`)
 
 		const result = await AdminAuth(context)
 
@@ -38,7 +40,8 @@ describe('AdminAuth', () => {
 		const token = await new SignJWT({ assassin: { admin: false, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
 			.sign(new TextEncoder().encode('kv-test-secret'))
-		context.req.header = () => `Bearer ${token}`
+
+		modifyContext(context, '$.req.header', () => `Bearer ${token}`)
 
 		const result = await AdminAuth(context)
 

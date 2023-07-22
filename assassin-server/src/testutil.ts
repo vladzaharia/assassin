@@ -5,7 +5,7 @@ import { value } from 'jsonpath'
 
 export const BASE_URL = 'https://test.assassin.vlad.gg'
 
-export const json = (response: unknown, status: number) => {
+export const json = (response: unknown, status = 200) => {
 	return {
 		json: () => response,
 		status,
