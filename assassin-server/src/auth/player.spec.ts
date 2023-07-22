@@ -1,24 +1,19 @@
 import { Context } from 'hono'
 import { PlayerAuth } from './player'
 import { SignJWT } from 'jose'
+import { createContext, modifyContext } from '../testutil'
 
 let context: Context<{ Bindings }>
 
 beforeEach(() => {
-	context = {
-		env: {
-			ASSASSIN_SECRET: 'some-test-secret',
-			OPENID: {
-				get: async () => undefined,
-			},
-		},
+	context = createContext({
 		req: {
 			header: () => 'test-player',
 			param: () => {
 				return { name: 'test-player' }
 			},
 		},
-	} as unknown as Context<{ Bindings }>
+	} as unknown as Context<{ Bindings }>)
 })
 
 describe('PlayerAuth', () => {
@@ -28,7 +23,7 @@ describe('PlayerAuth', () => {
 	})
 
 	test('auth is unsuccessful if on a different player', async () => {
-		context.req.header = () => 'Vlad'
+		modifyContext(context, "$.req.header", (key) => key === "X-Assassin-User" ? `Vlad` : undefined)
 
 		const result = await PlayerAuth(context)
 		expect(result).toBeFalsy()
@@ -37,9 +32,9 @@ describe('PlayerAuth', () => {
 	test('auth uses JWT if normal user header is not defined', async () => {
 		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: "test-player" })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('some-test-secret'))
+			.sign(new TextEncoder().encode('kv-test-secret'))
 
-		context.req.header = (key) => key === "Authorization" ? `Bearer ${token}` : undefined
+		modifyContext(context, "$.req.header", (key) => key === "Authorization" ? `Bearer ${token}` : undefined)
 
 		const result = await PlayerAuth(context)
 		expect(result).toBeTruthy()
@@ -48,9 +43,9 @@ describe('PlayerAuth', () => {
 	test('auth is unsuccessful if on a different player, using JWT', async () => {
 		const token = await new SignJWT({ assassin: { admin: false, user: true }, first_name: "Vlad" })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('some-test-secret'))
+			.sign(new TextEncoder().encode('kv-test-secret'))
 
-		context.req.header = (key) => key === "Authorization" ? `Bearer ${token}` : undefined
+		modifyContext(context, "$.req.header", (key) => key === "Authorization" ? `Bearer ${token}` : undefined)
 
 		const result = await PlayerAuth(context)
 		expect(result).toBeFalsy()

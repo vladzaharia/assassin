@@ -3,21 +3,16 @@ import { getToken, verifyToken } from './jwt'
 import { AuthException } from './common'
 import { SignJWT } from 'jose'
 import { JWTClaims } from '../types'
+import { createContext, modifyContext } from '../testutil'
 
 let context: Context<{ Bindings }>
 
 beforeEach(() => {
-	context = {
-		env: {
-			ASSASSIN_SECRET: 'some-test-secret',
-			OPENID: {
-				get: async () => 'another-test-secret',
-			},
-		},
+	context = createContext({
 		req: {
 			header: () => 'Bearer some-jwt-goes-here',
 		},
-	} as unknown as Context<{ Bindings }>
+	} as unknown as Context<{ Bindings }>)
 })
 
 describe('getToken', () => {
@@ -27,12 +22,12 @@ describe('getToken', () => {
 	})
 
 	test("header with malformed 'Bearer' fails", () => {
-		context.req.header = () => 'Bear some-jwt-goes-here'
+		modifyContext(context, "$.req.header", () => "Bear some-jwt-goes-here")
 		expect(() => getToken(context)).toThrowError(new AuthException('Malformed Authorization header', 400))
 	})
 
 	test("header with missing 'Bearer' fails", () => {
-		context.req.header = () => 'some-jwt-goes-here'
+		modifyContext(context, "$.req.header", () => "some-jwt-goes-here")
 		expect(() => getToken(context)).toThrowError(new AuthException('Malformed Authorization header', 400))
 	})
 })
@@ -41,7 +36,7 @@ describe('verifyToken', () => {
 	test('token verified with KV secret', async () => {
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('another-test-secret'))
+			.sign(new TextEncoder().encode('kv-test-secret'))
 
 		const verifiedToken = await verifyToken(context, token)
 
@@ -53,7 +48,7 @@ describe('verifyToken', () => {
 		context.env.OPENID.get = () => undefined
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('some-test-secret'))
+			.sign(new TextEncoder().encode('env-test-secret'))
 
 		const verifiedToken = await verifyToken(context, token)
 
@@ -71,7 +66,7 @@ describe('verifyToken', () => {
 	test('token verification fails if secrets differ', async () => {
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('some-test-secret'))
+			.sign(new TextEncoder().encode('env-test-secret'))
 
 		expect(() => verifyToken(context, token)).rejects.toEqual(new AuthException('Token could not be decoded', 401))
 	})

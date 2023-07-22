@@ -1,20 +1,6 @@
 import { Context } from 'hono'
 import { Bindings } from '../bindings'
-
-interface GitInfo {
-	source: string
-	ref: string
-	sha: string
-}
-
-interface DeploymentInfo {
-	version: {
-		app: string
-		server: string
-	}
-	time: number
-	git?: GitInfo
-}
+import { DeploymentInfo } from '../types'
 
 export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 	let deployment: DeploymentInfo | undefined = undefined
@@ -28,7 +14,7 @@ export const Info = async (c: Context<{ Bindings: Bindings }>) => {
 		{
 			env: c.env.ENVIRONMENT || 'local',
 			deployment,
-			urls: {
+			urls: c.env.BASE_URL && {
 				ui: `${c.env.BASE_URL}`,
 				admin: `${c.env.BASE_URL}/admin`,
 				api: `${c.env.BASE_URL}/api`,

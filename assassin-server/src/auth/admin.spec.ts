@@ -8,9 +8,9 @@ let context: Context<{ Bindings }>
 beforeEach(() => {
 	context = {
 		env: {
-			ASSASSIN_SECRET: 'some-test-secret',
+			ASSASSIN_SECRET: 'env-test-secret',
 			OPENID: {
-				get: async () => 'another-test-secret',
+				get: async () => 'kv-test-secret',
 			},
 		},
 		req: {
@@ -26,7 +26,7 @@ describe('AdminAuth', () => {
 	test('valid admin token', async () => {
 		const token = await new SignJWT({ assassin: { admin: true, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('another-test-secret'))
+			.sign(new TextEncoder().encode('kv-test-secret'))
 		context.req.header = () => `Bearer ${token}`
 
 		const result = await AdminAuth(context)
@@ -37,7 +37,7 @@ describe('AdminAuth', () => {
 	test('valid user token, no admin permission', async () => {
 		const token = await new SignJWT({ assassin: { admin: false, user: true } })
 			.setProtectedHeader({ alg: 'HS256' })
-			.sign(new TextEncoder().encode('another-test-secret'))
+			.sign(new TextEncoder().encode('kv-test-secret'))
 		context.req.header = () => `Bearer ${token}`
 
 		const result = await AdminAuth(context)

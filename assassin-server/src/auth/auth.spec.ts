@@ -3,6 +3,7 @@ import { AuthMiddleware, checkPath } from './auth'
 import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
 import { AuthException } from './common'
+import { createContext } from '../testutil'
 
 const secureEndpoints: SecureEndpoint[] = [
 	{
@@ -122,13 +123,7 @@ describe('checkPath', () => {
 describe('AuthMiddleware', () => {
 	let context: Context<{ Bindings }>
 	beforeEach(() => {
-		context = {
-			env: {
-				ASSASSIN_SECRET: 'some-test-secret',
-				OPENID: {
-					get: async () => undefined,
-				},
-			},
+		context = createContext({
 			req: {
 				header: () => 'test-player',
 				path: '/this-is-a-nonexistent-path',
@@ -137,7 +132,7 @@ describe('AuthMiddleware', () => {
 					return { room: 'test-room', name: 'test-player' }
 				},
 			},
-		} as unknown as Context<{ Bindings }>
+		} as unknown as Context<{ Bindings }>)
 	})
 
 	test('non-matching path returns successfully', async () => {
@@ -145,7 +140,7 @@ describe('AuthMiddleware', () => {
 		await AuthMiddleware(
 			{
 				env: {
-					ASSASSIN_SECRET: 'some-test-secret',
+					ASSASSIN_SECRET: 'env-test-secret',
 					OPENID: {
 						get: async () => undefined,
 					},

@@ -19,14 +19,14 @@ beforeEach(() => {
 	Object.defineProperty(window, 'location', {
 		configurable: true,
 		enumerable: true,
-		value: new URL('https://local.assassin.vlad.gg/'),
+		value: new URL('https://test.assassin.vlad.gg/'),
 	})
 })
 
 describe('getApiConfig', () => {
 	test('Creates base path from window.location', () => {
 		const config = getApiConfig()
-		expect(config.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(config.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('Replaces localhost port appropriately', () => {
@@ -58,7 +58,7 @@ describe('createAdminOrGMApi', () => {
 		expect(api instanceof GMApi).toBeTruthy()
 		expect(api.configuration.apiKey).toBe('PlayerName')
 		expect(api.configuration.accessToken).toBeUndefined()
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('passes through apiKey is set to gm', () => {
@@ -72,7 +72,7 @@ describe('createAdminOrGMApi', () => {
 		expect(api instanceof AdminApi).toBeTruthy()
 		expect(api.configuration.apiKey).toBeUndefined()
 		expect(api.configuration.accessToken).toBe('some-api-key')
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('passes through apiKey is set to admin', () => {
@@ -87,7 +87,7 @@ describe('createAdminApi', () => {
 
 		expect(api instanceof AdminApi).toBeTruthy()
 		expect(api.configuration.accessToken).toBe('some-test-token')
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('token is passed through', () => {
@@ -107,7 +107,7 @@ describe('createDatabaseApi', () => {
 
 		expect(api instanceof DatabaseApi).toBeTruthy()
 		expect(api.configuration.accessToken).toBe('some-test-token')
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('token is passed through', () => {
@@ -127,7 +127,7 @@ describe('createGMApi', () => {
 
 		expect(api instanceof GMApi).toBeTruthy()
 		expect(api.configuration.apiKey).toBe('PlayerName')
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('apiKey is passed through', () => {
@@ -146,7 +146,7 @@ describe('createInfoApi', () => {
 		const api = createInfoApi() as unknown as DebugApi
 
 		expect(api instanceof InfoApi).toBeTruthy()
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('apiKey is not set', () => {
@@ -166,7 +166,7 @@ describe('createPlayerApi', () => {
 
 		expect(api instanceof PlayerApi).toBeTruthy()
 		expect(api.configuration.apiKey).toBe('PlayerName')
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('apiKey is passed through', () => {
@@ -185,7 +185,7 @@ describe('createRoomApi', () => {
 		const api = createRoomApi() as unknown as DebugApi
 
 		expect(api instanceof RoomApi).toBeTruthy()
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('apiKey is not set', () => {
@@ -204,7 +204,7 @@ describe('createWordlistApi', () => {
 		const api = createWordlistApi() as unknown as DebugApi
 
 		expect(api instanceof WordlistApi).toBeTruthy()
-		expect(api.configuration.basePath).toBe('https://local.assassin.vlad.gg/api')
+		expect(api.configuration.basePath).toBe('https://test.assassin.vlad.gg/api')
 	})
 
 	test('apiKey is not set', () => {
