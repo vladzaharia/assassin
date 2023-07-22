@@ -55,18 +55,6 @@ describe('MigrateDb', () => {
 		context = createContext()
 	})
 
-	test('error', async () => {
-		mocks.dropRoomTable.mockImplementationOnce(() => {
-			throw new Error('The apocalypse is upon us')
-		})
-
-		const result = await ResetDb(context)
-		const resultJson = await result.json()
-
-		expect(result.status).toEqual(500)
-		expect(resultJson.message).toEqual('Something went wrong!')
-	})
-
 	test('all tables are dropped', async () => {
 		const result = await ResetDb(context)
 		const resultJson = await result.json()
@@ -78,5 +66,19 @@ describe('MigrateDb', () => {
 		expect(mocks.dropRoomTable).toBeCalledTimes(1)
 		expect(mocks.dropWordTable).toBeCalledTimes(1)
 		expect(mocks.dropWordListTable).toBeCalledTimes(1)
+	})
+
+	describe('errors', () => {
+		test('generic error', async () => {
+			mocks.dropRoomTable.mockImplementationOnce(() => {
+				throw new Error('The apocalypse is upon us')
+			})
+
+			const result = await ResetDb(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(500)
+			expect(resultJson.message).toEqual('Something went wrong!')
+		})
 	})
 })

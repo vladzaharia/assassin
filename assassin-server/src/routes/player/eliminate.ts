@@ -20,7 +20,7 @@ export const EliminatePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		// Check if player exists
 		const player = await findPlayer(db, room, name)
 		if (!player) {
-			return c.json({ message: 'Player does not exist!' }, 404)
+			return c.json({ message: 'Player not found!' }, 404)
 		} else if (player.status !== 'alive') {
 			return c.json({ message: 'Player is not alive!' }, 400)
 		}
@@ -37,7 +37,7 @@ export const EliminatePlayer = async (c: Context<{ Bindings: Bindings }>) => {
 		const targetName = player.target!
 		const target = await findPlayer(db, room, targetName)
 		if (!target) {
-			return c.json({ message: 'Target does not exist!' }, 404)
+			return c.json({ message: 'Target not found!' }, 404)
 		}
 		await setStatus(db, room, targetName, 'eliminated')
 

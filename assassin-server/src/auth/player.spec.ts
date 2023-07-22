@@ -2,8 +2,9 @@ import { Context } from 'hono'
 import { PlayerAuth } from './player'
 import { SignJWT } from 'jose'
 import { createContext, modifyContext } from '../testutil'
+import { Bindings } from '../bindings'
 
-let context: Context<{ Bindings }>
+let context: Context<{ Bindings: Bindings }>
 
 beforeEach(() => {
 	context = createContext({
@@ -13,7 +14,7 @@ beforeEach(() => {
 				return { name: 'test-player' }
 			},
 		},
-	} as unknown as Context<{ Bindings }>)
+	} as unknown as Context<{ Bindings: Bindings }>)
 })
 
 describe('PlayerAuth', () => {

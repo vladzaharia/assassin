@@ -4,7 +4,7 @@ import { SignJWT } from 'jose'
 import { AdminAuth } from './admin'
 import { modifyContext } from '../testutil'
 
-let context: Context<{ Bindings }>
+let context: Context<{ Bindings: Bindings }>
 
 beforeEach(() => {
 	context = {
@@ -20,7 +20,7 @@ beforeEach(() => {
 				return { room: 'test-room', name: 'test-player' }
 			},
 		},
-	} as unknown as Context<{ Bindings }>
+	} as unknown as Context<{ Bindings: Bindings }>
 })
 
 describe('AdminAuth', () => {

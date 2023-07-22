@@ -41,18 +41,6 @@ describe('RollbackDb', () => {
 		context = createContext()
 	})
 
-	test('error', async () => {
-		mocks.getCurrentMigration.mockImplementationOnce(() => {
-			throw new Error('The apocalypse is upon us')
-		})
-
-		const result = await RollbackDb(context)
-		const resultJson = await result.json()
-
-		expect(result.status).toEqual(500)
-		expect(resultJson.message).toEqual('Something went wrong!')
-	})
-
 	test('rollback is called', async () => {
 		const result = await RollbackDb(context)
 		const resultJson = await result.json()
@@ -92,31 +80,45 @@ describe('RollbackDb', () => {
 		expect(resultJson.newVersion).toEqual(-1)
 	})
 
-	test('no migrations to roll back', async () => {
-		mocks.getCurrentMigration.mockImplementationOnce(() => undefined)
+	describe('errors', () => {
+		test('generic error', async () => {
+			mocks.getCurrentMigration.mockImplementationOnce(() => {
+				throw new Error('The apocalypse is upon us')
+			})
 
-		const result = await RollbackDb(context)
-		const resultJson = await result.json()
+			const result = await RollbackDb(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(400)
-		expect(resultJson.message).toEqual('No migrations to roll back!')
-		expect(mocks.rollback).toBeCalledTimes(0)
-	})
-
-	test("can't roll back version 0", async () => {
-		mocks.getCurrentMigration.mockImplementationOnce(() => {
-			return {
-				name: 'test-first-migration',
-				version: 0,
-				applied: 1672560000,
-			} as MigrationTable
+			expect(result.status).toEqual(500)
+			expect(resultJson.message).toEqual('Something went wrong!')
 		})
 
-		const result = await RollbackDb(context)
-		const resultJson = await result.json()
+		test('no migrations to roll back', async () => {
+			mocks.getCurrentMigration.mockImplementationOnce(() => undefined)
 
-		expect(result.status).toEqual(400)
-		expect(resultJson.message).toEqual("Can't roll back migration 0!")
-		expect(mocks.rollback).toBeCalledTimes(0)
+			const result = await RollbackDb(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(400)
+			expect(resultJson.message).toEqual('No migrations to roll back!')
+			expect(mocks.rollback).toBeCalledTimes(0)
+		})
+
+		test("can't roll back version 0", async () => {
+			mocks.getCurrentMigration.mockImplementationOnce(() => {
+				return {
+					name: 'test-first-migration',
+					version: 0,
+					applied: 1672560000,
+				} as MigrationTable
+			})
+
+			const result = await RollbackDb(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(400)
+			expect(resultJson.message).toEqual("Can't roll back migration 0!")
+			expect(mocks.rollback).toBeCalledTimes(0)
+		})
 	})
 })

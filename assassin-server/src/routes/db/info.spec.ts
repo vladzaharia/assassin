@@ -75,18 +75,6 @@ describe('DbInfo', () => {
 		context = createContext()
 	})
 
-	test('error', async () => {
-		mocks.createMigrationTable.mockImplementationOnce(() => {
-			throw new Error('The apocalypse is upon us')
-		})
-
-		const result = await DbInfo(context)
-		const resultJson = await result.json()
-
-		expect(result.status).toEqual(500)
-		expect(resultJson.message).toEqual('Something went wrong!')
-	})
-
 	describe('binding', () => {
 		test('check database binding', async () => {
 			const result = await DbInfo(context)
@@ -200,6 +188,20 @@ describe('DbInfo', () => {
 
 			expect(result.status).toEqual(200)
 			expect(resultJson.migrations.available.length).toEqual(0)
+		})
+	})
+
+	describe('errors', () => {
+		test('generic error', async () => {
+			mocks.createMigrationTable.mockImplementationOnce(() => {
+				throw new Error('The apocalypse is upon us')
+			})
+
+			const result = await DbInfo(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(500)
+			expect(resultJson.message).toEqual('Something went wrong!')
 		})
 	})
 })

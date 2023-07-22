@@ -4,15 +4,16 @@ import { AuthException } from './common'
 import { SignJWT } from 'jose'
 import { JWTClaims } from '../types'
 import { createContext, modifyContext } from '../testutil'
+import { Bindings } from '../bindings'
 
-let context: Context<{ Bindings }>
+let context: Context<{ Bindings: Bindings }>
 
 beforeEach(() => {
 	context = createContext({
 		req: {
 			header: () => 'Bearer some-jwt-goes-here',
 		},
-	} as unknown as Context<{ Bindings }>)
+	} as unknown as Context<{ Bindings: Bindings }>)
 })
 
 describe('getToken', () => {

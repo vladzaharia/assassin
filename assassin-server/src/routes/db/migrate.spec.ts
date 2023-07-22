@@ -59,18 +59,6 @@ describe('MigrateDb', () => {
 		context = createContext()
 	})
 
-	test('error', async () => {
-		mocks.getCurrentMigration.mockImplementationOnce(() => {
-			throw new Error('The apocalypse is upon us')
-		})
-
-		const result = await MigrateDb(context)
-		const resultJson = await result.json()
-
-		expect(result.status).toEqual(500)
-		expect(resultJson.message).toEqual('Something went wrong!')
-	})
-
 	test('migrate is called', async () => {
 		const result = await MigrateDb(context)
 		const resultJson = await result.json()
@@ -110,13 +98,27 @@ describe('MigrateDb', () => {
 		expect(resultJson.newVersion).toEqual(-1)
 	})
 
-	test('no migrations available', async () => {
-		mocks.getAvailableMigrations.mockImplementationOnce(() => [])
+	describe('errors', () => {
+		test('generic error', async () => {
+			mocks.getCurrentMigration.mockImplementationOnce(() => {
+				throw new Error('The apocalypse is upon us')
+			})
 
-		const result = await MigrateDb(context)
-		const resultJson = await result.json()
+			const result = await MigrateDb(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(400)
-		expect(resultJson.message).toEqual('No migrations to apply!')
+			expect(result.status).toEqual(500)
+			expect(resultJson.message).toEqual('Something went wrong!')
+		})
+
+		test('no migrations available', async () => {
+			mocks.getAvailableMigrations.mockImplementationOnce(() => [])
+
+			const result = await MigrateDb(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(400)
+			expect(resultJson.message).toEqual('No migrations to apply!')
+		})
 	})
 })

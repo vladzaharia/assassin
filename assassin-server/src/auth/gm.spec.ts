@@ -5,6 +5,7 @@ import { Context } from 'hono'
 import { AuthException } from './common'
 import { SignJWT } from 'jose'
 import { createContext, modifyContext } from '../testutil'
+import { Bindings } from '../bindings'
 
 const mocks = vi.hoisted(() => {
 	return {
@@ -47,7 +48,7 @@ afterEach(() => {
 	vi.clearAllMocks()
 })
 
-let context: Context<{ Bindings }>
+let context: Context<{ Bindings: Bindings }>
 
 beforeEach(() => {
 	context = createContext({
@@ -57,7 +58,7 @@ beforeEach(() => {
 				return { room: 'test-room', name: 'test-player' }
 			},
 		},
-	} as unknown as Context<{ Bindings }>)
+	} as unknown as Context<{ Bindings: Bindings }>)
 })
 
 describe('GMAuth', () => {

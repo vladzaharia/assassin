@@ -4,6 +4,7 @@ import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
 import { AuthException } from './common'
 import { createContext, modifyContext } from '../testutil'
+import { Bindings } from '../bindings'
 
 const secureEndpoints: SecureEndpoint[] = [
 	{
@@ -121,7 +122,7 @@ describe('checkPath', () => {
 })
 
 describe('AuthMiddleware', () => {
-	let context: Context<{ Bindings }>
+	let context: Context<{ Bindings: Bindings }>
 	beforeEach(() => {
 		context = createContext({
 			req: {
@@ -132,7 +133,7 @@ describe('AuthMiddleware', () => {
 					return { room: 'test-room', name: 'test-player' }
 				},
 			},
-		} as unknown as Context<{ Bindings }>)
+		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
 	test('non-matching path returns successfully', async () => {
@@ -149,7 +150,7 @@ describe('AuthMiddleware', () => {
 					path: '/this-is-a-nonexistent-path',
 					method: 'GET',
 				},
-			} as unknown as Context<{ Bindings }>,
+			} as unknown as Context<{ Bindings: Bindings }>,
 			async () => {
 				nextCalled = true
 			}
