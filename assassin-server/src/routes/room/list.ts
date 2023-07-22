@@ -5,7 +5,7 @@ import { RoomStatus } from '../../tables/db'
 import { listPlayersInRoom } from '../../tables/player'
 import { getRoomStatus } from '../../util'
 
-interface ListRoomsResponse {
+export interface ListRoomsResponse {
 	name: string
 	status: RoomStatus | 'ready'
 	numPlayers: number
@@ -27,7 +27,7 @@ export const ListRooms = async (c: Context<{ Bindings: Bindings }>) => {
 				status: getRoomStatus(room.status, players),
 				numPlayers: players.length,
 				usesWords: room.usesWords === 1,
-				numWordLists: JSON.parse(room.wordlists).length,
+				numWordLists: room.wordlists ? JSON.parse(room.wordlists).length : 0,
 			})
 		}
 

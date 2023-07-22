@@ -16,7 +16,7 @@ export const ResetGame = async (c: Context<{ Bindings: Bindings }>) => {
 
 		await deletePlayersInRoom(db, room)
 		await setStatus(db, room, 'not-ready')
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Room reset successfully!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

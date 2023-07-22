@@ -27,7 +27,7 @@ const mocks = vi.hoisted(() => {
 				status: 'started',
 				numWords: 3,
 				usesWords: 1,
-				wordlists: '[]',
+				wordlists: JSON.stringify([]),
 			} as RoomTable
 		}),
 	}
@@ -206,7 +206,7 @@ describe('EliminatePlayer', () => {
 					status: 'not-ready',
 					numWords: 0,
 					usesWords: 0,
-					wordlists: '[]',
+					wordlists: JSON.stringify([]),
 				} as RoomTable
 			})
 

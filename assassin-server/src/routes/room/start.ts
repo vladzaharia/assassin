@@ -63,8 +63,6 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 				}
 			}
 
-			// Get words
-
 			// Update player records
 			for (const result of players) {
 				await setTarget(db, room, result.name, result.target!)

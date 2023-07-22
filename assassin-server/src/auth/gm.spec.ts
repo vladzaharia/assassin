@@ -15,7 +15,7 @@ const mocks = vi.hoisted(() => {
 				numWords: 0,
 				status: 'started',
 				usesWords: 0,
-				wordlists: '[]',
+				wordlists: JSON.stringify([]),
 			} as RoomTable
 		}),
 		findRoomGM: vi.fn().mockImplementation(async () => {

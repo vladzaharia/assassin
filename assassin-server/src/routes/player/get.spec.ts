@@ -20,6 +20,10 @@ const mocks = vi.hoisted(() => {
 		findRoom: vi.fn().mockImplementation(async () => {
 			return {
 				name: 'test-room',
+				status: 'started',
+				numWords: 3,
+				usesWords: 1,
+				wordlists: JSON.stringify([]),
 			} as RoomTable
 		}),
 	}
@@ -55,88 +59,173 @@ describe('GetPlayer', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('gets player information', async () => {
-		const result = await GetPlayer(context)
-		const resultJson = await result.json()
+	describe('name', () => {
+		test('has name', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.name).toEqual('test-player')
-		expect(resultJson.room).toEqual('test-room')
-		expect(resultJson.isGM).toBeTruthy()
-		expect(resultJson.status).toEqual('alive')
-		expect(resultJson.target).toEqual('test-player-2')
-		expect(resultJson.words.length).toEqual(3)
-		expect(resultJson.words).toEqual(['test', 'words', 'here'])
+			expect(result.status).toEqual(200)
+			expect(resultJson.name).toEqual('test-player')
+		})
 	})
 
-	test('not a GM', async () => {
-		mocks.findPlayer.mockImplementationOnce(() => {
-			return {
-				name: 'test-player',
-				room: 'test-room',
-				isGM: 0,
-				status: 'alive',
-				target: 'test-player-2',
-				words: JSON.stringify(['test', 'words', 'here']),
-			} as PlayerTable
-		})
-		const result = await GetPlayer(context)
-		const resultJson = await result.json()
+	describe('room', () => {
+		test('has room name', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.isGM).toBeFalsy()
+			expect(result.status).toEqual(200)
+			expect(resultJson.room).toEqual('test-room')
+		})
 	})
 
-	test('has no target', async () => {
-		mocks.findPlayer.mockImplementationOnce(() => {
-			return {
-				name: 'test-player',
-				room: 'test-room',
-				isGM: 0,
-				status: 'alive',
-				words: JSON.stringify(['test', 'words', 'here']),
-			} as PlayerTable
-		})
-		const result = await GetPlayer(context)
-		const resultJson = await result.json()
+	describe('status', () => {
+		test('player is alive', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.target).toBeUndefined()
+			expect(result.status).toEqual(200)
+			expect(resultJson.status).toEqual('alive')
+		})
+
+		test('player is eliminated', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'eliminated',
+					target: 'test-player-2',
+					words: JSON.stringify(['test', 'words', 'here']),
+				} as PlayerTable
+			})
+
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.status).toEqual('eliminated')
+		})
+
+		test('player is champion', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'champion',
+					target: 'test-player-2',
+					words: JSON.stringify(['test', 'words', 'here']),
+				} as PlayerTable
+			})
+
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.status).toEqual('champion')
+		})
 	})
 
-	test('empty words list', async () => {
-		mocks.findPlayer.mockImplementationOnce(() => {
-			return {
-				name: 'test-player',
-				room: 'test-room',
-				isGM: 0,
-				status: 'alive',
-				target: 'test-player-2',
-				words: JSON.stringify([]),
-			} as PlayerTable
-		})
-		const result = await GetPlayer(context)
-		const resultJson = await result.json()
+	describe('isGM', () => {
+		test('player is GM', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.words).toEqual([])
+			expect(result.status).toEqual(200)
+			expect(resultJson.isGM).toBeTruthy()
+		})
+
+		test('player is not a GM', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'alive',
+					target: 'test-player-2',
+					words: JSON.stringify(['test', 'words', 'here']),
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.isGM).toBeFalsy()
+		})
 	})
 
-	test('has no words', async () => {
-		mocks.findPlayer.mockImplementationOnce(() => {
-			return {
-				name: 'test-player',
-				room: 'test-room',
-				isGM: 0,
-				status: 'alive',
-				target: 'test-player-2',
-			} as PlayerTable
-		})
-		const result = await GetPlayer(context)
-		const resultJson = await result.json()
+	describe('target', () => {
+		test('player has target', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.words).toEqual([])
+			expect(result.status).toEqual(200)
+			expect(resultJson.target).toEqual('test-player-2')
+		})
+
+		test('player has no target', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'alive',
+					words: JSON.stringify(['test', 'words', 'here']),
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.target).toBeUndefined()
+		})
+	})
+
+	describe('words', () => {
+		test('player has words', async () => {
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.words.length).toEqual(3)
+			expect(resultJson.words).toEqual(['test', 'words', 'here'])
+		})
+
+		test('player has empty words list', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'alive',
+					target: 'test-player-2',
+					words: JSON.stringify([]),
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.words).toEqual([])
+		})
+
+		test('player has no words', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'test-player',
+					room: 'test-room',
+					isGM: 0,
+					status: 'alive',
+					target: 'test-player-2',
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.words).toEqual([])
+		})
 	})
 
 	describe('errors', () => {
