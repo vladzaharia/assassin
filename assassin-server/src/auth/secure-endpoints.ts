@@ -1,5 +1,5 @@
 export type HTTPMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-export type AuthType = 'gm' | 'player' | 'jwt'
+export type AuthType = 'gm' | 'player' | 'admin'
 
 export interface SecureEndpoint {
 	path: RegExp
@@ -12,57 +12,57 @@ export function getSecureEndpoints(): SecureEndpoint[] {
 		{
 			path: /db.*$/,
 			methods: ['POST', 'PUT', 'DELETE'],
-			authTypes: ['jwt'],
+			authTypes: ['admin'],
 		},
 		{
 			path: /room\/\w*$/,
 			methods: ['PUT', 'DELETE'],
-			authTypes: ['jwt'],
+			authTypes: ['admin'],
 		},
 		{
 			path: /room\/\w*$/,
 			methods: ['PATCH'],
-			authTypes: ['gm', 'jwt'],
+			authTypes: ['gm', 'admin'],
 		},
 		{
 			path: /room\/\w*\/player\/\w*$/,
 			methods: ['DELETE'],
-			authTypes: ['player', 'gm', 'jwt'],
+			authTypes: ['player', 'gm', 'admin'],
 		},
 		{
 			path: /room\/\w*\/player\/\w*$/,
 			methods: ['GET', 'PUT'],
-			authTypes: ['player', 'jwt'],
+			authTypes: ['player', 'admin'],
 		},
 		{
 			path: /room\/\w*\/player\/\w*\/eliminate$/,
 			methods: ['POST'],
-			authTypes: ['player', 'jwt'],
+			authTypes: ['player', 'admin'],
 		},
 		{
 			path: /room\/\w*\/(start|reset)$/,
 			methods: ['POST'],
-			authTypes: ['gm', 'jwt'],
+			authTypes: ['gm', 'admin'],
 		},
 		{
 			path: /room\/\w*\/gm\/?(\w+)?$/,
 			methods: ['POST'],
-			authTypes: ['gm', 'jwt'],
+			authTypes: ['gm', 'admin'],
 		},
 		{
 			path: /wordlist\/\w*$/,
 			methods: ['PUT', 'DELETE', 'PATCH'],
-			authTypes: ['jwt'],
+			authTypes: ['admin'],
 		},
 		{
 			path: /wordlist\/import\/\w*$/,
 			methods: ['PUT'],
-			authTypes: ['jwt'],
+			authTypes: ['admin'],
 		},
 		{
 			path: /wordlist\/\w*\/words$/,
 			methods: ['PUT', 'DELETE'],
-			authTypes: ['jwt'],
+			authTypes: ['admin'],
 		},
 	]
 }

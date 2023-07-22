@@ -29,7 +29,7 @@ export const AuthMiddleware = async (c: Context<{ Bindings: Bindings }>, next: N
 			result = await PlayerAuth(c)
 		}
 
-		if (match.authTypes.includes('jwt') && !result) {
+		if (match.authTypes.includes('admin') && !result) {
 			result = await AdminAuth(c)
 		}
 

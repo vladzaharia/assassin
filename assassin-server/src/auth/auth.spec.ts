@@ -2,7 +2,7 @@ import { Context } from 'hono'
 import { AuthMiddleware, checkPath } from './auth'
 import { vi } from 'vitest'
 import { SecureEndpoint } from './secure-endpoints'
-import { PlayerTable, RoomTable } from '../tables/db'
+import { AuthException } from './common'
 
 const secureEndpoints: SecureEndpoint[] = [
 	{
@@ -26,19 +26,19 @@ const secureEndpoints: SecureEndpoint[] = [
 		path: /\/player(\/.*)?$/,
 	},
 	{
-		authTypes: ['jwt'],
+		authTypes: ['admin'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-		path: /\/jwt(\/.*)?$/,
+		path: /\/admin(\/.*)?$/,
 	},
 	{
-		authTypes: ['player', 'jwt'],
+		authTypes: ['player', 'admin'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-		path: /\/player-jwt(\/.*)?$/,
+		path: /\/player-admin(\/.*)?$/,
 	},
 	{
-		authTypes: ['gm', 'jwt'],
+		authTypes: ['gm', 'admin'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-		path: /\/gm-jwt(\/.*)?$/,
+		path: /\/gm-admin(\/.*)?$/,
 	},
 	{
 		authTypes: ['gm', 'player'],
@@ -46,34 +46,23 @@ const secureEndpoints: SecureEndpoint[] = [
 		path: /\/gm-player(\/.*)?$/,
 	},
 	{
-		authTypes: ['gm', 'player', 'jwt'],
+		authTypes: ['gm', 'player', 'admin'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-		path: /\/gm-player-jwt(\/.*)?$/,
+		path: /\/gm-player-admin(\/.*)?$/,
 	},
 ]
 
 const mocks = vi.hoisted(() => {
 	return {
 		getSecureEndpoints: () => secureEndpoints,
-		jwt: vi.fn().mockImplementation(() => () => {
-			return
+		AdminAuth: vi.fn().mockImplementation(async () => {
+			return true
 		}),
-		findRoomMock: vi.fn().mockImplementation(async () => {
-			return {
-				name: 'test-room',
-				numWords: 0,
-				status: 'started',
-				usesWords: 0,
-				wordlists: '[]',
-			} as RoomTable
+		GMAuth: vi.fn().mockImplementation(async () => {
+			return true
 		}),
-		findRoomGM: vi.fn().mockImplementation(async () => {
-			return {
-				name: 'test-player',
-				room: 'test-room',
-				isGM: 1,
-				status: 'alive',
-			} as PlayerTable
+		PlayerAuth: vi.fn().mockImplementation(async () => {
+			return true
 		}),
 	}
 })
@@ -85,24 +74,21 @@ vi.mock('./secure-endpoints', () => {
 	}
 })
 
-// Mock jwt() calls
 vi.mock('./admin', () => {
 	return {
-		AdminAuth: mocks.jwt,
+		AdminAuth: mocks.AdminAuth,
 	}
 })
 
-// Mock finding room
-vi.mock('../tables/room', () => {
+vi.mock('./gm', () => {
 	return {
-		findRoom: mocks.findRoomMock,
+		GMAuth: mocks.GMAuth,
 	}
 })
 
-// Mock finding room GM
-vi.mock('../tables/player', () => {
+vi.mock('./player', () => {
 	return {
-		findRoomGM: mocks.findRoomGM,
+		PlayerAuth: mocks.PlayerAuth,
 	}
 })
 
@@ -174,217 +160,221 @@ describe('AuthMiddleware', () => {
 			}
 		)
 		expect(nextCalled).toBeTruthy()
-		expect(mocks.jwt).toHaveBeenCalledTimes(0)
-	})
-
-	describe('jwt', () => {
-		test('auth uses jwt if successful', async () => {
-			let nextCalled = false
-			context.req.path = '/jwt'
-
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-
-			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
-		})
-
-		test('auth falls back to jwt if gm fails', async () => {
-			let nextCalled = false
-			context.req.path = '/jwt'
-			context.req.header = () => 'Vlad'
-
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-
-			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
-		})
-
-		test('auth with no secrets', async () => {
-			context.req.path = '/jwt'
-			context.env.ASSASSIN_SECRET = undefined
-			context.env.OPENID.get = async () => undefined
-			let nextCalled = false
-			context.req.path = '/gm-jwt'
-			context.req.header = () => 'Vlad'
-
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
-		})
+		expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+		expect(mocks.GMAuth).toHaveBeenCalledTimes(0)
+		expect(mocks.PlayerAuth).toHaveBeenCalledTimes(0)
 	})
 
 	describe('gm-player', () => {
+		beforeEach(() => {
+			context.req.path = '/gm-player'
+		})
+
 		test('auth uses gm if successful', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to player if gm fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player'
-			context.req.header = () => 'test-player2'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
+
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalled()
 		})
 
-		test('auth fails if player and gm fails', async () => {
+		test('auth fails if gm and player fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player'
-			context.req.header = () => 'test-player3'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
+
+			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
 
 			expect(
-				AuthMiddleware(context, async () => {
+				() => AuthMiddleware(context, async () => {
 					nextCalled = true
 				})
-			).rejects.toBeDefined()
+			).rejects.toEqual(new AuthException('Unauthorized', 401))
 
 			expect(nextCalled).toBeFalsy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
 		})
 	})
 
-	describe('gm-jwt', () => {
+	describe('gm-admin', () => {
+		beforeEach(() => {
+			context.req.path = '/gm-admin'
+		})
+
 		test('auth uses gm if successful', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-jwt'
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalledTimes(0)
 		})
 
-		test('auth falls back to jwt if gm fails', async () => {
+		test('auth falls back to admin if gm fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-jwt'
-			context.req.header = () => 'Vlad'
+
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
+			expect(mocks.AdminAuth).toHaveBeenCalled()
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalledTimes(0)
 		})
 
-		test('auth with no secrets', async () => {
-			context.req.path = '/jwt'
-			context.env.ASSASSIN_SECRET = undefined
-			context.env.OPENID.get = async () => undefined
+		test('auth fails if gm and admin fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-jwt'
-			context.req.header = () => 'Vlad'
 
-			await AuthMiddleware(context, async () => {
-				nextCalled = true
-			})
-			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
+			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+
+			expect(
+				() => AuthMiddleware(context, async () => {
+					nextCalled = true
+				})
+			).rejects.toEqual(new AuthException('Unauthorized', 401))
+
+			expect(nextCalled).toBeFalsy()
 		})
 	})
 
-	describe('player-jwt', () => {
+	describe('player-admin', () => {
+		beforeEach(() => {
+			context.req.path = '/player-admin'
+		})
+
 		test('auth uses player if successful', async () => {
 			let nextCalled = false
-			context.req.path = '/player-jwt'
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.PlayerAuth).toHaveBeenCalled()
 		})
 
-		test('auth falls back to jwt if player fails', async () => {
+		test('auth falls back to admin if player fails', async () => {
 			let nextCalled = false
-			context.req.path = '/player-jwt'
-			context.req.header = () => 'Vlad'
+
+			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
+			expect(mocks.AdminAuth).toHaveBeenCalled()
+			expect(mocks.GMAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.PlayerAuth).toHaveBeenCalled()
+		})
+
+		test('auth fails if player and admin fails', async () => {
+			let nextCalled = false
+
+			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
+			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+
+			expect(
+				() => AuthMiddleware(context, async () => {
+					nextCalled = true
+				})
+			).rejects.toEqual(new AuthException('Unauthorized', 401))
+
+			expect(nextCalled).toBeFalsy()
 		})
 	})
 
-	describe('gm-player-jwt', () => {
+	describe('gm-player-admin', () => {
+		beforeEach(() => {
+			context.req.path = '/gm-player-admin'
+		})
+
 		test('auth uses gm if successful', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player-jwt'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalledTimes(0)
 		})
 
 		test('auth falls back to player if gm fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player-jwt'
-			context.req.header = () => 'test-player2'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
+
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalledTimes(0)
+			expect(mocks.AdminAuth).toHaveBeenCalledTimes(0)
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalled()
 		})
 
-		test('auth falls back to jwt if gm and player fail', async () => {
+		test('auth falls back to admin if gm and player fails', async () => {
 			let nextCalled = false
-			context.req.path = '/gm-player-jwt'
-			context.req.header = () => 'Vlad'
-			context.req.param = () => {
-				return { room: 'test-room', name: 'test-player2' }
-			}
+
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
 
 			await AuthMiddleware(context, async () => {
 				nextCalled = true
 			})
 
 			expect(nextCalled).toBeTruthy()
-			expect(mocks.jwt).toHaveBeenCalled()
+			expect(mocks.AdminAuth).toHaveBeenCalled()
+			expect(mocks.GMAuth).toHaveBeenCalled()
+			expect(mocks.PlayerAuth).toHaveBeenCalled()
+		})
+
+		test('auth fails if gm, player and admin fails', async () => {
+			let nextCalled = false
+
+			mocks.AdminAuth.mockImplementationOnce(async () => { return false })
+			mocks.GMAuth.mockImplementationOnce(async () => { return false })
+			mocks.PlayerAuth.mockImplementationOnce(async () => { return false })
+
+			expect(
+				() => AuthMiddleware(context, async () => {
+					nextCalled = true
+				})
+			).rejects.toEqual(new AuthException('Unauthorized', 401))
+
+			expect(nextCalled).toBeFalsy()
 		})
 	})
 })
