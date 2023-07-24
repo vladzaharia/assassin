@@ -68,6 +68,62 @@ describe('ListRooms', () => {
 		context = createContext()
 	})
 
+	describe('listRooms', async () => {
+		test('calls method', async () => {
+			const result = await ListRooms(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listRooms).toBeCalledTimes(1)
+			expect(mocks.listRooms).toBeCalledWith(undefined)
+		})
+	})
+
+	describe('listPlayersInRoom', async () => {
+		test('calls method', async () => {
+			const result = await ListRooms(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(2)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room')
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room-2')
+		})
+
+		test('calls method for each room in the room list', async () => {
+			mocks.listRooms.mockImplementationOnce(() => {
+				return [
+					{
+						name: 'test-room',
+						status: 'not-ready',
+						numWords: 0,
+						usesWords: 0,
+						wordlists: JSON.stringify([]),
+					},
+					{
+						name: 'test-room-2',
+						status: 'started',
+						numWords: 3,
+						usesWords: 1,
+						wordlists: JSON.stringify(['some-list', 'another-list']),
+					},
+					{
+						name: 'test-room-3',
+						status: 'started',
+						numWords: 3,
+						usesWords: 1,
+						wordlists: JSON.stringify(['some-list', 'another-list']),
+					},
+				] as RoomTable[]
+			})
+			const result = await ListRooms(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(3)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room')
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room-2')
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room-3')
+		})
+	})
+
 	describe('room array', () => {
 		test('multiple results', async () => {
 			const result = await ListRooms(context)

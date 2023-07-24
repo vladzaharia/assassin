@@ -66,12 +66,38 @@ describe('UpdateRoom', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('empty body', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await UpdateRoom(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
 		expect(resultJson.message).toEqual('Room updated successfully!')
+	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await UpdateRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await UpdateRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	test('empty body', async () => {
+		const result = await UpdateRoom(context)
+
+		expect(result.status).toEqual(200)
 		expect(mocks.setNumWords).toBeCalledTimes(0)
 		expect(mocks.setStatus).toBeCalledTimes(0)
 		expect(mocks.setUsesWords).toBeCalledTimes(0)
@@ -173,6 +199,23 @@ describe('UpdateRoom', () => {
 			expect(result.status).toEqual(200)
 			expect(mocks.setWordLists).toBeCalledTimes(1)
 			expect(mocks.setWordLists).toBeCalledWith(undefined, 'test-room', ['some', 'word', 'list'])
+			expect(mocks.findWordList).toBeCalledTimes(3)
+			expect(mocks.findWordList).toBeCalledWith(undefined, 'some')
+			expect(mocks.findWordList).toBeCalledWith(undefined, 'word')
+			expect(mocks.findWordList).toBeCalledWith(undefined, 'list')
+		})
+
+		test('uses passed in body parameter', async () => {
+			modifyContext(context, '$.req.json', () => {
+				return { wordLists: ['another'] }
+			})
+			const result = await UpdateRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.setWordLists).toBeCalledTimes(1)
+			expect(mocks.setWordLists).toBeCalledWith(undefined, 'test-room', ['another'])
+			expect(mocks.findWordList).toBeCalledTimes(1)
+			expect(mocks.findWordList).toBeCalledWith(undefined, 'another')
 		})
 
 		test('empty list', async () => {

@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { GetPlayer } from './get'
-import { createContext } from '../../testutil'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
 import { PlayerTable, RoomTable } from '../../tables/db'
 
@@ -57,6 +57,46 @@ describe('GetPlayer', () => {
 				},
 			},
 		} as unknown as Context<{ Bindings: Bindings }>)
+	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await GetPlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await GetPlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('findPlayer', async () => {
+		test('calls method', async () => {
+			const result = await GetPlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(1)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'test-room', 'test-player')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await GetPlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(1)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'another-room', 'test-player-3')
+		})
 	})
 
 	describe('name', () => {

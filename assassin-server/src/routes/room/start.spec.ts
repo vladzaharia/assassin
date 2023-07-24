@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { StartGame } from './start'
-import { createContext } from '../../testutil'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
 import { PlayerTable, RoomTable } from '../../tables/db'
 
@@ -90,13 +90,72 @@ describe('StartGame', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('sets room status', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await StartGame(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
-		expect(resultJson.message).toEqual('Successfully started game!')
-		expect(mocks.setStatus).toHaveBeenCalledWith(undefined, 'test-room', 'started')
+		expect(resultJson.message).toEqual('Game started successfully!')
+	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('listPlayersInRoom', async () => {
+		test('calls method', async () => {
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('setStatus', async () => {
+		test('calls method', async () => {
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.setStatus).toBeCalledTimes(1)
+			expect(mocks.setStatus).toBeCalledWith(undefined, 'test-room', 'started')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await StartGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.setStatus).toBeCalledTimes(1)
+			expect(mocks.setStatus).toBeCalledWith(undefined, 'another-room', 'started')
+		})
 	})
 
 	describe('uses words', () => {

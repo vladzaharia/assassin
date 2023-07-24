@@ -85,18 +85,103 @@ describe('AssignGM', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('calls setGMStatus', async () => {
-		const result = await AssignGM(context)
-		const resultJson = await result.json()
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await AssignGM(context)
 
-		expect(result.status).toEqual(200)
-		expect(resultJson.message).toEqual('Successfully reassigned GM status!')
-		expect(mocks.setGMStatus).toBeCalledTimes(2)
-		expect(mocks.setGMStatus).toBeCalledWith(undefined, 'test-room', 'test-player', false)
-		expect(mocks.setGMStatus).toBeCalledWith(undefined, 'test-room', 'test-player', true)
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('findRoomGM', async () => {
+		test('calls method', async () => {
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoomGM).toBeCalledTimes(1)
+			expect(mocks.findRoomGM).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoomGM).toBeCalledTimes(1)
+			expect(mocks.findRoomGM).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('listPlayersInRoom', async () => {
+		test('calls method', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'test-room' } })
+
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.listPlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.listPlayersInRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('findPlayer', async () => {
+		test('calls method', async () => {
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(1)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'test-room', 'test-player')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-2' } })
+
+			const result = await AssignGM(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(1)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'another-room', 'test-player-2')
+		})
 	})
 
 	describe('name parameter', () => {
+		test('sets GM to named player', async () => {
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'test-room', name: 'test-player' }
+			})
+
+			const result = await AssignGM(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.message).toEqual('Successfully reassigned GM status!')
+			expect(mocks.setGMStatus).toBeCalledTimes(2)
+			expect(mocks.setGMStatus).toBeCalledWith(undefined, 'test-room', 'test-player', true)
+		})
+
 		test('name parameter is used', async () => {
 			modifyContext(context, '$.req.param', () => {
 				return { room: 'test-room', name: 'test-player-2' }
@@ -141,6 +226,36 @@ describe('AssignGM', () => {
 			expect(resultJson.message).toEqual('Successfully reassigned GM status!')
 			expect(mocks.setGMStatus).toBeCalledTimes(2)
 			expect(mocks.setGMStatus).toBeCalledWith(undefined, 'test-room', 'test-player-454', true)
+		})
+
+		test('room parameter is used', async () => {
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
+			mocks.listPlayersInRoom.mockImplementationOnce(async () => {
+				return [
+					{
+						name: 'test-player',
+						room: 'test-room',
+						isGM: 1,
+						status: 'alive',
+					},
+					{
+						name: 'test-player-454',
+						room: 'test-room',
+						isGM: 0,
+						status: 'alive',
+					},
+				] as PlayerTable[]
+			})
+
+			const result = await AssignGM(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.message).toEqual('Successfully reassigned GM status!')
+			expect(mocks.setGMStatus).toBeCalledTimes(2)
+			expect(mocks.setGMStatus).toBeCalledWith(undefined, 'another-room', 'test-player-454', true)
 		})
 	})
 

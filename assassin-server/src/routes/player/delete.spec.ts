@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { DeletePlayer } from './delete'
-import { createContext } from '../../testutil'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
 import { PlayerTable, RoomTable } from '../../tables/db'
 
@@ -78,14 +78,52 @@ describe('DeletePlayer', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('calls deletePlayer', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await DeletePlayer(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
 		expect(resultJson.message).toEqual('Successfully left test-room room!')
-		expect(mocks.deletePlayer).toBeCalledTimes(1)
-		expect(mocks.deletePlayer).toBeCalledWith(undefined, 'test-room', 'test-player')
+	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await DeletePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await DeletePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('deletePlayer', async () => {
+		test('calls method', async () => {
+			const result = await DeletePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deletePlayer).toBeCalledTimes(1)
+			expect(mocks.deletePlayer).toBeCalledWith(undefined, 'test-room', 'test-player')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await DeletePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deletePlayer).toBeCalledTimes(1)
+			expect(mocks.deletePlayer).toBeCalledWith(undefined, 'another-room', 'test-player-3')
+		})
 	})
 
 	describe('reassign GM', () => {

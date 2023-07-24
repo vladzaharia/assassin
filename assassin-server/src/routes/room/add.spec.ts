@@ -39,15 +39,54 @@ describe('AddRoom', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('calls insertRoom', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await AddRoom(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
 		expect(resultJson.message).toEqual('Room created successfully!')
-		expect(mocks.insertRoom).toBeCalledTimes(1)
-		expect(mocks.insertRoom).toBeCalledWith(undefined, 'test-room', false)
 	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await AddRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await AddRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('insertRoom', async () => {
+		test('calls method', async () => {
+			const result = await AddRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.insertRoom).toBeCalledTimes(1)
+			expect(mocks.insertRoom).toBeCalledWith(undefined, 'test-room', false)
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await AddRoom(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.insertRoom).toBeCalledTimes(1)
+			expect(mocks.insertRoom).toBeCalledWith(undefined, 'another-room', false)
+		})
+	})
+
 
 	describe('usesWords', () => {
 		test('true', async () => {

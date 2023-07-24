@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { EliminatePlayer } from './eliminate'
-import { createContext } from '../../testutil'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
 import { PlayerTable, RoomTable } from '../../tables/db'
 
@@ -70,12 +70,59 @@ describe('EliminatePlayer', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('calls setStatus on target', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await EliminatePlayer(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
 		expect(resultJson.message).toEqual('Successfully eliminated test-player-2!')
+	})
+
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await EliminatePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await EliminatePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('findPlayer', async () => {
+		test('calls method', async () => {
+			const result = await EliminatePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(2)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'test-room', 'test-player')
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'test-room', 'test-player-2')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+
+			const result = await EliminatePlayer(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findPlayer).toBeCalledTimes(2)
+			expect(mocks.findPlayer).toBeCalledWith(undefined, 'another-room', 'test-player-3')
+		})
+	})
+
+	test('calls setStatus on target', async () => {
+		const result = await EliminatePlayer(context)
+
+		expect(result.status).toEqual(200)
 		expect(mocks.setStatus).toBeCalledWith(undefined, 'test-room', 'test-player-2', 'eliminated')
 	})
 

@@ -75,7 +75,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			// Update room record
 			await setRoomStatus(db, room, 'started')
 
-			return c.json({ message: 'Successfully started game!' })
+			return c.json({ message: 'Game started successfully!' })
 		} else {
 			return c.json({ message: 'Must have at least 3 people signed up!' }, 400)
 		}

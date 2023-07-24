@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { ResetGame } from './reset'
-import { createContext } from '../../testutil'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
 import { RoomTable } from '../../tables/db'
 
@@ -52,22 +52,72 @@ describe('ResetGame', () => {
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
-	test('calls setStatus', async () => {
+	test('returns 200 / success message', async () => {
 		const result = await ResetGame(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
 		expect(resultJson.message).toEqual('Room reset successfully!')
-		expect(mocks.setStatus).toBeCalledTimes(1)
-		expect(mocks.setStatus).toBeCalledWith(undefined, 'test-room', 'not-ready')
 	})
 
-	test('calls deletePlayersInRoom', async () => {
-		const result = await ResetGame(context)
+	describe('findRoom', async () => {
+		test('calls method', async () => {
+			const result = await ResetGame(context)
 
-		expect(result.status).toEqual(200)
-		expect(mocks.deletePlayersInRoom).toBeCalledTimes(1)
-		expect(mocks.deletePlayersInRoom).toBeCalledWith(undefined, 'test-room')
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await ResetGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.findRoom).toBeCalledTimes(1)
+			expect(mocks.findRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('deletePlayersInRoom', async () => {
+		test('calls method', async () => {
+			const result = await ResetGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deletePlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.deletePlayersInRoom).toBeCalledWith(undefined, 'test-room')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await ResetGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deletePlayersInRoom).toBeCalledTimes(1)
+			expect(mocks.deletePlayersInRoom).toBeCalledWith(undefined, 'another-room')
+		})
+	})
+
+	describe('setStatus', async () => {
+		test('calls method', async () => {
+			const result = await ResetGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.setStatus).toBeCalledTimes(1)
+			expect(mocks.setStatus).toBeCalledWith(undefined, 'test-room', 'not-ready')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+
+			const result = await ResetGame(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.setStatus).toBeCalledTimes(1)
+			expect(mocks.setStatus).toBeCalledWith(undefined, 'another-room', 'not-ready')
+		})
 	})
 
 	describe('errors', () => {
