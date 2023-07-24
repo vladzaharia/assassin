@@ -27,7 +27,7 @@ export default defineConfig({
 				'**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
 				'**/migrate/migrations/**',
 				'**/tables/*.ts',
-				'**/wordlist/managed/**',
+				'**/wordlist/managed/lists/**',
 			],
 			reporter: ['json-summary', 'json', 'html'],
 		},

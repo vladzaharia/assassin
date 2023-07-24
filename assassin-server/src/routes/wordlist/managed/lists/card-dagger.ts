@@ -1,4 +1,4 @@
-import { ManagedWordList } from './types'
+import { ManagedWordList } from '../types'
 
 export const CARD_DAGGER: ManagedWordList = {
 	name: 'card-dagger',
