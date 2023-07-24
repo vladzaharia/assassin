@@ -1,13 +1,14 @@
 import { Context } from 'hono'
-import { Bindings } from '../../../bindings'
-import { AddWords } from './addWords'
-import { createContext, modifyContext } from '../../../testutil'
+import { Bindings } from '../../bindings'
+import { DeleteWordList } from './delete'
+import { createContext, modifyContext } from '../../testutil'
 import { vi } from 'vitest'
-import { WordListTable } from '../../../tables/db'
+import { WordListTable } from '../../tables/db'
 
 const mocks = vi.hoisted(() => {
 	return {
-		insertWords: vi.fn(),
+		deleteWordList: vi.fn(),
+		deleteWordsInWordList: vi.fn(),
 		findWordList: vi.fn().mockImplementation(async () => {
 			return {
 				name: 'test-list',
@@ -18,15 +19,16 @@ const mocks = vi.hoisted(() => {
 	}
 })
 
-vi.mock('../../../tables/wordlist', () => {
+vi.mock('../../tables/wordlist', () => {
 	return {
 		findWordList: mocks.findWordList,
+		deleteWordList: mocks.deleteWordList,
 	}
 })
 
-vi.mock('../../../tables/word', () => {
+vi.mock('../../tables/word', () => {
 	return {
-		insertWords: mocks.insertWords,
+		deleteWordsInWordList: mocks.deleteWordsInWordList,
 	}
 })
 
@@ -35,33 +37,30 @@ afterEach(() => {
 	vi.clearAllMocks()
 })
 
-describe('AddWords', () => {
+describe('DeleteWordList', () => {
 	let context: Context<{ Bindings: Bindings }>
 
 	beforeEach(() => {
 		context = createContext({
 			req: {
 				param: () => {
-					return { list: 'test-list', word: 'foo' }
-				},
-				json: () => {
-					return { words: ['some', 'words', 'here'] }
+					return { list: 'test-list' }
 				},
 			},
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
 
 	test('returns 200 / success message', async () => {
-		const result = await AddWords(context)
+		const result = await DeleteWordList(context)
 		const resultJson = await result.json()
 
 		expect(result.status).toEqual(200)
-		expect(resultJson.message).toEqual('Successfully added words!')
+		expect(resultJson.message).toEqual('Successfully deleted word list!')
 	})
 
 	describe('findWordList', () => {
 		test('calls method', async () => {
-			const result = await AddWords(context)
+			const result = await DeleteWordList(context)
 
 			expect(result.status).toEqual(200)
 			expect(mocks.findWordList).toBeCalledTimes(1)
@@ -70,9 +69,9 @@ describe('AddWords', () => {
 
 		test('passed in parameters are used', async () => {
 			modifyContext(context, '$.req.param', () => {
-				return { list: 'another-list' }
+				return { list: 'another-list', word: 'bar' }
 			})
-			const result = await AddWords(context)
+			const result = await DeleteWordList(context)
 
 			expect(result.status).toEqual(200)
 			expect(mocks.findWordList).toBeCalledTimes(1)
@@ -80,27 +79,47 @@ describe('AddWords', () => {
 		})
 	})
 
-	describe('insertWords', () => {
+	describe('deleteWordList', () => {
 		test('calls method', async () => {
-			const result = await AddWords(context)
+			const result = await DeleteWordList(context)
 
 			expect(result.status).toEqual(200)
-			expect(mocks.insertWords).toBeCalledTimes(1)
-			expect(mocks.insertWords).toBeCalledWith(undefined, 'test-list', ['some', 'words', 'here'])
+			expect(mocks.deleteWordList).toBeCalledTimes(1)
+			expect(mocks.deleteWordList).toBeCalledWith(undefined, 'test-list')
 		})
 
 		test('passed in parameters are used', async () => {
 			modifyContext(context, '$.req.param', () => {
 				return { list: 'another-list' }
 			})
-			modifyContext(context, '$.req.json', () => {
-				return { words: ['other', 'words'] }
-			})
-			const result = await AddWords(context)
+
+			const result = await DeleteWordList(context)
 
 			expect(result.status).toEqual(200)
-			expect(mocks.insertWords).toBeCalledTimes(1)
-			expect(mocks.insertWords).toBeCalledWith(undefined, 'another-list', ['other', 'words'])
+			expect(mocks.deleteWordList).toBeCalledTimes(1)
+			expect(mocks.deleteWordList).toBeCalledWith(undefined, 'another-list')
+		})
+	})
+
+	describe('deleteWordsInWordList', () => {
+		test('calls method', async () => {
+			const result = await DeleteWordList(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deleteWordsInWordList).toBeCalledTimes(1)
+			expect(mocks.deleteWordsInWordList).toBeCalledWith(undefined, 'test-list')
+		})
+
+		test('passed in parameters are used', async () => {
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list' }
+			})
+
+			const result = await DeleteWordList(context)
+
+			expect(result.status).toEqual(200)
+			expect(mocks.deleteWordsInWordList).toBeCalledTimes(1)
+			expect(mocks.deleteWordsInWordList).toBeCalledWith(undefined, 'another-list')
 		})
 	})
 
@@ -110,7 +129,7 @@ describe('AddWords', () => {
 				throw new Error('The apocalypse is upon us')
 			})
 
-			const result = await AddWords(context)
+			const result = await DeleteWordList(context)
 			const resultJson = await result.json()
 
 			expect(result.status).toEqual(500)
@@ -120,35 +139,11 @@ describe('AddWords', () => {
 		test('word list not found', async () => {
 			mocks.findWordList.mockImplementationOnce(() => undefined)
 
-			const result = await AddWords(context)
+			const result = await DeleteWordList(context)
 			const resultJson = await result.json()
 
 			expect(result.status).toEqual(404)
 			expect(resultJson.message).toEqual('Word list not found!')
-		})
-
-		test('word list undefined', async () => {
-			modifyContext(context, '$.req.json', () => {
-				return {}
-			})
-
-			const result = await AddWords(context)
-			const resultJson = await result.json()
-
-			expect(result.status).toEqual(400)
-			expect(resultJson.message).toEqual('Must provide `words` array!')
-		})
-
-		test('word list empty', async () => {
-			modifyContext(context, '$.req.json', () => {
-				return { words: [] }
-			})
-
-			const result = await AddWords(context)
-			const resultJson = await result.json()
-
-			expect(result.status).toEqual(400)
-			expect(resultJson.message).toEqual('Must provide `words` array!')
 		})
 	})
 })

@@ -69,7 +69,9 @@ describe('GetPlayer', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room', name: 'test-player-3' }
+			})
 
 			const result = await GetPlayer(context)
 
@@ -89,7 +91,9 @@ describe('GetPlayer', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room', name: 'test-player-3' }
+			})
 
 			const result = await GetPlayer(context)
 
@@ -100,22 +104,58 @@ describe('GetPlayer', () => {
 	})
 
 	describe('name', () => {
-		test('has name', async () => {
+		test('is set', async () => {
 			const result = await GetPlayer(context)
 			const resultJson = await result.json()
 
 			expect(result.status).toEqual(200)
 			expect(resultJson.name).toEqual('test-player')
 		})
+
+		test('is based on db result', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'another-player',
+					room: 'another-room',
+					isGM: 0,
+					status: 'eliminated',
+					target: 'test-player-2',
+					words: JSON.stringify(['other']),
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.name).toEqual('another-player')
+		})
 	})
 
 	describe('room', () => {
-		test('has room name', async () => {
+		test('is set', async () => {
 			const result = await GetPlayer(context)
 			const resultJson = await result.json()
 
 			expect(result.status).toEqual(200)
 			expect(resultJson.room).toEqual('test-room')
+		})
+
+		test('is based on db result', async () => {
+			mocks.findPlayer.mockImplementationOnce(() => {
+				return {
+					name: 'another-player',
+					room: 'another-room',
+					isGM: 0,
+					status: 'eliminated',
+					target: 'test-player-2',
+					words: JSON.stringify(['other']),
+				} as PlayerTable
+			})
+			const result = await GetPlayer(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.room).toEqual('another-room')
 		})
 	})
 

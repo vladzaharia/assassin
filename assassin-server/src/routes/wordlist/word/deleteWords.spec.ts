@@ -10,17 +10,17 @@ const mocks = vi.hoisted(() => {
 		deleteWords: vi.fn(),
 		findWordList: vi.fn().mockImplementation(async () => {
 			return {
-				name: "test-list",
-				description: "A list used for testing",
-				icon: "flask"
+				name: 'test-list',
+				description: 'A list used for testing',
+				icon: 'flask',
 			} as WordListTable
-		})
+		}),
 	}
 })
 
 vi.mock('../../../tables/wordlist', () => {
 	return {
-		findWordList: mocks.findWordList
+		findWordList: mocks.findWordList,
 	}
 })
 
@@ -46,7 +46,7 @@ describe('DeleteWords', () => {
 				},
 				json: () => {
 					return { words: ['some', 'words', 'here'] }
-				}
+				},
 			},
 		} as unknown as Context<{ Bindings: Bindings }>)
 	})
@@ -69,7 +69,9 @@ describe('DeleteWords', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { list: 'another-list' } })
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list' }
+			})
 			const result = await DeleteWords(context)
 
 			expect(result.status).toEqual(200)
@@ -88,8 +90,12 @@ describe('DeleteWords', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { list: 'another-list' } })
-			modifyContext(context, "$.req.json", () => { return { words: ['other', 'words'] } })
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list' }
+			})
+			modifyContext(context, '$.req.json', () => {
+				return { words: ['other', 'words'] }
+			})
 			const result = await DeleteWords(context)
 
 			expect(result.status).toEqual(200)
@@ -122,7 +128,9 @@ describe('DeleteWords', () => {
 		})
 
 		test('word list undefined', async () => {
-			modifyContext(context, "$.req.json", () => { return {} })
+			modifyContext(context, '$.req.json', () => {
+				return {}
+			})
 
 			const result = await DeleteWords(context)
 			const resultJson = await result.json()
@@ -132,7 +140,9 @@ describe('DeleteWords', () => {
 		})
 
 		test('word list empty', async () => {
-			modifyContext(context, "$.req.json", () => { return { words: [] } })
+			modifyContext(context, '$.req.json', () => {
+				return { words: [] }
+			})
 
 			const result = await DeleteWords(context)
 			const resultJson = await result.json()

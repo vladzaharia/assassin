@@ -71,7 +71,9 @@ describe('GetRoom', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await GetRoom(context)
 
@@ -91,7 +93,9 @@ describe('GetRoom', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await GetRoom(context)
 
@@ -102,12 +106,29 @@ describe('GetRoom', () => {
 	})
 
 	describe('name', () => {
-		test('has name', async () => {
+		test('is set', async () => {
 			const result = await GetRoom(context)
 			const resultJson = await result.json()
 
 			expect(result.status).toEqual(200)
 			expect(resultJson.name).toEqual('test-room')
+		})
+
+		test('is based on db result', async () => {
+			mocks.findRoom.mockImplementationOnce(() => {
+				return {
+					name: 'another-room',
+					status: 'started',
+					numWords: 5,
+					usesWords: 0,
+					wordlists: JSON.stringify(['foobar']),
+				} as RoomTable
+			})
+			const result = await GetRoom(context)
+			const resultJson = await result.json()
+
+			expect(result.status).toEqual(200)
+			expect(resultJson.name).toEqual('another-room')
 		})
 	})
 

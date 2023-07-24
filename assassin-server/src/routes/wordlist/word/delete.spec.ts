@@ -19,17 +19,17 @@ const mocks = vi.hoisted(() => {
 		}),
 		findWordList: vi.fn().mockImplementation(async () => {
 			return {
-				name: "test-list",
-				description: "A list used for testing",
-				icon: "flask"
+				name: 'test-list',
+				description: 'A list used for testing',
+				icon: 'flask',
 			} as WordListTable
-		})
+		}),
 	}
 })
 
 vi.mock('../../../tables/wordlist', () => {
 	return {
-		findWordList: mocks.findWordList
+		findWordList: mocks.findWordList,
 	}
 })
 
@@ -76,7 +76,9 @@ describe('DeleteWord', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { list: 'another-list', word: 'bar' } })
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list', word: 'bar' }
+			})
 			const result = await DeleteWord(context)
 
 			expect(result.status).toEqual(200)
@@ -95,7 +97,9 @@ describe('DeleteWord', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { list: 'another-list', word: 'bar' } })
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list', word: 'bar' }
+			})
 			const result = await DeleteWord(context)
 
 			expect(result.status).toEqual(200)
@@ -114,7 +118,9 @@ describe('DeleteWord', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { list: 'another-list', word: 'bar' } })
+			modifyContext(context, '$.req.param', () => {
+				return { list: 'another-list', word: 'bar' }
+			})
 
 			const result = await DeleteWord(context)
 

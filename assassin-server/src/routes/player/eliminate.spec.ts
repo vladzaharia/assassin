@@ -88,7 +88,9 @@ describe('EliminatePlayer', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room', name: 'test-player-3' }
+			})
 
 			const result = await EliminatePlayer(context)
 
@@ -109,7 +111,9 @@ describe('EliminatePlayer', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-3' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room', name: 'test-player-3' }
+			})
 
 			const result = await EliminatePlayer(context)
 

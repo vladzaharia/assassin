@@ -108,7 +108,9 @@ describe('StartGame', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await StartGame(context)
 
@@ -128,7 +130,9 @@ describe('StartGame', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await StartGame(context)
 
@@ -148,7 +152,9 @@ describe('StartGame', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await StartGame(context)
 

@@ -57,7 +57,9 @@ describe('AddRoom', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await AddRoom(context)
 
@@ -77,7 +79,9 @@ describe('AddRoom', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await AddRoom(context)
 
@@ -86,7 +90,6 @@ describe('AddRoom', () => {
 			expect(mocks.insertRoom).toBeCalledWith(undefined, 'another-room', false)
 		})
 	})
-
 
 	describe('usesWords', () => {
 		test('true', async () => {

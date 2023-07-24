@@ -95,7 +95,9 @@ describe('AssignGM', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await AssignGM(context)
 
@@ -115,7 +117,9 @@ describe('AssignGM', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await AssignGM(context)
 
@@ -127,7 +131,9 @@ describe('AssignGM', () => {
 
 	describe('listPlayersInRoom', async () => {
 		test('calls method', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'test-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'test-room' }
+			})
 
 			const result = await AssignGM(context)
 
@@ -137,7 +143,9 @@ describe('AssignGM', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room' }
+			})
 
 			const result = await AssignGM(context)
 
@@ -157,7 +165,9 @@ describe('AssignGM', () => {
 		})
 
 		test('passed in parameters are used', async () => {
-			modifyContext(context, "$.req.param", () => { return { room: 'another-room', name: 'test-player-2' } })
+			modifyContext(context, '$.req.param', () => {
+				return { room: 'another-room', name: 'test-player-2' }
+			})
 
 			const result = await AssignGM(context)
 
