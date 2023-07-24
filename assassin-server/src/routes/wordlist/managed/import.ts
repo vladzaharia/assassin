@@ -25,7 +25,7 @@ export const ImportManagedWordList = async (c: Context<{ Bindings: Bindings }>) 
 		await insertWordList(db, initialWordList.name, initialWordList.description, initialWordList.icon)
 		await insertWords(db, initialWordList.name, initialWordList.words)
 
-		return c.json({ message: 'ok' })
+		return c.json({ message: 'Successfully imported word list!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

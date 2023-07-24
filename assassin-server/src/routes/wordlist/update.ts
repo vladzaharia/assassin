@@ -32,7 +32,7 @@ export const UpdateWordList = async (c: Context<{ Bindings: Bindings }>) => {
 			await setIcon(db, list, icon)
 		}
 
-		return c.json({ message: 'Successfully updated word list!' })
+		return c.json({ message: 'Word list updated succesfully!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

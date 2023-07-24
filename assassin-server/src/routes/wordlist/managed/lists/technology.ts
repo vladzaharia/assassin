@@ -1,4 +1,4 @@
-import { ManagedWordList } from './types'
+import { ManagedWordList } from '../types'
 
 export const TECHNOLOGY: ManagedWordList = {
 	name: 'technology',

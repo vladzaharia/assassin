@@ -51,11 +51,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			for (const result of players) {
 				const unmatched = players.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
 
-				console.log('matched', matched)
-				console.log('unmatched', unmatched)
-
 				result.target = arrayShuffle(unmatched)[0]?.name
-				console.log(`${result?.name} => ${result.target}`)
 				matched.push(result.target)
 
 				if (roomRecord.usesWords === 1) {
