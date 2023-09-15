@@ -2,7 +2,7 @@ import { Context } from 'hono'
 import { Bindings } from '../../bindings'
 import { listWordsInWordList } from '../../tables/word'
 import { findWordList } from '../../tables/wordlist'
-import { MANAGED_WORDLISTS } from './managed'
+import { GetManagedWordlists } from './managed'
 
 export const GetWordList = async (c: Context<{ Bindings: Bindings }>) => {
 	try {
@@ -23,7 +23,7 @@ export const GetWordList = async (c: Context<{ Bindings: Bindings }>) => {
 			description: wordListRecord.description,
 			words: wordsRecord?.map((w) => w.word),
 			icon: wordListRecord.icon,
-			managed: MANAGED_WORDLISTS.some((wl) => wl.name === wordListRecord.name),
+			managed: GetManagedWordlists().some((wl) => wl.name === wordListRecord.name),
 		})
 	} catch (e) {
 		console.error('err', e)

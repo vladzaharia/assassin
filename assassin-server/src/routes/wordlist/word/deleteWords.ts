@@ -14,6 +14,11 @@ export const DeleteWords = async (c: Context<{ Bindings: Bindings }>) => {
 
 		const db = c.env.D1DATABASE
 
+		// Check if words are provided
+		if (!words || words.length === 0) {
+			return c.json({ message: 'Must provide `words` array!' }, 400)
+		}
+
 		// Try to find word list
 		const record = await findWordList(db, list)
 		if (!record) {

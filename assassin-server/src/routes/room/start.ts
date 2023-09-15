@@ -51,19 +51,13 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			for (const result of players) {
 				const unmatched = players.filter((r) => !matched.includes(r?.name) && r?.name !== result?.name)
 
-				console.log('matched', matched)
-				console.log('unmatched', unmatched)
-
 				result.target = arrayShuffle(unmatched)[0]?.name
-				console.log(`${result?.name} => ${result.target}`)
 				matched.push(result.target)
 
 				if (roomRecord.usesWords === 1) {
 					result.words = JSON.stringify(shuffledWords.splice(0, roomRecord.numWords).map((w) => w.word))
 				}
 			}
-
-			// Get words
 
 			// Update player records
 			for (const result of players) {
@@ -77,7 +71,7 @@ export const StartGame = async (c: Context<{ Bindings: Bindings }>) => {
 			// Update room record
 			await setRoomStatus(db, room, 'started')
 
-			return c.json({ message: 'Successfully started game!' })
+			return c.json({ message: 'Game started successfully!' })
 		} else {
 			return c.json({ message: 'Must have at least 3 people signed up!' }, 400)
 		}

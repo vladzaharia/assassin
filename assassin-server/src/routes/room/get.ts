@@ -31,7 +31,7 @@ export const GetRoom = async (c: Context<{ Bindings: Bindings }>) => {
 			players: buildPlayerRecords(playerRecords),
 			usesWords: roomRecord.usesWords === 1,
 			numWords: roomRecord.numWords,
-			wordLists: JSON.parse(roomRecord.wordlists),
+			wordLists: roomRecord.wordlists ? JSON.parse(roomRecord.wordlists) : [],
 		})
 	} catch (e) {
 		console.error('err', e)

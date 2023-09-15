@@ -2,9 +2,8 @@ import { Hono } from 'hono'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { cors } from 'hono/cors'
 
-import { AuthMiddleware } from './auth'
+import { AuthMiddleware } from './auth/auth'
 import { Bindings } from './bindings'
-import { GetUninitializedWordLists, InitializeWordlists } from './routes/wordlist/import'
 import { ResetDb } from './routes/db/reset'
 import { Info } from './routes/info'
 import { AddPlayer } from './routes/player/add'
@@ -31,6 +30,8 @@ import { UpdateWordList } from './routes/wordlist/update'
 import { DbInfo } from './routes/db/info'
 import { MigrateDb } from './routes/db/migrate'
 import { RollbackDb } from './routes/db/rollback'
+import { ListManagedWordLists } from './routes/wordlist/managed/list'
+import { ImportManagedWordList } from './routes/wordlist/managed/import'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -81,8 +82,8 @@ app.get('/api/wordlist', ListWordLists)
 app.get('/api/wordlist/', ListWordLists)
 
 // Import word lists
-app.get('/api/wordlist/import', GetUninitializedWordLists)
-app.put('/api/wordlist/import/:importList', InitializeWordlists)
+app.get('/api/wordlist/import', ListManagedWordLists)
+app.put('/api/wordlist/import/:importList', ImportManagedWordList)
 
 // Get/add/delete word lists
 app.get('/api/wordlist/:list', GetWordList)

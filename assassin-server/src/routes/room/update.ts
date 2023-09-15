@@ -46,7 +46,7 @@ export const UpdateRoom = async (c: Context<{ Bindings: Bindings }>) => {
 			await setWordLists(db, room, wordLists)
 		}
 
-		return c.json({ message: 'Successfully updated room!' })
+		return c.json({ message: 'Room updated successfully!' })
 	} catch (e) {
 		console.error('err', e)
 		return c.json({ message: 'Something went wrong!' }, 500)

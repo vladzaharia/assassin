@@ -27,14 +27,15 @@
 			"executor": "@nx/vite:test",
 			"outputs": ["{workspaceRoot}/coverage/assassin-app"],
 			"options": {
-				"passWithNoTests": true,
-				"reportsDirectory": "../coverage/assassin-app"
-			},
-			"configurations": {
-				"ci": {
-					"coverage": true,
-					"reporters": ["default", "junit"]
-				}
+				"reportsDirectory": "../coverage/assassin-app",
+				"coverage": true
+			}
+		},
+		"test:ui": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "assassin-app",
+				"command": "vitest --coverage --ui"
 			}
 		},
 		"lint": {

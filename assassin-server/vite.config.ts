@@ -20,10 +20,20 @@ export default defineConfig({
 		environment: 'jsdom',
 		include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
 		coverage: {
-			reporter: ['json-summary', 'json'],
+			enabled: true,
+			include: ['**/src/**'],
+			exclude: [
+				'**/lib/**',
+				'**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+				'**/migrate/migrations/**',
+				'**/tables/*.ts',
+				'**/wordlist/managed/lists/**',
+			],
+			reporter: ['json-summary', 'json', 'html'],
 		},
 		reporters: ['default', 'junit'],
 		outputFile: {
-			junit: '../coverage/assassin-server/junit.xml'
-		}	},
+			junit: '../coverage/assassin-server/junit.xml',
+		},
+	},
 })

@@ -1,11 +1,6 @@
 import Menu from '../../components/menu/menu'
 import { hasAuthParams, useAuth } from 'react-oidc-context'
-import {
-	faTextSize,
-	faDoorOpen,
-	faDatabase,
-	faCircleInfo,
-} from '@fortawesome/pro-solid-svg-icons'
+import { faTextSize, faDoorOpen, faDatabase, faCircleInfo } from '@fortawesome/pro-solid-svg-icons'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import './admin.css'
